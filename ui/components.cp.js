@@ -4,7 +4,7 @@ import { Color } from 'lively.graphics/color.js';
 import { Image } from 'lively.morphic/morph.js';
 import { Text } from 'lively.morphic/text/morph.js';
 
-const LivelyFooter = component({
+export const LivelyFooter = component({
   extent: pt(707.2, 108.7),
   layout: new TilingLayout({
     axisAlign: 'center',
