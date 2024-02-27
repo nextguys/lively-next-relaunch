@@ -28,7 +28,7 @@ export const LivelyFooter = component({
     position: pt(143.2, 62.8),
     textAndAttributes: ['This is the ', null, 'lively.next', {
       fontWeight: '500'
-    }, ' impressum. Or shall we drop it alltogether?', null]
+    }, ' impressum. Or shall we drop it alltogether? I do not really know...', null]
 
   }]
 });
