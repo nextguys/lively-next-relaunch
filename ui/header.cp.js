@@ -171,7 +171,7 @@ export const BurgerMenu = component(
     })]
   });
 
-const BaseNavBar = component({
+export const BaseNavBar = component({
   extent: pt(554, 84),
   layout: new TilingLayout({
     align: 'center',
@@ -184,6 +184,15 @@ const BaseNavBar = component({
   })]
 });
 
+export const LargeNavBar = component(BaseNavBar, {
+  submorphs: [{
+    name: 'burger menu',
+    visible: false
+  }, {
+    name: 'spaced menu items',
+    visible: true
+  }]
+});
 export const SmallNavBar = component(BaseNavBar, {
   submorphs: [{
     name: 'spaced menu items',
@@ -192,5 +201,11 @@ export const SmallNavBar = component(BaseNavBar, {
 });
 
 export const NavBar = component(BaseNavBar, {
-  master: SmallNavBar
+  master: {
+    auto: SmallNavBar,
+    breakpoints: [
+      [pt(266, 0), LargeNavBar]
+    ]
+  },
+  extent: pt(89, 93)
 });
