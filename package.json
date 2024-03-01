@@ -16,7 +16,7 @@
   },
   "lively": {
     "projectDependencies": [],
-    "boundLivelyVersion": "6cbaf6a1c90b3305b6bfa6a5ffd8e22cc051dca8",
+    "boundLivelyVersion": "a850abeea922e7cdb3931fa4ed998ffd8ebece8a",
     "repositoryIsPrivate": false,
     "repoBelongsToOrg": true,
     "testActionEnabled": true,
@@ -24,10 +24,10 @@
     "testOnPush": true,
     "buildOnPush": false,
     "deployOnPush": false,
-    "canUsePages": false,
+    "canUsePages": true,
     "deployActionEnabled": false
   },
-  "version": "0.5.0",
+  "version": "0.5.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/nextguys/lively-next-relaunch"
