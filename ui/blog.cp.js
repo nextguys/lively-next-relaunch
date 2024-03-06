@@ -1,25 +1,47 @@
-import { component, part, without, add, ViewModel, TilingLayout } from 'lively.morphic';
+import { component, without, add, ViewModel, TilingLayout } from 'lively.morphic';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
 import { HTMLMorph } from 'lively.morphic/html-morph.js';
 import { mdCompiler } from 'lively.ide/md/compiler.js';
+import { connect } from 'lively.bindings';
+import { part } from 'lively.morphic/components/core.js';
+import { PaginationNavigator } from './a-morph.cp.js';
 
 import { BlogModel } from './blog.js';
 
 export const Blog = component({
   extent: pt(995, 828),
-
   defaultViewModel: BlogModel,
   layout: new TilingLayout({
+    align: 'center',
     axis: 'column',
+    axisAlign: 'center',
+    resizePolicies: [['entry area', {
+      height: 'fill',
+      width: 'fill'
+    }]],
     spacing: 20
-  })
+  }),
+  submorphs: [{
+    name: 'entry area',
+    layout: new TilingLayout({
+      axis: 'column',
+      spacing: 5
+    }),
+    borderColor: Color.rgb(23, 160, 251),
+    extent: pt(996.5, 748),
+    position: pt(-112, 24)
+  }, part(PaginationNavigator, {
+    name: 'pagination navigator'
+  })]
 });
 
 class BlogEntryPreviewModel extends ViewModel {
   static get properties () {
     return {
+      blog: {},
+      entry: {},
       date: {},
       abstract: {},
       title: {},
@@ -36,20 +58,7 @@ class BlogEntryPreviewModel extends ViewModel {
   }
 
   openEntry () {
-    const fullArticle = part(BlogEntry, {
-      extent: this.view.owner.extent,
-      position: this.view.owner.position,
-      viewModel: {
-        author: this.author,
-        abstract: this.abstract,
-        title: this.title,
-        date: this.date,
-        content: this.content
-      }
-    });
-    debugger;
-    fullArticle.openInWorld();
-    debugger;
+    this.blog.openEntry(this.entry);
   }
 
   viewDidLoad () {
@@ -64,6 +73,7 @@ class BlogEntryPreviewModel extends ViewModel {
 class BlogEntryModel extends ViewModel {
   static get properties () {
     return {
+      blog: {},
       date: {},
       content: {},
       title: {},
@@ -80,115 +90,22 @@ class BlogEntryModel extends ViewModel {
   }
 
   remove () {
-    debugger;
+    this.blog.resetURL();
     this.view.remove();
   }
 
   viewDidLoad () {
-    debugger;
-    const { author, date, content, title } = this.ui;
+    connect(this.blog, 'closeAllEntries', '() => this.blog.closeEntry(this.entry)');
+    const { author, date, content } = this.ui;
     author.textString = this.author;
     // TODO: needs to trigger an actual markdown rerender
     // once we have the markdown support fleshed out
     content.html = mdCompiler.compileToHTML(this.content);
-    title.textString = this.title;
+    // FIXME: this is a weird bug regarding the ui getter in frozen worlds
+    this.view.get('title').textString = this.title;
     date.textString = this.date;
   }
 }
-
-const BlogEntry = component(BlogEntryPreview, {
-  name: 'blog entry',
-  defaultViewModel: BlogEntryModel,
-  extent: pt(654, 688.5),
-  layout: new TilingLayout({
-    align: 'right',
-    axis: 'column',
-    padding: rect(20, 0, 0, 20),
-    resizePolicies: [['header wrapper', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['seperator', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['content', {
-      height: 'fill',
-      width: 'fill'
-    }]]
-  }),
-  position: pt(369, 153.8),
-  submorphs: [{
-    name: 'header wrapper',
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center',
-      justifySubmorphs: 'spaced',
-      padding: rect(0, 0, 0, 20),
-      resizePolicies: [['title wrapper', {
-        height: 'fixed',
-        width: 'fill'
-      }]],
-      wrapSubmorphs: true
-    }),
-    submorphs: [without('title'), add({
-      name: 'title wrapper',
-      borderColor: Color.rgb(23, 160, 251),
-      extent: pt(182, 69),
-      fill: Color.rgba(200, 74, 74, 0),
-      layout: new TilingLayout({
-        axisAlign: 'center',
-        hugContentsHorizontally: true
-      }),
-      submorphs: [{
-        type: Text,
-        name: 'back button',
-        borderColor: Color.rgb(23, 160, 251),
-        dynamicCursorColoring: true,
-        extent: pt(45, 52),
-        fill: Color.rgba(255, 255, 255, 0),
-        fixedHeight: true,
-        fixedWidth: true,
-        fontSize: 36,
-        lineWrapping: 'by-words',
-        padding: rect(1, 9, 0, -8),
-        textAndAttributes: ['', {
-          fontFamily: 'Material Icons',
-          fontWeight: '900'
-        }, ' ', {}]
-      }, {
-        type: Text,
-        name: 'title',
-        textAndAttributes: ['undefined', null]
-      }]
-    }, 'meta wrapper'), {
-      name: 'meta wrapper',
-      submorphs: [{
-        name: 'date',
-        textAndAttributes: ['undefined', null]
-      }, {
-        name: 'author',
-        textAndAttributes: ['undefined', null]
-      }]
-    }]
-  }, {
-    name: 'seperator',
-    height: 3
-  }, add({
-    // TODO: extract this into a markdown morph
-    type: HTMLMorph,
-    name: 'content',
-    borderColor: Color.rgb(23, 160, 251),
-    borderWidth: 1,
-    html: '\n\
-<div style="display: flex;\n\
-            align-items: center;\n\
-            justify-content: center;\n\
-            height: 100%;\n\
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(242,243,244,1)),color-stop(100%, rgba(229,231,233,1)))">\n\
-  <p style="font: bold 40pt Inconsolata, monospace; color: lightgray;">&lt;HTML/&gt;</p>\n\
-</div>'
-  }), without('abstract'), without('continue reading wrapper')]
-});
-
 export const BlogEntryPreview = component({
   defaultViewModel: BlogEntryPreviewModel,
   extent: pt(582, 245.5),
@@ -361,4 +278,97 @@ export const BlogEntryPreview = component({
       }]
     }
   ]
+});
+
+export const BlogEntry = component(BlogEntryPreview, {
+  name: 'blog entry',
+  defaultViewModel: BlogEntryModel,
+  extent: pt(654, 688.5),
+  layout: new TilingLayout({
+    align: 'right',
+    axis: 'column',
+    padding: rect(20, 0, 0, 20),
+    resizePolicies: [['header wrapper', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['seperator', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['content', {
+      height: 'fill',
+      width: 'fill'
+    }]]
+  }),
+  position: pt(369, 153.8),
+  submorphs: [{
+    name: 'header wrapper',
+    layout: new TilingLayout({
+      align: 'center',
+      axisAlign: 'center',
+      justifySubmorphs: 'spaced',
+      padding: rect(0, 0, 0, 20),
+      resizePolicies: [['title wrapper', {
+        height: 'fixed',
+        width: 'fill'
+      }]],
+      wrapSubmorphs: true
+    }),
+    submorphs: [without('title'), add({
+      name: 'title wrapper',
+      borderColor: Color.rgb(23, 160, 251),
+      extent: pt(182, 69),
+      fill: Color.rgba(200, 74, 74, 0),
+      layout: new TilingLayout({
+        axisAlign: 'center',
+        hugContentsHorizontally: true
+      }),
+      submorphs: [{
+        type: Text,
+        name: 'back button',
+        borderColor: Color.rgb(23, 160, 251),
+        dynamicCursorColoring: true,
+        extent: pt(45, 52),
+        fill: Color.rgba(255, 255, 255, 0),
+        fixedHeight: true,
+        fixedWidth: true,
+        fontSize: 36,
+        lineWrapping: 'by-words',
+        padding: rect(1, 9, 0, -8),
+        textAndAttributes: ['', {
+          fontFamily: 'Material Icons',
+          fontWeight: '900'
+        }, ' ', {}]
+      }, {
+        type: Text,
+        name: 'title',
+        textAndAttributes: ['undefined', null]
+      }]
+    }, 'meta wrapper'), {
+      name: 'meta wrapper',
+      submorphs: [{
+        name: 'date',
+        textAndAttributes: ['undefined', null]
+      }, {
+        name: 'author',
+        textAndAttributes: ['undefined', null]
+      }]
+    }]
+  }, {
+    name: 'seperator',
+    height: 3
+  }, add({
+    // TODO: extract this into a markdown morph
+    type: HTMLMorph,
+    name: 'content',
+    borderColor: Color.rgb(23, 160, 251),
+    borderWidth: 1,
+    html: '\n\
+<div style="display: flex;\n\
+            align-items: center;\n\
+            justify-content: center;\n\
+            height: 100%;\n\
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(242,243,244,1)),color-stop(100%, rgba(229,231,233,1)))">\n\
+  <p style="font: bold 40pt Inconsolata, monospace; color: lightgray;">&lt;HTML/&gt;</p>\n\
+</div>'
+  }), without('abstract'), without('continue reading wrapper')]
 });

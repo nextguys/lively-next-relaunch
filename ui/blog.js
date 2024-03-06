@@ -1,10 +1,13 @@
 import { ViewModel, part } from 'lively.morphic';
-import { BlogEntryPreview } from './blog.cp.js';
-import { newUUID } from 'lively.lang/string.js';
+import { BlogEntryPreview, BlogEntry } from './blog.cp.js';
+import { signal } from 'lively.bindings';
+
+const ENTRIES_PER_PAGE = 5;
 
 const entries = [
   {
     title: 'The first entry on the lively.next blog!',
+    slug: 'first-lively-blog-post',
     date: '03.05.2024',
     author: '@linusha',
     abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec tempor ante. Aenean consequat gravida odio, quis tempor nisl efficitur a. In risus neque, fermentum a aliquet non, semper sed ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque malesuada egestas sem, nec blandit libero viverra ut. Pellentesque feugiat tristique metus et sagittis. Cras ut tortor vehicula, tincidunt sem pretium, scelerisque sem. Aenean volutpat semper nulla, vel dictum ipsum ornare molestie. Suspendisse volutpat eget augue eget maximus. Aliquam turpis eros, facilisis sed neque vitae, interdum congue lorem. Fusce viverra, mauris quis dignissim suscipit, lectus ligula tincidunt leo, eu auctor nisl sapien eu orci. Praesent turpis lorem, ornare vel dignissim et, tempor eu libero. Quisque congue leo in fermentum aliquam.',
@@ -60,6 +63,7 @@ _This is italic text_
   },
   {
     title: 'Why the ipad is for infants',
+    slug: 'why-the-ipad-is-for-infants',
     date: '03.05.1988',
     author: '@alan',
     abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec tempor ante. Aenean consequat gravida odio, quis tempor nisl efficitur a. In risus neque, fermentum a aliquet non, semper sed ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque malesuada egestas sem, nec blandit libero viverra ut. Pellentesque feugiat tristique metus et sagittis. Cras ut tortor vehicula, tincidunt sem pretium, scelerisque sem. Aenean volutpat semper nulla, vel dictum ipsum ornare molestie. Suspendisse volutpat eget augue eget maximus. Aliquam turpis eros, facilisis sed neque vitae, interdum congue lorem. Fusce viverra, mauris quis dignissim suscipit, lectus ligula tincidunt leo, eu auctor nisl sapien eu orci. Praesent turpis lorem, ornare vel dignissim et, tempor eu libero. Quisque congue leo in fermentum aliquam.',
@@ -114,13 +118,61 @@ _This is italic text_
 > > > ...or with spaces between arrows.`
   }
 ];
+
 export class BlogModel extends ViewModel {
+  static get properties () {
+    return {
+      page: {
+        defaultValue: 0
+      }
+    };
+  }
+
   viewDidLoad () {
+    window.addEventListener('popstate', (event) => {
+      this.route(event.state);
+    });
+
+    this.prepareEntryPreviews();
+    this.route('home');
+  }
+
+  route (slug) {
+    if (slug === 'home') signal(this, 'closeAllEntries');
+    const calledArticle = entries.find(e => e.slug === slug);
+    if (calledArticle) this.openEntry(calledArticle);
+  }
+
+  resetURL () {
+    // TODO: add history button navigation
+    window.history.pushState('home', null, '/');
+  }
+
+  openEntry (entry) {
+    const fullArticle = part(BlogEntry, {
+      extent: this.view.extent,
+      position: this.view.position,
+      viewModel: {
+        blog: this,
+        author: entry.author,
+        abstract: entry.abstract,
+        title: entry.title,
+        date: entry.date,
+        content: entry.content
+      }
+    });
+    fullArticle.openInWorld();
+    window.history.pushState(entry.slug, null, entry.slug);
+  }
+
+  prepareEntryPreviews () {
+    this.ui.entryArea.layout = this.ui.entryArea.layout.copy();
     entries.forEach(entry => {
       const previewItem = part(BlogEntryPreview, {
-        // FIXME:
-        name: newUUID(),
+        name: entry.slug,
         viewModel: {
+          entry,
+          blog: this,
           author: entry.author,
           title: entry.title,
           date: entry.date,
@@ -129,8 +181,8 @@ export class BlogModel extends ViewModel {
 
         }
       });
-      this.view.layout.setResizePolicyFor(previewItem, { width: 'fill', height: 'fixed' });
-      this.view.addMorph(previewItem);
+      this.ui.entryArea.addMorph(previewItem);
+      this.ui.entryArea.layout.setResizePolicyFor(previewItem, { width: 'fill', height: 'fixed' });
     });
   }
 }

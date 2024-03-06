@@ -1,4 +1,8 @@
-'format esm';
+import { part } from 'lively.morphic';
+import { Blog } from './ui/blog.cp.js';
+
 export async function main () {
-    // THIS FUNCTION IS THE ENTRY POINT IN THE BUNDLED APPLICATION!
+  const blog = part(Blog);
+  blog.openInWorld();
+  blog.center = $world.center;
 }
