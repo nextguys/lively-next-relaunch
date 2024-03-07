@@ -10,7 +10,7 @@ import { PaginationNavigator } from './a-morph.cp.js';
 
 import { BlogModel } from './blog.js';
 
-export const Blog = component({
+const GrowingBlog = component({
   extent: pt(995, 828),
   defaultViewModel: BlogModel,
   layout: new TilingLayout({
@@ -35,6 +35,28 @@ export const Blog = component({
   }, part(PaginationNavigator, {
     name: 'pagination navigator'
   })]
+});
+
+export const FixedBlog = component(GrowingBlog, {
+  layout: new TilingLayout({
+    align: 'center',
+    axis: 'column',
+    axisAlign: 'center',
+    resizePolicies: [['entry area', {
+      height: 'fill',
+      width: 'fixed'
+    }]],
+    spacing: 20
+  })
+});
+
+export const Blog = component(GrowingBlog, {
+  master: {
+    breakpoints: [
+      [pt(0, 0), GrowingBlog],
+      [pt(1200, 0), FixedBlog]
+    ]
+  }
 });
 
 class BlogEntryPreviewModel extends ViewModel {

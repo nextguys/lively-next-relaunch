@@ -1,6 +1,7 @@
 import { ViewModel, part } from 'lively.morphic';
 import { BlogEntryPreview, BlogEntry } from './blog.cp.js';
 import { signal } from 'lively.bindings';
+import { pt } from 'lively.graphics';
 
 const ENTRIES_PER_PAGE = 5;
 
@@ -123,9 +124,19 @@ export class BlogModel extends ViewModel {
   static get properties () {
     return {
       page: {
-        defaultValue: 0
+        defaultValue: 1
+      },
+      expose: {
+        get () {
+          return ['relayout']
+        }
       }
     };
+  }
+
+  relayout () {
+    this.view.extent = $world.visibleBounds().extent();
+    this.view.position = pt(0, 0);
   }
 
   viewDidLoad () {
