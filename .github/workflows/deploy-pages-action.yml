@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache/restore@v3
         env:
           cache-name: lively-repo
-          ref: 267e25017c36eee176569436524d92b59f5ff5a9
+          ref: 652bef729fa14d77de4f69c3b5f79c0d2d2a7e33
         with:
           path: .            
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ env.ref }}
@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: LivelyKernel/lively.next
-          ref: 267e25017c36eee176569436524d92b59f5ff5a9
+          ref: 652bef729fa14d77de4f69c3b5f79c0d2d2a7e33
       - name: Install `lively.next`
         if: ${{ steps.cache-lively.outputs.cache-hit != 'true' }}
         run: |
@@ -44,14 +44,13 @@ jobs:
         uses: actions/cache/save@v3
         env:
           cache-name: lively-repo
-          ref: 267e25017c36eee176569436524d92b59f5ff5a9
+          ref: 652bef729fa14d77de4f69c3b5f79c0d2d2a7e33
         with:
           path: .            
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ env.ref }}     
       - name: Checkout Project Repository
         uses: actions/checkout@v4
         with:
-          ref: main
           path: local_projects/nextguys--lively-next-relaunch
       - name: Build Project
         run: npm run build-minified --prefix local_projects/nextguys--lively-next-relaunch
