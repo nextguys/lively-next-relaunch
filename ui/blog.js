@@ -3,7 +3,7 @@ import { BlogEntryPreview, BlogEntry } from './blog.cp.js';
 import { signal } from 'lively.bindings';
 import { pt } from 'lively.graphics';
 
-const ENTRIES_PER_PAGE = 5;
+const ENTRIES_PER_PAGE = 1;
 
 const entries = [
   {
@@ -126,12 +126,24 @@ export class BlogModel extends ViewModel {
       page: {
         defaultValue: 1
       },
+      bindings: {
+        get () {
+          return [
+            { target: 'pagination navigator', signal: 'changedPage', handler: 'pageChanged' }
+          ];
+        }
+      },
       expose: {
         get () {
-          return ['relayout']
+          return ['relayout'];
         }
       }
     };
+  }
+
+  pageChanged (page) {
+    // TODO: think about how pagination should affect the urls!
+    this.prepareEntryPreviews(page * ENTRIES_PER_PAGE);
   }
 
   relayout () {
@@ -145,6 +157,8 @@ export class BlogModel extends ViewModel {
     });
 
     this.prepareEntryPreviews();
+
+    this.ui.paginationNavigator.maxNumberOfPages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
     this.route('home');
   }
 
@@ -176,9 +190,13 @@ export class BlogModel extends ViewModel {
     window.history.pushState(entry.slug, null, entry.slug);
   }
 
-  prepareEntryPreviews () {
+  prepareEntryPreviews (offset) {
+    // TODO: maybe cache the morphs?
+    // Instead, we do even better: we construct all pages in the background and then just exchange the pages upon navigation
+    this.ui.entryArea.submorphs = [];
     this.ui.entryArea.layout = this.ui.entryArea.layout.copy();
-    entries.forEach(entry => {
+    entries.slice(offset - 1).forEach((entry, i) => {
+      if ((i + 1) > ENTRIES_PER_PAGE) return;
       const previewItem = part(BlogEntryPreview, {
         name: entry.slug,
         viewModel: {
