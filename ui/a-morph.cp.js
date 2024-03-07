@@ -5,7 +5,9 @@ import { Text } from 'lively.morphic/text/morph.js';
 
 class PaginationNavigatorModel extends ViewModel {
   static get properties () {
+    return {
 
+    };
   }
 }
 
