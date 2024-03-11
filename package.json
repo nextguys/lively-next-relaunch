@@ -23,11 +23,11 @@
     "buildActionEnabled": false,
     "testOnPush": true,
     "buildOnPush": false,
-    "deployOnPush": true,
+    "deployOnPush": false,
     "canUsePages": true,
-    "deployActionEnabled": true
+    "deployActionEnabled": false
   },
-  "version": "0.1.11",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/nextguys/lively-next-relaunch"
