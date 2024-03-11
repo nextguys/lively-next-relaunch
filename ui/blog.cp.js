@@ -167,7 +167,10 @@ export const BlogEntryPreview = component({
         axisAlign: 'center',
         justifySubmorphs: 'spaced',
         padding: rect(0, 0, 0, 20),
-        wrapSubmorphs: true
+        resizePolicies: [['title', {
+          height: 'fixed',
+          width: 'fill'
+        }]]
       }),
       height: 10,
       position: pt(-1.5, 0.5),
@@ -176,6 +179,8 @@ export const BlogEntryPreview = component({
         {
           type: Text,
           name: 'title',
+          lineWrapping: 'by-words',
+          fixedWidth: true,
           fontSize: 30,
           fontWeight: '700',
           fontFamily: '"Bree Serif"',
