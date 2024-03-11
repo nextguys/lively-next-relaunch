@@ -194,7 +194,6 @@ export class BlogModel extends ViewModel {
     // TODO: maybe cache the morphs?
     // Instead, we do even better: we construct all pages in the background and then just exchange the pages upon navigation
     this.ui.entryArea.submorphs = [];
-    this.ui.entryArea.layout = this.ui.entryArea.layout.copy();
     entries.slice(offset - 1).forEach((entry, i) => {
       if ((i + 1) > ENTRIES_PER_PAGE) return;
       const previewItem = part(BlogEntryPreview, {
