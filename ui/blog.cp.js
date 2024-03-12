@@ -37,6 +37,16 @@ const GrowingBlog = component({
   })]
 });
 
+export const PreviewPage = component({
+  name: 'preview page',
+  fill: Color.transparent,
+  clipMode: 'hidden',
+  layout: new TilingLayout({
+    axis: 'column'
+  }),
+  visible: false
+});
+
 export const FixedBlog = component(GrowingBlog, {
   layout: new TilingLayout({
     align: 'center',
@@ -130,10 +140,12 @@ class BlogEntryModel extends ViewModel {
 }
 export const BlogEntryPreview = component({
   defaultViewModel: BlogEntryPreviewModel,
+  clipMode: 'hidden',
   extent: pt(582, 245.5),
   layout: new TilingLayout({
     axis: 'column',
     axisAlign: 'right',
+    hugContentsVertically: true,
     padding: rect(20, 0, 0, 0),
     resizePolicies: [
       [
@@ -162,11 +174,13 @@ export const BlogEntryPreview = component({
   submorphs: [
     {
       name: 'header wrapper',
+      clipMode: 'hidden',
       fill: Color.rgba(255, 255, 255, 0),
       layout: new TilingLayout({
         axisAlign: 'center',
         justifySubmorphs: 'spaced',
         padding: rect(0, 0, 0, 20),
+        hugContentsVertically: true,
         resizePolicies: [['title', {
           height: 'fixed',
           width: 'fill'
@@ -194,6 +208,7 @@ export const BlogEntryPreview = component({
         },
         {
           name: 'meta wrapper',
+          clipMode: 'hidden',
           layout: new TilingLayout({
             align: 'center',
             axisAlign: 'center',
