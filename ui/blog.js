@@ -146,6 +146,7 @@ export class BlogModel extends ViewModel {
   }
 
   pageChanged (page) {
+    this.ui.paginationNavigator.setPage(page);
     // TODO: think about how pagination should affect the urls!
     this.pageMorphs.forEach(p => p.opacity = 0);
     this.pageMorphs[page - 1].opacity = 1;
@@ -175,6 +176,7 @@ export class BlogModel extends ViewModel {
   }
 
   route (slug) {
+    debugger;
     if (slug === '') {
       signal(this, 'closeAllEntries');
       this.pageChanged(1);
@@ -185,7 +187,6 @@ export class BlogModel extends ViewModel {
 
   resetURL () {
     // TODO: add history button navigation
-    window.history.pushState('home', null, '/');
   }
 
   openEntry (entry) {
@@ -202,7 +203,7 @@ export class BlogModel extends ViewModel {
       }
     });
     fullArticle.openInWorld();
-    window.history.pushState(entry.slug, null, entry.slug);
+    window.location.hash = `/${entry.slug}/`;
   }
 
   async prepareEntryPreviews () {
@@ -213,7 +214,6 @@ export class BlogModel extends ViewModel {
         extent: this.ui.entryArea.extent,
         position: this.ui.entryArea.position
       });
-      debugger;
       entries.slice(p * ENTRIES_PER_PAGE - 1).forEach((entry, i) => {
         if ((i + 1) > ENTRIES_PER_PAGE) return;
 

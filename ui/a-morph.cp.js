@@ -24,10 +24,19 @@ class PaginationNavigatorModel extends ViewModel {
       },
       expose: {
         get () {
-          return ['changedPage', 'maxNumberOfPages'];
+          return ['changedPage', 'maxNumberOfPages', 'setPage'];
         }
       }
     };
+  }
+
+  setPage (page) {
+    this.page = page;
+    this.ui.pageNumber.textString = this.page;
+    if (this.page === 2) this.ui.backward.master.setState('disabled');
+    else this.ui.backward.master.setState(null);
+    if (this.page === this.maxNumberOfPages - 1) this.ui.forward.master.setState('disabled');
+    else this.ui.forward.master.setState(null);
   }
 
   viewDidLoad () {
