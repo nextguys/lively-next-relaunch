@@ -132,7 +132,8 @@ export class BlogModel extends ViewModel {
       bindings: {
         get () {
           return [
-            { target: 'pagination navigator', signal: 'changedPage', handler: 'pageChanged' }
+            { target: 'pagination navigator', signal: 'changedPage', handler: 'pageChanged' },
+            { signal: 'remove', handler: 'remove' }
           ];
         }
       },
@@ -146,8 +147,9 @@ export class BlogModel extends ViewModel {
 
   pageChanged (page) {
     // TODO: think about how pagination should affect the urls!
-    this.pageMorphs.forEach(p => p.visible = false);
-    this.pageMorphs[page - 1].visible = true;
+    this.pageMorphs.forEach(p => p.opacity = 0);
+    this.pageMorphs[page - 1].opacity = 1;
+    window.location.hash = `/${page}/`;
   }
 
   relayout () {
@@ -168,14 +170,16 @@ export class BlogModel extends ViewModel {
     await this.prepareEntryPreviews();
 
     this.ui.paginationNavigator.maxNumberOfPages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
-    this.route('home');
-    this.pageChanged(1);
+    this.route(window.location.hash);
     if (lively.FreezerRuntime) this.relayout();
   }
 
   route (slug) {
-    if (slug === 'home') signal(this, 'closeAllEntries');
-    const calledArticle = entries.find(e => e.slug === slug);
+    if (slug === '') {
+      signal(this, 'closeAllEntries');
+      this.pageChanged(1);
+    }
+    const calledArticle = entries.find(e => e.slug === slug.replace('#', '').replaceAll('/', ''));
     if (calledArticle) this.openEntry(calledArticle);
   }
 

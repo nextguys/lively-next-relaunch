@@ -44,7 +44,7 @@ export const PreviewPage = component({
   layout: new TilingLayout({
     axis: 'column'
   }),
-  visible: false
+  opcaity: 0
 });
 
 export const FixedBlog = component(GrowingBlog, {
