@@ -164,7 +164,7 @@ export class BlogModel extends ViewModel {
 
   async viewDidLoad () {
     window.addEventListener('popstate', (event) => {
-      this.route(event.state);
+      this.route(document.location.hash);
     });
 
     await this.view.whenRendered();
