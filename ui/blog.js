@@ -149,7 +149,7 @@ export class BlogModel extends ViewModel {
     this.ui.paginationNavigator.setPage(page);
     this.ui.entryArea.submorphs = [];
     this.ui.entryArea.addMorph(this.pageMorphs[page - 1]);
-    this.ui.entryArea.layout.addResizePolicy(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
+    this.ui.entryArea.layout.setResizePolicyFor(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
     window.location.hash = `/${page}/`;
   }
 
