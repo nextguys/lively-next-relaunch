@@ -147,9 +147,9 @@ export class BlogModel extends ViewModel {
 
   pageChanged (page) {
     this.ui.paginationNavigator.setPage(page);
-    // TODO: think about how pagination should affect the urls!
-    this.pageMorphs.forEach(p => p.opacity = 0);
-    this.pageMorphs[page - 1].opacity = 1;
+    this.ui.entryArea.submorphs = [];
+    this.ui.entryArea.addMorph(this.pageMorphs[page - 1]);
+    this.ui.entryArea.layout.addResizePolicy(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
     window.location.hash = `/${page}/`;
   }
 
@@ -236,7 +236,7 @@ export class BlogModel extends ViewModel {
         // await pageMorph.whenRendered();
       });
       this.pageMorphs.push(pageMorph);
-      pageMorph.openInWorld();
+      // this.ui.entryArea.addMorph(pageMorph);
     }
   }
 }

@@ -347,13 +347,13 @@ export const BlogEntry = component(BlogEntryPreview, {
     layout: new TilingLayout({
       align: 'center',
       axisAlign: 'center',
+      hugContentsVertically: true,
       justifySubmorphs: 'spaced',
       padding: rect(0, 0, 0, 20),
       resizePolicies: [['title wrapper', {
         height: 'fixed',
         width: 'fill'
-      }]],
-      wrapSubmorphs: true
+      }]]
     }),
     submorphs: [without('title'), add({
       name: 'title wrapper',
@@ -362,7 +362,12 @@ export const BlogEntry = component(BlogEntryPreview, {
       fill: Color.rgba(200, 74, 74, 0),
       layout: new TilingLayout({
         axisAlign: 'center',
-        hugContentsHorizontally: true
+        hugContentsHorizontally: true,
+        hugContentsVertically: true,
+        resizePolicies: [['title', {
+          height: 'fixed',
+          width: 'fill'
+        }]]
       }),
       submorphs: [{
         type: Text,
@@ -402,15 +407,8 @@ export const BlogEntry = component(BlogEntryPreview, {
     // TODO: extract this into a markdown morph
     type: HTMLMorph,
     name: 'content',
+    clipMode: 'auto',
     borderColor: Color.rgb(23, 160, 251),
-    borderWidth: 1,
-    html: '\n\
-<div style="display: flex;\n\
-            align-items: center;\n\
-            justify-content: center;\n\
-            height: 100%;\n\
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(242,243,244,1)),color-stop(100%, rgba(229,231,233,1)))">\n\
-  <p style="font: bold 40pt Inconsolata, monospace; color: lightgray;">&lt;HTML/&gt;</p>\n\
-</div>'
+    styleClasses: ['markdown']
   }), without('abstract'), without('continue reading wrapper')]
 });
