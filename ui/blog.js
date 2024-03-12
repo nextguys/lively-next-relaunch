@@ -1,5 +1,5 @@
 import { ViewModel, part } from 'lively.morphic';
-import { BlogEntryPreview, BlogEntry } from './blog.cp.js';
+import { BlogEntryPreview, PreviewPage, BlogEntry } from './blog.cp.js';
 import { signal } from 'lively.bindings';
 import { pt } from 'lively.graphics';
 
@@ -126,10 +126,14 @@ export class BlogModel extends ViewModel {
       page: {
         defaultValue: 1
       },
+      pageMorphs: {
+        defaultValue: []
+      },
       bindings: {
         get () {
           return [
-            { target: 'pagination navigator', signal: 'changedPage', handler: 'pageChanged' }
+            { target: 'pagination navigator', signal: 'changedPage', handler: 'pageChanged' },
+            { signal: 'remove', handler: 'remove' }
           ];
         }
       },
@@ -142,8 +146,11 @@ export class BlogModel extends ViewModel {
   }
 
   pageChanged (page) {
-    // TODO: think about how pagination should affect the urls!
-    this.prepareEntryPreviews(page * ENTRIES_PER_PAGE);
+    this.ui.paginationNavigator.setPage(page);
+    this.ui.entryArea.submorphs = [];
+    this.ui.entryArea.addMorph(this.pageMorphs[page - 1]);
+    this.ui.entryArea.layout.setResizePolicyFor(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
+    window.location.hash = `/${page}/`;
   }
 
   relayout () {
@@ -151,26 +158,35 @@ export class BlogModel extends ViewModel {
     this.view.position = pt(0, 0);
   }
 
-  viewDidLoad () {
+  remove () {
+    this.pageMorphs.forEach(p => p.remove());
+  }
+
+  async viewDidLoad () {
     window.addEventListener('popstate', (event) => {
-      this.route(event.state);
+      this.route(document.location.hash);
     });
 
-    this.prepareEntryPreviews();
+    await this.view.whenRendered();
+    await this.prepareEntryPreviews();
 
     this.ui.paginationNavigator.maxNumberOfPages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
-    this.route('home');
+    this.route(window.location.hash);
+    if (lively.FreezerRuntime) this.relayout();
   }
 
   route (slug) {
-    if (slug === 'home') signal(this, 'closeAllEntries');
-    const calledArticle = entries.find(e => e.slug === slug);
+    debugger;
+    if (slug === '') {
+      signal(this, 'closeAllEntries');
+      this.pageChanged(1);
+    }
+    const calledArticle = entries.find(e => e.slug === slug.replace('#', '').replaceAll('/', ''));
     if (calledArticle) this.openEntry(calledArticle);
   }
 
   resetURL () {
     // TODO: add history button navigation
-    window.history.pushState('home', null, '/');
   }
 
   openEntry (entry) {
@@ -187,31 +203,40 @@ export class BlogModel extends ViewModel {
       }
     });
     fullArticle.openInWorld();
-    window.history.pushState(entry.slug, null, entry.slug);
+    window.location.hash = `/${entry.slug}/`;
   }
 
-  prepareEntryPreviews (offset) {
-    // TODO: maybe cache the morphs?
-    // Instead, we do even better: we construct all pages in the background and then just exchange the pages upon navigation
-    this.ui.entryArea.submorphs = [];
-    this.ui.entryArea.layout = this.ui.entryArea.layout.copy();
-    entries.slice(offset - 1).forEach((entry, i) => {
-      if ((i + 1) > ENTRIES_PER_PAGE) return;
-      const previewItem = part(BlogEntryPreview, {
-        name: entry.slug,
-        viewModel: {
-          entry,
-          blog: this,
-          author: entry.author,
-          title: entry.title,
-          date: entry.date,
-          abstract: entry.abstract,
-          content: entry.content
-
-        }
+  async prepareEntryPreviews () {
+    const pages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
+    for (let p = 1; p <= pages; p++) {
+      const pageMorph = part(PreviewPage, {
+        name: `page ${p}`,
+        extent: this.ui.entryArea.extent,
+        position: this.ui.entryArea.position
       });
-      this.ui.entryArea.addMorph(previewItem);
-      this.ui.entryArea.layout.setResizePolicyFor(previewItem, { width: 'fill', height: 'fixed' });
-    });
+      entries.slice(p * ENTRIES_PER_PAGE - 1).forEach((entry, i) => {
+        if ((i + 1) > ENTRIES_PER_PAGE) return;
+
+        const previewItem = part(BlogEntryPreview, {
+          name: entry.slug,
+          width: pageMorph.width,
+          viewModel: {
+            entry,
+            blog: this,
+            author: entry.author,
+            title: entry.title,
+            date: entry.date,
+            abstract: entry.abstract,
+            content: entry.content
+          }
+        });
+        pageMorph.addMorph(previewItem);
+        pageMorph.layout.setResizePolicyFor(previewItem, { width: 'fill', height: 'fixed' });
+
+        // await pageMorph.whenRendered();
+      });
+      this.pageMorphs.push(pageMorph);
+      // this.ui.entryArea.addMorph(pageMorph);
+    }
   }
 }

@@ -37,6 +37,16 @@ const GrowingBlog = component({
   })]
 });
 
+export const PreviewPage = component({
+  name: 'preview page',
+  fill: Color.transparent,
+  clipMode: 'hidden',
+  layout: new TilingLayout({
+    axis: 'column'
+  }),
+  opcaity: 0
+});
+
 export const FixedBlog = component(GrowingBlog, {
   layout: new TilingLayout({
     align: 'center',
@@ -130,10 +140,12 @@ class BlogEntryModel extends ViewModel {
 }
 export const BlogEntryPreview = component({
   defaultViewModel: BlogEntryPreviewModel,
+  clipMode: 'hidden',
   extent: pt(582, 245.5),
   layout: new TilingLayout({
     axis: 'column',
     axisAlign: 'right',
+    hugContentsVertically: true,
     padding: rect(20, 0, 0, 0),
     resizePolicies: [
       [
@@ -162,12 +174,17 @@ export const BlogEntryPreview = component({
   submorphs: [
     {
       name: 'header wrapper',
+      clipMode: 'hidden',
       fill: Color.rgba(255, 255, 255, 0),
       layout: new TilingLayout({
         axisAlign: 'center',
         justifySubmorphs: 'spaced',
         padding: rect(0, 0, 0, 20),
-        wrapSubmorphs: true
+        hugContentsVertically: true,
+        resizePolicies: [['title', {
+          height: 'fixed',
+          width: 'fill'
+        }]]
       }),
       height: 10,
       position: pt(-1.5, 0.5),
@@ -176,6 +193,8 @@ export const BlogEntryPreview = component({
         {
           type: Text,
           name: 'title',
+          lineWrapping: 'by-words',
+          fixedWidth: true,
           fontSize: 30,
           fontWeight: '700',
           fontFamily: '"Bree Serif"',
@@ -189,6 +208,7 @@ export const BlogEntryPreview = component({
         },
         {
           name: 'meta wrapper',
+          clipMode: 'hidden',
           layout: new TilingLayout({
             align: 'center',
             axisAlign: 'center',
@@ -327,13 +347,13 @@ export const BlogEntry = component(BlogEntryPreview, {
     layout: new TilingLayout({
       align: 'center',
       axisAlign: 'center',
+      hugContentsVertically: true,
       justifySubmorphs: 'spaced',
       padding: rect(0, 0, 0, 20),
       resizePolicies: [['title wrapper', {
         height: 'fixed',
         width: 'fill'
-      }]],
-      wrapSubmorphs: true
+      }]]
     }),
     submorphs: [without('title'), add({
       name: 'title wrapper',
@@ -342,7 +362,12 @@ export const BlogEntry = component(BlogEntryPreview, {
       fill: Color.rgba(200, 74, 74, 0),
       layout: new TilingLayout({
         axisAlign: 'center',
-        hugContentsHorizontally: true
+        hugContentsHorizontally: true,
+        hugContentsVertically: true,
+        resizePolicies: [['title', {
+          height: 'fixed',
+          width: 'fill'
+        }]]
       }),
       submorphs: [{
         type: Text,
@@ -382,15 +407,8 @@ export const BlogEntry = component(BlogEntryPreview, {
     // TODO: extract this into a markdown morph
     type: HTMLMorph,
     name: 'content',
+    clipMode: 'auto',
     borderColor: Color.rgb(23, 160, 251),
-    borderWidth: 1,
-    html: '\n\
-<div style="display: flex;\n\
-            align-items: center;\n\
-            justify-content: center;\n\
-            height: 100%;\n\
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(242,243,244,1)),color-stop(100%, rgba(229,231,233,1)))">\n\
-  <p style="font: bold 40pt Inconsolata, monospace; color: lightgray;">&lt;HTML/&gt;</p>\n\
-</div>'
+    styleClasses: ['markdown']
   }), without('abstract'), without('continue reading wrapper')]
 });
