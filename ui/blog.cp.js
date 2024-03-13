@@ -13,12 +13,12 @@ import { BlogModel } from './blog.js';
 
 const TopSpacer = component({
   name: 'top spacer',
-  extent: pt(96.5, 100),
   borderColor: Color.rgb(23, 160, 251),
   master: {
     breakpoints: [
+      // TODO: make this viewport dependent?
       [pt(0, 0), new PolicyApplicator({ height: 50 })],
-      [pt(550, 0), new PolicyApplicator({ height: 300 })]
+      [pt(550, 0), new PolicyApplicator({ height: 100 })]
     ]
   }
 });
@@ -42,11 +42,12 @@ const GrowingBlog = component({
     name: 'top spacer'
   }), {
     name: 'entry area',
+    borderWidth: 4,
     layout: new TilingLayout({
       axis: 'column',
       spacing: 5
     }),
-    borderColor: Color.rgb(23, 160, 251),
+    borderColor: Color.rgb(0, 96, 160),
     extent: pt(996.5, 748),
     position: pt(-112, 24)
   }, part(PaginationNavigator, {
@@ -84,7 +85,9 @@ export const Blog = component(GrowingBlog, {
       [pt(1200, 0), FixedBlog]
     ]
   },
-  respondsToVisibleWindow: true
+  respondsToVisibleWindow: true,
+  borderWidth: 3,
+  borderColor: Color.rgb(255, 112, 0)
 });
 
 class BlogEntryPreviewModel extends ViewModel {
