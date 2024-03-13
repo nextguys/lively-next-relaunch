@@ -87,7 +87,8 @@ export const Blog = component(GrowingBlog, {
   },
   respondsToVisibleWindow: true,
   borderWidth: 3,
-  borderColor: Color.rgb(255, 112, 0)
+  borderColor: Color.rgb(255, 112, 0),
+  clipMode: 'auto'
 });
 
 class BlogEntryPreviewModel extends ViewModel {
