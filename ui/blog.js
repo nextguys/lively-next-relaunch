@@ -1,7 +1,8 @@
 import { ViewModel, part } from 'lively.morphic';
 import { BlogEntryPreview, PreviewPage, BlogEntry } from './blog.cp.js';
-import { signal } from 'lively.bindings';
+import { signal, connect } from 'lively.bindings';
 import { pt } from 'lively.graphics';
+import { HashRouter } from '../hash-router.js';
 
 const ENTRIES_PER_PAGE = 1;
 
@@ -146,11 +147,12 @@ export class BlogModel extends ViewModel {
   }
 
   pageChanged (page) {
+    debugger;
     this.ui.paginationNavigator.setPage(page);
     this.ui.entryArea.submorphs = [];
     this.ui.entryArea.addMorph(this.pageMorphs[page - 1]);
     this.ui.entryArea.layout.setResizePolicyFor(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
-    window.location.hash = `/${page}/`;
+    this.router.setHash(page);
   }
 
   relayout () {
@@ -163,25 +165,26 @@ export class BlogModel extends ViewModel {
   }
 
   async viewDidLoad () {
-    window.addEventListener('popstate', (event) => {
-      this.route(document.location.hash);
+    this.router = new HashRouter({
+      prefix: 'blog',
+      debugMode: !lively.FreezerRuntime
     });
-
+    connect(this.router, 'routed', this, 'route');
     await this.view.whenRendered();
     await this.prepareEntryPreviews();
 
     this.ui.paginationNavigator.maxNumberOfPages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
-    this.route(window.location.hash);
+    debugger;
+    this.router.route();
     if (lively.FreezerRuntime) this.relayout();
   }
 
-  route (slug) {
-    debugger;
-    if (slug === '') {
+  route (hash) {
+    if (hash === '') {
       signal(this, 'closeAllEntries');
       this.pageChanged(1);
     }
-    const calledArticle = entries.find(e => e.slug === slug.replace('#', '').replaceAll('/', ''));
+    const calledArticle = entries.find(e => e.hash === hash.replace('#', '').replaceAll('/', ''));
     if (calledArticle) this.openEntry(calledArticle);
   }
 
@@ -203,7 +206,7 @@ export class BlogModel extends ViewModel {
       }
     });
     fullArticle.openInWorld();
-    window.location.hash = `/${entry.slug}/`;
+    this.router.setHash(entry.slug);
   }
 
   async prepareEntryPreviews () {
