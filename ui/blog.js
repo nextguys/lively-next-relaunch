@@ -167,7 +167,7 @@ export class BlogModel extends ViewModel {
   async viewDidLoad () {
     this.router = new HashRouter({
       prefix: 'blog',
-      debugMode: true
+      debugMode: !lively.FreezerRuntime
     });
     connect(this.router, 'routed', this, 'route');
     await this.view.whenRendered();
