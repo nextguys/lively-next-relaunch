@@ -7,9 +7,21 @@ import { mdCompiler } from 'lively.ide/md/compiler.js';
 import { connect } from 'lively.bindings';
 import { part } from 'lively.morphic/components/core.js';
 import { PaginationNavigator } from './a-morph.cp.js';
+import { PolicyApplicator } from 'lively.morphic/components/policy.js';
 
 import { BlogModel } from './blog.js';
 
+const TopSpacer = component({
+  name: 'top spacer',
+  extent: pt(96.5, 100),
+  borderColor: Color.rgb(23, 160, 251),
+  master: {
+    breakpoints: [
+      [pt(0, 0), new PolicyApplicator({ height: 50 })],
+      [pt(550, 0), new PolicyApplicator({ height: 300 })]
+    ]
+  }
+});
 const GrowingBlog = component({
   extent: pt(995, 828),
   defaultViewModel: BlogModel,
@@ -17,13 +29,18 @@ const GrowingBlog = component({
     align: 'center',
     axis: 'column',
     axisAlign: 'center',
-    resizePolicies: [['entry area', {
+    resizePolicies: [['top spacer', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['entry area', {
       height: 'fill',
       width: 'fill'
     }]],
     spacing: 20
   }),
-  submorphs: [{
+  submorphs: [part(TopSpacer, {
+    name: 'top spacer'
+  }), {
     name: 'entry area',
     layout: new TilingLayout({
       axis: 'column',
@@ -66,7 +83,8 @@ export const Blog = component(GrowingBlog, {
       [pt(0, 0), GrowingBlog],
       [pt(1200, 0), FixedBlog]
     ]
-  }
+  },
+  respondsToVisibleWindow: true
 });
 
 class BlogEntryPreviewModel extends ViewModel {

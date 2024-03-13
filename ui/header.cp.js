@@ -207,5 +207,9 @@ export const NavBar = component(BaseNavBar, {
       [pt(266, 0), LargeNavBar]
     ]
   },
-  extent: pt(89, 93)
+  layout: new TilingLayout({
+    align: 'center',
+    hugContentsHorizontally: true
+  }),
+  extent: pt(89,84)
 });
