@@ -66,7 +66,8 @@ export const Blog = component(GrowingBlog, {
       [pt(0, 0), GrowingBlog],
       [pt(1200, 0), FixedBlog]
     ]
-  }
+  },
+  respondsToVisibleWindow: true
 });
 
 class BlogEntryPreviewModel extends ViewModel {

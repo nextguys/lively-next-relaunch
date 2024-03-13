@@ -155,7 +155,7 @@ export class BlogModel extends ViewModel {
 
   relayout () {
     this.view.extent = $world.visibleBounds().extent();
-    this.view.position = pt(0, 0);
+    this.view.center = $world.center;
   }
 
   remove () {
