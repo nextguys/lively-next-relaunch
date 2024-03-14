@@ -21,7 +21,7 @@ const build = await rollup({
       verbose,
       asBrowserModule: true,
       excludedModules: [
-	    'lively.collab',
+	      'lively.collab',
         'mocha-es6','mocha', // references old lgtg that breaks the build
         'rollup', // has a dist file that cant be parsed by rollup
         // other stuff that is only needed by rollup
