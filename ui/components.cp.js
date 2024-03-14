@@ -20,7 +20,8 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   relayout () {
-    this.view.extent = $world.visibleBounds();
+    this.view.position = pt(0, 0);
+    this.view.extent = $world.visibleBounds().extent();
   }
 }
 
