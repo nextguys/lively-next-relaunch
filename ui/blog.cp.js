@@ -3,7 +3,6 @@ import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
 import { HTMLMorph } from 'lively.morphic/html-morph.js';
-import { mdCompiler } from 'lively.ide/md/compiler.js';
 import { connect } from 'lively.bindings';
 import { part } from 'lively.morphic/components/core.js';
 import { PaginationNavigator } from './a-morph.cp.js';
@@ -154,7 +153,7 @@ class BlogEntryModel extends ViewModel {
     author.textString = this.author;
     // TODO: needs to trigger an actual markdown rerender
     // once we have the markdown support fleshed out
-    content.html = mdCompiler.compileToHTML(this.content);
+    content.html = this.content;
     // FIXME: this is a weird bug regarding the ui getter in frozen worlds
     this.view.get('title').textString = this.title;
     date.textString = this.date;
