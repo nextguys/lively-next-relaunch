@@ -1,9 +1,11 @@
-import { component, part, ViewModel, ConstraintLayout, TilingLayout } from 'lively.morphic';
+import { component, ConstraintLayout, part, ViewModel, TilingLayout } from 'lively.morphic';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Image } from 'lively.morphic/morph.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
 import { HTMLMorph } from 'lively.morphic/html-morph.js';
+import { without } from 'lively.morphic/components/core.js';
+import { add } from 'lively.morphic/components/policy.js';
 class VideoLooperModel extends ViewModel {
   static get properties () {
     return {
@@ -105,6 +107,97 @@ const LogoSection = component(SmallLogoSection, {
   submorphs: [{
     name: 'text'
   }]
+});
+
+export const SellingPointCallOutVideoRight = component({
+  name: 'skalier den usp junge',
+  layout: new TilingLayout({
+    align: 'center',
+    axisAlign: 'center',
+    hugContentsHorizontally: true,
+    hugContentsVertically: true,
+    padding: rect(10, 10, 0, 0)
+  }),
+  extent: pt(533, 267),
+  submorphs: [{
+    name: 'text',
+    layout: new TilingLayout({
+      axis: 'column',
+      padding: rect(30, 30, 0, 0),
+      spacing: 10
+    }),
+    borderColor: Color.rgb(23, 160, 251),
+    borderWidth: 1,
+    extent: pt(241, 206.5),
+    position: pt(25.5, 102),
+    submorphs: [{
+      type: Text,
+      name: 'header',
+      dynamicCursorColoring: true,
+      fill: Color.rgb(255, 255, 255),
+      position: pt(80, 80.5),
+      textAndAttributes: ['building together!', null]
+    }, {
+      type: Text,
+      name: 'description',
+      borderColor: Color.rgb(23, 160, 251),
+      borderWidth: 1,
+      dynamicCursorColoring: true,
+      extent: pt(183.5, 133),
+      fill: Color.rgb(255, 255, 255),
+      fixedHeight: true,
+      fixedWidth: true,
+      lineWrapping: 'by-words',
+      padding: rect(1, 1, 0, 0),
+      position: pt(-58, 17)
+    }]
+  }, part(VideoLooper, {
+    name: 'looper',
+    position: pt(219, 17.5),
+    extent: pt(284.5, 261),
+    viewModel: {
+      height: 200,
+      width: 150,
+      srcURL: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm'
+    }
+  })]
+});
+
+export const SellingPointCallOutVideoLeft = component(SellingPointCallOutVideoRight, {
+  name: 'callout video left',
+  submorphs: [without('text'), add({
+    name: 'text',
+    layout: new TilingLayout({
+      axis: 'column',
+      padding: rect(30, 30, 0, 0),
+      spacing: 10
+    }),
+    borderColor: Color.rgb(23, 160, 251),
+    borderWidth: 1,
+    extent: pt(241, 206.5),
+    position: pt(25.5, 102),
+    submorphs: [{
+      type: Text,
+      name: 'header',
+      dynamicCursorColoring: true,
+      fill: Color.rgb(255, 255, 255),
+      position: pt(80, 80.5),
+      textAndAttributes: ['building together!', null]
+    }, {
+      type: Text,
+      name: 'description',
+      borderColor: Color.rgb(23, 160, 251),
+      borderWidth: 1,
+      dynamicCursorColoring: true,
+      extent: pt(183.5, 133),
+      fill: Color.rgb(255, 255, 255),
+      fixedHeight: true,
+      fixedWidth: true,
+      lineWrapping: 'by-words',
+      padding: rect(1, 1, 0, 0),
+      position: pt(-58, 17)
+    }]
+  })]
 });
 
 export const LivelyWebPage = component({
