@@ -7,14 +7,16 @@ import { HTMLMorph } from 'lively.morphic/html-morph.js';
 class VideoLooperModel extends ViewModel {
   static get properties () {
     return {
-      srcURL: {}
+      srcURL: {},
+      height: {},
+      width: {}
     };
   }
 
   viewDidLoad () {
-    debugger;
-    this.view.html = `<video autoplay='true' loop='true' >
-  <source src="${this.srcURL}">
+    const { height, width, srcURL } = this;
+    this.view.html = `<video autoplay='true' loop='true' disablepictureinpicture='true' playsinline='true' height='${height}' width='${width}'>
+  <source src="${srcURL}">
 </video>`;
   }
 }
@@ -104,6 +106,8 @@ export const LivelyWebPage = component({
     position: pt(38.5, 172.3),
     submorphs: [part(VideoLooper, {
       viewModel: {
+        height: 200,
+        width: 150,
         srcURL: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm'
       }
     })]
