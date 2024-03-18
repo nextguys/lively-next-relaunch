@@ -43,10 +43,69 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   relayout () {
+    if (!lively.FreezerRuntime) return;
     this.view.position = pt(0, 0);
     this.view.extent = $world.visibleBounds().extent();
   }
 }
+
+const LargeLogoSection = component({
+  name: 'aMorph',
+  borderColor: Color.rgb(23, 160, 251),
+  extent: pt(383.5, 109.5),
+  layout: new TilingLayout({
+    axisAlign: 'center'
+  }),
+  position: pt(39, 57.5),
+  submorphs: [{
+    type: Image,
+    name: 'logo',
+    extent: pt(100, 100)
+  }, {
+    type: Text,
+    name: 'text',
+    extent: pt(275, 128),
+    fixedWidth: true,
+    textAlign: 'right',
+    fontColor: Color.lively,
+    borderColor: Color.rgb(23, 160, 251),
+    dynamicCursorColoring: true,
+    fill: Color.rgba(255, 255, 255, 0),
+    lineWrapping: 'by-words',
+    padding: rect(1, 1, 0, 0),
+    position: pt(100, 0),
+    textAndAttributes: ['lively.next\n', {
+      fontFamily: '"IBM Plex Sans"',
+      fontSize: 30
+    }, 'the truly integrated development environment', {
+      fontStyle: 'italic'
+    }]
+  }]
+});
+
+const SmallLogoSection = component(LargeLogoSection, {
+  extent: pt(215, 109.5),
+  submorphs: [{
+    name: 'logo',
+    extent: pt(50, 50)
+  }, {
+    name: 'text',
+    extent: pt(160.5, 78)
+  }]
+});
+
+const LogoSection = component(SmallLogoSection, {
+  master: {
+    breakpoints: [
+      [pt(0, 0), SmallLogoSection],
+      [pt(375, 0), LargeLogoSection]
+    ]
+  },
+  extent: pt(220, 109.5),
+  submorphs: [{
+    name: 'text'
+  }]
+});
 
 export const LivelyWebPage = component({
   name: 'lively web site',
@@ -63,42 +122,8 @@ export const LivelyWebPage = component({
       y: 'resize'
     }]]
   }),
-  extent: pt(1260.5, 670),
-  submorphs: [{
-    name: 'aMorph',
-    borderColor: Color.rgb(23, 160, 251),
-    extent: pt(593.5, 176.5),
-    layout: new TilingLayout({
-      axisAlign: 'center',
-      hugContentsHorizontally: true,
-      hugContentsVertically: true
-    }),
-    position: pt(39, 57.5),
-    submorphs: [{
-      type: Image,
-      name: 'anImage',
-      extent: pt(100, 100)
-    }, {
-      type: Text,
-      name: 'aText',
-      extent: pt(275, 128),
-      fixedWidth: true,
-      textAlign: 'right',
-      fontColor: Color.lively,
-      borderColor: Color.rgb(23, 160, 251),
-      dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
-      lineWrapping: 'by-words',
-      padding: rect(1, 1, 0, 0),
-      position: pt(100, 0),
-      textAndAttributes: ['lively.next\n', {
-        fontFamily: '"IBM Plex Sans"',
-        fontSize: 30
-      }, 'the truly integrated development environment', {
-        fontStyle: 'italic'
-      }]
-    }]
-  }, {
+  extent: pt(900.5, 670),
+  submorphs: [part(LogoSection), {
     name: 'aMorph_1',
     layout: new TilingLayout({}),
     borderColor: Color.rgb(23, 160, 251),
