@@ -1,8 +1,31 @@
-import { component, ViewModel, ConstraintLayout, TilingLayout } from 'lively.morphic';
+import { component, part, ViewModel, ConstraintLayout, TilingLayout } from 'lively.morphic';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Image } from 'lively.morphic/morph.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
+import { HTMLMorph } from 'lively.morphic/html-morph.js';
+class VideoLooperModel extends ViewModel {
+  static get properties () {
+    return {
+      srcURL: {},
+      height: {},
+      width: {}
+    };
+  }
+
+  viewDidLoad () {
+    const { height, width, srcURL } = this;
+    this.view.html = `<video autoplay='true' loop='true' disablepictureinpicture='true' playsinline='true' height='${height}' width='${width}'>
+  <source src="${srcURL}">
+</video>`;
+  }
+}
+
+const VideoLooper = component({
+  type: HTMLMorph,
+  name: 'video looper',
+  defaultViewModel: VideoLooperModel
+});
 
 class LivelyWebPageModel extends ViewModel {
   static get properties () {
@@ -30,7 +53,10 @@ export const LivelyWebPage = component({
   respondsToVisibleWindow: true,
   defaultViewModel: LivelyWebPageModel,
   layout: new ConstraintLayout({
-    lastExtent: undefined,
+    lastExtent: {
+      x: 1260.5,
+      y: 670
+    },
     reactToSubmorphAnimations: false,
     submorphSettings: [['aMorph_1', {
       x: 'resize',
@@ -74,9 +100,17 @@ export const LivelyWebPage = component({
     }]
   }, {
     name: 'aMorph_1',
+    layout: new TilingLayout({}),
     borderColor: Color.rgb(23, 160, 251),
     extent: pt(1180, 473.5),
-    position: pt(38.5, 172.3)
+    position: pt(38.5, 172.3),
+    submorphs: [part(VideoLooper, {
+      viewModel: {
+        height: 200,
+        width: 150,
+        srcURL: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm'
+      }
+    })]
   }]
 
 });
