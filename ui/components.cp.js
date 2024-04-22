@@ -202,7 +202,6 @@ export const SellingPointCallOutVideoLeft = component(SellingPointCallOutVideoRi
 
 export const LivelyWebPage = component({
   name: 'lively web site',
-  respondsToVisibleWindow: true,
   defaultViewModel: LivelyWebPageModel,
   layout: new ConstraintLayout({
     lastExtent: {
