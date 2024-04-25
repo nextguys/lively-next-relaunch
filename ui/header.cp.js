@@ -14,17 +14,28 @@ export const ResponsiveHeader = component({
 export const NavItemBase = component({
   type: Text,
   name: 'nav item',
-  textAndAttributes: ['sss', null],
-  // in order to not have a wiggle effect when activating the border on hvoer
-  borderWidth: 2,
-  borderStyle: 'solid',
-  borderColor: Color.white
+  textAndAttributes: ['sddss', null],
+  // in order to not have a wiggle effect when activating the border on hvoerborderStyle: 'solid',
+  borderColor: Color.rgba(255, 255, 255, 0)
 });
 
 export const NavItemHovered = component(NavItemBase, {
   // This is not a good solution as the edges are cutoff
-  borderColor: { bottom: Color.lively },
-  fontSize: 0
+  borderColor: {
+    bottom: Color.rgb(245, 124, 0)
+  },
+  borderStyle: {
+    bottom: 'solid',
+    left: 'none',
+    right: 'none',
+    top: 'none'
+  },
+  borderWidth: {
+    bottom: 2,
+    left: 0,
+    right: 0,
+    top: 0
+  }
 });
 
 export const NavItem = component(NavItemBase, {
@@ -158,7 +169,7 @@ export const BurgerMenu = component(
     padding: rect(1, 1, 0, 0),
     position: pt(-12, 21),
     textAndAttributes: ['', {
-      fontFamily: '"Font Awesome 6 Free", "Font Awesome 6 Brands"',
+      fontFamily: 'Font Awesome',
       fontWeight: '900'
     }, ' ', {}],
     submorphs: [part(BurgerNavBarItems, {
@@ -175,8 +186,7 @@ export const BaseNavBar = component({
   extent: pt(554, 84),
   layout: new TilingLayout({
     align: 'center',
-    axisAlign: 'center',
-    hugContentsHorizontally: true
+    axisAlign: 'center'
   }),
   submorphs: [part(SpacedNavBarItems,
     { name: 'spaced menu items' }), part(BurgerMenu, {
@@ -204,12 +214,9 @@ export const NavBar = component(BaseNavBar, {
   master: {
     auto: SmallNavBar,
     breakpoints: [
-      [pt(266, 0), LargeNavBar]
+      [pt(500, 0), LargeNavBar]
     ]
   },
-  layout: new TilingLayout({
-    align: 'center',
-    hugContentsHorizontally: true
-  }),
-  extent: pt(89,84)
+  extent: pt(500.5,53),
+  clipMode: 'hidden'
 });
