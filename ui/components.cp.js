@@ -103,7 +103,7 @@ const LogoSection = component(SmallLogoSection, {
       [pt(375, 0), LargeLogoSection]
     ]
   },
-  extent: pt(220, 109.5),
+  extent: pt(266.5, 109.5),
   submorphs: [{
     name: 'text'
   }]
@@ -205,21 +205,27 @@ export const LivelyWebPage = component({
   defaultViewModel: LivelyWebPageModel,
   layout: new ConstraintLayout({
     lastExtent: {
-      x: 1260.5,
+      x: 1600,
       y: 670
     },
     reactToSubmorphAnimations: false,
-    submorphSettings: [['aMorph_1', {
+    submorphSettings: [['logo section', {
+      x: 'resize',
+      y: 'fixed'
+    }], ['aMorph_1', {
       x: 'resize',
       y: 'resize'
     }]]
   }),
-  extent: pt(900.5, 670),
-  submorphs: [part(LogoSection), {
+  extent: pt(1200,670),
+  submorphs: [part(LogoSection, {
+    name: 'logo section',
+    extent: pt(253.5, 109.5)
+  }), {
     name: 'aMorph_1',
     layout: new TilingLayout({}),
     borderColor: Color.rgb(23, 160, 251),
-    extent: pt(1180, 473.5),
+    extent: pt(817.5, 473.5),
     position: pt(38.5, 172.3),
     submorphs: [part(VideoLooper, {
       viewModel: {
@@ -229,5 +235,4 @@ export const LivelyWebPage = component({
       }
     })]
   }]
-
 });
