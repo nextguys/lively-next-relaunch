@@ -5,7 +5,7 @@ import { Text } from 'lively.morphic/text/morph.js';
 import { HTMLMorph } from 'lively.morphic/html-morph.js';
 import { connect } from 'lively.bindings';
 import { part } from 'lively.morphic/components/core.js';
-import { PaginationNavigator } from './a-morph.cp.js';
+import { PaginationNavigator } from './pagination-navigator.cp.js';
 import { PolicyApplicator } from 'lively.morphic/components/policy.js';
 
 import { BlogModel } from './blog.js';

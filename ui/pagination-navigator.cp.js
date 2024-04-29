@@ -2,7 +2,7 @@ import { TilingLayout, part, ViewModel, component } from 'lively.morphic/index.j
 import { pt } from 'lively.graphics/geometry-2d.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
-import { PaginationButton } from './back1.cp.js';
+import { PaginationButton } from './pagination-buttons.cp.js';
 import { signal } from 'lively.bindings';
 
 class PaginationNavigatorModel extends ViewModel {
