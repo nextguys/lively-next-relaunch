@@ -79,6 +79,7 @@ class LivelyWebPageModel extends ViewModel {
 
 const LargeLogoSection = component({
   name: 'aMorph',
+  nativeCursor: 'pointer',
   borderColor: Color.rgb(23, 160, 251),
   extent: pt(383.5, 109.5),
   layout: new TilingLayout({
@@ -88,9 +89,11 @@ const LargeLogoSection = component({
   submorphs: [{
     type: Image,
     name: 'logo',
+    reactsToPointer: false,
     extent: pt(100, 100)
   }, {
     type: Text,
+    reactsToPointer: false,
     name: 'text',
     extent: pt(275, 128),
     fixedWidth: true,
