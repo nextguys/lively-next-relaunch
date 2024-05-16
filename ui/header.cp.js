@@ -1,5 +1,6 @@
 import { component, easings, ViewModel, part, Text, TilingLayout } from 'lively.morphic';
 import { pt, rect, Color } from 'lively.graphics';
+import { connect } from 'lively.bindings';
 
 export const NavItemBase = component({
   type: Text,
@@ -90,11 +91,40 @@ export const BurgerNavBarItems = component(SpacedNavBarItems, {
     align: 'center',
     axis: 'column',
     axisAlign: 'center',
-    hugContentsHorizontally: true,
-    hugContentsVertically: true,
+    resizePolicies: [['history', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['documentation', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['community', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['examples', {
+      height: 'fixed',
+      width: 'fill'
+    }]],
     spacing: 10
   }),
-  isLayoutabe: false
+  isLayoutable: false,
+  extent: pt(85, 105),
+  submorphs: [{
+    name: 'history',
+    textAlign: 'right',
+    fixedWidth: true
+  }, {
+    name: 'documentation',
+    textAlign: 'right',
+    fixedWidth: true
+  }, {
+    name: 'community',
+    textAlign: 'right',
+    fixedWidth: true
+  }, {
+    name: 'examples',
+    textAlign: 'right',
+    fixedWidth: true
+  }]
 });
 
 class BurgerMenuModel extends ViewModel {
@@ -113,10 +143,15 @@ class BurgerMenuModel extends ViewModel {
   }
 
   fadeIn () {
-    debugger;
-    const items = part(BurgerNavBarItems, { opacity: 0, name: 'burger items' }).openInWorld();
+    if (this.burgerItems) return;
+    this.burgerItems = part(BurgerNavBarItems, { opacity: 0, name: 'burger items' });
+    const items = this.burgerItems;
+    connect(items, 'onMouseDown', this, 'fadeOut');
+    const page = window.LIVELY_PAGE;
+    const burgerButton = this.view.owner;
+    page.addMorph(items);
     items.applyLayoutIfNeeded();
-    items.topCenter = this.view.owner.worldPoint(this.view.owner.bottomCenter);
+    items.topCenter = page.localizePointFrom(burgerButton.bottomCenter, burgerButton.owner);
     items.onHoverOut = () => this.fadeOut();
     items.visible = true;
     items.animate({
@@ -127,13 +162,14 @@ class BurgerMenuModel extends ViewModel {
   }
 
   fadeOut () {
-    const items = $world.get('burger items');
+    const items = this.burgerItems;
     items.animate({
       opacity: 0,
       duration: 300,
       easing: easings.inOutSine
     });
     items.remove();
+    delete this.burgerItems;
   }
 }
 
@@ -190,6 +226,7 @@ export const LargeNavBar = component(BaseNavBar, {
     visible: true
   }]
 });
+
 export const SmallNavBar = component(BaseNavBar, {
   submorphs: [{
     name: 'spaced menu items',

@@ -64,6 +64,7 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   async viewDidLoad () {
+    window.LIVELY_PAGE = this.view;
     this.router = new HashRouter({
       debugMode: !lively.FreezerRuntime
     });
