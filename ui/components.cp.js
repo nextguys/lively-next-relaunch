@@ -57,6 +57,10 @@ class LivelyWebPageModel extends ViewModel {
 
   onMouseDown (evt) {
     if (evt.targetMorphs[0].name === 'community') this.router.route('community', true);
+    if (evt.targetMorphs[0].name === 'examples') this.router.route('examples', true);
+    if (evt.targetMorphs[0].name === 'documentation') this.router.route('documentation', true);
+    if (evt.targetMorphs[0].name === 'history') this.router.route('history', true);
+    if (evt.targetMorphs[0].name === 'logo section') this.router.route(null, true);
   }
 
   async viewDidLoad () {
@@ -67,7 +71,9 @@ class LivelyWebPageModel extends ViewModel {
 
     connect(this.router, 'routed', this, 'route');
     if (lively.FreezerRuntime) this.relayout();
-    this.route(null, true);
+    let loadedHash = window.location.hash;
+    if (loadedHash.startsWith('#')) loadedHash = loadedHash.replace('#', '');
+    this.route(loadedHash, true);
   }
 
   relayout () {

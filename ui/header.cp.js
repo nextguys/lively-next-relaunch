@@ -47,7 +47,7 @@ export const SpacedNavBarItems = component({
   submorphs: [
     part(NavItem, {
       type: Text,
-      name: 'aText3',
+      name: 'history',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
       lineWrapping: 'by-words',
@@ -56,7 +56,7 @@ export const SpacedNavBarItems = component({
       textAndAttributes: ['History', null]
     }), part(NavItem, {
       type: Text,
-      name: 'aText2',
+      name: 'documentation',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
       lineWrapping: 'by-words',
@@ -74,14 +74,7 @@ export const SpacedNavBarItems = component({
       textAndAttributes: ['Community', null]
     }), part(NavItem, {
       type: Text,
-      name: 'aText',
-      dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
-      position: pt(-179.5, -315.5),
-      textAndAttributes: ['About', null]
-    }), part(NavItem, {
-      type: Text,
-      name: 'aText1',
+      name: 'examples',
       extent: pt(54.5, 19),
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
