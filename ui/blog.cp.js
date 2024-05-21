@@ -21,6 +21,7 @@ const TopSpacer = component({
     ]
   }
 });
+
 const GrowingBlog = component({
   extent: pt(995, 828),
   defaultViewModel: BlogModel,

@@ -2,7 +2,8 @@ import { ViewModel, part } from 'lively.morphic';
 import { BlogEntryPreview, PreviewPage, BlogEntry } from './blog.cp.js';
 import { signal, connect } from 'lively.bindings';
 import { pt } from 'lively.graphics';
-import { HashRouter } from '../hash-router.js';
+import { HashRouter } from 'lively.components/hash-router.js';
+
 import { entries } from '../assets/articles/entries.js';
 
 const ENTRIES_PER_PAGE = 1;

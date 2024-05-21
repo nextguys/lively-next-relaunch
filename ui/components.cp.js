@@ -1,4 +1,4 @@
-import { component, ConstraintLayout, part, ViewModel, TilingLayout } from 'lively.morphic';
+import { component, part, ViewModel, TilingLayout } from 'lively.morphic';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Image } from 'lively.morphic/morph.js';
 import { Color } from 'lively.graphics/color.js';
@@ -6,6 +6,13 @@ import { Text } from 'lively.morphic/text/morph.js';
 import { HTMLMorph } from 'lively.morphic/html-morph.js';
 import { without } from 'lively.morphic/components/core.js';
 import { add } from 'lively.morphic/components/policy.js';
+import { Footer } from './footer.cp.js';
+import { HashRouter } from 'lively.components/hash-router.js';
+
+import { connect } from 'lively.bindings';
+import { NavBar } from './header.cp.js';
+import { LandingPage } from './pages/landing-page.cp.js';
+import { CommunityPage } from './pages/community.cp.js';
 class VideoLooperModel extends ViewModel {
   static get properties () {
     return {
@@ -34,14 +41,33 @@ class LivelyWebPageModel extends ViewModel {
     return {
       expose: {
         get () {
-          return ['relayout'];
+          return ['relayout', 'onMouseDown'];
         }
       }
     };
   }
 
-  viewDidLoad () {
+  route (hash) {
+    const { communityPage, landingPage } = this.ui;
+    communityPage.visible = landingPage.visible = false;
+    // base landing page
+    if (!hash || hash === '') landingPage.visible = true;
+    if (hash === 'community') communityPage.visible = true;
+  }
+
+  onMouseDown (evt) {
+    if (evt.targetMorphs[0].name === 'community') this.router.route('community', true);
+  }
+
+  async viewDidLoad () {
+    this.router = new HashRouter({
+      debugMode: !lively.FreezerRuntime
+    });
+    window.router = this.router; // FIXME:
+
+    connect(this.router, 'routed', this, 'route');
     if (lively.FreezerRuntime) this.relayout();
+    this.route(null, true);
   }
 
   relayout () {
@@ -203,36 +229,80 @@ export const SellingPointCallOutVideoLeft = component(SellingPointCallOutVideoRi
 export const LivelyWebPage = component({
   name: 'lively web site',
   defaultViewModel: LivelyWebPageModel,
-  layout: new ConstraintLayout({
-    lastExtent: {
-      x: 1600,
-      y: 670
-    },
-    reactToSubmorphAnimations: false,
-    submorphSettings: [['logo section', {
-      x: 'resize',
-      y: 'fixed'
-    }], ['aMorph_1', {
-      x: 'resize',
-      y: 'resize'
+  respondsToVisibleWindow: true,
+  clipMode: 'auto',
+  layout: new TilingLayout({
+    axis: 'column',
+    resizePolicies: [['website header', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['body', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['footer', {
+      height: 'fixed',
+      width: 'fill'
     }]]
   }),
-  extent: pt(1200,670),
-  submorphs: [part(LogoSection, {
-    name: 'logo section',
-    extent: pt(253.5, 109.5)
-  }), {
-    name: 'aMorph_1',
-    layout: new TilingLayout({}),
+  extent: pt(1109.5, 701),
+  submorphs: [{
+    name: 'website header',
+    layout: new TilingLayout({
+      align: 'center',
+      axisAlign: 'center',
+      padding: rect(50, 0, -50, 0),
+      resizePolicies: [['logo section', {
+        height: 'fixed',
+        width: 'fill'
+      }], ['navigation', {
+        height: 'fixed',
+        width: 'fill'
+      }]]
+    }),
     borderColor: Color.rgb(23, 160, 251),
-    extent: pt(817.5, 473.5),
-    position: pt(38.5, 172.3),
-    submorphs: [part(VideoLooper, {
-      viewModel: {
-        height: 200,
-        width: 150,
-        srcURL: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm'
-      }
+    extent: pt(1261, 175),
+    submorphs: [part(LogoSection, {
+      name: 'logo section',
+      position: pt(-321, -70),
+      extent: pt(693.5, 109.5)
+    }), part(NavBar, {
+      name: 'navigation',
+      clipMode: 'visible',
+      layout: new TilingLayout({
+        align: 'right',
+        padding: rect(0, 0, 20, 0)
+      })
     })]
-  }]
+  }, {
+    name: 'body',
+    layout: new TilingLayout({
+      align: 'center',
+      axis: 'column',
+      axisAlign: 'center',
+      hugContentsVertically: true
+    }),
+    submorphs: [
+      part(LandingPage, {
+        name: 'landing page',
+        // FIXME: Why does this not work?
+        extent: pt(10, 500)
+      }),
+      part(CommunityPage, {
+        name: 'community page',
+        visible: false
+      })
+    ],
+    borderColor: Color.rgb(23, 160, 251),
+    position: pt(0, 173)
+  }, part(Footer, {
+    name: 'footer',
+    layout: new TilingLayout({
+      align: 'center',
+      axisAlign: 'center',
+      hugContentsVertically: true,
+      padding: rect(20, 20, 0, 0),
+      spacing: 30,
+      wrapSubmorphs: true
+    })
+  })]
 });

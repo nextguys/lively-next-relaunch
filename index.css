@@ -2,11 +2,4 @@
 /* Do NOT create other CSS files in this folder, as they will not be available in the bundled application! */
 /* `@imports` fetching remote CSS are okay. */
 
-.markdown {
-  * {
-    font-family: 'IBM Plex Sans'
-  }
-  h1,h2,h3,h4,h5,h6 {
-    
-  }
-}
+a { text-decoration: none; }

@@ -1,4 +1,4 @@
-import { component, easings, ViewModel, ShadowObject, part, Text, TilingLayout, Image } from 'lively.morphic';
+import { component, easings, ViewModel, part, Text, TilingLayout } from 'lively.morphic';
 import { pt, rect, Color } from 'lively.graphics';
 
 export const NavItemBase = component({
@@ -65,7 +65,7 @@ export const SpacedNavBarItems = component({
       textAndAttributes: ['Documentation', null]
     }), part(NavItem, {
       type: Text,
-      name: 'aText_1',
+      name: 'community',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
       lineWrapping: 'by-words',
@@ -112,11 +112,6 @@ class BurgerMenuModel extends ViewModel {
           return [
             {
               signal: 'onMouseDown', handler: 'fadeIn'
-            },
-            {
-              target: 'spaced nav bar items_1',
-              signal: 'onHoverOut',
-              handler: 'fadeOut'
             }
           ];
         }
@@ -125,7 +120,11 @@ class BurgerMenuModel extends ViewModel {
   }
 
   fadeIn () {
-    const { spacedNavBarItems_1: items } = this.ui;
+    debugger;
+    const items = part(BurgerNavBarItems, { opacity: 0, name: 'burger items' }).openInWorld();
+    items.applyLayoutIfNeeded();
+    items.topCenter = this.view.owner.worldPoint(this.view.owner.bottomCenter);
+    items.onHoverOut = () => this.fadeOut();
     items.visible = true;
     items.animate({
       opacity: 1,
@@ -135,42 +134,46 @@ class BurgerMenuModel extends ViewModel {
   }
 
   fadeOut () {
-    const { spacedNavBarItems_1: items } = this.ui;
+    const items = $world.get('burger items');
     items.animate({
       opacity: 0,
       duration: 300,
       easing: easings.inOutSine
     });
-    items.visible = false;
+    items.remove();
   }
 }
 
 export const BurgerMenu = component(
   {
-    type: Text,
-    defaultViewModel: BurgerMenuModel,
-    name: 'aText_2',
-    extent: pt(30, 30),
-    borderColor: Color.rgb(23, 160, 251),
-    dynamicCursorColoring: true,
-    fill: Color.rgba(255, 255, 255, 0),
-    fontSize: 40,
-    lineWrapping: 'by-words',
-    padding: rect(1, 1, 0, 0),
-    position: pt(-12, 21),
-    textAndAttributes: ['', {
-      fontFamily: 'Font Awesome',
-      fontWeight: '900'
-    }, ' ', {}],
-    submorphs: [part(BurgerNavBarItems, {
-      name: 'spaced nav bar items_1',
-      visible: false,
-      layoutable: false,
-      opacity: 0,
-      dropShadow: new ShadowObject({ color: Color.rgba(0, 0, 0, 0.6), blur: 40, fast: false }),
-      extent: pt(89, 43),
-      position: pt(-22.5, 49)
-    })]
+    name: 'burger menu',
+    layout: new TilingLayout({
+      align: 'center',
+      axisAlign: 'center'
+    }),
+    fill: Color.transparent,
+    submorphs: [
+      {
+        type: Text,
+        defaultViewModel: BurgerMenuModel,
+        name: 'burger',
+        textAlign: 'center',
+        fixedHeight: true,
+        fixedWidth: true,
+        extent: pt(36.5, 61),
+        borderColor: Color.rgb(23, 160, 251),
+        dynamicCursorColoring: true,
+        fill: Color.rgba(255, 255, 255, 0),
+        fontSize: 40,
+        nativeCursor: 'pointer',
+        lineWrapping: 'by-words',
+        padding: rect(1, 1, 0, 0),
+        position: pt(-12, 21),
+        textAndAttributes: ['', {
+          fontFamily: 'Font Awesome',
+          fontWeight: '900'
+        }, ' ', {}]
+      }]
   });
 
 export const BaseNavBar = component({
@@ -208,23 +211,20 @@ export const NavBar = component(BaseNavBar, {
       [pt(500, 0), LargeNavBar]
     ]
   },
-  extent: pt(500.5,53),
+  extent: pt(500.5, 53),
   clipMode: 'hidden'
 });
 
 export const ResponsiveHeader = component({
-  extent: pt(205.5,137),
+  extent: pt(205.5, 137),
   layout: new TilingLayout({
     justifySubmorphs: 'spaced',
-    resizePolicies: [
-      ['navigation', { width: 'fill', height: 'fixed' }]]
+    resizePolicies: [['navigation', {
+      height: 'fixed',
+      width: 'fill'
+    }]]
   }),
-  submorphs: [{
-    type: Image,
-    name: 'anImage',
-    extent: pt(124.5, 137),
-    position: pt(4.5, 0.5)
-  }, part(NavBar, {
+  submorphs: [part(NavBar, {
     name: 'navigation',
     height: 84
   })]
