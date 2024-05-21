@@ -79,7 +79,7 @@ const PaginationNavigator = component({
     part(PaginationButton, {
       name: 'backward',
       textAndAttributes: ['', {
-        fontFamily: '"Font Awesome 6 Free", "Font Awesome 6 Brands"',
+        fontFamily: 'Font Awesome',
         fontWeight: '900'
       }, ' ', {}]
 
@@ -98,7 +98,7 @@ const PaginationNavigator = component({
     }, part(PaginationButton, {
       name: 'forward',
       textAndAttributes: ['', {
-        fontFamily: '"Font Awesome 6 Free", "Font Awesome 6 Brands"',
+        fontFamily: 'Font Awesome',
         fontWeight: '900'
       }, ' ', {}]
     })]

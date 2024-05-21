@@ -16,7 +16,7 @@ export const PaginationButtonEnabled = component({
   padding: rect(1, 1, 0, 0),
   position: pt(332.5, 458.3),
   textAndAttributes: ['', {
-    fontFamily: '"Font Awesome 6 Free", "Font Awesome 6 Brands"',
+    fontFamily: 'Font Awesome',
     fontWeight: '900'
   }, ' ', {}]
 });
