@@ -3,6 +3,7 @@ import { Color, rect, pt } from 'lively.graphics';
 
 export const LandingPage = component({
   name: 'hero',
+  extent: pt(915,298),
   layout: new TilingLayout({
     align: 'center',
     axisAlign: 'center',

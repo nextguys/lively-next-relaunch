@@ -16,7 +16,9 @@ export const PreviewPage = component({
   fill: Color.transparent,
   clipMode: 'hidden',
   layout: new TilingLayout({
-    axis: 'column'
+    axis: 'column',
+    hugContentsVertically: true,
+    hugContentsHorizontally: true
   }),
   opcaity: 0
 });
@@ -395,8 +397,8 @@ export class BlogModel extends ViewModel {
     this.ui.paginationNavigator.setPage(page);
     this.ui.entryArea.submorphs = [];
     this.ui.entryArea.addMorph(this.pageMorphs[page - 1]);
-    // FIXME:
-    // this.ui.entryArea.layout.setResizePolicyFor(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
+
+    this.ui.entryArea.layout.setResizePolicyFor(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
   }
 
   remove () {
@@ -404,22 +406,11 @@ export class BlogModel extends ViewModel {
   }
 
   async viewDidLoad () {
-    debugger;
     await this.view.whenRendered();
     await this.prepareEntryPreviews();
 
     this.ui.paginationNavigator.maxNumberOfPages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
-    if (lively.FreezerRuntime) this.relayout();
   }
-
-  // route (hash) {
-  //   if (hash === '') {
-  //     signal(this, 'closeAllEntries');
-  //     this.pageChanged(1);
-  //   }
-  //   const calledArticle = entries.find(e => e.hash === hash.replace('#', '').replaceAll('/', ''));
-  //   if (calledArticle) this.openEntry(calledArticle);
-  // }
 
   openEntry (entry) {
     const fullArticle = part(BlogEntry, {
@@ -434,11 +425,14 @@ export class BlogModel extends ViewModel {
         content: entry.content
       }
     });
-    fullArticle.openInWorld();
+    this.ui.entryArea.submorphs = [];
+    this.ui.entryArea.addMorph(fullArticle);
+    // TODO
   // this.router.setHash(entry.slug);
   }
 
   async prepareEntryPreviews () {
+    debugger;
     const pages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
     for (let p = 1; p <= pages; p++) {
       const pageMorph = part(PreviewPage, {
@@ -467,6 +461,7 @@ export class BlogModel extends ViewModel {
       });
       this.pageMorphs.push(pageMorph);
       this.ui.entryArea.addMorph(pageMorph);
+      this.ui.entryArea.layout.setResizePolicyFor(pageMorph, { width: 'fill', height: 'fixed' });
     }
   }
 }

@@ -8,6 +8,7 @@ import { without } from 'lively.morphic/components/core.js';
 import { add } from 'lively.morphic/components/policy.js';
 import { Footer } from './footer.cp.js';
 import { HashRouter } from 'lively.components/hash-router.js';
+import { Blog } from './blog.cp.js';
 
 import { connect } from 'lively.bindings';
 import { NavBar } from './header.cp.js';
@@ -48,14 +49,16 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   route (hash) {
-    const { communityPage, landingPage } = this.ui;
-    communityPage.visible = landingPage.visible = false;
+    const { communityPage, landingPage, blogComponent } = this.ui;
+    communityPage.visible = landingPage.visible = blogComponent.visible = false;
     // base landing page
     if (!hash || hash === '') landingPage.visible = true;
     if (hash === 'community') communityPage.visible = true;
+    if (hash === 'blog') blogComponent.visible = true;
   }
 
   onMouseDown (evt) {
+    if (evt.targetMorphs[0].name === 'blog') this.router.route('blog', true);
     if (evt.targetMorphs[0].name === 'community') this.router.route('community', true);
     if (evt.targetMorphs[0].name === 'examples') this.router.route('examples', true);
     if (evt.targetMorphs[0].name === 'documentation') this.router.route('documentation', true);
@@ -305,12 +308,14 @@ export const LivelyWebPage = component({
     }),
     submorphs: [
       part(LandingPage, {
-        name: 'landing page',
-        // FIXME: Why does this not work?
-        extent: pt(10, 500)
+        name: 'landing page'
       }),
       part(CommunityPage, {
         name: 'community page',
+        visible: false
+      }),
+      part(Blog, {
+        name: 'blog component',
         visible: false
       })
     ],

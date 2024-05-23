@@ -83,6 +83,17 @@ export const SpacedNavBarItems = component({
       padding: rect(1, 1, 0, 0),
       position: pt(80, 76),
       textAndAttributes: ['Examples', null]
+    }),
+    part(NavItem, {
+      type: Text,
+      name: 'blog',
+      extent: pt(54.5, 19),
+      dynamicCursorColoring: true,
+      fill: Color.rgb(255, 255, 255),
+      lineWrapping: 'by-words',
+      padding: rect(1, 1, 0, 0),
+      position: pt(80, 76),
+      textAndAttributes: ['Blog', null]
     })]
 });
 
@@ -101,6 +112,9 @@ export const BurgerNavBarItems = component(SpacedNavBarItems, {
       height: 'fixed',
       width: 'fill'
     }], ['examples', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['blog', {
       height: 'fixed',
       width: 'fill'
     }]],
@@ -122,6 +136,10 @@ export const BurgerNavBarItems = component(SpacedNavBarItems, {
     fixedWidth: true
   }, {
     name: 'examples',
+    textAlign: 'right',
+    fixedWidth: true
+  }, {
+    name: 'blog',
     textAlign: 'right',
     fixedWidth: true
   }]
