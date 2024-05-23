@@ -14,8 +14,10 @@ export const PreviewPage = component({
   clipMode: 'hidden',
   layout: new TilingLayout({
     axis: 'column',
+    hugContentsHorizontally: true,
     hugContentsVertically: true,
-    hugContentsHorizontally: true
+    padding: rect(10, 10, 0, 0),
+    spacing: 10
   }),
   opcaity: 0
 });
@@ -92,6 +94,12 @@ class BlogEntryModel extends ViewModel {
 }
 export const BlogEntryPreview = component({
   defaultViewModel: BlogEntryPreviewModel,
+  borderStyle: {
+    bottom: 'solid',
+    left: 'none',
+    right: 'none',
+    top: 'solid'
+  },
   borderColor: Color.rgb(166, 166, 166),
   borderWidth: 1,
   clipMode: 'hidden',
