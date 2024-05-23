@@ -52,7 +52,8 @@ class BlogEntryPreviewModel extends ViewModel {
     // TODO: should this be textandattributes?
     abstract.textString = this.abstract;
     title.textString = this.title;
-    date.textString = this.date;
+    date.textString = new Date(this.date).toLocaleDateString()
+    ;
   }
 }
 
@@ -89,7 +90,7 @@ class BlogEntryModel extends ViewModel {
     content.html = this.content;
     // FIXME: this is a weird bug regarding the ui getter in frozen worlds
     this.view.get('title').textString = this.title;
-    date.textString = this.date;
+    date.textString = new Date(this.date).toLocaleDateString();
   }
 }
 export const BlogEntryPreview = component({
