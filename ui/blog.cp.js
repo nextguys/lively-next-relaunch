@@ -95,6 +95,8 @@ class BlogEntryModel extends ViewModel {
 }
 export const BlogEntryPreview = component({
   defaultViewModel: BlogEntryPreviewModel,
+  borderColor: Color.rgb(166, 166, 166),
+  borderWidth: 1,
   clipMode: 'hidden',
   extent: pt(582, 245.5),
   layout: new TilingLayout({
@@ -167,7 +169,8 @@ export const BlogEntryPreview = component({
           layout: new TilingLayout({
             align: 'center',
             axisAlign: 'center',
-            padding: rect(0, 2, 0, -2)
+            hugContentsHorizontally: true,
+            padding: rect(3, 3, 0, 0)
           }),
           fill: Color.rgba(152, 152, 152, 0.4049),
           borderRadius: 30,
