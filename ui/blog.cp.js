@@ -6,54 +6,10 @@ import { HTMLMorph } from 'lively.morphic/html-morph.js';
 import { connect } from 'lively.bindings';
 import { part } from 'lively.morphic/components/core.js';
 import { PaginationNavigator } from './pagination-navigator.cp.js';
-import { PolicyApplicator } from 'lively.morphic/components/policy.js';
 
-import { BlogModel } from './blog.js';
+import { entries } from '../assets/articles/entries.js';
 
-const TopSpacer = component({
-  name: 'top spacer',
-  borderColor: Color.rgb(23, 160, 251),
-  master: {
-    breakpoints: [
-      // TODO: make this viewport dependent?
-      [pt(0, 0), new PolicyApplicator({ height: 50 })],
-      [pt(550, 0), new PolicyApplicator({ height: 100 })]
-    ]
-  }
-});
-
-const GrowingBlog = component({
-  extent: pt(995, 828),
-  defaultViewModel: BlogModel,
-  layout: new TilingLayout({
-    align: 'center',
-    axis: 'column',
-    axisAlign: 'center',
-    resizePolicies: [['top spacer', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['entry area', {
-      height: 'fill',
-      width: 'fill'
-    }]],
-    spacing: 20
-  }),
-  submorphs: [part(TopSpacer, {
-    name: 'top spacer'
-  }), {
-    name: 'entry area',
-    borderWidth: 4,
-    layout: new TilingLayout({
-      axis: 'column',
-      spacing: 5
-    }),
-    borderColor: Color.rgb(0, 96, 160),
-    extent: pt(996.5, 748),
-    position: pt(-112, 24)
-  }, part(PaginationNavigator, {
-    name: 'pagination navigator'
-  })]
-});
+const ENTRIES_PER_PAGE = 5;
 
 export const PreviewPage = component({
   name: 'preview page',
@@ -63,32 +19,6 @@ export const PreviewPage = component({
     axis: 'column'
   }),
   opcaity: 0
-});
-
-export const FixedBlog = component(GrowingBlog, {
-  layout: new TilingLayout({
-    align: 'center',
-    axis: 'column',
-    axisAlign: 'center',
-    resizePolicies: [['entry area', {
-      height: 'fill',
-      width: 'fixed'
-    }]],
-    spacing: 20
-  })
-});
-
-export const Blog = component(GrowingBlog, {
-  master: {
-    breakpoints: [
-      [pt(0, 0), GrowingBlog],
-      [pt(1200, 0), FixedBlog]
-    ]
-  },
-  respondsToVisibleWindow: true,
-  borderWidth: 3,
-  borderColor: Color.rgb(255, 112, 0),
-  clipMode: 'auto'
 });
 
 class BlogEntryPreviewModel extends ViewModel {
@@ -124,6 +54,7 @@ class BlogEntryPreviewModel extends ViewModel {
     date.textString = this.date;
   }
 }
+
 class BlogEntryModel extends ViewModel {
   static get properties () {
     return {
@@ -200,9 +131,9 @@ export const BlogEntryPreview = component({
       fill: Color.rgba(255, 255, 255, 0),
       layout: new TilingLayout({
         axisAlign: 'center',
+        hugContentsVertically: true,
         justifySubmorphs: 'spaced',
         padding: rect(0, 0, 0, 20),
-        hugContentsVertically: true,
         resizePolicies: [['title', {
           height: 'fixed',
           width: 'fill'
@@ -433,4 +364,140 @@ export const BlogEntry = component(BlogEntryPreview, {
     borderColor: Color.rgb(23, 160, 251),
     styleClasses: ['markdown']
   }), without('abstract'), without('continue reading wrapper')]
+});
+
+export class BlogModel extends ViewModel {
+  static get properties () {
+    return {
+      page: {
+        defaultValue: 1
+      },
+      pageMorphs: {
+        defaultValue: []
+      },
+      bindings: {
+        get () {
+          return [
+            { target: 'pagination navigator', signal: 'changedPage', handler: 'pageChanged' },
+            { signal: 'remove', handler: 'remove' }
+          ];
+        }
+      },
+      expose: {
+        get () {
+          return ['relayout'];
+        }
+      }
+    };
+  }
+
+  pageChanged (page) {
+    this.ui.paginationNavigator.setPage(page);
+    this.ui.entryArea.submorphs = [];
+    this.ui.entryArea.addMorph(this.pageMorphs[page - 1]);
+    // FIXME:
+    // this.ui.entryArea.layout.setResizePolicyFor(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
+  }
+
+  remove () {
+    this.pageMorphs.forEach(p => p.remove());
+  }
+
+  async viewDidLoad () {
+    debugger;
+    await this.view.whenRendered();
+    await this.prepareEntryPreviews();
+
+    this.ui.paginationNavigator.maxNumberOfPages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
+    if (lively.FreezerRuntime) this.relayout();
+  }
+
+  // route (hash) {
+  //   if (hash === '') {
+  //     signal(this, 'closeAllEntries');
+  //     this.pageChanged(1);
+  //   }
+  //   const calledArticle = entries.find(e => e.hash === hash.replace('#', '').replaceAll('/', ''));
+  //   if (calledArticle) this.openEntry(calledArticle);
+  // }
+
+  openEntry (entry) {
+    const fullArticle = part(BlogEntry, {
+      extent: this.view.extent,
+      position: this.view.position,
+      viewModel: {
+        blog: this,
+        author: entry.author,
+        abstract: entry.abstract,
+        title: entry.title,
+        date: entry.date,
+        content: entry.content
+      }
+    });
+    fullArticle.openInWorld();
+  // this.router.setHash(entry.slug);
+  }
+
+  async prepareEntryPreviews () {
+    const pages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
+    for (let p = 1; p <= pages; p++) {
+      const pageMorph = part(PreviewPage, {
+        name: `page ${p}`,
+        extent: this.ui.entryArea.extent,
+        position: this.ui.entryArea.position
+      });
+      entries/* .slice(p * ENTRIES_PER_PAGE - 1) */.forEach((entry, i) => {
+        if ((i + 1) > ENTRIES_PER_PAGE) return;
+
+        const previewItem = part(BlogEntryPreview, {
+          name: entry.slug,
+          width: pageMorph.width,
+          viewModel: {
+            entry,
+            blog: this,
+            author: entry.author,
+            title: entry.title,
+            date: entry.date,
+            abstract: entry.abstract,
+            content: entry.content
+          }
+        });
+        pageMorph.addMorph(previewItem);
+        pageMorph.layout.setResizePolicyFor(previewItem, { width: 'fill', height: 'fixed' });
+      });
+      this.pageMorphs.push(pageMorph);
+      this.ui.entryArea.addMorph(pageMorph);
+    }
+  }
+}
+
+const GrowingBlog = component({
+  defaultViewModel: BlogModel,
+  layout: new TilingLayout({
+    align: 'center',
+    axis: 'column',
+    axisAlign: 'center',
+    hugContentsVertically: true,
+    resizePolicies: [['entry area', {
+      height: 'fixed',
+      width: 'fill'
+    }]],
+    spacing: 20
+  }),
+  submorphs: [{
+    name: 'entry area',
+    borderStyle: 'none',
+    layout: new TilingLayout({
+      axis: 'column',
+      hugContentsVertically: true,
+      spacing: 5
+    }),
+    borderColor: Color.rgb(0, 96, 160)
+  }, part(PaginationNavigator, {
+    name: 'pagination navigator'
+  })]
+});
+
+export const Blog = component(GrowingBlog, {
+  clipMode: 'auto'
 });
