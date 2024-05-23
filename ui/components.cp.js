@@ -118,11 +118,12 @@ const LargeLogoSection = component({
     padding: rect(1, 1, 0, 0),
     position: pt(100, 0),
     textAndAttributes: ['lively.next\n', {
-      fontFamily: '"IBM Plex Sans"',
+      fontFamily: '\"IBM Plex Sans\"',
       fontSize: 30
-    }, 'the truly integrated development environment', {
+    }, 'the ', {}, 'truly', {
+      fontWeight: '600',
       fontStyle: 'italic'
-    }]
+    }, ' integrated development environment', { fontStyle: 'italic' }]
   }]
 });
 
