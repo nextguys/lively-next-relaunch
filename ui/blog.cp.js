@@ -5,11 +5,8 @@ import { Text } from 'lively.morphic/text/morph.js';
 import { HTMLMorph } from 'lively.morphic/html-morph.js';
 import { connect } from 'lively.bindings';
 import { part } from 'lively.morphic/components/core.js';
-import { PaginationNavigator } from './pagination-navigator.cp.js';
 
 import { entries } from '../assets/articles/entries.js';
-
-const ENTRIES_PER_PAGE = 5;
 
 export const PreviewPage = component({
   name: 'preview page',
@@ -77,8 +74,8 @@ class BlogEntryModel extends ViewModel {
   }
 
   remove () {
-    this.blog.resetURL();
     this.view.remove();
+    this.blog.showList();
   }
 
   viewDidLoad () {
@@ -377,13 +374,10 @@ export class BlogModel extends ViewModel {
       page: {
         defaultValue: 1
       },
-      pageMorphs: {
-        defaultValue: []
-      },
+      previewPage: { },
       bindings: {
         get () {
           return [
-            { target: 'pagination navigator', signal: 'changedPage', handler: 'pageChanged' },
             { signal: 'remove', handler: 'remove' }
           ];
         }
@@ -396,23 +390,15 @@ export class BlogModel extends ViewModel {
     };
   }
 
-  pageChanged (page) {
-    this.ui.paginationNavigator.setPage(page);
-    this.ui.entryArea.submorphs = [];
-    this.ui.entryArea.addMorph(this.pageMorphs[page - 1]);
-
-    this.ui.entryArea.layout.setResizePolicyFor(this.pageMorphs[page - 1], { width: 'fill', height: 'fixed' });
-  }
-
-  remove () {
-    this.pageMorphs.forEach(p => p.remove());
-  }
-
   async viewDidLoad () {
     await this.view.whenRendered();
     await this.prepareEntryPreviews();
+    this.showList();
+  }
 
-    this.ui.paginationNavigator.maxNumberOfPages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
+  showList () {
+    this.ui.entryArea.addMorph(this.previewPage);
+    this.ui.entryArea.layout.setResizePolicyFor(this.previewPage, { width: 'fill', height: 'fixed' });
   }
 
   openEntry (entry) {
@@ -428,48 +414,39 @@ export class BlogModel extends ViewModel {
         content: entry.content
       }
     });
-    this.ui.entryArea.submorphs = [];
+    this.previewPage.remove();
     this.ui.entryArea.addMorph(fullArticle);
-    // TODO
-  // this.router.setHash(entry.slug);
   }
 
   async prepareEntryPreviews () {
-    debugger;
-    const pages = Math.ceil(entries.length / ENTRIES_PER_PAGE);
-    for (let p = 1; p <= pages; p++) {
-      const pageMorph = part(PreviewPage, {
-        name: `page ${p}`,
-        extent: this.ui.entryArea.extent,
-        position: this.ui.entryArea.position
-      });
-      entries/* .slice(p * ENTRIES_PER_PAGE - 1) */.forEach((entry, i) => {
-        if ((i + 1) > ENTRIES_PER_PAGE) return;
+    const pageMorph = part(PreviewPage, {
+      name: 'blog previews',
+      extent: this.ui.entryArea.extent,
+      position: this.ui.entryArea.position
+    });
 
-        const previewItem = part(BlogEntryPreview, {
-          name: entry.slug,
-          width: pageMorph.width,
-          viewModel: {
-            entry,
-            blog: this,
-            author: entry.author,
-            title: entry.title,
-            date: entry.date,
-            abstract: entry.abstract,
-            content: entry.content
-          }
-        });
-        pageMorph.addMorph(previewItem);
-        pageMorph.layout.setResizePolicyFor(previewItem, { width: 'fill', height: 'fixed' });
+    entries.forEach((entry) => {
+      const previewItem = part(BlogEntryPreview, {
+        name: entry.slug,
+        viewModel: {
+          entry,
+          blog: this,
+          author: entry.author,
+          title: entry.title,
+          date: entry.date,
+          abstract: entry.abstract,
+          content: entry.content
+        }
       });
-      this.pageMorphs.push(pageMorph);
-      this.ui.entryArea.addMorph(pageMorph);
-      this.ui.entryArea.layout.setResizePolicyFor(pageMorph, { width: 'fill', height: 'fixed' });
-    }
+      pageMorph.addMorph(previewItem);
+      pageMorph.layout.setResizePolicyFor(previewItem, { width: 'fill', height: 'fixed' });
+    });
+
+    this.previewPage = pageMorph;
   }
 }
 
-const GrowingBlog = component({
+export const Blog = component({
   defaultViewModel: BlogModel,
   layout: new TilingLayout({
     align: 'center',
@@ -484,18 +461,10 @@ const GrowingBlog = component({
   }),
   submorphs: [{
     name: 'entry area',
-    borderStyle: 'none',
     layout: new TilingLayout({
       axis: 'column',
       hugContentsVertically: true,
       spacing: 5
-    }),
-    borderColor: Color.rgb(0, 96, 160)
-  }, part(PaginationNavigator, {
-    name: 'pagination navigator'
-  })]
-});
-
-export const Blog = component(GrowingBlog, {
-  clipMode: 'auto'
+    })
+  }]
 });
