@@ -289,19 +289,19 @@ export const BlogEntryPreview = component({
 export const BlogEntry = component(BlogEntryPreview, {
   name: 'blog entry',
   defaultViewModel: BlogEntryModel,
+  borderStyle: 'none',
+  clipMode: 'visible',
   extent: pt(654, 688.5),
   layout: new TilingLayout({
     align: 'right',
     axis: 'column',
+    hugContentsVertically: true,
     padding: rect(20, 0, 0, 20),
     resizePolicies: [['header wrapper', {
       height: 'fixed',
       width: 'fill'
     }], ['seperator', {
       height: 'fixed',
-      width: 'fill'
-    }], ['content', {
-      height: 'fill',
       width: 'fill'
     }]]
   }),
@@ -352,6 +352,7 @@ export const BlogEntry = component(BlogEntryPreview, {
       }, {
         type: Text,
         name: 'title',
+        padding: rect(0, 10, 0, -10),
         textAndAttributes: ['undefined', null]
       }]
     }, 'meta wrapper'), {
@@ -368,10 +369,9 @@ export const BlogEntry = component(BlogEntryPreview, {
     name: 'seperator',
     height: 3
   }, add({
-    // TODO: extract this into a markdown morph
     type: HTMLMorph,
     name: 'content',
-    clipMode: 'auto',
+    fixedHeight: false,
     borderColor: Color.rgb(23, 160, 251),
     styleClasses: ['markdown']
   }), without('abstract'), without('continue reading wrapper')]
