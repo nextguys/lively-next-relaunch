@@ -78,6 +78,8 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   relayout () {
+    this.ui.body.width = this.view.width > 1200 ? 900 : this.view.width;
+    this.view.applyLayoutIfNeeded();
     if (!lively.FreezerRuntime) return;
     this.view.position = pt(0, 0);
     this.view.extent = $world.visibleBounds().extent();
@@ -238,15 +240,14 @@ export const SellingPointCallOutVideoLeft = component(SellingPointCallOutVideoRi
 
 export const LivelyWebPage = component({
   name: 'lively web site',
+  styleClasses: ['website'],
   defaultViewModel: LivelyWebPageModel,
   respondsToVisibleWindow: true,
   clipMode: 'auto',
   layout: new TilingLayout({
     axis: 'column',
+    axisAlign: 'center',
     resizePolicies: [['website header', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['body', {
       height: 'fixed',
       width: 'fill'
     }], ['footer', {
@@ -254,7 +255,7 @@ export const LivelyWebPage = component({
       width: 'fill'
     }]]
   }),
-  extent: pt(1109.5, 701),
+  extent: pt(1128, 701),
   submorphs: [{
     name: 'website header',
     layout: new TilingLayout({
@@ -285,11 +286,22 @@ export const LivelyWebPage = component({
     })]
   }, {
     name: 'body',
+    clipMode: 'hidden',
     layout: new TilingLayout({
       align: 'center',
       axis: 'column',
       axisAlign: 'center',
-      hugContentsVertically: true
+      hugContentsVertically: true,
+      resizePolicies: [['landing page', {
+        height: 'fixed',
+        width: 'fill'
+      }], ['community page', {
+        height: 'fixed',
+        width: 'fill'
+      }], ['blog component', {
+        height: 'fixed',
+        width: 'fill'
+      }]]
     }),
     submorphs: [
       part(LandingPage, {

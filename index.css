@@ -3,3 +3,7 @@
 /* `@imports` fetching remote CSS are okay. */
 
 a { text-decoration: none; }
+
+.website {
+  overflow-x: hidden !important; // hide horizontal 
+}
