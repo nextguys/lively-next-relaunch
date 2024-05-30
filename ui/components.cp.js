@@ -81,7 +81,7 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   relayout () {
-    this.ui.body.width = this.view.width > 1200 ? 900 : this.view.width;
+    this.ui.body.width = this.view.width > 1200 ? 1200 : this.view.width;
     this.view.applyLayoutIfNeeded();
     if (!lively.FreezerRuntime) return;
     this.view.position = pt(0, 0);
