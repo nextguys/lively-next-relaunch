@@ -249,13 +249,15 @@ export const LivelyWebPage = component({
   respondsToVisibleWindow: true,
   clipMode: 'auto',
   layout: new TilingLayout({
+    align: 'center',
     axis: 'column',
     axisAlign: 'center',
+    justifySubmorphs: 'spaced',
     resizePolicies: [['website header', {
       height: 'fixed',
       width: 'fill'
-    }], ['footer', {
-      height: 'fixed',
+    }], ['contents wrapper', {
+      height: 'fill',
       width: 'fill'
     }]]
   }),
@@ -289,48 +291,70 @@ export const LivelyWebPage = component({
       })
     })]
   }, {
-    name: 'body',
-    clipMode: 'hidden',
+    name: 'contents wrapper',
+    clipMode: 'visible',
     layout: new TilingLayout({
       align: 'center',
       axis: 'column',
       axisAlign: 'center',
-      hugContentsVertically: true,
-      resizePolicies: [['landing page', {
-        height: 'fixed',
-        width: 'fill'
-      }], ['community page', {
-        height: 'fixed',
-        width: 'fill'
-      }], ['blog component', {
-        height: 'fixed',
-        width: 'fill'
-      }]]
+      hugContentsHorizontally: true,
+      justifySubmorphs: 'spaced'
     }),
-    submorphs: [
-      part(LandingPage, {
-        name: 'landing page'
+    submorphs: [{
+      name: 'body',
+      clipMode: 'hidden',
+      layout: new TilingLayout({
+        align: 'center',
+        axis: 'column',
+        axisAlign: 'center',
+        hugContentsVertically: true,
+        padding: rect(20, 20, 0, 0),
+        resizePolicies: [['landing page', {
+          height: 'fixed',
+          width: 'fill'
+        }], ['community page', {
+          height: 'fixed',
+          width: 'fill'
+        }], ['blog component', {
+          height: 'fixed',
+          width: 'fill'
+        }], ['error page', {
+          height: 'fixed',
+          width: 'fill'
+        }]]
       }),
-      part(CommunityPage, {
-        name: 'community page',
-        visible: false
-      }),
-      part(Blog, {
-        name: 'blog component',
-        visible: false
+      submorphs: [
+        part(LandingPage, {
+          name: 'landing page'
+        }),
+        part(CommunityPage, {
+          name: 'community page',
+          visible: false
+        }),
+        part(ErrorPage, {
+          name: 'error page',
+          visible: false
+        }),
+        part(Blog, {
+          name: 'blog component',
+          visible: false
+        })
+      ],
+      borderColor: Color.rgb(23, 160, 251),
+      position: pt(0, 173)
+    },
+    part(Footer, {
+      name: 'footer',
+      layout: new TilingLayout({
+        align: 'center',
+        axisAlign: 'center',
+        hugContentsVertically: true,
+        padding: rect(20, 20, 0, 0),
+        spacing: 30,
+        wrapSubmorphs: true
       })
-    ],
-    borderColor: Color.rgb(23, 160, 251),
-    position: pt(0, 173)
-  }, part(Footer, {
-    name: 'footer',
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center',
-      hugContentsVertically: true,
-      padding: rect(20, 20, 0, 0),
-      spacing: 30,
-      wrapSubmorphs: true
     })
-  })]
+
+    ]
+  }]
 });
