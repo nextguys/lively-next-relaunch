@@ -3,7 +3,7 @@ import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
 import { HTMLMorph } from 'lively.morphic/html-morph.js';
-import { connect } from 'lively.bindings';
+import { connect, noUpdate } from 'lively.bindings';
 import { part } from 'lively.morphic/components/core.js';
 
 import { entries } from '../assets/articles/entries.js';
@@ -29,16 +29,10 @@ class BlogEntryPreviewModel extends ViewModel {
       entry: {},
       date: {},
       abstract: {},
+      slug: {},
       title: {},
       author: {},
-      content: {},
-      bindings: {
-        get () {
-          return [
-            { target: 'continue reading', signal: 'onMouseDown', handler: 'openEntry' }
-          ];
-        }
-      }
+      content: {}
     };
   }
 
@@ -47,13 +41,13 @@ class BlogEntryPreviewModel extends ViewModel {
   }
 
   viewDidLoad () {
-    const { author, date, abstract, title } = this.ui;
+    const { author, date, abstract, title, continueReading } = this.ui;
     author.textString = this.author;
     // TODO: should this be textandattributes?
     abstract.textString = this.abstract;
     title.textString = this.title;
-    date.textString = new Date(this.date).toLocaleDateString()
-    ;
+    date.textString = new Date(this.date).toLocaleDateString();
+    continueReading.name = `${this.slug}`;
   }
 }
 
@@ -78,7 +72,7 @@ class BlogEntryModel extends ViewModel {
 
   remove () {
     this.view.remove();
-    this.blog.showList();
+    this.blog.showList(true);
   }
 
   viewDidLoad () {
@@ -393,24 +387,36 @@ export class BlogModel extends ViewModel {
       },
       expose: {
         get () {
-          return ['relayout'];
+          return ['showList', 'openEntry', 'reset'];
         }
       }
     };
   }
 
-  async viewDidLoad () {
-    await this.view.whenRendered();
-    await this.prepareEntryPreviews();
-    this.showList();
+  viewDidLoad () {
+    this.prepareEntryPreviews();
   }
 
-  showList () {
+  /**
+   * Shows a list of articles, also closing all open articles.
+   */
+  showList (doRoute = false) {
+    // Push the URL update to history but do not trigger actual routing flow.
+    // Necessary in the case we come here from closing an article.
+    if (doRoute) noUpdate(() => window.router.route('blog', true));
+    this.ui.entryArea.submorphs = [];
+    if (!this.previewPage) this.prepareEntryPreviews();
     this.ui.entryArea.addMorph(this.previewPage);
     this.ui.entryArea.layout.setResizePolicyFor(this.previewPage, { width: 'fill', height: 'fixed' });
   }
 
+  reset () {
+    this.ui.entryArea.submorphs = [];
+  }
+
   openEntry (entry) {
+    debugger;
+    this.reset();
     const fullArticle = part(BlogEntry, {
       extent: this.view.extent,
       position: this.view.position,
@@ -423,11 +429,12 @@ export class BlogModel extends ViewModel {
         content: entry.content
       }
     });
-    this.previewPage.remove();
     this.ui.entryArea.addMorph(fullArticle);
+    this.ui.entryArea.layout.setResizePolicyFor(fullArticle, { width: 'fill', height: 'fixed' });
+    this.view.applyLayoutIfNeeded();
   }
 
-  async prepareEntryPreviews () {
+  prepareEntryPreviews () {
     const pageMorph = part(PreviewPage, {
       name: 'blog previews',
       extent: this.ui.entryArea.extent,
@@ -444,7 +451,8 @@ export class BlogModel extends ViewModel {
           title: entry.title,
           date: entry.date,
           abstract: entry.abstract,
-          content: entry.content
+          content: entry.content,
+          slug: entry.slug
         }
       });
       pageMorph.addMorph(previewItem);

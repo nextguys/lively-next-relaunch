@@ -9,11 +9,14 @@ import { add } from 'lively.morphic/components/policy.js';
 import { Footer } from './footer.cp.js';
 import { HashRouter } from 'lively.components/hash-router.js';
 import { Blog } from './blog.cp.js';
+import { entries } from '../assets/articles/entries.js';
 
 import { connect } from 'lively.bindings';
 import { NavBar } from './header.cp.js';
 import { LandingPage } from './pages/landing-page.cp.js';
 import { CommunityPage } from './pages/community.cp.js';
+import { ErrorPage } from './pages/error.cp.js';
+
 class VideoLooperModel extends ViewModel {
   static get properties () {
     return {
@@ -48,13 +51,38 @@ class LivelyWebPageModel extends ViewModel {
     };
   }
 
+  showErrorPage () {
+    const { errorPage } = this.ui;
+    debugger;
+    errorPage.visible = true;
+    errorPage.getSubmorphNamed('bottom text').requestMasterStyling();
+    errorPage.getSubmorphNamed('number').requestMasterStyling();
+  }
+
   route (hash) {
-    const { communityPage, landingPage, blogComponent } = this.ui;
-    communityPage.visible = landingPage.visible = blogComponent.visible = false;
+    debugger;
+    const { communityPage, landingPage, blogComponent, errorPage } = this.ui;
+    communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = false;
     // base landing page
     if (!hash || hash === '') landingPage.visible = true;
     if (hash === 'community') communityPage.visible = true;
-    if (hash === 'blog') blogComponent.visible = true;
+    debugger;
+    if (hash === 'blog') {
+      blogComponent.visible = true;
+      blogComponent.showList();
+      return;
+    }
+    if (hash.startsWith('blog/')) {
+      const slug = hash.replace('blog/', '').replaceAll('/', '');
+      blogComponent.visible = true;
+      const entryToOpen = entries.find(e => e.slug === slug);
+      if (!entryToOpen) {
+        this.showErrorPage();
+        blogComponent.visible = false;
+        return;
+      }
+      blogComponent.openEntry(entryToOpen);
+    }
   }
 
   onMouseDown (evt) {
@@ -63,6 +91,7 @@ class LivelyWebPageModel extends ViewModel {
     if (evt.targetMorphs[0].name === 'examples') this.router.route('examples', true);
     if (evt.targetMorphs[0].name === 'documentation') this.router.route('documentation', true);
     if (evt.targetMorphs[0].name === 'history') this.router.route('history', true);
+    if (entries.map(e => e.slug).includes(evt.targetMorphs[0].name)) this.router.route(`blog/${evt.targetMorphs[0].name}`, true);
     if (evt.targetMorphs[0].name === 'logo section') this.router.route(null, true);
   }
 
@@ -158,7 +187,8 @@ export const SellingPointCallOutVideoRight = component({
     axisAlign: 'center',
     hugContentsHorizontally: true,
     hugContentsVertically: true,
-    padding: rect(10, 10, 0, 0)
+    padding: rect(10, 10, 0, 0),
+    wrapSubmorphs: true
   }),
   extent: pt(533, 267),
   submorphs: [{
@@ -207,6 +237,7 @@ export const SellingPointCallOutVideoRight = component({
 
 export const SellingPointCallOutVideoLeft = component(SellingPointCallOutVideoRight, {
   name: 'callout video left',
+  extent: pt(562.5, 487.5),
   submorphs: [without('text'), add({
     name: 'text',
     layout: new TilingLayout({
@@ -302,6 +333,7 @@ export const LivelyWebPage = component({
     }),
     submorphs: [{
       name: 'body',
+      borderWidth: 1,
       clipMode: 'hidden',
       layout: new TilingLayout({
         align: 'center',
@@ -340,7 +372,7 @@ export const LivelyWebPage = component({
           visible: false
         })
       ],
-      borderColor: Color.rgb(23, 160, 251),
+      borderColor: Color.rgb(251, 23, 26),
       position: pt(0, 173)
     },
     part(Footer, {
