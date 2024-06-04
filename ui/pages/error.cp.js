@@ -6,31 +6,50 @@ import { rect } from 'lively.graphics/geometry-2d.js';
 export const ErrorPage = component({
   name: 'hero',
   clipMode: 'visible',
-  extent: pt(606.5, 298),
-  layout: new TilingLayout({
-    align: 'center',
-    axisAlign: 'center',
-    padding: rect(5, 5, 0, 0),
-    resizePolicies: [['wrapper', {
-      height: 'fixed',
-      width: 'fill'
-    }]],
-    spacing: 20
-  }),
-  height: 298,
+  extent: pt(649,298),
+  master: {
+    breakpoints: [
+      [pt(0, 0), component({
+        layout: new TilingLayout({
+          align: 'center',
+          axisAlign: 'center',
+          padding: rect(5, 5, 0, 0),
+          resizePolicies: [['wrapper', {
+            height: 'fixed',
+            width: 'fill'
+          }]],
+          spacing: 20
+        })
+      })],
+      [pt(750, 0), component({
+        width: 750,
+        layout: new TilingLayout({
+          align: 'center',
+          axisAlign: 'center',
+          padding: rect(5, 5, 0, 0),
+          resizePolicies: [['wrapper', {
+            height: 'fixed',
+            width: 'fixed'
+          }]],
+          spacing: 20
+        })
+      })]
+    ]
+  },
   position: pt(560, 80),
   submorphs: [{
     type: Image,
     name: 'anImage',
     borderStyle: 'none',
     imageUrl: projectAsset('logo_gray.png'),
-    borderColor: Color.rgb(23, 160, 251),
+    borderColor: Color.blue,
     borderWidth: 1,
     extent: pt(128.5, 128),
     fill: Color.rgb(255, 255, 255)
   }, {
     name: 'wrapper',
     borderWidth: 0,
+    width: 750,
     height: 149,
     master: {
       breakpoints: [

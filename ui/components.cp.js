@@ -52,15 +52,15 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   showErrorPage () {
-    const { errorPage } = this.ui;
-    debugger;
+    const { communityPage, landingPage, blogComponent, errorPage } = this.ui;
+    communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = false;
     errorPage.visible = true;
+    errorPage.env.forceUpdate();
     errorPage.getSubmorphNamed('bottom text').requestMasterStyling();
     errorPage.getSubmorphNamed('number').requestMasterStyling();
   }
 
   route (hash) {
-    debugger;
     const { communityPage, landingPage, blogComponent, errorPage } = this.ui;
     communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = false;
     // base landing page
@@ -110,11 +110,11 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   relayout () {
-    this.ui.body.width = this.view.width > 1200 ? 1200 : this.view.width;
-    this.view.applyLayoutIfNeeded();
+    // this.ui.body.width = this.view.width > 1200 ? 1200 : this.view.width;
+    // this.view.applyLayoutIfNeeded();
     if (!lively.FreezerRuntime) return;
     this.view.position = pt(0, 0);
-    this.view.extent = $world.visibleBounds().extent();
+    this.view.extent = $world.windowBounds().extent();
   }
 }
 
@@ -275,10 +275,8 @@ export const SellingPointCallOutVideoLeft = component(SellingPointCallOutVideoRi
 
 export const LivelyWebPage = component({
   name: 'lively web site',
-  styleClasses: ['website'],
   defaultViewModel: LivelyWebPageModel,
   respondsToVisibleWindow: true,
-  clipMode: 'auto',
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
@@ -292,7 +290,7 @@ export const LivelyWebPage = component({
       width: 'fill'
     }]]
   }),
-  extent: pt(1128, 701),
+  extent: pt(1132.8, 863.3),
   submorphs: [{
     name: 'website header',
     layout: new TilingLayout({
@@ -319,22 +317,54 @@ export const LivelyWebPage = component({
       layout: new TilingLayout({
         align: 'right',
         padding: rect(0, 0, 20, 0)
-      })
+      }),
+      submorphs: [{
+        name: 'burger menu',
+        layout: new TilingLayout({
+          align: 'center',
+          axisAlign: 'center',
+          hugContentsHorizontally: true,
+          hugContentsVertically: true
+        })
+      }]
     })]
   }, {
     name: 'contents wrapper',
+    height: 539.41796875,
     clipMode: 'visible',
-    layout: new TilingLayout({
-      align: 'center',
-      axis: 'column',
-      axisAlign: 'center',
-      hugContentsHorizontally: true,
-      justifySubmorphs: 'spaced'
-    }),
+    master: {
+      breakpoints: [
+        [pt(0, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            axis: 'column',
+            axisAlign: 'center',
+            justifySubmorphs: 'spaced',
+            resizePolicies: [['body', { height: 'fixed', width: 'fill' }], ['footer', {
+              height: 'fixed',
+              width: 'fill'
+            }]]
+          })
+        })],
+        [pt(1200, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            axis: 'column',
+            axisAlign: 'center',
+            justifySubmorphs: 'spaced',
+            resizePolicies: [['body', { height: 'fixed', width: 'fixed' }], ['footer', {
+              height: 'fixed',
+              width: 'fill'
+            }]]
+          })
+        })]
+      ]
+    },
     submorphs: [{
       name: 'body',
       borderWidth: 1,
       clipMode: 'hidden',
+      width: 1200,
       layout: new TilingLayout({
         align: 'center',
         axis: 'column',
@@ -357,7 +387,8 @@ export const LivelyWebPage = component({
       }),
       submorphs: [
         part(LandingPage, {
-          name: 'landing page'
+          name: 'landing page',
+          visible: true
         }),
         part(CommunityPage, {
           name: 'community page',
@@ -365,7 +396,20 @@ export const LivelyWebPage = component({
         }),
         part(ErrorPage, {
           name: 'error page',
-          visible: false
+          visible: false,
+          submorphs: [{
+            name: 'wrapper',
+            extent: pt(750, 149),
+            submorphs: [{
+              name: 'number',
+              extent: pt(500, 187.4),
+              width: undefined
+            }, {
+              name: 'bottom text',
+              extent: pt(500, 1226.9),
+              width: undefined
+            }]
+          }]
         }),
         part(Blog, {
           name: 'blog component',
@@ -386,7 +430,18 @@ export const LivelyWebPage = component({
         wrapSubmorphs: true
       })
     })
-
     ]
-  }]
+  }
+  // part(Footer, {
+  //   name: 'footer 2',
+  //   layout: new TilingLayout({
+  //     align: 'center',
+  //     axisAlign: 'center',
+  //     hugContentsVertically: true,
+  //     padding: rect(20, 20, 0, 0),
+  //     spacing: 30,
+  //     wrapSubmorphs: true
+  //   })
+  // })
+  ]
 });

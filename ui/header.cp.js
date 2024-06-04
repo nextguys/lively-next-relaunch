@@ -169,7 +169,7 @@ class BurgerMenuModel extends ViewModel {
     const burgerButton = this.view.owner;
     page.addMorph(items);
     items.applyLayoutIfNeeded();
-    items.topCenter = page.localizePointFrom(burgerButton.bottomCenter, burgerButton.owner);
+    items.topRight = page.localizePointFrom(burgerButton.bottomRight, burgerButton.owner);
     items.onHoverOut = () => this.fadeOut();
     items.visible = true;
     items.animate({
@@ -196,7 +196,9 @@ export const BurgerMenu = component(
     name: 'burger menu',
     layout: new TilingLayout({
       align: 'center',
-      axisAlign: 'center'
+      axisAlign: 'center',
+      hugContentsHorizontally: true,
+      hugContentsVertically: true
     }),
     fill: Color.transparent,
     submorphs: [
@@ -204,10 +206,9 @@ export const BurgerMenu = component(
         type: Text,
         defaultViewModel: BurgerMenuModel,
         name: 'burger',
-        textAlign: 'center',
-        fixedHeight: true,
+        extent: pt(36, 61),
         fixedWidth: true,
-        extent: pt(36.5, 61),
+        textAlign: 'right',
         borderColor: Color.rgb(23, 160, 251),
         dynamicCursorColoring: true,
         fill: Color.rgba(255, 255, 255, 0),

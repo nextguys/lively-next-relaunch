@@ -19,7 +19,7 @@
   },
   "lively": {
     "projectDependencies": [],
-    "boundLivelyVersion": "0c9bf31e6c40c945b347e2b468bb8ba7d46df009",
+    "boundLivelyVersion": "59f0e673f833aa6dd233fbe3735cfa2c17bc41e9",
     "repositoryIsPrivate": false,
     "repoBelongsToOrg": true,
     "testOnPush": true,
@@ -28,7 +28,7 @@
     "canUsePages": true,
     "deployActionEnabled": true
   },
-  "version": "0.2.3",
+  "version": "0.2.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/nextguys/lively-next-relaunch"
