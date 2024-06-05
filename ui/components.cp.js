@@ -11,9 +11,10 @@ import { HashRouter } from 'lively.components/hash-router.js';
 import { Blog } from './blog.cp.js';
 import { entries } from '../assets/articles/entries.js';
 import { HistoryPage } from './pages/history.cp.js';
+import { ImprintPage } from './pages/imprint.cp.js';
 
 import { connect } from 'lively.bindings';
-import { NavBar } from './header.cp.js';
+import { NavBar } from './navigation.cp.js';
 import { LandingPage } from './pages/landing-page.cp.js';
 import { CommunityPage } from './pages/community.cp.js';
 import { ErrorPage } from './pages/error.cp.js';
@@ -62,11 +63,12 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   route (hash) {
-    const { communityPage, landingPage, blogComponent, errorPage, historyPage } = this.ui;
-    communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = historyPage.visible = false;
+    const { communityPage, landingPage, blogComponent, errorPage, historyPage, imprint } = this.ui;
+    communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = historyPage.visible = imprint.visible = false;
     // base landing page
     if (!hash || hash === '') landingPage.visible = true;
     if (hash === 'community') communityPage.visible = true;
+    if (hash === 'imprint') imprint.visible = true;
     if (hash === 'history') historyPage.visible = true;
     if (hash === 'blog') {
       blogComponent.visible = true;
@@ -150,7 +152,7 @@ const LargeLogoSection = component({
     textAndAttributes: ['lively.next\n', {
       fontFamily: '\"IBM Plex Sans\"',
       fontSize: 30
-    }, 'the ', {}, 'truly', {
+    }, 'the ', { fontStyle: 'italic' }, 'truly', {
       fontWeight: '600',
       fontStyle: 'italic'
     }, ' integrated development environment', { fontStyle: 'italic' }]
@@ -388,6 +390,10 @@ export const LivelyWebPage = component({
         ['history page', {
           height: 'fixed',
           width: 'fill'
+        }],
+        ['imprint', {
+          height: 'fixed',
+          width: 'fill'
         }]]
       }),
       submorphs: [
@@ -397,6 +403,10 @@ export const LivelyWebPage = component({
         }),
         part(HistoryPage, {
           name: 'history page',
+          visible: false
+        }),
+        part(ImprintPage, {
+          name: 'imprint',
           visible: false
         }),
         part(CommunityPage, {
@@ -429,28 +439,9 @@ export const LivelyWebPage = component({
       position: pt(0, 173)
     },
     part(Footer, {
-      name: 'footer',
-      layout: new TilingLayout({
-        align: 'center',
-        axisAlign: 'center',
-        hugContentsVertically: true,
-        padding: rect(20, 20, 0, 0),
-        spacing: 30,
-        wrapSubmorphs: true
-      })
+      name: 'footer'
     })
     ]
   }
-  // part(Footer, {
-  //   name: 'footer 2',
-  //   layout: new TilingLayout({
-  //     align: 'center',
-  //     axisAlign: 'center',
-  //     hugContentsVertically: true,
-  //     padding: rect(20, 20, 0, 0),
-  //     spacing: 30,
-  //     wrapSubmorphs: true
-  //   })
-  // })
   ]
 });

@@ -263,18 +263,3 @@ export const NavBar = component(BaseNavBar, {
   extent: pt(500.5, 53),
   clipMode: 'hidden'
 });
-
-export const ResponsiveHeader = component({
-  extent: pt(205.5, 137),
-  layout: new TilingLayout({
-    justifySubmorphs: 'spaced',
-    resizePolicies: [['navigation', {
-      height: 'fixed',
-      width: 'fill'
-    }]]
-  }),
-  submorphs: [part(NavBar, {
-    name: 'navigation',
-    height: 84
-  })]
-});
