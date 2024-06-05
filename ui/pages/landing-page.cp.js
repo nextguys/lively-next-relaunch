@@ -241,7 +241,7 @@ const FeatureHolder = component({
         }, {
           name: 'description',
           extent: pt(236.5, 192),
-          textAndAttributes: ['\n', null, 'lively.next', {
+          textAndAttributes: ['lively.next', {
             fontColor: Color.rgb(255, 119, 0),
             fontFamily: '\"IBM Plex Mono\"'
           }, ' is...well, ', null, 'alive', {
@@ -278,9 +278,6 @@ export const LandingPage = component({
     resizePolicies: [['hero', {
       height: 'fixed',
       width: 'fill'
-    }], ['features', {
-      height: 'fixed',
-      width: 'fill'
     }]]
   }),
   submorphs: [
@@ -312,18 +309,7 @@ export const LandingPage = component({
         ]
       },
       height: 298,
-      borderStyle: {
-        bottom: 'solid',
-        left: 'none',
-        right: 'none',
-        top: 'none'
-      },
-      borderColor: {
-        bottom: Color.rgb(255, 119, 0),
-        left: Color.rgb(23, 160, 251),
-        right: Color.rgb(23, 160, 251),
-        top: Color.rgb(23, 160, 251)
-      },
+      borderColor: Color.rgba(23, 160, 251, 0),
       borderWidth: {
         bottom: 2,
         left: 1,
@@ -382,7 +368,6 @@ export const LandingPage = component({
     part(FeatureHolder, {
       name: 'features',
       layout: new TilingLayout({
-        align: 'center',
         axis: 'column',
         axisAlign: 'center',
         padding: rect(20, 20, 0, 0),

@@ -10,6 +10,7 @@ import { Footer } from './footer.cp.js';
 import { HashRouter } from 'lively.components/hash-router.js';
 import { Blog } from './blog.cp.js';
 import { entries } from '../assets/articles/entries.js';
+import { HistoryPage } from './pages/history.cp.js';
 
 import { connect } from 'lively.bindings';
 import { NavBar } from './header.cp.js';
@@ -61,12 +62,12 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   route (hash) {
-    const { communityPage, landingPage, blogComponent, errorPage } = this.ui;
-    communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = false;
+    const { communityPage, landingPage, blogComponent, errorPage, historyPage } = this.ui;
+    communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = historyPage.visible = false;
     // base landing page
     if (!hash || hash === '') landingPage.visible = true;
     if (hash === 'community') communityPage.visible = true;
-    debugger;
+    if (hash === 'history') historyPage.visible = true;
     if (hash === 'blog') {
       blogComponent.visible = true;
       blogComponent.showList();
@@ -383,12 +384,20 @@ export const LivelyWebPage = component({
         }], ['error page', {
           height: 'fixed',
           width: 'fill'
+        }],
+        ['history page', {
+          height: 'fixed',
+          width: 'fill'
         }]]
       }),
       submorphs: [
         part(LandingPage, {
           name: 'landing page',
           visible: true
+        }),
+        part(HistoryPage, {
+          name: 'history page',
+          visible: false
         }),
         part(CommunityPage, {
           name: 'community page',
