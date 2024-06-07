@@ -391,6 +391,74 @@ export const LandingPage = component({
           align: 'center'
         })
       }]
-    })
+    }), {
+      name: 'vision',
+      extent: pt(781, 214.5),
+      layout: new TilingLayout({
+        axis: 'column',
+        padding: rect(20, 20, 0, 0),
+        resizePolicies: [['content', {
+          height: 'fixed',
+          width: 'fill'
+        }]]
+      }),
+      submorphs: [{
+        type: Text,
+        name: 'heading',
+        dynamicCursorColoring: true,
+        fill: Color.rgb(255, 255, 255),
+        fontColor: Color.rgb(255, 119, 0),
+        fontSize: 35,
+        lineWrapping: 'by-words',
+        padding: rect(1, 1, 0, 0),
+        position: pt(20, 20),
+        textAndAttributes: ['Our Vision', null]
+      }, {
+        type: Text,
+        name: 'content',
+        height: 204,
+        styleClasses: ['dashed'],
+        dynamicCursorColoring: true,
+        fill: Color.rgb(255, 255, 255),
+        fixedWidth: true,
+        lineWrapping: 'by-words',
+        padding: rect(1, 1, 0, 0),
+        position: pt(20, 71),
+        textAndAttributes: ['The lively aims at building a platform to express 🔗', {
+          fontColor: Color.rgb(0, 0, 0)
+        }, 'powerful ideas', {
+          fontColor: Color.rgb(0, 0, 0),
+          link: 'https://www.ted.com/talks/alan_kay_a_powerful_idea_about_ideas#t-1110785'
+        }, ' much in the tradition of 🔗', null, 'original', {
+          fontColor: Color.rgb(0, 0, 0),
+          link: 'https://dougengelbart.org/content/view/209/',
+          textDecoration: 'none'
+        }, ' 🔗 ', {
+          fontColor: Color.rgb(0, 0, 0),
+          textDecoration: 'none'
+        }, 'systems', {
+          fontColor: Color.rgb(0, 0, 0),
+          link: 'https://worrydream.com/EarlyHistoryOfSmalltalk/',
+          textDecoration: 'none'
+        }, ' 🔗 ', {
+          fontColor: Color.rgb(0, 0, 0),
+          textDecoration: 'none'
+        }, ',and', {
+          fontColor: Color.rgb(0, 0, 0),
+          link: 'https://www.youtube.com/watch?v=QQhVQ1UG6aM&t=9s',
+          textDecoration: 'none'
+        }, ' 🔗 ', {
+          fontColor: Color.rgb(0, 0, 0),
+          textDecoration: 'none'
+        }, 'tools', {
+          fontColor: Color.rgb(0, 0, 0),
+          link: 'https://en.wikipedia.org/wiki/HyperCard',
+          textDecoration: 'none'
+        }, ' that defined the meaning of \"personal computing\". We are inspired, among others, by \n- the works and powerful ideas of Alan Kay,\n- Doug Engelbarts mother of all demos,\n- the flexibility of Smalltalk,\n- and original authoring-for-all-tools like Bill Atkinson\'s HyperCard.\nougl Enge  lively.next forms a flexible personal computing environment and construction kit.  Yet we hope, that it will just be a stepping stone towards a medium that truly helps us think, learn, do, and create - in the spirit of what Bret Victor calls Seeing Spaces.\n\nLively might look different from conventional programming systems but it is based on some of the same ideas and mechanisms than Smalltalk systems introduced over 40 years ago.  Its user interface is a variant of Self\'s ', null, 'Morphic', {
+          fontColor: Color.rgb(0, 0, 0),
+          link: 'http://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf'
+        }, '.  The goal of the Lively project is to evolve those powerful concepts and combine them with novel ideas to make programming less rigid and narrow. ', null]
+      }]
+    }
   ]
 });
