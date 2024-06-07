@@ -2,4 +2,11 @@
 /* Do NOT create other CSS files in this folder, as they will not be available in the bundled application! */
 /* `@imports` fetching remote CSS are okay. */
 
-a { text-decoration: none; }
+a {
+  text-decoration: none;
+}
+
+.dashed a {
+  text-decoration: underline dashed #FF7700;
+  text-decoration-thickness: 2px;
+} 

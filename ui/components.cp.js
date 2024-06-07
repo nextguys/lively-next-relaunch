@@ -53,9 +53,21 @@ class LivelyWebPageModel extends ViewModel {
     };
   }
 
+  hideAllPages () {
+    const { examplesPage, documentationPage, landingPage, blogComponent, errorPage, historyPage, imprint } = this.ui;
+
+    examplesPage.visible = documentationPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = historyPage.visible = imprint.visible = false;
+
+    // reset menu headings
+    this.ui.history.fontWeight = 'normal';
+    this.ui.documentation.fontWeight = 'normal';
+    this.ui.examples.fontWeight = 'normal';
+    this.ui.blog.fontWeight = 'normal';
+  }
+
   showErrorPage () {
-    const { communityPage, landingPage, blogComponent, errorPage } = this.ui;
-    communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = false;
+    const { errorPage } = this.ui;
+    this.hideAllPages();
     errorPage.visible = true;
     errorPage.env.forceUpdate();
     errorPage.getSubmorphNamed('bottom text').requestMasterStyling();
@@ -63,19 +75,48 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   route (hash) {
-    const { communityPage, landingPage, blogComponent, errorPage, historyPage, imprint } = this.ui;
-    communityPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = historyPage.visible = imprint.visible = false;
+    const { examplesPage, documentationPage, landingPage, blogComponent, historyPage, imprint } = this.ui;
+
+    this.hideAllPages();
+
     // base landing page
-    if (!hash || hash === '') landingPage.visible = true;
-    if (hash === 'community') communityPage.visible = true;
-    if (hash === 'imprint') imprint.visible = true;
-    if (hash === 'history') historyPage.visible = true;
+    if (!hash || hash === '') {
+      landingPage.visible = true;
+      return;
+    }
+
+    if (hash === 'history') {
+      this.ui.history.fontWeight = 'bold';
+      historyPage.visible = true;
+      return;
+    }
+
+    if (hash === 'documentation') {
+      this.ui.documentation.fontWeight = 'bold';
+      documentationPage.visible = true;
+      return;
+    }
+
+    if (hash === 'examples') {
+      this.ui.examples.fontWeight = 'bold';
+      examplesPage.visible = true;
+      return;
+    }
+
+    if (hash === 'imprint') {
+      imprint.visible = true;
+      return;
+    }
+
+    this.ui.blog.fontWeight = 'bold';
     if (hash === 'blog') {
+      this.ui.blog.fontWeight = 'bold';
       blogComponent.visible = true;
       blogComponent.showList();
       return;
     }
     if (hash.startsWith('blog/')) {
+      this.ui.blog.fontWeight = 'bold';
       const slug = hash.replace('blog/', '').replaceAll('/', '');
       blogComponent.visible = true;
       const entryToOpen = entries.find(e => e.slug === slug);
@@ -85,15 +126,17 @@ class LivelyWebPageModel extends ViewModel {
         return;
       }
       blogComponent.openEntry(entryToOpen);
+      return;
     }
+
+    this.showErrorPage();
   }
 
   onMouseDown (evt) {
     if (evt.targetMorphs[0].name === 'blog') this.router.route('blog', true);
-    if (evt.targetMorphs[0].name === 'community') this.router.route('community', true);
-    if (evt.targetMorphs[0].name === 'examples') this.router.route('examples', true);
-    if (evt.targetMorphs[0].name === 'documentation') this.router.route('documentation', true);
     if (evt.targetMorphs[0].name === 'history') this.router.route('history', true);
+    if (evt.targetMorphs[0].name === 'documentation') this.router.route('documentation', true);
+    if (evt.targetMorphs[0].name === 'examples') this.router.route('examples', true);
     if (entries.map(e => e.slug).includes(evt.targetMorphs[0].name)) this.router.route(`blog/${evt.targetMorphs[0].name}`, true);
     if (evt.targetMorphs[0].name === 'logo section') this.router.route(null, true);
   }
@@ -377,17 +420,19 @@ export const LivelyWebPage = component({
         resizePolicies: [['landing page', {
           height: 'fixed',
           width: 'fill'
-        }], ['community page', {
+        }], ['history page', {
+          height: 'fixed',
+          width: 'fill'
+        }], ['documentation page', {
+          height: 'fixed',
+          width: 'fill'
+        }], ['examples page', {
           height: 'fixed',
           width: 'fill'
         }], ['blog component', {
           height: 'fixed',
           width: 'fill'
         }], ['error page', {
-          height: 'fixed',
-          width: 'fill'
-        }],
-        ['history page', {
           height: 'fixed',
           width: 'fill'
         }],
@@ -405,12 +450,16 @@ export const LivelyWebPage = component({
           name: 'history page',
           visible: false
         }),
-        part(ImprintPage, {
-          name: 'imprint',
+        part(CommunityPage, {
+          name: 'documentation page',
           visible: false
         }),
         part(CommunityPage, {
-          name: 'community page',
+          name: 'examples page',
+          visible: false
+        }),
+        part(ImprintPage, {
+          name: 'imprint',
           visible: false
         }),
         part(ErrorPage, {

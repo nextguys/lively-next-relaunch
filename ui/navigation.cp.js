@@ -66,15 +66,6 @@ export const SpacedNavBarItems = component({
       textAndAttributes: ['Documentation', null]
     }), part(NavItem, {
       type: Text,
-      name: 'community',
-      dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
-      lineWrapping: 'by-words',
-      padding: rect(1, 1, 0, 0),
-      position: pt(-24, -286),
-      textAndAttributes: ['Community', null]
-    }), part(NavItem, {
-      type: Text,
       name: 'examples',
       extent: pt(54.5, 19),
       dynamicCursorColoring: true,
@@ -108,9 +99,6 @@ export const BurgerNavBarItems = component(SpacedNavBarItems, {
     }], ['documentation', {
       height: 'fixed',
       width: 'fill'
-    }], ['community', {
-      height: 'fixed',
-      width: 'fill'
     }], ['examples', {
       height: 'fixed',
       width: 'fill'
@@ -128,10 +116,6 @@ export const BurgerNavBarItems = component(SpacedNavBarItems, {
     fixedWidth: true
   }, {
     name: 'documentation',
-    textAlign: 'right',
-    fixedWidth: true
-  }, {
-    name: 'community',
     textAlign: 'right',
     fixedWidth: true
   }, {
