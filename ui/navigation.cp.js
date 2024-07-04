@@ -51,7 +51,6 @@ export const SpacedNavBarItems = component({
       name: 'history',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
-      lineWrapping: 'by-words',
       padding: rect(1, 1, 0, 0),
       position: pt(106, -308.5),
       textAndAttributes: ['History', null]
@@ -60,7 +59,6 @@ export const SpacedNavBarItems = component({
       name: 'documentation',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
-      lineWrapping: 'by-words',
       padding: rect(1, 1, 0, 0),
       position: pt(-113, -309.5),
       textAndAttributes: ['Documentation', null]
@@ -70,7 +68,6 @@ export const SpacedNavBarItems = component({
       extent: pt(54.5, 19),
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
-      lineWrapping: 'by-words',
       padding: rect(1, 1, 0, 0),
       position: pt(80, 76),
       textAndAttributes: ['Examples', null]
@@ -81,7 +78,6 @@ export const SpacedNavBarItems = component({
       extent: pt(54.5, 19),
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
-      lineWrapping: 'by-words',
       padding: rect(1, 1, 0, 0),
       position: pt(80, 76),
       textAndAttributes: ['Blog', null]
@@ -198,7 +194,6 @@ export const BurgerMenu = component(
         fill: Color.rgba(255, 255, 255, 0),
         fontSize: 40,
         nativeCursor: 'pointer',
-        lineWrapping: 'by-words',
         padding: rect(1, 1, 0, 0),
         position: pt(-12, 21),
         textAndAttributes: ['', {

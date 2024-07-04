@@ -19,7 +19,6 @@ const Feature = component({
     textAndAttributes: ['Building Together', null],
     dynamicCursorColoring: true,
     fill: Color.rgb(255, 255, 255),
-    lineWrapping: 'by-words',
     padding: rect(1, 1, 0, 0)
   }, {
     type: Text,
@@ -383,17 +382,19 @@ export const LandingPage = component({
       submorphs: [{
         name: 'top part',
         layout: new TilingLayout({
-          align: 'center'
+          align: 'center',
+          justifySubmorphs: 'spaced'
         })
       }, {
         name: 'bottom part',
         layout: new TilingLayout({
-          align: 'center'
+          align: 'center',
+          justifySubmorphs: 'spaced'
         })
       }]
     }), {
       name: 'vision',
-      extent: pt(781, 214.5),
+      extent: pt(836, 214.5),
       layout: new TilingLayout({
         axis: 'column',
         padding: rect(20, 20, 0, 0),
@@ -409,7 +410,6 @@ export const LandingPage = component({
         fill: Color.rgb(255, 255, 255),
         fontColor: Color.rgb(255, 119, 0),
         fontSize: 35,
-        lineWrapping: 'by-words',
         padding: rect(1, 1, 0, 0),
         position: pt(20, 20),
         textAndAttributes: ['Our Vision', null]
