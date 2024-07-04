@@ -43,10 +43,17 @@ export const Footer = component({
     layout: new TilingLayout({
       align: 'right',
       axisAlign: 'center',
-      justifySubmorphs: 'spaced'
+      justifySubmorphs: 'spaced',
+      spacing: 20
     }),
     extent: pt(116.5, 44),
     submorphs: [{
+      type: Text,
+      name: 'matrix',
+      dynamicCursorColoring: true,
+      fill: Color.rgb(255, 255, 255),
+      textAndAttributes: ['🗨️', { fontFamily: 'Noto Emoji Color' }, ' Talk to us on Matrix!', null]
+    }, {
       type: Text,
       name: 'github',
       extent: pt(52, 17),

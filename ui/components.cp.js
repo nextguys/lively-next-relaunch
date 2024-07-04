@@ -16,7 +16,7 @@ import { ImprintPage } from './pages/imprint.cp.js';
 import { connect } from 'lively.bindings';
 import { NavBar } from './navigation.cp.js';
 import { LandingPage } from './pages/landing-page.cp.js';
-import { CommunityPage } from './pages/community.cp.js';
+import { GenericContentPage } from './pages/content.cp.js';
 import { ErrorPage } from './pages/error.cp.js';
 
 class VideoLooperModel extends ViewModel {
@@ -337,7 +337,7 @@ export const LivelyWebPage = component({
       width: 'fill'
     }]]
   }),
-  extent: pt(1132.8, 863.3),
+  extent: pt(911.3, 863.3),
   submorphs: [{
     name: 'website header',
     height: 138.5,
@@ -363,7 +363,7 @@ export const LivelyWebPage = component({
       clipMode: 'visible',
       layout: new TilingLayout({
         align: 'right',
-        padding: rect(0, 0, 20, 0)
+        padding: rect(0, 0, 80, 0)
       }),
       submorphs: [{
         name: 'burger menu',
@@ -451,11 +451,11 @@ export const LivelyWebPage = component({
           name: 'history page',
           visible: false
         }),
-        part(CommunityPage, {
+        part(GenericContentPage, {
           name: 'documentation page',
           visible: false
         }),
-        part(CommunityPage, {
+        part(GenericContentPage, {
           name: 'examples page',
           visible: false
         }),

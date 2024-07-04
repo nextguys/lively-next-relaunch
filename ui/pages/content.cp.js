@@ -1,7 +1,7 @@
 import { TilingLayout, component, Text, Image } from 'lively.morphic';
 import { Color, rect, pt } from 'lively.graphics';
 
-export const CommunityPage = component({
+export const GenericContentPage = component({
   name: 'hero',
   layout: new TilingLayout({
     align: 'center',
