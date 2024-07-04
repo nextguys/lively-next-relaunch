@@ -148,6 +148,7 @@ class LivelyWebPageModel extends ViewModel {
     });
     window.router = this.router; // FIXME:
 
+    this.view.get('try it out button').onMouseDown = () => window.open('https://github.com/LivelyKernel/lively.next', '_blank');
     connect(this.router, 'routed', this, 'route');
     if (lively.FreezerRuntime) this.relayout();
     let loadedHash = window.location.hash;

@@ -1,5 +1,6 @@
-import { TilingLayout, part, component, Text, Image } from 'lively.morphic';
+import { TilingLayout, ShadowObject, part, component, Text, Image } from 'lively.morphic';
 import { Color, rect, pt } from 'lively.graphics';
+import { LinearGradient } from 'lively.graphics/color.js';
 
 const Feature = component({
   name: 'feature',
@@ -364,7 +365,57 @@ export const LandingPage = component({
         position: pt(615.5, 82.5)
       }]
     },
-    part(FeatureHolder, {
+    {
+      name: 'button section',
+      layout: new TilingLayout({
+        align: 'center',
+        axis: 'column',
+        axisAlign: 'center',
+        hugContentsVertically: true,
+        padding: rect(5, 5, 0, 0),
+        spacing: 5
+      }),
+      extent: pt(836, 82.8),
+      position: pt(-140.6, 22.8),
+      submorphs: [{
+        name: 'try it out button',
+        nativeCursor: 'pointer',
+        layout: new TilingLayout({
+          align: 'center',
+          axisAlign: 'center'
+        }),
+        borderRadius: 5,
+        dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 8 }),
+        extent: pt(335.5, 52.8),
+        fill: new LinearGradient({ stops: [{ offset: 0.6261015662975711, color: Color.rgb(255, 119, 0) }, { offset: 1, color: Color.rgba(255, 119, 0, 0.5689) }], vector: rect(0.4879935360229983, 0.00014417596393961896, 0.0240129279540034, 0.9997116480721208) }),
+        position: pt(250.4, 57.7),
+        submorphs: [{
+          type: Text,
+          name: 'button label',
+          fontWeight: '600',
+          fontSize: 24,
+          fontColor: Color.rgb(255, 255, 255),
+          textAlign: 'center',
+          textAndAttributes: ['Try it out!', null],
+          reactsToPointer: false,
+          dynamicCursorColoring: true,
+          extent: pt(50.9, 85.9),
+          fill: Color.rgba(255, 255, 255, 0),
+          padding: rect(1, 1, 0, 0),
+          position: pt(126.7, 64.9)
+        }]
+      }, {
+        type: Text,
+        name: 'license',
+        dynamicCursorColoring: true,
+        fill: Color.rgba(255, 255, 255, 0),
+        textAndAttributes: ['lively.next', {
+          fontColor: Color.rgb(255, 119, 0),
+          fontFamily: 'IBM Plex Mono'
+        }, ' is and always will be free and MIT licensed.', null]
+
+      }]
+    }, part(FeatureHolder, {
       name: 'features',
       layout: new TilingLayout({
         axis: 'column',
