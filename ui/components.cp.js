@@ -339,10 +339,11 @@ export const LivelyWebPage = component({
   extent: pt(1132.8, 863.3),
   submorphs: [{
     name: 'website header',
+    height: 138.5,
     layout: new TilingLayout({
       align: 'center',
       axisAlign: 'center',
-      padding: rect(50, 0, -50, 0),
+      padding: rect(50, 20, -50, -20),
       resizePolicies: [['logo section', {
         height: 'fixed',
         width: 'fill'
@@ -352,7 +353,6 @@ export const LivelyWebPage = component({
       }]]
     }),
     borderColor: Color.rgb(23, 160, 251),
-    extent: pt(1261, 175),
     submorphs: [part(LogoSection, {
       name: 'logo section',
       position: pt(-321, -70),
