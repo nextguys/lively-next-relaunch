@@ -53,7 +53,7 @@ const WideFooter = component({
       name: 'matrix',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
-      textAndAttributes: ['🗨️', { fontFamily: 'Noto Emoji Color' }, ' Talk to us on Matrix!', null]
+      textAndAttributes: ['🗨️', { fontFamily: 'Noto Emoji Color' }, ' Talk to us on Matrix!', { fontColor: Color.rgb(0, 0, 0), link: 'https://matrix.to/#/#lively.next:matrix.org' }]
     }, {
       type: Text,
       name: 'github',
