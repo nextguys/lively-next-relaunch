@@ -12,35 +12,13 @@ import { Blog } from './blog.cp.js';
 import { entries } from '../assets/articles/entries.js';
 import { HistoryPage } from './pages/history.cp.js';
 import { ImprintPage } from './pages/imprint.cp.js';
-
+import { ExamplePage } from './pages/examples.cp.js';
+import { VideoLooper } from './partials.cp.js';
 import { connect } from 'lively.bindings';
 import { NavBar } from './navigation.cp.js';
 import { LandingPage } from './pages/landing-page.cp.js';
 import { GenericContentPage } from './pages/content.cp.js';
 import { ErrorPage } from './pages/error.cp.js';
-
-class VideoLooperModel extends ViewModel {
-  static get properties () {
-    return {
-      srcURL: {},
-      height: {},
-      width: {}
-    };
-  }
-
-  viewDidLoad () {
-    const { height, width, srcURL } = this;
-    this.view.html = `<video autoplay='true' loop='true' disablepictureinpicture='true' playsinline='true' height='${height}' width='${width}'>
-  <source src="${srcURL}">
-</video>`;
-  }
-}
-
-const VideoLooper = component({
-  type: HTMLMorph,
-  name: 'video looper',
-  defaultViewModel: VideoLooperModel
-});
 
 class LivelyWebPageModel extends ViewModel {
   static get properties () {
@@ -455,7 +433,7 @@ export const LivelyWebPage = component({
           name: 'documentation page',
           visible: false
         }),
-        part(GenericContentPage, {
+        part(ExamplePage, {
           name: 'examples page',
           visible: false
         }),
