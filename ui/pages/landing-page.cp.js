@@ -380,6 +380,7 @@ export const LandingPage = component({
       position: pt(-140.6, 22.8),
       submorphs: [{
         name: 'try it out button',
+        fill: new LinearGradient({stops: [{offset: 0.1473074248342803, color: Color.rgb(255,119,0)}, {offset: 1, color: Color.rgba(255,119,0,0.4538)}], vector: rect(0.49999999999999994,0,6.123233995736766e-17,1)}),
         nativeCursor: 'pointer',
         layout: new TilingLayout({
           align: 'center',
@@ -388,7 +389,6 @@ export const LandingPage = component({
         borderRadius: 5,
         dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 8 }),
         extent: pt(335.5, 52.8),
-        fill: new LinearGradient({ stops: [{ offset: 0.6261015662975711, color: Color.rgb(255, 119, 0) }, { offset: 1, color: Color.rgba(255, 119, 0, 0.5689) }], vector: rect(0.4879935360229983, 0.00014417596393961896, 0.0240129279540034, 0.9997116480721208) }),
         position: pt(250.4, 57.7),
         submorphs: [{
           type: Text,
@@ -400,7 +400,7 @@ export const LandingPage = component({
           textAndAttributes: ['Try it out!', null],
           reactsToPointer: false,
           dynamicCursorColoring: true,
-          extent: pt(50.9, 85.9),
+          extent: pt(60.9, 85.9),
           fill: Color.rgba(255, 255, 255, 0),
           padding: rect(1, 1, 0, 0),
           position: pt(126.7, 64.9)
