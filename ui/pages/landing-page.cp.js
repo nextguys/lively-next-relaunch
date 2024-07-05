@@ -1,6 +1,8 @@
 import { TilingLayout, ShadowObject, part, component, Text, Image } from 'lively.morphic';
 import { Color, rect, pt } from 'lively.graphics';
 import { LinearGradient } from 'lively.graphics/color.js';
+import { VideoLooper } from '../partials.cp.js';
+import { projectAsset } from 'lively.project/helpers.js';
 
 const Feature = component({
   name: 'feature',
@@ -318,17 +320,17 @@ export const LandingPage = component({
         top: 1
       },
       position: pt(560, 80),
-      submorphs: [{
-        type: Image,
+      submorphs: [part(VideoLooper, {
         name: 'productive lively session',
-        borderStyle: 'none',
-        borderColor: Color.rgb(23, 160, 251),
-        borderWidth: 1,
-        extent: pt(551, 364),
-        fill: Color.rgba(255, 255, 255, 0),
-        imageUrl: 'http://localhost:9011/local_projects/nextguys--lively-next-relaunch/assets/lively_while_working.png',
-        position: pt(43.5, 0)
-      }, {
+        viewModel: {
+          srcURL: projectAsset('lively_working.mp4')
+        },
+        submorphs: [
+          {
+            name: 'video player',
+            extent: pt(450, 253)
+          }]
+      }), {
         type: Text,
         name: 'hero text',
         textAndAttributes: ['lively.next', {
@@ -380,7 +382,7 @@ export const LandingPage = component({
       position: pt(-140.6, 22.8),
       submorphs: [{
         name: 'try it out button',
-        fill: new LinearGradient({stops: [{offset: 0.1473074248342803, color: Color.rgb(255,119,0)}, {offset: 1, color: Color.rgba(255,119,0,0.4538)}], vector: rect(0.49999999999999994,0,6.123233995736766e-17,1)}),
+        fill: new LinearGradient({ stops: [{ offset: 0.1473074248342803, color: Color.rgb(255, 119, 0) }, { offset: 1, color: Color.rgba(255, 119, 0, 0.4538) }], vector: rect(0.49999999999999994, 0, 6.123233995736766e-17, 1) }),
         nativeCursor: 'pointer',
         layout: new TilingLayout({
           align: 'center',
