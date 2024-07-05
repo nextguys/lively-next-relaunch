@@ -2,7 +2,8 @@ import { component, TilingLayout } from 'lively.morphic';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
-export const Footer = component({
+
+const WideFooter = component({
   name: 'footer',
   clipMode: 'hidden',
   borderColor: Color.rgb(57, 57, 57),
@@ -96,4 +97,38 @@ export const Footer = component({
 
     }]
   }]
+});
+
+const NarrowFooter = component(WideFooter, {
+  layout: new TilingLayout({
+    align: 'right',
+    axis: 'column',
+    axisAlign: 'center',
+    hugContentsVertically: true,
+    justifySubmorphs: 'spaced',
+    padding: rect(0, 5, 0, 0)
+  }),
+  submorphs: [{
+    name: 'right',
+    extent: pt(372, 10),
+    layout: new TilingLayout({
+      axisAlign: 'center',
+      hugContentsHorizontally: true
+    }),
+    submorphs: [{
+      name: 'funding',
+      padding: rect(0, 0, 0, 0)
+    }]
+  }]
+});
+
+export const Footer = component(NarrowFooter, {
+  name: 'footer',
+  master: {
+    breakpoints: [
+      [pt(0, 0), NarrowFooter],
+      [pt(950, 0), WideFooter]
+    ]
+  },
+  extent: pt(906.2, 44)
 });
