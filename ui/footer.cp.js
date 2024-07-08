@@ -18,6 +18,7 @@ const WideFooter = component({
     axisAlign: 'center',
     hugContentsVertically: true,
     justifySubmorphs: 'spaced',
+    padding: rect(30, 0, 0, 0),
     spacing: 30
   }),
   extent: pt(1078.5, 40),
@@ -78,6 +79,7 @@ const WideFooter = component({
     }]
   }, {
     name: 'right',
+    extent: pt(320, 10),
     width: 372,
     layout: new TilingLayout({
       axisAlign: 'center',
