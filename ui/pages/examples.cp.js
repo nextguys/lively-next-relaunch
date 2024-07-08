@@ -241,9 +241,9 @@ export const ExamplePage = component({
     }), {
       type: Text,
       name: 'hero text',
-      textAndAttributes: ['qinoq - An editor for the creation of Scrollytelling\n', {
+      textAndAttributes: ['qinoq - An editor for the creation of Scrollytellings\n', {
         fontWeight: '600'
-      }, '\nThe whole power of lively being a self-contained system becomes apparent when developing custom tooling for specific use cases to foster custom workflows.\nqinoq is an example of such a spezialed tool inside of lively.next. It\'s aimed the creation of interactive content in the form of Scrollytellings, allowing users to organize content in scenes akin to video cutting programs. Animations coupled to the current scroll position are easy to create in a graphical manner while more advanced interactions can still be programmed in a way that is easily accessible for programmers.\n\n', null, '', {
+      }, '\nThe whole power of lively being a self-contained system becomes apparent when developing custom tooling for specific use cases to foster custom workflows.\nqinoq is an example of such a spezialed tool inside of lively.next. It\'s aimed at the creation of interactive content in the form of Scrollytellings, allowing users to organize content in scenes akin to video cutting programs. Animations coupled to the current scroll position are easy to create in a graphical manner while more advanced interactions can still be programmed in a way that is easily accessible for programmers.\n\n', null, '', {
         fontFamily: 'Font Awesome Brands',
         fontWeight: '400'
       }, ' Watch the ', {}, 'presentation', {
