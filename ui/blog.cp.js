@@ -394,7 +394,7 @@ export class BlogModel extends ViewModel {
   }
 
   viewDidLoad () {
-    this.prepareEntryPreviews();
+    this.showList();
   }
 
   /**
@@ -465,23 +465,48 @@ export class BlogModel extends ViewModel {
 
 export const Blog = component({
   defaultViewModel: BlogModel,
+  styleClasses: ['dashed'],
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
     axisAlign: 'center',
     hugContentsVertically: true,
-    resizePolicies: [['entry area', {
+    resizePolicies: [['intro text', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['entry area', {
       height: 'fixed',
       width: 'fill'
     }]],
     spacing: 20
   }),
-  submorphs: [{
-    name: 'entry area',
-    layout: new TilingLayout({
-      axis: 'column',
-      hugContentsVertically: true,
-      spacing: 5
-    })
-  }]
+  submorphs: [
+    {
+      name: 'intro text',
+      type: Text,
+      padding: rect(0, 30, 0, 0),
+      lineWrapping: 'by-words',
+      fontSize: 14,
+      textAndAttributes: ['Welcome to the blog of the ', null, 'lively.next', {
+        fontColor: Color.rgb(255, 119, 0),
+        fontFamily: '\"IBM Plex Mono\"'
+      }, ' project!\nThis blog serves as a place for us to announce changes and progress on the project as well as a place to shed some light on ideas and experiments we are working on or an occasional deep-dive into the technical nitti-gritties of', null, ' lively.next!', {
+        fontColor: Color.rgb(255, 119, 0),
+        fontFamily: '\"IBM Plex Mono\"'
+      }, ' For a more synchronous mode of communication, we kindly invite you to our ', null, '🔗', {
+        fontFamily: 'Noto Emoji Color'
+      },' chatroom on matrix ', {
+        fontColor: Color.rgb(0, 0, 0),
+        link: 'https://matrix.to/#/#lively.next:matrix.org'
+      }, '!', null]
+
+    },
+    {
+      name: 'entry area',
+      layout: new TilingLayout({
+        axis: 'column',
+        hugContentsVertically: true,
+        spacing: 5
+      })
+    }]
 });
