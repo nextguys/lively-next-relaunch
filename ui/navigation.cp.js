@@ -239,6 +239,6 @@ export const NavBar = component(BaseNavBar, {
       [pt(500, 0), LargeNavBar]
     ]
   },
-  extent: pt(500.5, 53),
+  extent: pt(59.6,53),
   clipMode: 'hidden'
 });

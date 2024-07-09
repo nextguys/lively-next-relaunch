@@ -221,7 +221,7 @@ export const LivelyWebPage = component({
       width: 'fill'
     }]]
   }),
-  extent: pt(380.5, 863.3),
+  extent: pt(474, 863.3),
   submorphs: [{
     name: 'website header',
     height: 138.5,
@@ -234,6 +234,7 @@ export const LivelyWebPage = component({
             padding: rect(20, 20, -20, -20),
             resizePolicies: [['logo section', {
               height: 'fixed',
+              // Takes the value from the moment the breakpoint becomes active
               width: 'fixed'
             }], ['navigation', {
               height: 'fixed',
@@ -241,7 +242,7 @@ export const LivelyWebPage = component({
             }]]
           })
         })],
-        [pt(180, 0), component({
+        [pt(400, 0), component({
           layout: new TilingLayout({
             align: 'center',
             axisAlign: 'center',
@@ -251,7 +252,7 @@ export const LivelyWebPage = component({
               width: 'fill'
             }], ['navigation', {
               height: 'fixed',
-              width: 'fixed'
+              width: 'fill'
             }]]
           })
         })]]
@@ -262,11 +263,24 @@ export const LivelyWebPage = component({
       extent: pt(120, 109.5)
     }), part(NavBar, {
       name: 'navigation',
-      clipMode: 'visible',
-      layout: new TilingLayout({
-        align: 'right',
-        padding: rect(0, 0, 80, 0)
-      }),
+      fill: Color.transparent,
+      master: {
+        breakpoints: [
+          [pt(0, 0), component({
+            fill: Color.rgb(255, 255, 255, 0),
+            layout: new TilingLayout({
+              align: 'right',
+              padding: rect(0, 0, 30, 0)
+            })
+          })], [
+            pt(130, 0), component({
+              fill: Color.rgb(255, 255, 255, 0),
+              layout: new TilingLayout({
+                align: 'right',
+                padding: rect(0, 0, 80, 0)
+              })
+            })]]
+      },
       submorphs: [{
         name: 'burger menu',
         layout: new TilingLayout({
