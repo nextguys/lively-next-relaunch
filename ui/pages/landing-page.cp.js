@@ -1,4 +1,4 @@
-import { TilingLayout, ShadowObject, part, component, Text, Image } from 'lively.morphic';
+import { TilingLayout, ShadowObject, part, component, Text } from 'lively.morphic';
 import { Color, rect, pt } from 'lively.graphics';
 import { LinearGradient } from 'lively.graphics/color.js';
 import { VideoLooper } from '../partials.cp.js';
@@ -10,12 +10,14 @@ const Feature = component({
     axis: 'column',
     hugContentsVertically: true
   }),
+  selectionMode: 'native',
   fill: Color.rgba(255, 255, 255, 0),
   extent: pt(336.5, 176),
   submorphs: [{
     type: Text,
     name: 'title',
     textAlign: 'center',
+    fontSize: 14,
     height: 20.296875,
     fontColor: Color.rgb(255, 119, 0),
     fontWeight: '600',
@@ -26,6 +28,7 @@ const Feature = component({
   }, {
     type: Text,
     name: 'description',
+    fontSize: 14,
     fixedWidth: true,
     textAndAttributes: ['No need to \"quickly grab the new color codes from the mockup\" - ', null, 'lively.next ', {
       fontColor: Color.rgb(255, 119, 0),
@@ -333,6 +336,8 @@ export const LandingPage = component({
       }), {
         type: Text,
         name: 'hero text',
+        fontSize: 14,
+        selectionMode: 'native',
         textAndAttributes: ['lively.next', {
           fontColor: Color.rgb(255, 119, 0),
           fontWeight: '600'
@@ -396,7 +401,7 @@ export const LandingPage = component({
           type: Text,
           name: 'button label',
           fontWeight: '600',
-          fontSize: 24,
+          fontSize: 32,
           fontColor: Color.rgb(255, 255, 255),
           textAlign: 'center',
           textAndAttributes: ['Try it out!', null],
@@ -410,6 +415,7 @@ export const LandingPage = component({
       }, {
         type: Text,
         name: 'license',
+        fontSize: 14,
         dynamicCursorColoring: true,
         fill: Color.rgba(255, 255, 255, 0),
         textAndAttributes: ['lively.next', {
@@ -460,6 +466,7 @@ export const LandingPage = component({
       submorphs: [{
         type: Text,
         name: 'heading',
+        selectionMode: 'native',
         dynamicCursorColoring: true,
         fill: Color.rgb(255, 255, 255),
         fontColor: Color.rgb(255, 119, 0),
@@ -470,7 +477,9 @@ export const LandingPage = component({
       }, {
         type: Text,
         name: 'content',
-        height: 254,
+        height: 295.90625,
+        selectionMode: 'native',
+        fontSize: 14,
         styleClasses: ['dashed'],
         dynamicCursorColoring: true,
         fill: Color.rgb(255, 255, 255),
