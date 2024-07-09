@@ -369,64 +369,7 @@ export const LivelyWebPage = component({
       submorphs: [
         part(LandingPage, {
           name: 'landing page',
-          visible: true,
-          submorphs: [{
-            name: 'features',
-            submorphs: [{
-              name: 'bottom part',
-              submorphs: [{
-                name: 'live programming',
-                submorphs: [{
-                  name: 'description',
-                  extent: pt(236, 189.8),
-                  width: undefined
-                }]
-              }, {
-                name: 'customize',
-                extent: pt(237.5, 159),
-                submorphs: [{
-                  name: 'description',
-                  extent: pt(236, 139.4),
-                  width: undefined
-                }]
-              }, {
-                name: 'batteries included',
-                extent: pt(237.5, 159),
-                submorphs: [{
-                  name: 'description',
-                  extent: pt(236, 139.4),
-                  width: undefined
-                }]
-              }]
-            }, {
-              name: 'top part',
-              submorphs: [{
-                name: 'code generation',
-                extent: pt(237.5, 92),
-                submorphs: [{
-                  name: 'description',
-                  extent: pt(236, 72.2),
-                  width: undefined
-                }]
-              }, {
-                name: 'components',
-                extent: pt(237.5, 109),
-                submorphs: [{
-                  name: 'description',
-                  extent: pt(236, 89),
-                  width: undefined
-                }]
-              }, {
-                name: 'building together',
-                extent: pt(237.5, 126),
-                submorphs: [{
-                  name: 'description',
-                  extent: pt(236, 105.8),
-                  width: undefined
-                }]
-              }]
-            }]
-          }]
+          visible: true
         }),
         part(HistoryPage, {
           name: 'history page',
