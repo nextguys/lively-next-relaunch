@@ -32,6 +32,7 @@ const WideFooter = component({
     submorphs: [{
       type: Text,
       name: 'aText',
+      selectionMode: 'native',
       fontStyle: 'italic',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
@@ -52,12 +53,14 @@ const WideFooter = component({
     submorphs: [{
       type: Text,
       name: 'matrix',
+      selectionMode: 'native',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
       textAndAttributes: ['🗨️', { fontFamily: 'Noto Emoji Color' }, ' Talk to us on Matrix!', { fontColor: Color.rgb(0, 0, 0), link: 'https://matrix.to/#/#lively.next:matrix.org' }]
     }, {
       type: Text,
       name: 'github',
+      selectionMode: 'native',
       extent: pt(52, 17),
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
@@ -68,6 +71,7 @@ const WideFooter = component({
       }]
     }, {
       type: Text,
+      selectionMode: 'native',
       name: 'imprint',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
@@ -87,6 +91,7 @@ const WideFooter = component({
     }),
     submorphs: [{
       type: Text,
+      selectionMode: 'native',
       name: 'funding',
       padding: rect(0, 0, 30, 0),
       dynamicCursorColoring: true,
