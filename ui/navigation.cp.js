@@ -37,6 +37,7 @@ export const NavItem = component(NavItemBase, {
 
 export const SpacedNavBarItems = component({
   name: 'spaced nav bar items',
+  fill: Color.rgba(255, 255, 255, 0),
   layout: new TilingLayout({
     align: 'center',
     axisAlign: 'center',
@@ -50,7 +51,6 @@ export const SpacedNavBarItems = component({
       type: Text,
       name: 'history',
       dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
       padding: rect(1, 1, 0, 0),
       position: pt(106, -308.5),
       textAndAttributes: ['History', null]
@@ -58,7 +58,6 @@ export const SpacedNavBarItems = component({
       type: Text,
       name: 'documentation',
       dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
       padding: rect(1, 1, 0, 0),
       position: pt(-113, -309.5),
       textAndAttributes: ['Documentation', null]
@@ -67,7 +66,6 @@ export const SpacedNavBarItems = component({
       name: 'examples',
       extent: pt(54.5, 19),
       dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
       padding: rect(1, 1, 0, 0),
       position: pt(80, 76),
       textAndAttributes: ['Examples', null]
@@ -77,7 +75,6 @@ export const SpacedNavBarItems = component({
       name: 'blog',
       extent: pt(54.5, 19),
       dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
       padding: rect(1, 1, 0, 0),
       position: pt(80, 76),
       textAndAttributes: ['Blog', null]
@@ -106,6 +103,7 @@ export const BurgerNavBarItems = component(SpacedNavBarItems, {
   }),
   isLayoutable: false,
   extent: pt(85, 105),
+  fill: Color.rgb(255, 255, 255),
   submorphs: [{
     name: 'history',
     textAlign: 'right',
@@ -209,6 +207,7 @@ export const BaseNavBar = component({
     align: 'center',
     axisAlign: 'center'
   }),
+  fill: Color.rgba(255, 255, 255, 0),
   submorphs: [part(SpacedNavBarItems,
     { name: 'spaced menu items' }), part(BurgerMenu, {
     name: 'burger menu'
@@ -228,7 +227,8 @@ export const LargeNavBar = component(BaseNavBar, {
 export const SmallNavBar = component(BaseNavBar, {
   submorphs: [{
     name: 'spaced menu items',
-    visible: false
+    visible: false,
+    layoutable: false
   }]
 });
 
