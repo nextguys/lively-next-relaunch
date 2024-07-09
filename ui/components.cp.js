@@ -170,13 +170,21 @@ const LargeLogoSection = component({
     lineWrapping: 'by-words',
     padding: rect(1, 1, 0, 0),
     position: pt(100, 0),
-    textAndAttributes: ['lively.next\n', {
+    textAndAttributes: ['lively', {
+      fontFamily: '\"IBM Plex Sans\"',
+      fontSize: 30,
+      fontWeight: '600'
+    }, '.next\n', {
       fontFamily: '\"IBM Plex Sans\"',
       fontSize: 30
-    }, 'the ', { fontStyle: 'italic' }, 'truly', {
-      fontWeight: '600',
+    }, 'the ', {
       fontStyle: 'italic'
-    }, ' integrated development environment', { fontStyle: 'italic' }]
+    }, 'truly', {
+      fontStyle: 'italic',
+      fontWeight: '600'
+    }, ' integrated development environment', {
+      fontStyle: 'italic'
+    }]
   }]
 });
 
