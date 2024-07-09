@@ -3,9 +3,7 @@ import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Image } from 'lively.morphic/morph.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
-import { HTMLMorph } from 'lively.morphic/html-morph.js';
-import { without } from 'lively.morphic/components/core.js';
-import { add } from 'lively.morphic/components/policy.js';
+
 import { Footer } from './footer.cp.js';
 import { HashRouter } from 'lively.components/hash-router.js';
 import { Blog } from './blog.cp.js';
@@ -13,12 +11,13 @@ import { entries } from '../assets/articles/entries.js';
 import { HistoryPage } from './pages/history.cp.js';
 import { ImprintPage } from './pages/imprint.cp.js';
 import { ExamplePage } from './pages/examples.cp.js';
-import { VideoLooper } from './partials.cp.js';
+
 import { connect } from 'lively.bindings';
 import { NavBar } from './navigation.cp.js';
 import { LandingPage } from './pages/landing-page.cp.js';
-import { GenericContentPage } from './pages/content.cp.js';
+
 import { ErrorPage } from './pages/error.cp.js';
+import { DocumentationPage } from './pages/documentation.cp.js';
 
 class LivelyWebPageModel extends ViewModel {
   static get properties () {
@@ -199,103 +198,10 @@ const LogoSection = component(SmallLogoSection, {
       [pt(375, 0), LargeLogoSection]
     ]
   },
-  extent: pt(266.5, 109.5),
+  extent: pt(223, 109.5),
   submorphs: [{
     name: 'text'
   }]
-});
-
-export const SellingPointCallOutVideoRight = component({
-  name: 'skalier den usp junge',
-  layout: new TilingLayout({
-    align: 'center',
-    axisAlign: 'center',
-    hugContentsHorizontally: true,
-    hugContentsVertically: true,
-    padding: rect(10, 10, 0, 0),
-    wrapSubmorphs: true
-  }),
-  extent: pt(533, 267),
-  submorphs: [{
-    name: 'text',
-    layout: new TilingLayout({
-      axis: 'column',
-      padding: rect(30, 30, 0, 0),
-      spacing: 10
-    }),
-    borderColor: Color.rgb(23, 160, 251),
-    borderWidth: 1,
-    extent: pt(241, 206.5),
-    position: pt(25.5, 102),
-    submorphs: [{
-      type: Text,
-      name: 'header',
-      dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
-      position: pt(80, 80.5),
-      textAndAttributes: ['building together!', null]
-    }, {
-      type: Text,
-      name: 'description',
-      borderColor: Color.rgb(23, 160, 251),
-      borderWidth: 1,
-      dynamicCursorColoring: true,
-      extent: pt(183.5, 133),
-      fill: Color.rgb(255, 255, 255),
-      fixedHeight: true,
-      fixedWidth: true,
-      lineWrapping: 'by-words',
-      padding: rect(1, 1, 0, 0),
-      position: pt(-58, 17)
-    }]
-  }, part(VideoLooper, {
-    name: 'looper',
-    position: pt(219, 17.5),
-    extent: pt(284.5, 261),
-    viewModel: {
-      height: 200,
-      width: 150,
-      srcURL: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm'
-    }
-  })]
-});
-
-export const SellingPointCallOutVideoLeft = component(SellingPointCallOutVideoRight, {
-  name: 'callout video left',
-  extent: pt(562.5, 487.5),
-  submorphs: [without('text'), add({
-    name: 'text',
-    layout: new TilingLayout({
-      axis: 'column',
-      padding: rect(30, 30, 0, 0),
-      spacing: 10
-    }),
-    borderColor: Color.rgb(23, 160, 251),
-    borderWidth: 1,
-    extent: pt(241, 206.5),
-    position: pt(25.5, 102),
-    submorphs: [{
-      type: Text,
-      name: 'header',
-      dynamicCursorColoring: true,
-      fill: Color.rgb(255, 255, 255),
-      position: pt(80, 80.5),
-      textAndAttributes: ['building together!', null]
-    }, {
-      type: Text,
-      name: 'description',
-      borderColor: Color.rgb(23, 160, 251),
-      borderWidth: 1,
-      dynamicCursorColoring: true,
-      extent: pt(183.5, 133),
-      fill: Color.rgb(255, 255, 255),
-      fixedHeight: true,
-      fixedWidth: true,
-      lineWrapping: 'by-words',
-      padding: rect(1, 1, 0, 0),
-      position: pt(-58, 17)
-    }]
-  })]
 });
 
 export const LivelyWebPage = component({
@@ -315,27 +221,45 @@ export const LivelyWebPage = component({
       width: 'fill'
     }]]
   }),
-  extent: pt(911.3, 863.3),
+  extent: pt(380.5, 863.3),
   submorphs: [{
     name: 'website header',
     height: 138.5,
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center',
-      padding: rect(50, 20, -50, -20),
-      resizePolicies: [['logo section', {
-        height: 'fixed',
-        width: 'fill'
-      }], ['navigation', {
-        height: 'fixed',
-        width: 'fill'
-      }]]
-    }),
+    master: {
+      breakpoints: [
+        [pt(0, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            axisAlign: 'center',
+            padding: rect(20, 20, -20, -20),
+            resizePolicies: [['logo section', {
+              height: 'fixed',
+              width: 'fixed'
+            }], ['navigation', {
+              height: 'fixed',
+              width: 'fill'
+            }]]
+          })
+        })],
+        [pt(180, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            axisAlign: 'center',
+            padding: rect(50, 20, -50, -20),
+            resizePolicies: [['logo section', {
+              height: 'fixed',
+              width: 'fill'
+            }], ['navigation', {
+              height: 'fixed',
+              width: 'fixed'
+            }]]
+          })
+        })]]
+    },
     borderColor: Color.rgb(23, 160, 251),
     submorphs: [part(LogoSection, {
       name: 'logo section',
-      position: pt(-321, -70),
-      extent: pt(693.5, 109.5)
+      extent: pt(120, 109.5)
     }), part(NavBar, {
       name: 'navigation',
       clipMode: 'visible',
@@ -423,13 +347,70 @@ export const LivelyWebPage = component({
       submorphs: [
         part(LandingPage, {
           name: 'landing page',
-          visible: true
+          visible: true,
+          submorphs: [{
+            name: 'features',
+            submorphs: [{
+              name: 'bottom part',
+              submorphs: [{
+                name: 'live programming',
+                submorphs: [{
+                  name: 'description',
+                  extent: pt(236, 189.8),
+                  width: undefined
+                }]
+              }, {
+                name: 'customize',
+                extent: pt(237.5, 159),
+                submorphs: [{
+                  name: 'description',
+                  extent: pt(236, 139.4),
+                  width: undefined
+                }]
+              }, {
+                name: 'batteries included',
+                extent: pt(237.5, 159),
+                submorphs: [{
+                  name: 'description',
+                  extent: pt(236, 139.4),
+                  width: undefined
+                }]
+              }]
+            }, {
+              name: 'top part',
+              submorphs: [{
+                name: 'code generation',
+                extent: pt(237.5, 92),
+                submorphs: [{
+                  name: 'description',
+                  extent: pt(236, 72.2),
+                  width: undefined
+                }]
+              }, {
+                name: 'components',
+                extent: pt(237.5, 109),
+                submorphs: [{
+                  name: 'description',
+                  extent: pt(236, 89),
+                  width: undefined
+                }]
+              }, {
+                name: 'building together',
+                extent: pt(237.5, 126),
+                submorphs: [{
+                  name: 'description',
+                  extent: pt(236, 105.8),
+                  width: undefined
+                }]
+              }]
+            }]
+          }]
         }),
         part(HistoryPage, {
           name: 'history page',
           visible: false
         }),
-        part(GenericContentPage, {
+        part(DocumentationPage, {
           name: 'documentation page',
           visible: false
         }),

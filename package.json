@@ -19,7 +19,7 @@
   },
   "lively": {
     "projectDependencies": [],
-    "boundLivelyVersion": "9b1020491ead18f565c5b76a9a9cfe081807c384",
+    "boundLivelyVersion": "f8706ab6e9fadf99e084763533b5ac9f0fccbf34",
     "repositoryIsPrivate": false,
     "repoBelongsToOrg": true,
     "testOnPush": true,
