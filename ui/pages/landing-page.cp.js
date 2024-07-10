@@ -12,19 +12,22 @@ const Feature = component({
   }),
   selectionMode: 'native',
   fill: Color.rgba(255, 255, 255, 0),
-  extent: pt(336.5, 176),
+  extent: pt(300, 124.6),
   submorphs: [{
     type: Text,
     name: 'title',
-    textAlign: 'center',
+    lineWrapping: 'by-words',
+    selectionMode: 'native',
+    extent: pt(300, 21.6),
+    fixedWidth: true,
     fontSize: 14,
+    textAlign: 'left',
     height: 20.296875,
     fontColor: Color.rgb(255, 119, 0),
     fontWeight: '600',
     textAndAttributes: ['Building Together', null],
     dynamicCursorColoring: true,
-    fill: Color.rgb(255, 255, 255),
-    padding: rect(1, 1, 0, 0)
+    fill: Color.rgb(255, 255, 255)
   }, {
     type: Text,
     name: 'description',
@@ -54,7 +57,7 @@ const Feature = component({
       top: 2
     },
     dynamicCursorColoring: true,
-    extent: pt(236.5, 132),
+    extent: pt(300, 132),
     fill: Color.rgb(255, 255, 255),
     lineWrapping: 'by-words',
     padding: rect(1, 1, 0, 0),
@@ -66,6 +69,8 @@ const FeatureHolder = component({
   name: 'features shoutout',
   layout: new TilingLayout({
     axis: 'column',
+    axisAlign: 'center',
+    hugContentsVertically: true,
     padding: rect(20, 20, 0, 0),
     resizePolicies: [['top part', {
       height: 'fixed',
@@ -76,19 +81,21 @@ const FeatureHolder = component({
     }]],
     spacing: 20
   }),
-  extent: pt(835.5, 387),
+  extent: pt(1060.5, 420),
   submorphs: [{
     name: 'top part',
-    layout: new TilingLayout({}),
+    layout: new TilingLayout({
+      align: 'center',
+      spacing: 20,
+      wrapSubmorphs: true
+    }),
     submorphs: [
       part(Feature, {
         name: 'building together',
-        extent: pt(237.5, 129),
         submorphs: [
           {
             name: 'title',
-            textAndAttributes: ['👪', { fontFamily: 'Noto Emoji Color' }, ' Building Together', null],
-            extent: pt(52, 52)
+            textAndAttributes: ['👪', { fontFamily: 'Noto Emoji Color' }, ' Building Together', null]
           },
           {
             name: 'description',
@@ -106,13 +113,11 @@ const FeatureHolder = component({
         ]
       }), part(Feature, {
         name: 'components',
-        extent: pt(237.5, 0),
         submorphs: [{
           name: 'title',
           textAndAttributes: ['🔁', { fontFamily: 'Noto Emoji Color' }, ' Powerful Component System', null]
         }, {
           name: 'description',
-          extent: pt(236.5, 89),
           textAndAttributes: ['lively.next', {
             fontColor: Color.rgb(255, 119, 0),
             fontFamily: '\"IBM Plex Mono\"'
@@ -128,16 +133,13 @@ const FeatureHolder = component({
         }]
       }), part(Feature, {
         name: 'code generation',
-        extent: pt(237.5, 129),
         submorphs: [
           {
             name: 'title',
-            textAndAttributes: ['🖨️', { fontFamily: 'Noto Emoji Color' }, ' Code Generation That Just Works', null],
-            extent: pt(13, 422)
+            textAndAttributes: ['🖨️', { fontFamily: 'Noto Emoji Color' }, ' Code Generation That Just Works', null]
           },
           {
             name: 'description',
-            extent: pt(236.5, 72),
             textAndAttributes: ['Components', {
               fontFamily: '\"IBM Plex Mono\"'
             }, ' can be edited visually or by writing code. Both options are equally powerful and ', null, 'code is generated and kept in sync', {
@@ -148,11 +150,14 @@ const FeatureHolder = component({
     ]
   }, {
     name: 'bottom part',
-    layout: new TilingLayout({}),
+    layout: new TilingLayout({
+      align: 'center',
+      spacing: 20,
+      wrapSubmorphs: true
+    }),
     submorphs: [
       part(Feature, {
         name: 'batteries included',
-        extent: pt(237.5, 0),
         submorphs: [{
           name: 'title',
           textAndAttributes: ['🔋️', { fontFamily: 'Noto Emoji Color' }, ' Batteries Included', null]
@@ -197,7 +202,6 @@ const FeatureHolder = component({
         }]
       }), part(Feature, {
         name: 'customize',
-        extent: pt(237.5, 0),
         fill: Color.rgba(255, 255, 255, 0),
         layout: new TilingLayout({
           axis: 'column',
@@ -208,7 +212,6 @@ const FeatureHolder = component({
           textAndAttributes: ['🎨️', { fontFamily: 'Noto Emoji Color' }, ' Make it Yours', null]
         }, {
           name: 'description',
-          extent: pt(236.5, 139),
           textAndAttributes: ['lively.next', {
             fontColor: Color.rgb(255, 119, 0),
             fontFamily: '\"IBM Plex Mono\"'
@@ -233,19 +236,16 @@ const FeatureHolder = component({
         }]
       }), part(Feature, {
         name: 'live programming',
-        extent: pt(237.5, 0),
         fill: Color.rgba(255, 255, 255, 0),
         layout: new TilingLayout({
           axis: 'column',
-          hugContentsHorizontally: true,
           hugContentsVertically: true
         }),
         submorphs: [{
           name: 'title',
-          textAndAttributes: ['🤸', { fontFamily: 'Noto Emoji Color' }, ' Live Programming throughout the whole Stack', null]
+          textAndAttributes: ['🤸', { fontFamily: 'Noto Emoji Color' }, ' Full Stack Live Programming', null]
         }, {
           name: 'description',
-          extent: pt(236.5, 192),
           textAndAttributes: ['lively.next', {
             fontColor: Color.rgb(255, 119, 0),
             fontFamily: '\"IBM Plex Mono\"'
@@ -274,7 +274,7 @@ const FeatureHolder = component({
 
 export const LandingPage = component({
   name: 'page',
-  extent: pt(1339.5, 1241.2),
+  extent: pt(1336, 3907.6),
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
@@ -282,6 +282,15 @@ export const LandingPage = component({
     hugContentsVertically: true,
     padding: rect(10, 10, 0, 0),
     resizePolicies: [['hero', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['button section', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['features', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['vision', {
       height: 'fixed',
       width: 'fill'
     }]]
@@ -295,25 +304,36 @@ export const LandingPage = component({
         breakpoints: [
           [pt(0, 0), component({
             layout: new TilingLayout({
-              axis: 'column',
               align: 'center',
               axisAlign: 'center',
-              padding: rect(20, 20, 0, 0),
               hugContentsVertically: true,
+              wrapSubmorphs: true,
+              padding: rect(20, 20, 0, 0),
+              resizePolicies: [['hero text', {
+                height: 'fixed',
+                width: 'fill'
+              }],
+              ['productive lively session', { height: 'fixed', width: 'fill' }]],
               spacing: 20
             })
           })],
-          [pt(1100, 0), component({
+          [pt(780, 0), component({
             layout: new TilingLayout({
               align: 'center',
               axisAlign: 'center',
-              padding: rect(20, 20, 0, 0),
               hugContentsVertically: true,
+              padding: rect(20, 20, 0, 0),
+              resizePolicies: [['hero text', {
+                height: 'fixed',
+                width: 'fixed'
+              }], ['productive lively session', { height: 'fixed', width: 'fill' }]],
               spacing: 20
             })
           })]
         ]
       },
+      fill: Color.rgba(244, 37, 37, 0),
+      extent: pt(1116, 298),
       height: 298,
       borderColor: Color.rgba(23, 160, 251, 0),
       borderWidth: {
@@ -325,14 +345,34 @@ export const LandingPage = component({
       position: pt(560, 80),
       submorphs: [part(VideoLooper, {
         name: 'productive lively session',
+        layout: new TilingLayout({
+          align: 'right',
+          hugContentsHorizontally: true,
+          hugContentsVertically: true,
+          padding: rect(20, 20, 0, 0)
+        }),
         viewModel: {
           srcURL: projectAsset('lively_working.mp4')
         },
-        submorphs: [
-          {
-            name: 'video player',
-            extent: pt(450, 253)
-          }]
+        master: {
+          breakpoints: [
+            [pt(0, 0), component({
+              submorphs: [
+                {
+                  name: 'video player',
+                  extent: pt(310, 174)
+                }
+              ]
+            }), pt(455, 0), component({
+              submorphs: [
+                {
+                  name: 'video player',
+                  extent: pt(450, 253)
+                }
+              ]
+            })]
+          ]
+        }
       }), {
         type: Text,
         name: 'hero text',
@@ -364,17 +404,38 @@ export const LandingPage = component({
         }, '.', null],
         borderColor: Color.rgb(23, 160, 251),
         dynamicCursorColoring: true,
-        extent: pt(487.5, 158.5),
         fill: Color.rgb(255, 255, 255),
-        fixedHeight: true,
         fixedWidth: true,
         lineWrapping: 'by-words',
-        padding: rect(1, 1, 0, 0),
-        position: pt(615.5, 82.5)
+        position: pt(615.5, 82.5),
+        extent: pt(300, 300)
       }]
     },
     {
       name: 'button section',
+      master: {
+        breakpoints: [
+          [pt(0, 0), component({
+            submorphs: [{
+              name: 'try it out button',
+
+              extent: pt(300, 52.8)
+            }, {
+              name: 'license',
+              fontSize: 12
+            }]
+          })],
+          [pt(390, 0), component({
+            submorphs: [{
+              name: 'try it out button',
+              extent: pt(335.5, 52.8)
+            }, {
+              name: 'license',
+              fontSize: 14
+            }]
+          })]
+        ]
+      },
       layout: new TilingLayout({
         align: 'center',
         axis: 'column',
@@ -383,8 +444,6 @@ export const LandingPage = component({
         padding: rect(5, 5, 0, 0),
         spacing: 5
       }),
-      extent: pt(836, 82.8),
-      position: pt(-140.6, 22.8),
       submorphs: [{
         name: 'try it out button',
         fill: new LinearGradient({ stops: [{ offset: 0.1473074248342803, color: Color.rgb(255, 119, 0) }, { offset: 1, color: Color.rgba(255, 119, 0, 0.4538) }], vector: rect(0.49999999999999994, 0, 6.123233995736766e-17, 1) }),
@@ -395,8 +454,6 @@ export const LandingPage = component({
         }),
         borderRadius: 5,
         dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 8 }),
-        extent: pt(335.5, 52.8),
-        position: pt(250.4, 57.7),
         submorphs: [{
           type: Text,
           name: 'button label',
@@ -407,7 +464,6 @@ export const LandingPage = component({
           textAndAttributes: ['Try it out!', null],
           reactsToPointer: false,
           dynamicCursorColoring: true,
-          extent: pt(60.9, 85.9),
           fill: Color.rgba(255, 255, 255, 0),
           padding: rect(1, 1, 0, 0),
           position: pt(126.7, 64.9)
@@ -415,7 +471,7 @@ export const LandingPage = component({
       }, {
         type: Text,
         name: 'license',
-        fontSize: 14,
+        extent: pt(354, 19.6),
         dynamicCursorColoring: true,
         fill: Color.rgba(255, 255, 255, 0),
         textAndAttributes: ['lively.next', {
@@ -425,92 +481,145 @@ export const LandingPage = component({
 
       }]
     }, part(FeatureHolder, {
-      name: 'features',
+      name: 'features'
+    }), {
+      name: 'vision',
+      master: {
+        breakpoints: [
+          [pt(0, 0), component({
+            submorphs: [{
+              name: 'spacer',
+              width: 300
+            }]
+          })],
+          [pt(661, 0), component({
+            submorphs: [{
+              name: 'spacer',
+              width: 620
+            }]
+          })], [pt(981, 0), component({
+            submorphs: [{
+              name: 'spacer',
+              width: 940
+            }]
+          })]
+        ]
+      },
       layout: new TilingLayout({
         axis: 'column',
         axisAlign: 'center',
-        padding: rect(20, 20, 0, 0),
-        resizePolicies: [['top part', {
-          height: 'fixed',
-          width: 'fill'
-        }], ['bottom part', {
-          height: 'fixed',
-          width: 'fill'
-        }]],
-        spacing: 20
+        hugContentsVertically: true,
+        padding: rect(2, 2, 0, 0)
       }),
       submorphs: [{
-        name: 'top part',
+        name: 'spacer',
         layout: new TilingLayout({
-          align: 'center',
-          justifySubmorphs: 'spaced'
-        })
-      }, {
-        name: 'bottom part',
-        layout: new TilingLayout({
-          align: 'center',
-          justifySubmorphs: 'spaced'
-        })
-      }]
-    }), {
-      name: 'vision',
-      extent: pt(836, 214.5),
-      layout: new TilingLayout({
-        axis: 'column',
-        padding: rect(20, 20, 0, 0),
-        resizePolicies: [['content', {
-          height: 'fixed',
-          width: 'fill'
-        }]]
-      }),
-      submorphs: [{
-        type: Text,
-        name: 'heading',
-        selectionMode: 'native',
-        dynamicCursorColoring: true,
-        fill: Color.rgb(255, 255, 255),
-        fontColor: Color.rgb(255, 119, 0),
-        fontSize: 35,
-        padding: rect(1, 1, 0, 0),
-        position: pt(20, 20),
-        textAndAttributes: ['Our Vision', null]
-      }, {
-        type: Text,
-        name: 'content',
-        height: 295.90625,
-        selectionMode: 'native',
-        fontSize: 14,
-        styleClasses: ['dashed'],
-        dynamicCursorColoring: true,
-        fill: Color.rgb(255, 255, 255),
-        fixedWidth: true,
-        lineWrapping: 'by-words',
-        padding: rect(1, 1, 0, 0),
-        position: pt(20, 71),
-        textAndAttributes: ['\nThe lively aims at building a platform to express ', null, '🔗', {
-          fontFamily: 'Noto Emoji Color'
-        }, 'powerful ideas', {
-          fontColor: Color.rgb(0, 0, 0),
-          link: 'https://www.ted.com/talks/alan_kay_a_powerful_idea_about_ideas#t-1110785'
-        }, ' much in the tradition of original systems and tools that defined the meaning of \"personal computing\". We are inspired, among others, by \n\n- the works and powerful ideas of ', null, '🔗', {
-          fontFamily: 'Noto Emoji Color'
-        }, ' Alan Kay,', { link: 'https://www.youtube.com/watch?v=QQhVQ1UG6aM&t=9s', fontColor: Color.rgb(0, 0, 0) }, '\n- Doug Engelbarts ', null, '🔗', {
-          fontFamily: 'Noto Emoji Color'
-        }, 'mother of all demos', { link: 'https://dougengelbart.org/content/view/209/', fontColor: Color.rgb(0, 0, 0) }, ',\n- the flexibility of ', null, '🔗', {
-          fontFamily: 'Noto Emoji Color'
-        }, 'Smalltalk', { link: 'https://worrydream.com/EarlyHistoryOfSmalltalk/', fontColor: Color.rgb(0, 0, 0) }, ',\n- and original authoring-for-all-tools like Bill Atkinson\'s ', null, '🔗', {
-          fontFamily: 'Noto Emoji Color'
-        }, ' HyperCard', { link: 'https://en.wikipedia.org/wiki/HyperCard', fontColor: Color.rgb(0, 0, 0) }, '.\n\n', null, 'lively.next', {
+          axis: 'column',
+          hugContentsVertically: true,
+          resizePolicies: [['content', {
+            height: 'fixed',
+            width: 'fill'
+          }]]
+        }),
+        submorphs: [{
+          type: Text,
+          name: 'heading',
+          selectionMode: 'native',
+          dynamicCursorColoring: true,
+          fill: Color.rgb(255, 255, 255),
           fontColor: Color.rgb(255, 119, 0),
-          fontFamily: '\"IBM Plex Mono\"'
-        }, ' forms a flexible personal computing environment and construction kit.  Yet we hope, that it will just be a stepping stone towards a medium that truly helps us think, learn, do, and create - in the spirit of what Bret Victor calls ', null, '🔗', {
-          fontFamily: 'Noto Emoji Color'
-        }, ' Seeing Spaces', { link: 'https://worrydream.com/SeeingSpaces/', fontColor: Color.rgb(0, 0, 0) }, '.\n\nLively might look different from conventional programming systems but it is based on some of the same ideas and mechanisms than Smalltalk systems introduced over 40 years ago.  Its user interface is a variant of Self\'s ', null, '🔗', {
-          fontFamily: 'Noto Emoji Color'
-        }, ' Morphic', {
-          fontColor: Color.rgb(0, 0, 0),
-          link: 'http://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf'
-        }, '.  The goal of the Lively project is to evolve those powerful concepts and combine them with novel ideas to make programming less rigid and narrow. ', null]
+          fontSize: 35,
+          padding: rect(1, 1, 0, 0),
+          position: pt(118, 0),
+          textAndAttributes: ['Our Vision', null]
+        }, {
+          type: Text,
+          name: 'content',
+          extent: pt(940, 2631.3),
+          height: 2980.25,
+          selectionMode: 'native',
+          fontSize: 14,
+          dynamicCursorColoring: true,
+          fill: Color.rgb(255, 255, 255),
+          fixedWidth: true,
+          lineWrapping: 'by-words',
+          position: pt(120, 400),
+          textAndAttributes: ['\nThe lively team aims to build a platform to express ', null, '🔗', {
+            fontFamily: 'Noto Emoji Color',
+            link: 'https://www.ted.com/talks/alan_kay_a_powerful_idea_about_ideas#t-1110785'
+          }, ' ', {
+            fontFamily: '\"IBM Plex Sans\"',
+            link: 'https://www.ted.com/talks/alan_kay_a_powerful_idea_about_ideas#t-1110785'
+          }, 'powerful ideas', {
+            fontColor: Color.rgb(0, 0, 0),
+            link: 'https://www.ted.com/talks/alan_kay_a_powerful_idea_about_ideas#t-1110785',
+            textDecoration: 'underline'
+          }, ' much in the tradition of original systems and tools that defined the meaning of \"personal computing\". We are inspired, among others, by \n\n- the works and powerful ideas of ', null, '🔗', {
+            fontFamily: 'Noto Emoji Color',
+            link: 'https://www.youtube.com/watch?v=QQhVQ1UG6aM&t=9s'
+          }, ' ', {
+            fontFamily: '\"IBM Plex Sans\"',
+            link: 'https://www.youtube.com/watch?v=QQhVQ1UG6aM&t=9s'
+          }, 'Alan Kay,\n', {
+            fontColor: Color.rgb(0, 0, 0),
+            link: 'https://www.youtube.com/watch?v=QQhVQ1UG6aM&t=9s',
+            textDecoration: 'underline'
+          }, '- Doug Engelbarts ', null, '🔗', {
+            fontFamily: 'Noto Emoji Color',
+            link: 'https://dougengelbart.org/content/view/209/'
+          }, ' ', {
+            fontFamily: '\"IBM Plex Sans\"',
+            link: 'https://dougengelbart.org/content/view/209/'
+          }, 'mother of all demos', {
+            fontColor: Color.rgb(0, 0, 0),
+            link: 'https://dougengelbart.org/content/view/209/',
+            textDecoration: 'underline'
+          }, ',\n- the flexibility of ', null, '🔗', {
+            fontFamily: 'Noto Emoji Color',
+            link: 'https://worrydream.com/EarlyHistoryOfSmalltalk/'
+          }, ' ', {
+            fontFamily: '\"IBM Plex Sans\"',
+            link: 'https://worrydream.com/EarlyHistoryOfSmalltalk/'
+          }, 'Smalltalk', {
+            fontColor: Color.rgb(0, 0, 0),
+            link: 'https://worrydream.com/EarlyHistoryOfSmalltalk/',
+            textDecoration: 'underline'
+          }, ',\n- and original authoring-for-all-tools like Bill Atkinson\'s ', null, '🔗', {
+            fontFamily: 'Noto Emoji Color',
+            link: 'https://en.wikipedia.org/wiki/HyperCard'
+          }, ' ', {
+            fontFamily: '\"IBM Plex Sans\"',
+            link: 'https://en.wikipedia.org/wiki/HyperCard'
+          }, 'HyperCard', {
+            fontColor: Color.rgb(0, 0, 0),
+            link: 'https://en.wikipedia.org/wiki/HyperCard',
+            textDecoration: 'underline'
+          }, '.\n\n', null, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"'
+          }, ' forms a flexible personal computing environment and construction kit.  Yet we hope, that it will just be a stepping stone towards a medium that truly helps us think, learn, do, and create - in the spirit of what Bret Victor calls ', null, '🔗', {
+            fontFamily: 'Noto Emoji Color',
+            link: 'https://worrydream.com/SeeingSpaces/'
+          }, ' ', {
+            fontFamily: '\"IBM Plex Sans\"',
+            link: 'https://worrydream.com/SeeingSpaces/'
+          }, 'Seeing Spaces', {
+            fontColor: Color.rgb(0, 0, 0),
+            link: 'https://worrydream.com/SeeingSpaces/',
+            textDecoration: 'underline'
+          }, '.\n\nLively might look different from conventional programming systems but it is based on some of the same ideas and mechanisms than Smalltalk systems introduced over 40 years ago.  Its user interface is a variant of Self\'s ', null, '🔗', {
+            fontFamily: 'Noto Emoji Color',
+            link: 'http://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf'
+          }, ' ', {
+            fontFamily: '\"IBM Plex Sans\"',
+            link: 'http://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf'
+          }, 'Morphic', {
+            fontColor: Color.rgb(0, 0, 0),
+            link: 'http://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf',
+            textDecoration: 'underline'
+          }, '.  The goal of the Lively project is to evolve those powerful concepts and combine them with novel ideas to make programming less rigid and narrow. ', null]
+
+        }]
       }]
     }
   ]
