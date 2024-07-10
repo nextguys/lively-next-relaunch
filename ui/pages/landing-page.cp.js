@@ -535,8 +535,6 @@ export const LandingPage = component({
         }, {
           type: Text,
           name: 'content',
-          extent: pt(940, 2631.3),
-          height: 2980.25,
           selectionMode: 'native',
           fontSize: 14,
           dynamicCursorColoring: true,
