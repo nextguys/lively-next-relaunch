@@ -6,26 +6,29 @@ import { rect } from 'lively.graphics/geometry-2d.js';
 export const ErrorPage = component({
   name: 'hero',
   clipMode: 'visible',
-  extent: pt(649,298),
+  extent: pt(830.5,298),
   master: {
     breakpoints: [
       [pt(0, 0), component({
         layout: new TilingLayout({
           align: 'center',
           axisAlign: 'center',
+          axis: 'column',
           padding: rect(5, 5, 0, 0),
           resizePolicies: [['wrapper', {
             height: 'fixed',
             width: 'fill'
           }]],
           spacing: 20
-        })
+        }),
+        submorphs: [
+          { name: 'dead logo', visible: false }]
       })],
-      [pt(750, 0), component({
-        width: 750,
+      [pt(660, 0), component({
         layout: new TilingLayout({
           align: 'center',
           axisAlign: 'center',
+          axis: 'row',
           padding: rect(5, 5, 0, 0),
           resizePolicies: [['wrapper', {
             height: 'fixed',
@@ -39,7 +42,7 @@ export const ErrorPage = component({
   position: pt(560, 80),
   submorphs: [{
     type: Image,
-    name: 'anImage',
+    name: 'dead logo',
     borderStyle: 'none',
     imageUrl: projectAsset('logo_gray.png'),
     borderColor: Color.blue,
@@ -49,17 +52,17 @@ export const ErrorPage = component({
   }, {
     name: 'wrapper',
     borderWidth: 0,
-    width: 750,
+    width: 510,
     height: 149,
     master: {
       breakpoints: [
         [pt(0, 0), component({
           layout: new TilingLayout({
-            align: 'center',
+            align: 'left',
             axis: 'column',
-            axisAlign: 'center',
-            hugContentsHorizontally: true,
-            hugContentsVertically: true,
+            axisAlign: 'left',
+            // hugContentsHorizontally: true,
+            // hugContentsVertically: true,
             padding: rect(4, 4, 0, 0),
             resizePolicies: [['number', {
               height: 'fixed',
@@ -70,11 +73,11 @@ export const ErrorPage = component({
             }]]
           })
         })],
-        [pt(500, 0), component({
+        [pt(751, 0), component({
           layout: new TilingLayout({
-            align: 'center',
+            align: 'left',
             axis: 'column',
-            axisAlign: 'center',
+            axisAlign: 'left',
             padding: rect(4, 4, 0, 0)
           })
         })]
@@ -101,8 +104,7 @@ export const ErrorPage = component({
       }],
       borderColor: Color.rgb(23, 160, 251),
       dynamicCursorColoring: true,
-      fill: Color.rgba(255, 255, 255, 0),
-      lineWrapping: 'by-words'
+      fill: Color.rgba(255, 255, 255, 0)
     }, {
       type: Text,
       master: {

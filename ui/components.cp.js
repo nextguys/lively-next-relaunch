@@ -229,7 +229,7 @@ export const LivelyWebPage = component({
       width: 'fill'
     }]]
   }),
-  extent: pt(474, 863.3),
+  extent: pt(690.5, 863.3),
   submorphs: [{
     name: 'website header',
     height: 138.5,
@@ -301,8 +301,6 @@ export const LivelyWebPage = component({
     })]
   }, {
     name: 'contents wrapper',
-    height: 539.41796875,
-    clipMode: 'visible',
     master: {
       breakpoints: [
         [pt(0, 0), component({
@@ -389,20 +387,7 @@ export const LivelyWebPage = component({
         }),
         part(ErrorPage, {
           name: 'error page',
-          visible: false,
-          submorphs: [{
-            name: 'wrapper',
-            extent: pt(750, 149),
-            submorphs: [{
-              name: 'number',
-              extent: pt(500, 187.4),
-              width: undefined
-            }, {
-              name: 'bottom text',
-              extent: pt(500, 1226.9),
-              width: undefined
-            }]
-          }]
+          visible: false
         }),
         part(Blog, {
           name: 'blog component',
