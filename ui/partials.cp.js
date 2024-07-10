@@ -11,7 +11,9 @@ class VideoLooperModel extends ViewModel {
 
   viewDidLoad () {
     const { srcURL } = this;
-    this.ui.videoPlayer.html = `<video controls autoplay='true' loop='true' disablepictureinpicture='true' muted="muted" playsinline='true' style='object-fit: fill' width='${this.ui.videoPlayer.width}' height='${this.ui.videoPlayer.height}'>
+    // TODO: what the hell is this?
+    if (!this.ui?.videoPlayer?.width) return;
+    this.ui.videoPlayer.html = `<video controls autoplay='true' loop='true' disablepictureinpicture='true' muted="muted" playsinline='true' style='object-fit: fill' width='100%' height='100%'>
     <source src="${srcURL}">
   </video>`;
   }
