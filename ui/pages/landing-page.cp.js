@@ -30,6 +30,7 @@ const Feature = component({
     fill: Color.rgb(255, 255, 255)
   }, {
     type: Text,
+    selectionMode: 'native',
     name: 'description',
     fontSize: 14,
     fixedWidth: true,
