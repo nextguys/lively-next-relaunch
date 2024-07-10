@@ -236,9 +236,28 @@ export const NavBar = component(BaseNavBar, {
   master: {
     auto: SmallNavBar,
     breakpoints: [
-      [pt(500, 0), LargeNavBar]
+      [pt(0, 0), component(SmallNavBar, {
+        layout: new TilingLayout({
+          align: 'right',
+          padding: rect(0, 0, 30, 0)
+        })
+      })], [
+        pt(130, 0), component(SmallNavBar, {
+
+          layout: new TilingLayout({
+            align: 'right',
+            padding: rect(0, 0, 80, 0)
+          })
+        })],
+      [pt(500, 0), component(LargeNavBar, {
+        layout: new TilingLayout({
+          align: 'right',
+          padding: rect(0, 0, 80, 0)
+        })
+      })]
     ]
   },
-  extent: pt(59.6,53),
+  fill: Color.rgb(255, 255, 255, 0),
+  extent: pt(85.9, 53),
   clipMode: 'hidden'
 });

@@ -211,7 +211,7 @@ const LogoSection = component(SmallLogoSection, {
     name: 'text'
   }]
 });
-
+// part(LivelyWebPage).openInWorld()
 export const LivelyWebPage = component({
   name: 'lively web site',
   defaultViewModel: LivelyWebPageModel,
@@ -229,7 +229,7 @@ export const LivelyWebPage = component({
       width: 'fill'
     }]]
   }),
-  extent: pt(690.5, 863.3),
+  extent: pt(1189.2, 863.3),
   submorphs: [{
     name: 'website header',
     height: 138.5,
@@ -272,23 +272,6 @@ export const LivelyWebPage = component({
     }), part(NavBar, {
       name: 'navigation',
       fill: Color.transparent,
-      master: {
-        breakpoints: [
-          [pt(0, 0), component({
-            fill: Color.rgb(255, 255, 255, 0),
-            layout: new TilingLayout({
-              align: 'right',
-              padding: rect(0, 0, 30, 0)
-            })
-          })], [
-            pt(130, 0), component({
-              fill: Color.rgb(255, 255, 255, 0),
-              layout: new TilingLayout({
-                align: 'right',
-                padding: rect(0, 0, 80, 0)
-              })
-            })]]
-      },
       submorphs: [{
         name: 'burger menu',
         layout: new TilingLayout({
