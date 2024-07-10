@@ -68,28 +68,41 @@ const Feature = component({
 
 const FeatureHolder = component({
   name: 'features shoutout',
-  layout: new TilingLayout({
-    axis: 'column',
-    axisAlign: 'center',
-    hugContentsVertically: true,
-    padding: rect(20, 20, 0, 0),
-    resizePolicies: [['top part', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['bottom part', {
-      height: 'fixed',
-      width: 'fill'
-    }]],
-    spacing: 20
-  }),
-  extent: pt(1060.5, 420),
+  master: {
+    breakpoints: [
+      [pt(0, 0), component({
+        layout: new TilingLayout({
+          axis: 'column',
+          axisAlign: 'center',
+          hugContentsVertically: true,
+          padding: rect(20, 20, 0, 0),
+          resizePolicies: [['all parts', {
+            height: 'fixed',
+            width: 'fill'
+          }]],
+          spacing: 20
+        })
+      })],
+      [pt(1000, 0), component({
+        layout: new TilingLayout({
+          axis: 'column',
+          axisAlign: 'center',
+          hugContentsVertically: true,
+          padding: rect(20, 20, 0, 0),
+          spacing: 20
+        })
+      })]
+    ]
+  },
+  extent: pt(1000, 420),
   submorphs: [{
-    name: 'top part',
+    name: 'all parts',
     layout: new TilingLayout({
       align: 'center',
       spacing: 20,
       wrapSubmorphs: true
     }),
+    extent: pt(1000, 420),
     submorphs: [
       part(Feature, {
         name: 'building together',
@@ -147,16 +160,7 @@ const FeatureHolder = component({
               fontWeight: '600'
             }, ' for all changes made visually. ', null]
           }]
-      })
-    ]
-  }, {
-    name: 'bottom part',
-    layout: new TilingLayout({
-      align: 'center',
-      spacing: 20,
-      wrapSubmorphs: true
-    }),
-    submorphs: [
+      }),
       part(Feature, {
         name: 'batteries included',
         submorphs: [{
@@ -272,16 +276,16 @@ const FeatureHolder = component({
     ]
   }]
 });
-
+// part(LandingPage).openInWorld()
 export const LandingPage = component({
   name: 'page',
-  extent: pt(1336, 3907.6),
+  extent: pt(911.5, 1694.1),
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
     axisAlign: 'center',
     hugContentsVertically: true,
-    padding: rect(10, 10, 0, 0),
+    padding: rect(20, 10, 0, 0),
     resizePolicies: [['hero', {
       height: 'fixed',
       width: 'fill'
@@ -310,13 +314,25 @@ export const LandingPage = component({
               hugContentsVertically: true,
               wrapSubmorphs: true,
               padding: rect(20, 20, 0, 0),
-              resizePolicies: [['hero text', {
+              resizePolicies: [['hero wrapper', {
                 height: 'fixed',
                 width: 'fill'
               }],
               ['productive lively session', { height: 'fixed', width: 'fill' }]],
               spacing: 20
-            })
+            }),
+            submorphs: [
+              {
+                name: 'hero text wrapper',
+
+                layout: new TilingLayout({
+                  axisAlign: 'center',
+                  align: 'center'
+                }),
+
+                submorphs: [{ name: 'hero text', width: 300 }]
+              }
+            ]
           })],
           [pt(780, 0), component({
             layout: new TilingLayout({
@@ -324,12 +340,21 @@ export const LandingPage = component({
               axisAlign: 'center',
               hugContentsVertically: true,
               padding: rect(20, 20, 0, 0),
-              resizePolicies: [['hero text', {
+              resizePolicies: [['hero text wrapper', {
                 height: 'fixed',
-                width: 'fixed'
+                width: 'fill'
               }], ['productive lively session', { height: 'fixed', width: 'fill' }]],
               spacing: 20
-            })
+            }),
+            submorphs: [
+              {
+                name: 'hero text wrapper',
+                layout: new TilingLayout({
+                  axisAlign: 'center'
+                }),
+                submorphs: [{ name: 'hero text', width: 450 }]
+              }
+            ]
           })]
         ]
       },
@@ -348,7 +373,6 @@ export const LandingPage = component({
         name: 'productive lively session',
         layout: new TilingLayout({
           align: 'right',
-          hugContentsHorizontally: true,
           hugContentsVertically: true,
           padding: rect(20, 20, 0, 0)
         }),
@@ -359,13 +383,16 @@ export const LandingPage = component({
           breakpoints: [
             [pt(0, 0), component({
               submorphs: [
+
                 {
                   name: 'video player',
                   extent: pt(310, 174)
                 }
               ]
-            }), pt(455, 0), component({
+            })],
+            [pt(455, 0), component({
               submorphs: [
+
                 {
                   name: 'video player',
                   extent: pt(450, 253)
@@ -375,41 +402,44 @@ export const LandingPage = component({
           ]
         }
       }), {
-        type: Text,
-        name: 'hero text',
-        fontSize: 14,
-        selectionMode: 'native',
-        textAndAttributes: ['lively.next', {
-          fontColor: Color.rgb(255, 119, 0),
-          fontWeight: '600'
-        }, ' is a personal programming kit.\nIt emphasizes ', null, 'liveness', {
-          fontStyle: 'italic'
-        }, ', ', null, 'directness', {
-          fontStyle: 'italic'
-        }, ' and ', null, 'interactivity', {
-          fontStyle: 'italic'
-        }, '. \n\n It combines rich ', null, 'live programming capabilities', {
-          fontStyle: 'italic'
-        }, ', in the spirit of Smalltalk, with a graphical ', null, 'direct manipulation', {
-          fontStyle: 'italic'
-        }, ' workflow from current design tools. It seamlessly brigdes these two, allowing for ', null, 'rapid prototyping', {
-          fontStyle: 'italic'
-        }, ' and', null, ' efficient collaboration', {
-          fontStyle: 'italic'
-        }, '. \n\nWe aim to bring you an ', null, 'innovative programming experience', {
-          fontStyle: 'italic',
-          fontWeight: '600'
-        }, ' while building an integrated system that brings designer and programmers ', null, 'together', {
-          fontColor: Color.rgb(255, 119, 0),
-          fontWeight: '600'
-        }, '.', null],
-        borderColor: Color.rgb(23, 160, 251),
-        dynamicCursorColoring: true,
-        fill: Color.rgb(255, 255, 255),
-        fixedWidth: true,
-        lineWrapping: 'by-words',
-        position: pt(615.5, 82.5),
-        extent: pt(300, 300)
+        name: 'hero text wrapper',
+        height: 300,
+        fill: Color.transparent,
+        submorphs: [{
+          type: Text,
+          name: 'hero text',
+          fontSize: 14,
+          selectionMode: 'native',
+          textAndAttributes: ['lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontWeight: '600'
+          }, ' is a personal programming kit.\nIt emphasizes ', null, 'liveness', {
+            fontStyle: 'italic'
+          }, ', ', null, 'directness', {
+            fontStyle: 'italic'
+          }, ' and ', null, 'interactivity', {
+            fontStyle: 'italic'
+          }, '. \n\n It combines rich ', null, 'live programming capabilities', {
+            fontStyle: 'italic'
+          }, ', in the spirit of Smalltalk, with a graphical ', null, 'direct manipulation', {
+            fontStyle: 'italic'
+          }, ' workflow from current design tools. It seamlessly brigdes these two, allowing for ', null, 'rapid prototyping', {
+            fontStyle: 'italic'
+          }, ' and', null, ' efficient collaboration', {
+            fontStyle: 'italic'
+          }, '. \n\nWe aim to bring you an ', null, 'innovative programming experience', {
+            fontStyle: 'italic',
+            fontWeight: '600'
+          }, ' while building an integrated system that brings designer and programmers ', null, 'together', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontWeight: '600'
+          }, '.', null],
+          borderColor: Color.rgb(23, 160, 251),
+          dynamicCursorColoring: true,
+          fill: Color.rgb(255, 255, 255),
+          fixedWidth: true,
+          lineWrapping: 'by-words'
+        }]
       }]
     },
     {
