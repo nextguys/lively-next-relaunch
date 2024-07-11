@@ -1,9 +1,15 @@
-import { component, TilingLayout, ShadowObject, add, ViewModel } from 'lively.morphic/index.js';
+import { component, config, ConstraintLayout, TilingLayout, ShadowObject, add, ViewModel } from 'lively.morphic/index.js';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
 import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
 import { num } from 'lively.lang';
-import { Polygon } from 'lively.morphic/morph.js';
+import { Polygon, Ellipse } from 'lively.morphic/morph.js';
+import JavaScriptEditorPlugin from 'lively.ide/js/editor-plugin.js';
+import { SystemButton } from 'lively.components/buttons.cp.js';
+import { ColorPicker } from 'lively.ide/styling/color-picker.cp.js';
+import { createFiles } from 'lively.resources';
+import module from 'lively.modules/src/module.js';
+import { signal } from 'lively.bindings';
 
 import { part } from 'lively.morphic/components/core.js';
 import { SearchField } from 'lively.components/inputs.cp.js';
@@ -541,6 +547,323 @@ const OpacityVisualizer = component(BorderRadiusVisualizer, {
   }, 'dummy')]
 });
 
+const Headline = component({
+  type: Text,
+  name: 'headline concept',
+  fixedHeight: true,
+  extent: pt(347.4, 76.8),
+  clipMode: 'hidden',
+  fill: Color.rgb(255, 255, 255),
+  fixedWidth: true,
+  fontColor: '#24292e',
+  fontSize: 33,
+  lineHeight: 1.5,
+  lineWrapping: true,
+  padding: rect(10, 10, 0, 0),
+  position: pt(-114.1, 34),
+  textAlign: 'left',
+  textAndAttributes: ['Morphic: Concept', {
+    fontWeight: 'bold'
+  }]
+});
+
+const Paragraph = component({
+  type: Text,
+  name: 'intro',
+  extent: pt(297.3, 252),
+  textAndAttributes: ['hello linus', null],
+  clipMode: 'hidden',
+  fill: Color.rgb(255, 255, 255),
+  fixedWidth: true,
+  fontColor: '#24292e',
+  fontSize: 16,
+  lineHeight: 1.5,
+  lineWrapping: 'by-words',
+  padding: rect(20, 16, -10, 4),
+  position: pt(24.5, 17.3),
+  textAlign: 'left'
+});
+
+export const InteractiveDie = component({
+  fill: Color.white,
+  extent: pt(582.2,304.9),
+  layout: new ConstraintLayout({
+    lastExtent: {
+      x: 582.15703125,
+      y: 304.9
+    },
+    reactToSubmorphAnimations: false,
+    submorphSettings: [['movable die 1', {
+      x: 'center',
+      y: 'center'
+    }]]
+  }),
+  borderWidth: 7,
+  borderColor: Color.rgb(229, 231, 233),
+  clipMode: 'hidden',
+  submorphs: [
+    {
+      name: 'movable die 1',
+      position: pt(253.3,112.6),
+      extent: pt(78.5, 78.7),
+      borderRadius: 13,
+      fill: Color.rgb(255, 0, 0),
+      submorphs: [{
+        type: 'ellipse',
+        name: 'eye',
+        extent: pt(15.9, 16.6),
+        position: pt(30.6, 31.5)
+      }]
+    }
+  ]
+});
+
+class CodeEditorModel extends ViewModel {
+  static get properties () {
+    return {
+      initCode: { defaultValue: '' },
+      targetModule: { defaultValue: null },
+      knownGlobals: { defaultValue: [] },
+      expose: { get () { return ['targetModule', 'runEval']; } },
+      bindings: {
+        get () {
+          return [{
+            target: 'eval button', signal: 'fire', handler: 'runEval'
+          }];
+        }
+      }
+    };
+  }
+
+  async runEval () {
+    await this.ui.editor.editorPlugin.runEval(this.ui.editor.textString);
+    signal(this, 'runEval');
+  }
+
+  async refreshEditor () {
+    const ed = this.ui.editor;
+    const targetModule = this.targetModule || 'lively://lively.next-workspace/' + ed.id + '.cp.js';
+    ed.editorPlugin.evalEnvironment = {
+      knownGlobals: this.knownGlobals,
+      targetModule,
+      context: ed,
+      format: 'esm'
+    };
+    if (this.initCode) {
+      await this.ui.editor.editorPlugin.runEval(this.initCode);
+    } else ed.textString = await module(System, targetModule).source();
+    setTimeout(() => ed.editorPlugin.highlight());
+  }
+
+  onRefresh (change) {
+    if (change === 'targetModule') this.refreshEditor();
+  }
+
+  async viewDidLoad () {
+    this.ui.editor.plugins = [new JavaScriptEditorPlugin()];
+    this.refreshEditor();
+  }
+}
+
+export const CodeEditor = component({
+  defaultViewModel: CodeEditorModel,
+  extent: pt(438.6, 270.6),
+  layout: new TilingLayout({
+    axis: 'column',
+    axisAlign: 'right',
+    padding: rect(7, 7, 0, 0),
+    resizePolicies: [['editor', {
+      height: 'fill',
+      width: 'fill'
+    }]],
+    spacing: 7
+  }),
+  fill: Color.rgb(229, 231, 233),
+  submorphs: [{
+    type: 'text',
+    name: 'editor',
+    fixedWidth: true,
+    fixedHeight: true,
+    readOnly: false,
+    lineWrapping: 'by-chars',
+    fill: Color.white,
+    ...config.codeEditor.defaultStyle
+  }, part(SystemButton, {
+    name: 'eval button',
+    extent: pt(91.3, 25),
+    nativeCursor: 'pointer',
+    submorphs: [{
+      name: 'label',
+      extent: pt(76, 20),
+      textAndAttributes: ['run code ', null, '', {
+        fontFamily: 'Font Awesome',
+        fontWeight: '900'
+      }, ' ', {}]
+
+    }]
+  })]
+});
+
+export const EditorSample1 = component(CodeEditor, {
+  viewModel: {
+    initCode: 'let aMorph = $world.get(\'movable die 1\'); import { Color, pt } from "lively.graphics";',
+    knownGlobals: ['aMorph', 'Color']
+  },
+  submorphs: [{
+    name: 'editor',
+    textString: 'aMorph.show()'
+  }]
+});
+
+const demoDir = 'local://component-reconciliation-demo/';
+let testResources = {
+  die: {
+    'demo.cp.js': `
+import { component } from 'lively.morphic';
+import { pt, Color} from 'lively.graphics';
+  
+export const Die = component({
+    extent: pt(78.5, 78.7),
+    borderRadius: 13,
+    fill: Color.rgb(255, 0, 0),
+    submorphs: [{
+      type: 'ellipse',
+      name: 'eye',
+      extent: pt(15.9, 16.6),
+      position: pt(30.6, 31.5)
+    }]
+  })
+  `,
+    'package.json': '{"name": "die", "main": "demo.cp.js"}'
+  }
+};
+
+class ReconciliationSampleModel extends ViewModel {
+  static get properties () {
+    return {
+      bindings: {
+        get () {
+          return [{
+            target: 'color picker', signal: 'value', handler: 'updateColor'
+          }, {
+            target: 'code editor recon', signal: 'runEval', handler: 'updateTarget'
+          }];
+        }
+      }
+    };
+  }
+
+  updateColor (newColor) {
+    const [die] = this.ui.hFloater.submorphs;
+    die.withMetaDo({ reconcileChanges: true }, () => {
+      die.fill = newColor;
+    });
+  }
+
+  updateTarget () {
+    const [EditableComponent] = this.ui.hFloater.submorphs;
+    this.ui.colorPicker.focusOnMorph(EditableComponent, EditableComponent.fill);
+  }
+
+  async prepareEnv () {
+    let Die;
+    const modId = demoDir + 'die/demo.cp.js';
+    await createFiles(demoDir, testResources);
+    const mod = module(System, modId);
+    ({ Die } = await mod.load());
+    this.ui.codeEditorRecon.targetModule = modId;
+    Die.previouslyRemovedMorphs = new WeakMap();
+    const EditableComponent = await Die.edit();
+    this.ui.hFloater.submorphs = [EditableComponent];
+    // somehow connect the change tracker to the editor so it reconciles correctly
+    // FIXME: also implement a backwards propagation mechanism for the color picker
+    this.updateTarget();
+  }
+
+  viewDidLoad () {
+    this.prepareEnv();
+  }
+}
+
+// the reconciliation needs to be setup within the viewModel
+export const ReconciliationSample = component({
+  defaultViewModel: ReconciliationSampleModel,
+  fill: Color.rgb(229, 231, 233),
+  extent: pt(679.4, 933.1),
+  layout: new TilingLayout({
+    axis: 'column',
+    padding: rect(10, 10, 0, 0),
+    resizePolicies: [['h floater', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['b floater', {
+      height: 'fill',
+      width: 'fill'
+    }]],
+    spacing: 10
+  }),
+  submorphs: [{
+    name: 'h floater',
+    layout: new TilingLayout({
+      align: 'center',
+      axisAlign: 'center'
+    }),
+    height: 117.68359375,
+    position: pt(86.1, 72.1),
+    submorphs: [{
+      name: 'reconcilable die',
+      borderRadius: 13,
+      extent: pt(78.5, 78.7),
+      fill: Color.rgb(255, 0, 0),
+      position: pt(175.8, 15),
+      submorphs: [{
+        type: Ellipse,
+        name: 'eye',
+        extent: pt(15.9, 16.6),
+        position: pt(30.6, 31.5)
+      }]
+    }]
+  }, {
+    name: 'b floater',
+    layout: new TilingLayout({
+      align: 'center',
+      axisAlign: 'center',
+      padding: rect(0, 0, 10, 0),
+      resizePolicies: [['code editor recon', {
+        height: 'fill',
+        width: 'fill'
+      }]],
+      spacing: 10
+    }),
+    fill: Color.rgba(255, 255, 255, 0),
+    extent: pt(397.7, 128.9),
+    position: pt(48, 193.1),
+    submorphs: [
+      part(CodeEditor, {
+        name: 'code editor recon',
+        viewModel: { initCode: null },
+        submorphs: [{
+          name: 'eval button',
+          extent: pt(117.6, 25),
+          submorphs: [{
+            name: 'label',
+            extent: pt(99, 20),
+            textAndAttributes: ['save module', null, ' ', {
+              fontColor: Color.rgb(0, 200, 83)
+            }, '', {
+              fontColor: Color.rgb(0, 200, 83),
+              fontFamily: 'Font Awesome',
+              fontWeight: '900'
+            }, ' ', {}]
+
+          }]
+        }]
+      }),
+      part(ColorPicker, { viewModel: { embedded: true }, name: 'color picker' })
+    ]
+  }]
+});
+
 class MorphicPropertyEssayModel extends ViewModel {
   static get properties () {
     return {
@@ -574,19 +897,14 @@ class MorphicPropertyEssayModel extends ViewModel {
 
 const MorphicPropertyEssay = component({
   defaultViewModel: MorphicPropertyEssayModel,
+  extent: pt(818.3, 7232),
   fill: Color.rgb(229, 231, 233),
   width: 800,
   layout: new TilingLayout({
     axis: 'column',
     hugContentsVertically: true,
     padding: rect(5, 5, 0, 0),
-    resizePolicies: [['headline props', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['intro', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['visual property intro', {
+    resizePolicies: [['visual property intro', {
       height: 'fixed',
       width: 'fill'
     }], ['visual property collection', {
@@ -599,42 +917,6 @@ const MorphicPropertyEssay = component({
     spacing: 5
   }),
   submorphs: [{
-    type: Text,
-    name: 'headline props',
-    padding: rect(10, 10, 0, 0),
-    fixedWidth: true,
-    fill: Color.rgb(255, 255, 255),
-    clipMode: 'hidden',
-    fontColor: '#24292e',
-    fontSize: 33,
-    lineHeight: 1.5,
-    lineWrapping: true,
-    position: pt(12.7, 26.8),
-    textAlign: 'left',
-    textAndAttributes: ['Morphic: Properties', {
-      fontWeight: 'bold'
-    }]
-  }, {
-    type: Text,
-    name: 'intro',
-    height: 132,
-    clipMode: 'hidden',
-    fill: Color.rgb(255, 255, 255),
-    fixedWidth: true,
-    fontColor: '#24292e',
-    fontSize: 16,
-    lineHeight: 1.5,
-    lineWrapping: 'by-words',
-    padding: rect(20, 16, -10, 4),
-    position: pt(24.5, 17.3),
-    textAlign: 'left',
-    textAndAttributes: ['', {
-      fontSize: 20,
-      fontWeight: 'bold'
-    }, 'The objects ', null, '(Morphs)', {
-      fontStyle: 'italic'
-    }, ' that make up a GUI in Morphic support a range of properties that define their visual appearance. In the list below you can search through all of the default properties that a morph supports. When hovering over the respective boxes, an animation will illustrate how a change in the property affects the appearance of the morph.', null]
-  }, {
     name: 'visual property intro',
     layout: new TilingLayout({
       axis: 'column',
@@ -768,12 +1050,13 @@ const MorphicPropertyEssay = component({
       type: Text,
       name: 'reactsToPointer prop',
       clipMode: 'hidden',
+      extent: pt(774.3, 85),
       fill: Color.rgb(255, 255, 255),
       fixedWidth: true,
       fontColor: Color.rgb(121, 125, 127),
       fontSize: 16,
       lineHeight: 1.5,
-      lineWrapping: true,
+      lineWrapping: 'by-words',
       position: pt(46.6, 80.3),
       textAlign: 'left',
       textAndAttributes: ['reactsToPointer', {
@@ -1029,7 +1312,12 @@ const MorphicPropertyEssay = component({
       }, ' ', {
         fontSize: 20,
         fontWeight: 'bold'
-      }, 'defaultValue: ', {
+      }, 'defaultValue:', {
+        fontColor: Color.rgb(127, 140, 141),
+        fontSize: 20,
+        fontStyle: 'italic',
+        fontWeight: 'normal'
+      }, ' ', {
         fontColor: Color.gray,
         fontSize: 20,
         fontStyle: 'italic',
@@ -1039,12 +1327,18 @@ const MorphicPropertyEssay = component({
         fontSize: 20,
         fontStyle: 'italic',
         fontWeight: 'normal'
-      }, 'D', null]
+      }, 'Defines wether or not a given morph is captured in case of ', null, 'reconciliation', {
+        fontStyle: 'italic'
+      }, ' or ', null, 'serialization', {
+        fontStyle: 'italic'
+      }, '. Is usually used for morphs that are part of the toolsupport of the system. Note that epiMorphs also do not appear inside the scene graph, which is handy for a various set of tools that live inside the world.', null]
     }]
   }]
 });
 
 export {
+  Headline,
+  Paragraph,
   BorderRadiusVisualizer,
   BorderColorVisualizer,
   BorderWidthVisualizer,
@@ -1058,5 +1352,6 @@ export {
   ScaleVisualizer,
   VisibilityVisualizer,
   VerticesVisualizer,
-  OpacityVisualizer
+  OpacityVisualizer,
+  MorphicPropertyEssay
 };

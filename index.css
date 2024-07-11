@@ -2,6 +2,12 @@
 /* Do NOT create other CSS files in this folder, as they will not be available in the bundled application! */
 /* `@imports` fetching remote CSS are okay. */
 
+@import url("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css");
+
+figcaption {
+  font-style: italic;
+  color: gray;
+}
 a {
   text-decoration: none;
 }
@@ -10,3 +16,4 @@ a {
   text-decoration: underline dashed #FF7700;
   text-decoration-thickness: 2px;
 } 
+
