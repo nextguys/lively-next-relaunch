@@ -1,17 +1,19 @@
 import { component, easings, ViewModel, part, Text, TilingLayout } from 'lively.morphic';
 import { pt, rect, Color } from 'lively.graphics';
 import { connect } from 'lively.bindings';
+import { add } from 'lively.morphic/components/core.js';
+import { Ellipse } from 'lively.morphic/morph.js';
 
 export const NavItemBase = component({
   type: Text,
   name: 'nav item',
   textAndAttributes: ['sddss', null],
+  fontSize: 14,
   // in order to not have a wiggle effect when activating the border on hvoerborderStyle: 'solid',
   borderColor: Color.rgba(255, 255, 255, 0)
 });
 
 export const NavItemHovered = component(NavItemBase, {
-  // This is not a good solution as the edges are cutoff
   borderColor: {
     bottom: Color.rgb(245, 124, 0)
   },
@@ -102,7 +104,7 @@ export const BurgerNavBarItems = component(SpacedNavBarItems, {
     spacing: 10
   }),
   isLayoutable: false,
-  extent: pt(85, 105),
+  extent: pt(101, 110),
   fill: Color.rgb(255, 255, 255),
   submorphs: [{
     name: 'history',
@@ -123,6 +125,62 @@ export const BurgerNavBarItems = component(SpacedNavBarItems, {
   }]
 });
 
+const BurgerNavBarItemsSmall = component(BurgerNavBarItems, {
+  name: 'small screen burger nav items',
+  extent: pt(220.5, 271.5),
+  submorphs: [{
+    name: 'history',
+    textAlign: 'center',
+    fontSize: 30
+  }, {
+    name: 'documentation',
+    textAlign: 'center',
+    fontSize: 30
+  }, {
+    name: 'examples',
+    textAlign: 'center',
+    fontSize: 30
+  }, {
+    name: 'blog',
+    textAlign: 'center',
+    fontSize: 30
+  }, add({
+    name: 'close wrapper',
+    layout: new TilingLayout({
+      align: 'center',
+      axisAlign: 'center'
+    }),
+    extent: pt(160.5, 50.5),
+    position: pt(879.8, 436.8),
+    submorphs: [{
+      type: Ellipse,
+      name: 'close button',
+      nativeCursor: 'pointer',
+      borderColor: Color.rgb(0, 0, 0),
+      borderWidth: 3,
+      extent: pt(30, 30),
+      layout: new TilingLayout({
+        align: 'center',
+        axisAlign: 'center'
+      }),
+      position: pt(41, 42.8),
+      submorphs: [{
+        type: Text,
+        reactsToPointer: false,
+        name: 'aText',
+        dynamicCursorColoring: true,
+        fill: Color.rgba(255, 255, 255, 0),
+        padding: rect(3, 0, -3, 0),
+        position: pt(8, 7),
+        textAndAttributes: ['', {
+          fontFamily: 'Font Awesome',
+          fontWeight: '900'
+        }, ' ', {}]
+      }]
+    }]
+  })]
+});
+
 class BurgerMenuModel extends ViewModel {
   static get properties () {
     return {
@@ -140,15 +198,28 @@ class BurgerMenuModel extends ViewModel {
 
   fadeIn () {
     if (this.burgerItems) return;
-    this.burgerItems = part(BurgerNavBarItems, { opacity: 0, name: 'burger items' });
+    this.burgerItems = $world.width > 1024
+      ? part(BurgerNavBarItems, { opacity: 0, name: 'burger items' })
+      : part(BurgerNavBarItemsSmall, { opacity: 0, name: 'burger items', hasFixedPosition: true });
     const items = this.burgerItems;
+    // A trick to compensate for the small items not being submorph of the page but of the world
+    if ($world.width <= 1024) items.withAllSubmorphsDo((item) => { if (item !== items) connect(item, 'onMouseDown', window.LIVELY_PAGE, 'onMouseDown', { converter: '() => {return {targetMorphs: [source]}}' }); });
     connect(items, 'onMouseDown', this, 'fadeOut');
     const page = window.LIVELY_PAGE;
     const burgerButton = this.view.owner;
-    page.addMorph(items);
+    if ($world.width > 1024) page.addMorph(items);
+    else this.burgerItems.openInWorld();
     items.applyLayoutIfNeeded();
-    items.topRight = page.localizePointFrom(burgerButton.bottomRight, burgerButton.owner);
-    items.onHoverOut = () => this.fadeOut();
+    if ($world.width > 1024) {
+      items.topRight = page.localizePointFrom(burgerButton.bottomRight, burgerButton.owner);
+      items.onHoverOut = () => this.fadeOut();
+    } else {
+      window.LIVELY_PAGE.animate({
+        duration: 300,
+        blur: 2
+      });
+      items.center = $world.visibleBounds().center();
+    }
     items.visible = true;
     items.animate({
       opacity: 1,
@@ -158,6 +229,10 @@ class BurgerMenuModel extends ViewModel {
   }
 
   fadeOut () {
+    window.LIVELY_PAGE.animate({
+      duration: 300,
+      blur: 0
+    });
     const items = this.burgerItems;
     items.animate({
       opacity: 0,
@@ -249,7 +324,7 @@ export const NavBar = component(BaseNavBar, {
             padding: rect(0, 0, 80, 0)
           })
         })],
-      [pt(500, 0), component(LargeNavBar, {
+      [pt(465, 0), component(LargeNavBar, {
         layout: new TilingLayout({
           align: 'right',
           padding: rect(0, 0, 80, 0)

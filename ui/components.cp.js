@@ -114,6 +114,7 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   onMouseDown (evt) {
+    debugger;
     if (evt.targetMorphs[0].name === 'blog') this.router.route('blog', true);
     if (evt.targetMorphs[0].name === 'history') this.router.route('history', true);
     if (evt.targetMorphs[0].name === 'documentation') this.router.route('documentation', true);
@@ -146,7 +147,6 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   get respondsToVisibleWindow () { return lively.FreezerRuntime; }
-
 }
 
 const LargeLogoSection = component({
