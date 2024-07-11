@@ -1,6 +1,7 @@
 import { component, TilingLayout, ViewModel } from 'lively.morphic/index.js';
 import { HTMLMorph } from 'lively.morphic/html-morph.js';
-import { rect } from 'lively.graphics/geometry-2d.js';
+import { rect, pt } from 'lively.graphics/geometry-2d.js';
+import { Color } from 'lively.graphics';
 
 class VideoLooperModel extends ViewModel {
   static get properties () {
@@ -23,13 +24,27 @@ export const VideoLooper = component({
   name: 'video looper',
   defaultViewModel: VideoLooperModel,
   layout: new TilingLayout({
-    hugContentsHorizontally: true,
-    hugContentsVertically: true,
-    padding: rect(20, 20, 0, 0)
+    align: 'center',
+    axisAlign: 'center'
   }),
-  submorphs: [{
-    type: HTMLMorph,
-    name: 'video player'
-  }
+  extent: pt(37, 31.5),
+  submorphs: [
+    {
+      name: 'border',
+      // FIXME: This is a workaround to outmaneuver a rendering bug that inserts nonsensical margins!
+      clipMode: 'hidden',
+      layout: new TilingLayout({
+        hugContentsHorizontally: true,
+        hugContentsVertically: true,
+        padding: rect(20, 20, 0, 0)
+      }),
+      fill: Color.pink,
+      submorphs: [
+        {
+          type: HTMLMorph,
+          name: 'video player'
+        }
+      ]
+    }
   ]
 });

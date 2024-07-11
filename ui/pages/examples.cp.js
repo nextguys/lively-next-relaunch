@@ -7,7 +7,7 @@ import { Color, rect, pt } from 'lively.graphics';
 
 export const ExamplePage = component({
   name: 'hero',
-  extent: pt(1028.5, 1437),
+  extent: pt(902, 1105),
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
@@ -87,32 +87,42 @@ export const ExamplePage = component({
       align: 'center',
       axisAlign: 'center',
       hugContentsVertically: true,
-      spacing: 50,
-      wrapSubmorphs: true
+      resizePolicies: [['snowfall video', {
+        height: 'fixed',
+        width: 'fill'
+      }]],
+      spacing: 50
     }),
     extent: pt(320.5, 167.5),
     position: pt(402, 667.5),
     submorphs: [part(VideoLooper, {
       name: 'snowfall video',
-      extent: pt(472.8, 320.6),
+      master: {
+        breakpoints: [
+          [pt(0, 0), component({
+            submorphs: [
+
+              {
+                name: 'video player',
+                extent: pt(310, 174)
+              }
+            ]
+          })],
+          [pt(455, 0), component({
+            submorphs: [
+
+              {
+                name: 'video player',
+                extent: pt(450, 253)
+              }
+            ]
+          })]
+        ]
+      },
       fill: Color.rgb(224, 224, 224),
       viewModel: {
-
-        height: 400,
         srcURL: projectAsset('snowfall.mp4')
-      },
-      submorphs: [{
-        name: 'video player',
-        extent: pt(450, 253),
-        html: '\n\
-<div style=\"display: flex;\n\
-            align-items: center;\n\
-            justify-content: center;\n\
-            height: 100%;\n\
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(242,243,244,1)),color-stop(100%, rgba(229,231,233,1)))\">\n\
-  <p style=\"font: bold 40pt Inconsolata, monospace; color: lightgray;\">&lt;HTML/&gt;</p>\n\
-</div>'
-      }]
+      }
     }), {
       type: Text,
       name: 'hero text',
@@ -147,31 +157,42 @@ export const ExamplePage = component({
       align: 'center',
       axisAlign: 'center',
       hugContentsVertically: true,
-      spacing: 50,
-      wrapSubmorphs: true
+      resizePolicies: [['solar system video', {
+        height: 'fixed',
+        width: 'fill'
+      }]],
+      spacing: 50
     }),
     extent: pt(320.5, 167.5),
     position: pt(402, 667.5),
     submorphs: [part(VideoLooper, {
       name: 'solar system video',
+      master: {
+        breakpoints: [
+          [pt(0, 0), component({
+            submorphs: [
+
+              {
+                name: 'video player',
+                extent: pt(310, 174)
+              }
+            ]
+          })],
+          [pt(455, 0), component({
+            submorphs: [
+
+              {
+                name: 'video player',
+                extent: pt(450, 253)
+              }
+            ]
+          })]
+        ]
+      },
       fill: Color.rgb(224, 224, 224),
       viewModel: {
-
-        height: 400,
         srcURL: projectAsset('solarsystem.mp4')
-      },
-      submorphs: [{
-        name: 'video player',
-        extent: pt(450, 253),
-        html: '\n\
-<div style=\"display: flex;\n\
-            align-items: center;\n\
-            justify-content: center;\n\
-            height: 100%;\n\
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(242,243,244,1)),color-stop(100%, rgba(229,231,233,1)))\">\n\
-  <p style=\"font: bold 40pt Inconsolata, monospace; color: lightgray;\">&lt;HTML/&gt;</p>\n\
-</div>'
-      }]
+      }
     }), {
       type: Text,
       name: 'hero text',
@@ -199,35 +220,68 @@ export const ExamplePage = component({
     }]
   }, {
     name: 'typeshift',
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center',
-      hugContentsVertically: true,
-      spacing: 50,
-      wrapSubmorphs: true
-    }),
+    master: {
+      breakpoints: [
+        [pt(0, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            axisAlign: 'center',
+            axis: 'column',
+            hugContentsVertically: true,
+            resizePolicies: [['typeshift video', {
+              height: 'fixed',
+              width: 'fill'
+            }], ['hero text', {
+              height: 'fixed',
+              width: 'fill'
+            }]],
+            spacing: 50
+          })
+        })],
+        [pt(890, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            axisAlign: 'center',
+            axis: 'row',
+            hugContentsVertically: true,
+            resizePolicies: [['typeshift video', {
+              height: 'fixed',
+              width: 'fill'
+            }]],
+            spacing: 50
+          })
+        })]
+      ]
+    },
+
     extent: pt(320.5, 167.5),
     position: pt(402, 667.5),
     submorphs: [part(VideoLooper, {
       name: 'typeshift video',
-      fill: Color.rgb(224, 224, 224),
-      viewModel: {
-
-        height: 400,
-        srcURL: projectAsset('typeshift.mp4')
+      fill: Color.rgba(224, 224, 224, 0),
+      master: {
+        breakpoints: [
+          [pt(0, 0), component({
+            submorphs: [
+              {
+                name: 'video player',
+                extent: pt(270, 152)
+              }
+            ]
+          })],
+          [pt(490, 0), component({
+            submorphs: [
+              {
+                name: 'video player',
+                extent: pt(450, 253)
+              }
+            ]
+          })]
+        ]
       },
-      submorphs: [{
-        name: 'video player',
-        extent: pt(450, 253),
-        html: '\n\
-<div style=\"display: flex;\n\
-            align-items: center;\n\
-            justify-content: center;\n\
-            height: 100%;\n\
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(242,243,244,1)),color-stop(100%, rgba(229,231,233,1)))\">\n\
-  <p style=\"font: bold 40pt Inconsolata, monospace; color: lightgray;\">&lt;HTML/&gt;</p>\n\
-</div>'
-      }]
+      viewModel: {
+        srcURL: projectAsset('typeshift.mp4')
+      }
     }), {
       type: Text,
       name: 'hero text',
@@ -252,7 +306,7 @@ export const ExamplePage = component({
       fill: Color.rgb(255, 255, 255),
       fixedWidth: true,
       lineWrapping: 'by-words',
-      padding: rect(1, 1, 0, 0),
+      padding: rect(20, 1, 0, 0),
       position: pt(-913.2, -79.5)
     }]
   }, {
@@ -261,30 +315,48 @@ export const ExamplePage = component({
       align: 'center',
       axisAlign: 'center',
       hugContentsVertically: true,
-      spacing: 50,
-      wrapSubmorphs: true
+      resizePolicies: [['qinoq video', {
+        height: 'fixed',
+        width: 'fill'
+      }]],
+      spacing: 50
     }),
     extent: pt(320.5, 167.5),
-    position: pt(-1083.6, -1434.8),
     submorphs: [part(VideoLooper, {
       name: 'qinoq video',
-      fill: Color.rgb(224, 224, 224),
-      viewModel: {
-        height: 400,
-        srcURL: projectAsset('qinoq.mp4')
+      master: {
+        breakpoints: [
+          [pt(0, 0), component({
+            submorphs: [
+              {
+                name: 'border',
+                submorphs: [
+                  {
+                    name: 'video player',
+                    extent: pt(310, 174)
+                  }
+                ]
+              }
+            ]
+          })],
+          [pt(455, 0), component({
+            submorphs: [
+              {
+                name: 'border',
+                surmopshs: [
+                  {
+                    name: 'video player',
+                    extent: pt(450, 253)
+                  }
+                ]
+              }
+            ]
+          })]
+        ]
       },
-      submorphs: [{
-        name: 'video player',
-        extent: pt(450, 253),
-        html: '\n\
-<div style=\"display: flex;\n\
-            align-items: center;\n\
-            justify-content: center;\n\
-            height: 100%;\n\
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, rgba(242,243,244,1)),color-stop(100%, rgba(229,231,233,1)))\">\n\
-  <p style=\"font: bold 40pt Inconsolata, monospace; color: lightgray;\">&lt;HTML/&gt;</p>\n\
-</div>'
-      }]
+      viewModel: {
+        srcURL: projectAsset('qinoq.mp4')
+      }
     }), {
       type: Text,
       name: 'hero text',
