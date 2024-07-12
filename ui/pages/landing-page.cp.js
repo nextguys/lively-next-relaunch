@@ -109,7 +109,7 @@ const FeatureHolder = component({
         submorphs: [
           {
             name: 'title',
-            textAndAttributes: ['👪', { fontFamily: 'Noto Emoji Color' }, ' Building Together', null]
+            textAndAttributes: ['👪', { fontFamily: 'Noto Emoji Color Subset' }, ' Building Together', null]
           },
           {
             name: 'description',
@@ -129,7 +129,7 @@ const FeatureHolder = component({
         name: 'components',
         submorphs: [{
           name: 'title',
-          textAndAttributes: ['🔁', { fontFamily: 'Noto Emoji Color' }, ' Powerful Component System', null]
+          textAndAttributes: ['🔁', { fontFamily: 'Noto Emoji Color Subset' }, ' Powerful Component System', null]
         }, {
           name: 'description',
           textAndAttributes: ['lively.next', {
@@ -150,7 +150,7 @@ const FeatureHolder = component({
         submorphs: [
           {
             name: 'title',
-            textAndAttributes: ['🖨️', { fontFamily: 'Noto Emoji Color' }, ' Code Generation That Just Works', null]
+            textAndAttributes: ['🖨️', { fontFamily: 'Noto Emoji Color Subset' }, ' Code Generation That Just Works', null]
           },
           {
             name: 'description',
@@ -165,7 +165,7 @@ const FeatureHolder = component({
         name: 'batteries included',
         submorphs: [{
           name: 'title',
-          textAndAttributes: ['🔋️', { fontFamily: 'Noto Emoji Color' }, ' Batteries Included', null]
+          textAndAttributes: ['🔋️', { fontFamily: 'Noto Emoji Color Subset' }, ' Batteries Included', null]
         }, {
           name: 'description',
           textAndAttributes: ['lively.next ', {
@@ -214,7 +214,7 @@ const FeatureHolder = component({
         }),
         submorphs: [{
           name: 'title',
-          textAndAttributes: ['🎨️', { fontFamily: 'Noto Emoji Color' }, ' Make it Yours', null]
+          textAndAttributes: ['🎨️', { fontFamily: 'Noto Emoji Color Subset' }, ' Make it Yours', null]
         }, {
           name: 'description',
           textAndAttributes: ['lively.next', {
@@ -248,7 +248,7 @@ const FeatureHolder = component({
         }),
         submorphs: [{
           name: 'title',
-          textAndAttributes: ['🤸', { fontFamily: 'Noto Emoji Color' }, ' Full Stack Live Programming', null]
+          textAndAttributes: ['🤸', { fontFamily: 'Noto Emoji Color Subset' }, ' Full Stack Live Programming', null]
         }, {
           name: 'description',
           textAndAttributes: ['lively.next', {
@@ -574,7 +574,7 @@ export const LandingPage = component({
           lineWrapping: 'by-words',
           position: pt(120, 400),
           textAndAttributes: ['\nThe lively team aims to build a platform to express ', null, '🔗', {
-            fontFamily: 'Noto Emoji Color',
+            fontFamily: 'Noto Emoji Color Subset',
             link: 'https://www.ted.com/talks/alan_kay_a_powerful_idea_about_ideas#t-1110785'
           }, ' ', {
             fontFamily: '\"IBM Plex Sans\"',
@@ -584,7 +584,7 @@ export const LandingPage = component({
             link: 'https://www.ted.com/talks/alan_kay_a_powerful_idea_about_ideas#t-1110785',
             textDecoration: 'underline'
           }, ' much in the tradition of original systems and tools that defined the meaning of \"personal computing\". We are inspired, among others, by \n\n- the works and powerful ideas of ', null, '🔗', {
-            fontFamily: 'Noto Emoji Color',
+            fontFamily: 'Noto Emoji Color Subset',
             link: 'https://www.youtube.com/watch?v=QQhVQ1UG6aM&t=9s'
           }, ' ', {
             fontFamily: '\"IBM Plex Sans\"',
@@ -594,7 +594,7 @@ export const LandingPage = component({
             link: 'https://www.youtube.com/watch?v=QQhVQ1UG6aM&t=9s',
             textDecoration: 'underline'
           }, '- Doug Engelbarts ', null, '🔗', {
-            fontFamily: 'Noto Emoji Color',
+            fontFamily: 'Noto Emoji Color Subset',
             link: 'https://dougengelbart.org/content/view/209/'
           }, ' ', {
             fontFamily: '\"IBM Plex Sans\"',
@@ -604,7 +604,7 @@ export const LandingPage = component({
             link: 'https://dougengelbart.org/content/view/209/',
             textDecoration: 'underline'
           }, ',\n- the flexibility of ', null, '🔗', {
-            fontFamily: 'Noto Emoji Color',
+            fontFamily: 'Noto Emoji Color Subset',
             link: 'https://worrydream.com/EarlyHistoryOfSmalltalk/'
           }, ' ', {
             fontFamily: '\"IBM Plex Sans\"',
@@ -614,7 +614,7 @@ export const LandingPage = component({
             link: 'https://worrydream.com/EarlyHistoryOfSmalltalk/',
             textDecoration: 'underline'
           }, ',\n- and original authoring-for-all-tools like Bill Atkinson\'s ', null, '🔗', {
-            fontFamily: 'Noto Emoji Color',
+            fontFamily: 'Noto Emoji Color Subset',
             link: 'https://en.wikipedia.org/wiki/HyperCard'
           }, ' ', {
             fontFamily: '\"IBM Plex Sans\"',
@@ -627,7 +627,7 @@ export const LandingPage = component({
             fontColor: Color.rgb(255, 119, 0),
             fontFamily: '\"IBM Plex Mono\"'
           }, ' forms a flexible personal computing environment and construction kit.  Yet we hope, that it will just be a stepping stone towards a medium that truly helps us think, learn, do, and create - in the spirit of what Bret Victor calls ', null, '🔗', {
-            fontFamily: 'Noto Emoji Color',
+            fontFamily: 'Noto Emoji Color Subset',
             link: 'https://worrydream.com/SeeingSpaces/'
           }, ' ', {
             fontFamily: '\"IBM Plex Sans\"',
@@ -637,7 +637,7 @@ export const LandingPage = component({
             link: 'https://worrydream.com/SeeingSpaces/',
             textDecoration: 'underline'
           }, '.\n\nLively might look different from conventional programming systems but it is based on some of the same ideas and mechanisms than Smalltalk systems introduced over 40 years ago.  Its user interface is a variant of Self\'s ', null, '🔗', {
-            fontFamily: 'Noto Emoji Color',
+            fontFamily: 'Noto Emoji Color Subset',
             link: 'http://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf'
           }, ' ', {
             fontFamily: '\"IBM Plex Sans\"',

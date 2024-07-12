@@ -56,7 +56,7 @@ const WideFooter = component({
       selectionMode: 'native',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
-      textAndAttributes: ['🗨️', { fontFamily: 'Noto Emoji Color' }, ' Talk to us on Matrix!', { fontColor: Color.rgb(0, 0, 0), link: 'https://matrix.to/#/#lively.next:matrix.org' }]
+      textAndAttributes: ['🗨️', { fontFamily: 'Noto Emoji Color Subset' }, ' Talk to us on Matrix!', { fontColor: Color.rgb(0, 0, 0), link: 'https://matrix.to/#/#lively.next:matrix.org' }]
     }, {
       type: Text,
       name: 'github',
@@ -97,7 +97,7 @@ const WideFooter = component({
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
       position: pt(-107, 23.5),
-      textAndAttributes: ['We are looking for funding! ', null, '💌', { fontFamily: 'Noto Emoji Color', link: 'mailto:hello@example.com' }, ' funding@lively-next.org', {
+      textAndAttributes: ['We are looking for funding! ', null, '💌', { fontFamily: 'Noto Emoji Color Subset', link: 'mailto:hello@example.com' }, ' funding@lively-next.org', {
         fontColor: Color.rgb(0, 0, 0),
         link: 'mailto:hello@example.com'
       }]

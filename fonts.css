@@ -3,3 +3,10 @@ DO NOT CHANGE THE CONTENTS OF THIS FILE!
 Its content is managed automatically by lively.next. It will automatically be loaded/bundled together with this project!
 */
 
+@font-face {
+  font-family: 'Noto Emoji Color Subset';
+  src: url('./assets/Noto Emoji Color Subset.woff2');
+  font-style: normal;
+  font-display: swap;
+}
+

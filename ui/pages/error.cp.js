@@ -124,7 +124,7 @@ export const ErrorPage = component({
       textAndAttributes: ['Oh no, it\'s not so alive right now', {
         fontSize: 32
       }, '😢', {
-        fontFamily: 'Noto Emoji Color',
+        fontFamily: 'Noto Emoji Color Subset',
         fontSize: 32
       }]
     }]

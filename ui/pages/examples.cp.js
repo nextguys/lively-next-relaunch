@@ -144,10 +144,10 @@ export const ExamplePage = component({
         fontFamily: '\"IBM Plex Mono\"'
       }, ' (', null, 'in fact, you are looking at such a site right now!', {
         fontStyle: 'italic'
-      }, '), it really shines when building ', null, '🔗', {
-        fontFamily: '\"Noto Emoji Color\"',
+      }, '), it really shines when building ', null, '🔗', {
+        fontFamily: '\"Noto Emoji Color Subset\"',
         link: 'https://media.ccc.de/v/froscon2023-2897-live_programming_and_designing_of_dynamic_web_applications'
-      }, ' ', {
+      }, ' ', {
         link: 'https://media.ccc.de/v/froscon2023-2897-live_programming_and_designing_of_dynamic_web_applications'
       }, 'highly customized, interactive applications', {
         fontColor: Color.rgb(0, 0, 0),
