@@ -30,7 +30,7 @@ const historyData = [
     title: 'Dan Ingalls present the first version of LivelyKernel at Google TechTalks. First implementation of Fabrik for Lively.',
     pictures: [
       {
-        yt: 'https://www.youtube.com/watch?v=gGw09RZjQf8'
+        yt: 'gGw09RZjQf8'
       }
     ]
   },
@@ -57,7 +57,7 @@ const historyData = [
     title: 'The server side of LivelyKernel is now fully implemented in NodeJS, allowing for flexibel server as well as client side scripting. This fullstack version of LivelyKernel is named Lively-Web.',
     pictures: [
       {
-        yt: 'https://www.youtube.com/watch?v=QTJRwKOFddc&t=677s',
+        yt: 'QTJRwKOFddc',
         caption: 'Dan Ingalls presents Lively-Web at JsConf 2012'
       }
     ]
@@ -97,7 +97,7 @@ const historyData = [
     title: 'BachelorProject between Typeshift and HPI Software Architecture Group develops Qinoq, and interactive tool built ontop of lively.next that allows for non programmers and programmers to collaborate on building Scrollytelling interactives.',
     pictures: [
       {
-        yt: 'https://www.youtube.com/watch?v=O7pdYaSdZ3U&list=PLU8gLN7WFOzfmDpsL3iVcZrVVxWG95yLX&index=10',
+        yt: 'O7pdYaSdZ3U',
         caption: 'The final presentation of the scrollytelling editor (German)'
       }
     ]
@@ -115,7 +115,7 @@ const historyData = [
     title: 'Linus Hagemann presents the latest version of lively.next at Froscon in Germany.',
     pictures: [
       {
-        yt: 'https://www.youtube.com/watch?v=XaMYx-OCaYo&t=2777s'
+        yt: 'XaMYx-OCaYo'
       }
     ]
   },
@@ -214,7 +214,7 @@ const ChronoVideo = component(ChronoPicture, {
     without('picture'),
     add(part(YouTubeEmbed, {
       name: 'video',
-      viewModel: { videoURL: 'https://www.youtube.com/watch?v=gGw09RZjQf8' },
+      viewModel: { videoID: 'gGw09RZjQf8' },
       extent: pt(400, 225),
       position: pt(13.1, 265)
     }), 'caption')
@@ -226,7 +226,7 @@ const createChronoVideo = ({ src, caption }) => part(ChronoVideo, {
   submorphs: [
     {
       name: 'video',
-      viewModel: { videoURL: src }
+      viewModel: { videoID: src }
     },
     {
       name: 'caption',
