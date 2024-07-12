@@ -43,11 +43,10 @@ export const SpacedNavBarItems = component({
   layout: new TilingLayout({
     align: 'center',
     axisAlign: 'center',
-    justifySubmorphs: 'spaced',
-    spacing: 10
+    spacing: 42
   }),
   borderColor: Color.rgb(23, 160, 251),
-  extent: pt(464, 43),
+  extent: pt(375, 43),
   submorphs: [
     part(NavItem, {
       type: Text,
@@ -328,7 +327,7 @@ export const NavBar = component(BaseNavBar, {
             padding: rect(0, 0, 80, 0)
           })
         })],
-      [pt(600, 0), component(LargeNavBar, {
+      [pt(488, 0), component(LargeNavBar, {
         layout: new TilingLayout({
           align: 'right',
           padding: rect(0, 0, 80, 0)
