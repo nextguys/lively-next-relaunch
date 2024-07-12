@@ -104,29 +104,16 @@ export const BlogEntryPreview = component({
     axisAlign: 'right',
     hugContentsVertically: true,
     padding: rect(20, 0, 0, 0),
-    resizePolicies: [
-      [
-        'header wrapper',
-        {
-          height: 'fixed',
-          width: 'fill'
-        }
-      ],
-      [
-        'seperator',
-        {
-          height: 'fixed',
-          width: 'fill'
-        }
-      ],
-      [
-        'abstract',
-        {
-          height: 'fixed',
-          width: 'fill'
-        }
-      ]
-    ]
+    resizePolicies: [['header wrapper', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['seperator', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['abstract', {
+      height: 'fixed',
+      width: 'fill'
+    }]]
   }),
   submorphs: [
     {
@@ -134,10 +121,10 @@ export const BlogEntryPreview = component({
       clipMode: 'hidden',
       fill: Color.rgba(255, 255, 255, 0),
       layout: new TilingLayout({
+        align: 'right',
         axisAlign: 'center',
         hugContentsVertically: true,
         justifySubmorphs: 'spaced',
-        padding: rect(0, 0, 0, 20),
         resizePolicies: [['title', {
           height: 'fixed',
           width: 'fill'
@@ -150,6 +137,8 @@ export const BlogEntryPreview = component({
         {
           type: Text,
           name: 'title',
+          selectionMode: 'native',
+          padding: rect(0, 5, 0, -5),
           lineWrapping: 'by-words',
           fixedWidth: true,
           fontSize: 30,
@@ -181,6 +170,7 @@ export const BlogEntryPreview = component({
             {
               type: Text,
               name: 'date',
+              selectionMode: 'native',
               fontWeight: '600',
               borderColor: Color.rgb(23, 160, 251),
               dynamicCursorColoring: true,
@@ -196,6 +186,7 @@ export const BlogEntryPreview = component({
             {
               type: Text,
               name: 'aText_2',
+              selectionMode: 'native',
               borderColor: Color.rgb(23, 160, 251),
               dynamicCursorColoring: true,
               fill: Color.rgba(255, 255, 255, 0),
@@ -211,6 +202,7 @@ export const BlogEntryPreview = component({
               type: Text,
               name: 'author',
               fontWeight: '600',
+              selectionMode: 'native',
               borderColor: Color.rgb(23, 160, 251),
               dynamicCursorColoring: true,
               fill: Color.rgba(255, 255, 255, 0),
@@ -236,13 +228,13 @@ export const BlogEntryPreview = component({
     {
       type: Text,
       name: 'abstract',
-      extent: pt(540, 90.5),
+      fontSize: 14,
       clipMode: 'hidden',
       height: 90.5,
+      selectionMode: 'native',
       borderColor: Color.rgb(23, 160, 251),
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
-      fixedHeight: true,
       fixedWidth: true,
       lineWrapping: 'by-words',
       padding: rect(1, 20, 0, -19),
@@ -295,6 +287,9 @@ export const BlogEntry = component(BlogEntryPreview, {
       height: 'fixed',
       width: 'fill'
     }], ['seperator', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['content', {
       height: 'fixed',
       width: 'fill'
     }]]
@@ -401,6 +396,7 @@ export class BlogModel extends ViewModel {
    * Shows a list of articles, also closing all open articles.
    */
   showList (doRoute = false) {
+    this.ui.introText.visible = true;
     // Push the URL update to history but do not trigger actual routing flow.
     // Necessary in the case we come here from closing an article.
     if (doRoute) noUpdate(() => window.router.route('blog', true));
@@ -415,7 +411,7 @@ export class BlogModel extends ViewModel {
   }
 
   openEntry (entry) {
-    debugger;
+    this.ui.introText.visible = false;
     this.reset();
     const fullArticle = part(BlogEntry, {
       extent: this.view.extent,
@@ -465,6 +461,7 @@ export class BlogModel extends ViewModel {
 
 export const Blog = component({
   defaultViewModel: BlogModel,
+  extent: pt(719.5, 306),
   styleClasses: ['dashed'],
   layout: new TilingLayout({
     align: 'center',
@@ -484,18 +481,30 @@ export const Blog = component({
     {
       name: 'intro text',
       type: Text,
+      height: 200,
+      selectionMode: 'native',
       padding: rect(0, 30, 0, 0),
       lineWrapping: 'by-words',
       fontSize: 14,
-      textAndAttributes: ['Welcome to the blog of the ', null, 'lively.next', {
+      textAndAttributes: ['Welcome to the ', {
+        fontSize: 16
+      }, 'blog', {
+        fontSize: 16,
+        fontWeight: '600'
+      }, ' of the ', {
+        fontSize: 16
+      }, 'lively.next', {
+        fontColor: Color.rgb(255, 119, 0),
+        fontFamily: '\"IBM Plex Mono\"',
+        fontSize: 16
+      }, ' project!\n', {
+        fontSize: 16
+      }, '\nThis blog serves as a place for us to announce changes and progress on the project, as well as a place to shed some light on ideas and experiments we are working on, or an occasional deep-dive into the technical nitti-gritties of', null, ' lively.next!', {
         fontColor: Color.rgb(255, 119, 0),
         fontFamily: '\"IBM Plex Mono\"'
-      }, ' project!\nThis blog serves as a place for us to announce changes and progress on the project as well as a place to shed some light on ideas and experiments we are working on or an occasional deep-dive into the technical nitti-gritties of', null, ' lively.next!', {
-        fontColor: Color.rgb(255, 119, 0),
-        fontFamily: '\"IBM Plex Mono\"'
-      }, ' For a more synchronous mode of communication, we kindly invite you to our ', null, '🔗', {
-        fontFamily: 'Noto Emoji Color'
-      },' chatroom on matrix ', {
+      }, ' \n\nFor a more synchronous mode of communication, we kindly invite you to our ', null, '🔗', {
+        fontFamily: 'Noto Emoji Color Subset'
+      }, ' chatroom on matrix ', {
         fontColor: Color.rgb(0, 0, 0),
         link: 'https://matrix.to/#/#lively.next:matrix.org'
       }, '!', null]
