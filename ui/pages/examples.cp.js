@@ -1,13 +1,95 @@
 import { component, Text, TilingLayout } from 'lively.morphic';
-
 import { part } from 'lively.morphic/components/core.js';
 import { VideoLooper } from '../partials.cp.js';
 import { projectAsset } from 'lively.project/helpers.js';
 import { Color, rect, pt } from 'lively.graphics';
+// part(ExamplePage).openInWorld()
+
+const ExampleEntry = component({
+  name: 'example',
+  master: {
+    breakpoints: [
+      [pt(0, 0), component({
+        layout: new TilingLayout({
+          align: 'center',
+          axisAlign: 'center',
+          axis: 'column',
+          hugContentsVertically: true,
+          resizePolicies: [['example video', {
+            height: 'fixed',
+            width: 'fill'
+          }], ['hero text', {
+            height: 'fixed',
+            width: 'fill'
+          }]],
+          spacing: 50
+        })
+      })],
+      [pt(890, 0), component({
+        layout: new TilingLayout({
+          align: 'center',
+          axisAlign: 'center',
+          axis: 'row',
+          hugContentsVertically: true,
+          resizePolicies: [['example video', {
+            height: 'fixed',
+            width: 'fill'
+          }],
+          ['hero text', {
+            height: 'fixed',
+            width: 'fixed'
+          }]],
+          spacing: 50
+        }),
+        submorphs: [
+          { name: 'hero text', width: 500 }
+        ]
+      })]
+    ]
+  },
+  extent: pt(673.3, 484.2),
+  position: pt(402, 667.5),
+  submorphs: [part(VideoLooper, {
+    name: 'example video',
+    fill: Color.rgba(224, 224, 224, 0),
+    master: {
+      breakpoints: [
+        [pt(0, 0), component({
+          submorphs: [
+            {
+              name: 'video player',
+              extent: pt(270, 152)
+            }
+          ]
+        })],
+        [pt(490, 0), component({
+          submorphs: [
+            {
+              name: 'video player',
+              extent: pt(450, 253)
+            }
+          ]
+        })]
+      ]
+    }
+  }), {
+    type: Text,
+    name: 'hero text',
+    fontSize: 14,
+    selectionMode: 'native',
+    textAndAttributes: ['Sample description', null],
+    dynamicCursorColoring: true,
+    extent: pt(487.5, 158.5),
+    fill: Color.rgb(255, 255, 255),
+    fixedWidth: true,
+    lineWrapping: 'by-words',
+    padding: rect(20, 1, 0, 0)
+  }]
+});
 
 export const ExamplePage = component({
   name: 'hero',
-  extent: pt(902, 1105),
+  extent: pt(1037, 1176),
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
@@ -81,319 +163,129 @@ export const ExamplePage = component({
       lineWrapping: 'by-words',
       padding: rect(1, 1, 0, 0)
     }]
-  }, {
+  },
+  part(ExampleEntry, {
     name: 'snowfall',
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center',
-      hugContentsVertically: true,
-      resizePolicies: [['snowfall video', {
-        height: 'fixed',
-        width: 'fill'
-      }]],
-      spacing: 50
-    }),
-    extent: pt(320.5, 167.5),
-    position: pt(402, 667.5),
-    submorphs: [part(VideoLooper, {
-      name: 'snowfall video',
-      master: {
-        breakpoints: [
-          [pt(0, 0), component({
-            submorphs: [
-
-              {
-                name: 'video player',
-                extent: pt(310, 174)
-              }
-            ]
-          })],
-          [pt(455, 0), component({
-            submorphs: [
-
-              {
-                name: 'video player',
-                extent: pt(450, 253)
-              }
-            ]
-          })]
-        ]
+    submorphs: [
+      {
+        name: 'example video',
+        viewModel: {
+          srcURL: projectAsset('snowfall.mp4')
+        }
       },
-      fill: Color.rgb(224, 224, 224),
-      viewModel: {
-        srcURL: projectAsset('snowfall.mp4')
+      {
+        name: 'hero text',
+        textAndAttributes: ['Snowflake - Interactive Web-Content\n', {
+          fontSize: 16,
+          fontWeight: '600'
+        }, '\n', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is especially well suited for the development of highly customized, interactive web content. This example is a scrollytelling which takes its readers on a journey to the origins of a snowflake. The content is discovered by use of scrolling while other means of interaction are also included. The scrollytelling is optimized for use on mobile devices.\n\n', null, ' ', {
+          fontColor: Color.rgb(0, 0, 0),
+          fontFamily: 'Font Awesome',
+          fontWeight: '900',
+          link: 'https://typeshift.io/snowflakes/'
+        }, 'Try it out', {
+          fontColor: Color.rgb(0, 0, 0),
+          link: 'https://typeshift.io/snowflakes/',
+          textDecoration: 'underline'
+        }, ' for yourself!', {
+          fontColor: Color.rgb(0, 0, 0)
+        }]
       }
-    }), {
-      type: Text,
-      name: 'hero text',
-      selectionMode: 'native',
-      fontSize: 14,
-      textAndAttributes: ['Snowflake - Interactive Web-Content\n', {
-        fontSize: 16,
-        fontWeight: '600'
-      }, '\n', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is especially well suited for the development of highly customized, interactive web content. This example is a scrollytelling which takes its readers on a journey to the origins of a snowflake. The content is discovered by use of scrolling while other means of interaction are also included. The scrollytelling is optimized for use on mobile devices.\n\n', null, ' ', {
-        fontColor: Color.rgb(0, 0, 0),
-        fontFamily: 'Font Awesome',
-        fontWeight: '900',
-        link: 'https://typeshift.io/snowflakes/'
-      }, 'Try it out', {
-        fontColor: Color.rgb(0, 0, 0),
-        link: 'https://typeshift.io/snowflakes/',
-        textDecoration: 'underline'
-      }, ' for yourself!', {
-        fontColor: Color.rgb(0, 0, 0)
-      }],
-      dynamicCursorColoring: true,
-      extent: pt(487.5, 158.5),
-      fill: Color.rgb(255, 255, 255),
-      fixedWidth: true,
-      lineWrapping: 'by-words',
-      padding: rect(1, 1, 0, 0),
-      position: pt(-913.2, -79.5)
-    }]
-  }, {
+    ]
+  }),
+
+  part(ExampleEntry, {
     name: 'solar system',
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center',
-      hugContentsVertically: true,
-      resizePolicies: [['solar system video', {
-        height: 'fixed',
-        width: 'fill'
-      }]],
-      spacing: 50
-    }),
-    extent: pt(320.5, 167.5),
-    position: pt(402, 667.5),
-    submorphs: [part(VideoLooper, {
-      name: 'solar system video',
-      master: {
-        breakpoints: [
-          [pt(0, 0), component({
-            submorphs: [
-
-              {
-                name: 'video player',
-                extent: pt(310, 174)
-              }
-            ]
-          })],
-          [pt(455, 0), component({
-            submorphs: [
-
-              {
-                name: 'video player',
-                extent: pt(450, 253)
-              }
-            ]
-          })]
-        ]
+    submorphs: [
+      {
+        name: 'example video',
+        viewModel: {
+          srcURL: projectAsset('solarsystem.mp4')
+        }
       },
-      fill: Color.rgb(224, 224, 224),
-      viewModel: {
-        srcURL: projectAsset('solarsystem.mp4')
+      {
+        name: 'hero text',
+        textAndAttributes: ['Solar System Simulation - Integrating Third-Party Libraries\n', {
+          fontWeight: '600',
+          fontSize: 16
+        }, '\nA simulation of our solar system, showing all orbital tracks and how different celestial bodies interact to create solar eclipses etc. The 3D scene is created using the ', null, 'zdog', { fontFamily: 'IBM Plex Mono', fontColor: Color.black, textDecoration: 'underline', link: 'https://zzz.dog/' }, ' library and is entirely scripted inside of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ', showcasing how the entire power of the web as a platform can be leveraged inside of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, '!\n\n', null, '', {
+          fontFamily: 'Tabler Icons',
+          fontColor: Color.black,
+          link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840'
+        }, ' ', { link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840' }, 'Find out when the next eclipse is coming', {
+          textDecoration: 'underline',
+          fontColor: Color.rgb(0, 0, 0),
+          link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840'
+        }, '! ', {}]
       }
-    }), {
-      type: Text,
-      name: 'hero text',
-      fontSize: 14,
-      selectionMode: 'native',
-      textAndAttributes: ['Solar System Simulation - Integrating Third-Party Libraries\n', {
-        fontWeight: '600',
-        fontSize: 16
-      }, '\nA simulation of our solar system, showing all orbital tracks and how different celestial bodies interact to create solar eclipses etc. The 3D scene is created using the ', null, 'zdog', { fontFamily: 'IBM Plex Mono', fontColor: Color.black, textDecoration: 'underline', link: 'https://zzz.dog/' }, ' library and is entirely scripted inside of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ', showcasing how the entire power of the web as a platform can be leveraged inside of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, '!\n\n', null, '', {
-        fontFamily: 'Tabler Icons',
-        fontColor: Color.black,
-        link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840'
-      }, ' ', { link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840' }, 'Find out when the next eclipse is coming', {
-        textDecoration: 'underline',
-        fontColor: Color.rgb(0, 0, 0),
-        link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840'
-      }, '! ', {}],
-      dynamicCursorColoring: true,
-      extent: pt(487.5, 158.5),
-      fill: Color.rgb(255, 255, 255),
-      fixedWidth: true,
-      lineWrapping: 'by-words',
-      padding: rect(1, 1, 0, 0),
-      position: pt(-913.2, -79.5)
-    }]
-  }, {
+    ]
+  }),
+  part(ExampleEntry, {
     name: 'typeshift',
-    master: {
-      breakpoints: [
-        [pt(0, 0), component({
-          layout: new TilingLayout({
-            align: 'center',
-            axisAlign: 'center',
-            axis: 'column',
-            hugContentsVertically: true,
-            resizePolicies: [['typeshift video', {
-              height: 'fixed',
-              width: 'fill'
-            }], ['hero text', {
-              height: 'fixed',
-              width: 'fill'
-            }]],
-            spacing: 50
-          })
-        })],
-        [pt(890, 0), component({
-          layout: new TilingLayout({
-            align: 'center',
-            axisAlign: 'center',
-            axis: 'row',
-            hugContentsVertically: true,
-            resizePolicies: [['typeshift video', {
-              height: 'fixed',
-              width: 'fill'
-            }]],
-            spacing: 50
-          })
-        })]
-      ]
-    },
+    submorphs: [
+      {
+        name: 'example video',
+        viewModel: {
+          srcURL: projectAsset('typeshift.mp4')
+        }
+      },
+      {
+        name: 'hero text',
+        textAndAttributes: ['typeshift.io - A Classic Business Homepage\n', {
+          fontStyle: 'normal',
+          fontSize: 16,
+          fontWeight: '600'
+        }, '\nOf course, ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' can also be used for the creation of classic websites, with its design goal being to tear down the wall between the design and implementation phase. typeshift.io is a Potsdam based agency specializing on interactive web content.\n\n', null, ' ', {
+          fontFamily: 'Font Awesome',
+          link: 'https://typeshift.io/',
+          fontWeight: '900',
+          fontColor: Color.rgb(0, 0, 0)
+        }, 'Visit typeshift.io', {
+          fontColor: Color.rgb(0, 0, 0),
+          textDecoration: 'underline',
+          link: 'https://typeshift.io/'
+        }]
+      }
+    ]
+  }),
 
-    extent: pt(320.5, 167.5),
-    position: pt(402, 667.5),
-    submorphs: [part(VideoLooper, {
-      name: 'typeshift video',
-      fill: Color.rgba(224, 224, 224, 0),
-      master: {
-        breakpoints: [
-          [pt(0, 0), component({
-            submorphs: [
-              {
-                name: 'video player',
-                extent: pt(270, 152)
-              }
-            ]
-          })],
-          [pt(490, 0), component({
-            submorphs: [
-              {
-                name: 'video player',
-                extent: pt(450, 253)
-              }
-            ]
-          })]
-        ]
-      },
-      viewModel: {
-        srcURL: projectAsset('typeshift.mp4')
-      }
-    }), {
-      type: Text,
-      name: 'hero text',
-      fontSize: 14,
-      selectionMode: 'native',
-      textAndAttributes: ['typeshift.io - A Classic Business Homepage\n', {
-        fontStyle: 'normal',
-        fontSize: 16,
-        fontWeight: '600'
-      }, '\nOf course, ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' can also be used for the creation of classic websites, with its design goal being to tear down the wall between the design and implementation phase. typeshift.io is a Potsdam based agency specializing on interactive web content.\n\n', null, ' ', {
-        fontFamily: 'Font Awesome',
-        link: 'https://typeshift.io/',
-        fontWeight: '900',
-        fontColor: Color.rgb(0, 0, 0)
-      }, 'Visit typeshift.io', {
-        fontColor: Color.rgb(0, 0, 0),
-        textDecoration: 'underline',
-        link: 'https://typeshift.io/'
-      }],
-      dynamicCursorColoring: true,
-      extent: pt(487.5, 158.5),
-      fill: Color.rgb(255, 255, 255),
-      fixedWidth: true,
-      lineWrapping: 'by-words',
-      padding: rect(20, 1, 0, 0),
-      position: pt(-913.2, -79.5)
-    }]
-  }, {
+  part(ExampleEntry, {
     name: 'qinoq',
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center',
-      hugContentsVertically: true,
-      resizePolicies: [['qinoq video', {
-        height: 'fixed',
-        width: 'fill'
-      }]],
-      spacing: 50
-    }),
-    extent: pt(320.5, 167.5),
-    submorphs: [part(VideoLooper, {
-      name: 'qinoq video',
-      master: {
-        breakpoints: [
-          [pt(0, 0), component({
-            submorphs: [
-              {
-                name: 'border',
-                submorphs: [
-                  {
-                    name: 'video player',
-                    extent: pt(310, 174)
-                  }
-                ]
-              }
-            ]
-          })],
-          [pt(455, 0), component({
-            submorphs: [
-              {
-                name: 'border',
-                surmopshs: [
-                  {
-                    name: 'video player',
-                    extent: pt(450, 253)
-                  }
-                ]
-              }
-            ]
-          })]
-        ]
+    submorphs: [
+      {
+        name: 'example video',
+        viewModel: {
+          srcURL: projectAsset('qinoq.mp4')
+        }
       },
-      viewModel: {
-        srcURL: projectAsset('qinoq.mp4')
+      {
+        name: 'hero text',
+        textAndAttributes: ['qinoq - An Editor for the Creation of Scrollytellings\n', {
+          fontWeight: '600',
+          fontSize: 16
+        }, '\nThe whole power of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' being a self-contained system becomes apparent when developing custom tooling for specific use cases to foster custom workflows.\n', null, 'qinoq', { fontFamily: 'IBM Plex Mono' }, ' is an example of such a spezialed tool. It\'s aimed at the creation of interactive content in the form of scrollytellings, allowing users to organize content in scenes akin to video cutting programs. Animations coupled to the current scroll position are easy to create in a graphical manner, while more advanced interactions can still be programmed in a way that is easily accessible for programmers.\n\n', null, '', {
+          fontFamily: 'Font Awesome Brands',
+          fontWeight: '400'
+        }, ' Watch the ', {}, 'presentation', {
+          fontColor: Color.rgb(0, 0, 0),
+          textDecoration: 'underline',
+          link: 'https://www.youtube.com/watch?v=O7pdYaSdZ3U'
+        }, ' of qinoq (in German)\n', {}, '', {
+          fontFamily: 'Font Awesome',
+          fontWeight: '900'
+        }, ' Read the ', {}, 'technical report\n', {
+          fontColor: Color.rgb(0, 0, 0),
+          textDecoration: 'underline',
+          link: 'https://publishup.uni-potsdam.de/opus4-ubp/frontdoor/deliver/index/docId/51857/file/tbhpi141.pdf'
+        }, '', {
+          fontFamily: 'Font Awesome Brands',
+          fontWeight: '400'
+        }, ' Find the source code on ', {}, 'GitHub', {
+          fontColor: Color.rgb(0, 0, 0),
+          textDecoration: 'underline',
+          link: 'https://github.com/hpi-swa-lab/qinoq'
+        }]
       }
-    }), {
-      type: Text,
-      name: 'hero text',
-      fontSize: 14,
-      selectionMode: 'native',
-      textAndAttributes: ['qinoq - An Editor for the Creation of Scrollytellings\n', {
-        fontWeight: '600',
-        fontSize: 16
-      }, '\nThe whole power of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' being a self-contained system becomes apparent when developing custom tooling for specific use cases to foster custom workflows.\n', null, 'qinoq', { fontFamily: 'IBM Plex Mono' }, ' is an example of such a spezialed tool. It\'s aimed at the creation of interactive content in the form of scrollytellings, allowing users to organize content in scenes akin to video cutting programs. Animations coupled to the current scroll position are easy to create in a graphical manner, while more advanced interactions can still be programmed in a way that is easily accessible for programmers.\n\n', null, '', {
-        fontFamily: 'Font Awesome Brands',
-        fontWeight: '400'
-      }, ' Watch the ', {}, 'presentation', {
-        fontColor: Color.rgb(0, 0, 0),
-        textDecoration: 'underline',
-        link: 'https://www.youtube.com/watch?v=O7pdYaSdZ3U'
-      }, ' of qinoq (in German)\n', {}, '', {
-        fontFamily: 'Font Awesome',
-        fontWeight: '900'
-      }, ' Read the ', {}, 'technical report\n', {
-        fontColor: Color.rgb(0, 0, 0),
-        textDecoration: 'underline',
-        link: 'https://publishup.uni-potsdam.de/opus4-ubp/frontdoor/deliver/index/docId/51857/file/tbhpi141.pdf'
-      }, '', {
-        fontFamily: 'Font Awesome Brands',
-        fontWeight: '400'
-      }, ' Find the source code on ', {}, 'GitHub', {
-        fontColor: Color.rgb(0, 0, 0),
-        textDecoration: 'underline',
-        link: 'https://github.com/hpi-swa-lab/qinoq'
-      }],
-      dynamicCursorColoring: true,
-      extent: pt(487.5, 227.9),
-      fill: Color.rgb(255, 255, 255),
-      fixedWidth: true,
-      lineWrapping: 'by-words',
-      padding: rect(1, 1, 0, 0),
-      position: pt(-913.2, -79.5)
-    }]
-  }]
+    ]
+  })]
 });

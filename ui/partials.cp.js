@@ -38,7 +38,7 @@ export const VideoLooper = component({
         hugContentsVertically: true,
         padding: rect(20, 20, 0, 0)
       }),
-      fill: Color.pink,
+      fill: Color.gray,
       submorphs: [
         {
           type: HTMLMorph,

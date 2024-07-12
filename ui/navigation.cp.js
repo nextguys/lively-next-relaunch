@@ -207,9 +207,13 @@ class BurgerMenuModel extends ViewModel {
     connect(items, 'onMouseDown', this, 'fadeOut');
     const page = window.LIVELY_PAGE;
     const burgerButton = this.view.owner;
+    burgerButton.makeDirty();
+    burgerButton.env.forceUpdate();
+
     if ($world.width > 1024) page.addMorph(items);
     else this.burgerItems.openInWorld();
     items.applyLayoutIfNeeded();
+
     if ($world.width > 1024) {
       items.topRight = page.localizePointFrom(burgerButton.bottomRight, burgerButton.owner);
       items.onHoverOut = () => this.fadeOut();
@@ -317,14 +321,14 @@ export const NavBar = component(BaseNavBar, {
           padding: rect(0, 0, 30, 0)
         })
       })], [
-        pt(130, 0), component(SmallNavBar, {
+        pt(300, 0), component(SmallNavBar, {
 
           layout: new TilingLayout({
             align: 'right',
             padding: rect(0, 0, 80, 0)
           })
         })],
-      [pt(465, 0), component(LargeNavBar, {
+      [pt(600, 0), component(LargeNavBar, {
         layout: new TilingLayout({
           align: 'right',
           padding: rect(0, 0, 80, 0)

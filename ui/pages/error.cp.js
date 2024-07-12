@@ -6,7 +6,7 @@ import { rect } from 'lively.graphics/geometry-2d.js';
 export const ErrorPage = component({
   name: 'hero',
   clipMode: 'visible',
-  extent: pt(830.5,298),
+  extent: pt(828, 298),
   master: {
     breakpoints: [
       [pt(0, 0), component({
@@ -61,8 +61,6 @@ export const ErrorPage = component({
             align: 'left',
             axis: 'column',
             axisAlign: 'left',
-            // hugContentsHorizontally: true,
-            // hugContentsVertically: true,
             padding: rect(4, 4, 0, 0),
             resizePolicies: [['number', {
               height: 'fixed',
@@ -73,7 +71,7 @@ export const ErrorPage = component({
             }]]
           })
         })],
-        [pt(751, 0), component({
+        [pt(650, 0), component({
           layout: new TilingLayout({
             align: 'left',
             axis: 'column',

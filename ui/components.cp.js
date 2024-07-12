@@ -35,10 +35,6 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   hideAllPages () {
-    const { examplesPage, documentationPage, landingPage, blogComponent, errorPage, historyPage, imprint } = this.ui;
-
-    examplesPage.visible = documentationPage.visible = landingPage.visible = blogComponent.visible = errorPage.visible = historyPage.visible = imprint.visible = false;
-
     // reset menu headings
     this.ui.history.fontWeight = 'normal';
     this.ui.documentation.fontWeight = 'normal';
@@ -47,63 +43,65 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   showErrorPage () {
-    const { errorPage } = this.ui;
-    this.hideAllPages();
-    errorPage.visible = true;
-    errorPage.env.forceUpdate();
+    let errorPage = this.showInBody(ErrorPage);
     errorPage.getSubmorphNamed('bottom text').requestMasterStyling();
     errorPage.getSubmorphNamed('number').requestMasterStyling();
   }
 
-  route (hash) {
-    const { examplesPage, documentationPage, landingPage, blogComponent, historyPage, imprint } = this.ui;
+  showInBody (pageComponent) {
+    const page = part(pageComponent);
+    this.ui.body.submorphs = [page];
+    this.ui.body.layout.setResizePolicyFor(page, { width: 'fill', height: 'fixed' });
+    return page;
+  }
 
+  route (hash) {
     this.hideAllPages();
 
     // base landing page
     if (!hash || hash === '') {
-      landingPage.visible = true;
+      this.showInBody(LandingPage);
       return;
     }
 
     if (hash === 'history') {
       this.ui.history.fontWeight = 'bold';
-      historyPage.visible = true;
+      this.showInBody(HistoryPage);
       return;
     }
 
     if (hash === 'documentation') {
       this.ui.documentation.fontWeight = 'bold';
-      documentationPage.visible = true;
+      this.showInBody(DocumentationPage);
       return;
     }
 
     if (hash === 'examples') {
       this.ui.examples.fontWeight = 'bold';
-      examplesPage.visible = true;
+      this.showInBody(ExamplePage);
       return;
     }
 
     if (hash === 'imprint') {
-      imprint.visible = true;
+      this.showInBody(ImprintPage);
       return;
     }
 
-    this.ui.blog.fontWeight = 'bold';
+    let blogComponent;
     if (hash === 'blog') {
       this.ui.blog.fontWeight = 'bold';
-      blogComponent.visible = true;
+      blogComponent = this.showInBody(Blog);
       blogComponent.showList();
       return;
     }
+
     if (hash.startsWith('blog/')) {
       this.ui.blog.fontWeight = 'bold';
+      blogComponent = this.showInBody(Blog);
       const slug = hash.replace('blog/', '').replaceAll('/', '');
-      blogComponent.visible = true;
       const entryToOpen = entries.find(e => e.slug === slug);
       if (!entryToOpen) {
         this.showErrorPage();
-        blogComponent.visible = false;
         return;
       }
       blogComponent.openEntry(entryToOpen);
@@ -114,7 +112,6 @@ class LivelyWebPageModel extends ViewModel {
   }
 
   onMouseDown (evt) {
-    debugger;
     if (evt.targetMorphs[0].name === 'blog') this.router.route('blog', true);
     if (evt.targetMorphs[0].name === 'history') this.router.route('history', true);
     if (evt.targetMorphs[0].name === 'documentation') this.router.route('documentation', true);
@@ -213,12 +210,12 @@ const LogoSection = component(SmallLogoSection, {
       [pt(375, 0), LargeLogoSection]
     ]
   },
-  extent: pt(223, 109.5),
-  submorphs: [{
-    name: 'text'
-  }]
+  extent: pt(262.3, 100)
 });
-// part(LivelyWebPage).openInWorld()
+
+// page = part(LivelyWebPage)
+// page.openInWorld()
+// now the page still does not have the correct styling applied
 export const LivelyWebPage = component({
   name: 'lively web site',
   defaultViewModel: LivelyWebPageModel,
@@ -273,22 +270,21 @@ export const LivelyWebPage = component({
         })]]
     },
     borderColor: Color.rgb(23, 160, 251),
-    submorphs: [part(LogoSection, {
-      name: 'logo section',
-      extent: pt(120, 109.5)
-    }), part(NavBar, {
-      name: 'navigation',
-      fill: Color.transparent,
-      submorphs: [{
-        name: 'burger menu',
-        layout: new TilingLayout({
-          align: 'center',
-          axisAlign: 'center',
-          hugContentsHorizontally: true,
-          hugContentsVertically: true
-        })
-      }]
-    })]
+    submorphs: [
+      part(LogoSection, { name: 'logo section' }),
+      part(NavBar, {
+        name: 'navigation',
+        fill: Color.transparent,
+        submorphs: [{
+          name: 'burger menu',
+          layout: new TilingLayout({
+            align: 'center',
+            axisAlign: 'center',
+            hugContentsHorizontally: true,
+            hugContentsVertically: true
+          })
+        }]
+      })]
   }, {
     name: 'contents wrapper',
     master: {
@@ -299,6 +295,7 @@ export const LivelyWebPage = component({
             axis: 'column',
             axisAlign: 'center',
             justifySubmorphs: 'spaced',
+            hugContentsVertically: true,
             resizePolicies: [['body', { height: 'fixed', width: 'fill' }], ['footer', {
               height: 'fixed',
               width: 'fill'
@@ -311,6 +308,7 @@ export const LivelyWebPage = component({
             axis: 'column',
             axisAlign: 'center',
             justifySubmorphs: 'spaced',
+            hugContentsVertically: true,
             resizePolicies: [['body', { height: 'fixed', width: 'fixed' }], ['footer', {
               height: 'fixed',
               width: 'fill'
@@ -321,7 +319,7 @@ export const LivelyWebPage = component({
     },
     submorphs: [{
       name: 'body',
-      borderWidth: 1,
+      borderWidth: 0,
       clipMode: 'hidden',
       width: 1200,
       layout: new TilingLayout({
@@ -333,55 +331,12 @@ export const LivelyWebPage = component({
         resizePolicies: [['landing page', {
           height: 'fixed',
           width: 'fill'
-        }], ['history page', {
-          height: 'fixed',
-          width: 'fill'
-        }], ['documentation page', {
-          height: 'fixed',
-          width: 'fill'
-        }], ['examples page', {
-          height: 'fixed',
-          width: 'fill'
-        }], ['blog component', {
-          height: 'fixed',
-          width: 'fill'
-        }], ['error page', {
-          height: 'fixed',
-          width: 'fill'
-        }],
-        ['imprint', {
-          height: 'fixed',
-          width: 'fill'
         }]]
       }),
       submorphs: [
         part(LandingPage, {
           name: 'landing page',
           visible: true
-        }),
-        part(HistoryPage, {
-          name: 'history page',
-          visible: false
-        }),
-        part(DocumentationPage, {
-          name: 'documentation page',
-          visible: false
-        }),
-        part(ExamplePage, {
-          name: 'examples page',
-          visible: false
-        }),
-        part(ImprintPage, {
-          name: 'imprint',
-          visible: false
-        }),
-        part(ErrorPage, {
-          name: 'error page',
-          visible: false
-        }),
-        part(Blog, {
-          name: 'blog component',
-          visible: false
         })
       ],
       borderColor: Color.rgb(251, 23, 26),

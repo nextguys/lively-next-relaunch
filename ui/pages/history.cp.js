@@ -165,6 +165,7 @@ export const ChronoPicture = component({
 });
 
 const createChronoPicture = ({ src, caption }) => part(ChronoPicture, {
+  fill: Color.transparent,
   submorphs: [
     {
       name: 'picture',
@@ -182,6 +183,7 @@ const ChronoVideo = component(ChronoPicture, {
   master: {
     auto: component({
       layout: new TilingLayout({
+        axisAlign: 'center',
         axis: 'column',
         resizePolicies: [['video', {
           height: 'fill',
@@ -195,6 +197,7 @@ const ChronoVideo = component(ChronoPicture, {
     breakpoints: [
       [pt(400, 0), component({
         layout: new TilingLayout({
+          axisAlign: 'center',
           axis: 'column',
           resizePolicies: [['video', {
             height: 'fill',
@@ -219,6 +222,7 @@ const ChronoVideo = component(ChronoPicture, {
 });
 
 const createChronoVideo = ({ src, caption }) => part(ChronoVideo, {
+  fill: Color.transparent,
   submorphs: [
     {
       name: 'video',
@@ -241,7 +245,7 @@ class EntryModel extends ViewModel {
   }
 
   viewDidLoad () {
-    const { date: dateView, description, stepPictures } = this.ui;
+    const { date: dateView, description, stepPictures, stepPicturesWrapper } = this.ui;
     const { date, title, pictures } = this.timestamp;
     dateView.textString = date;
     description.textString = title;
@@ -252,7 +256,7 @@ class EntryModel extends ViewModel {
       });
       stepPictures.submorphs.forEach(m => stepPictures.layout.setResizePolicyFor(m, { width: 'fill', height: 'fill' }));
     } else {
-      stepPictures.height = 10;
+      stepPicturesWrapper.height = 10;
     }
   }
 }
@@ -267,7 +271,7 @@ export const ChronologicalEntry = component({
     axisAlign: 'center',
     hugContentsVertically: true,
     padding: rect(0, 10, 0, 0),
-    resizePolicies: [['step pictures', {
+    resizePolicies: [['step pictures wrapper', {
       height: 'fixed',
       width: 'fill'
     }], ['step description wrapper', {
@@ -279,13 +283,23 @@ export const ChronologicalEntry = component({
   position: pt(53.8, -2.9),
   extent: pt(1070, 289),
   submorphs: [{
-    name: 'step pictures',
+    // this is needed to fix a current rendering bug in the css layouts
+    name: 'step pictures wrapper',
+    fill: Color.transparent,
     layout: new TilingLayout({
-      align: 'center',
-      spacing: 10
+      resizePolicies: [
+        ['step pictures', { width: 'fill', height: 'fill' }]
+      ]
     }),
-    fill: Color.rgba(255, 255, 255, 0),
-    extent: pt(428, 252.5)
+    extent: pt(428, 252.5),
+    submorphs: [{
+      name: 'step pictures',
+      layout: new TilingLayout({
+        align: 'center',
+        spacing: 10
+      }),
+      fill: Color.rgba(255, 255, 255, 0)
+    }]
   }, {
     type: Ellipse,
     name: 'step marker',
@@ -352,6 +366,27 @@ export const ChronologicalEntry = component({
   }]
 });
 
+const ChronologicalEntryReverse = component(ChronologicalEntry, {
+  rotation: num.toRadians(180.0),
+  submorphs: [
+    {
+      name: 'step pictures wrapper',
+      rotation: -num.toRadians(180.0)
+    },
+    {
+      name: 'step description wrapper',
+      submorphs: [{
+        name: 'step description',
+        layout: new TilingLayout({
+          axis: 'column',
+          axisAlign: 'right',
+          hugContentsVertically: true
+        }),
+        rotation: num.toRadians(180.0)
+      }]
+    }]
+});
+
 const ChronologicalEntryMobile = component(ChronologicalEntry, {
   rotation: 0,
   layout: new TilingLayout({
@@ -360,7 +395,7 @@ const ChronologicalEntryMobile = component(ChronologicalEntry, {
     axisAlign: 'center',
     hugContentsVertically: true,
     padding: rect(15, 10, -15, 0),
-    resizePolicies: [['step pictures', {
+    resizePolicies: [['step pictures wrapper', {
       height: 'fixed',
       width: 'fill'
     }], ['step description wrapper', {
@@ -370,13 +405,16 @@ const ChronologicalEntryMobile = component(ChronologicalEntry, {
     spacing: 20
   }),
   submorphs: [{
-    name: 'step pictures',
+    name: 'step pictures wrapper',
+    visible: true,
     layout: new TilingLayout({
-      align: 'center',
+      align: 'right',
       padding: rect(30, 0, -20, 0),
-      spacing: 10
-    }),
-    visible: true
+      resizePolicies: [['step pictures', {
+        height: 'fill',
+        width: 'fill'
+      }]]
+    })
   }, {
     name: 'step marker',
     visible: false
@@ -392,25 +430,6 @@ const ChronologicalEntryMobile = component(ChronologicalEntry, {
       name: 'mobile step marker',
       visible: true
     }]
-  }]
-});
-
-const ChronologicalEntryReverse = component(ChronologicalEntry, {
-  rotation: num.toRadians(180.0),
-  submorphs: [{
-    name: 'step description wrapper',
-    submorphs: [{
-      name: 'step description',
-      layout: new TilingLayout({
-        axis: 'column',
-        axisAlign: 'right',
-        hugContentsVertically: true
-      }),
-      rotation: num.toRadians(180.0)
-    }]
-  }, {
-    name: 'step pictures',
-    rotation: -num.toRadians(180.0)
   }]
 });
 
