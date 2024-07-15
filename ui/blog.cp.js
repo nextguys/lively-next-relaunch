@@ -461,29 +461,45 @@ export class BlogModel extends ViewModel {
 
 export const Blog = component({
   defaultViewModel: BlogModel,
-  extent: pt(719.5, 306),
+  extent: pt(931, 306),
   styleClasses: ['dashed'],
-  layout: new TilingLayout({
-    align: 'center',
-    axis: 'column',
-    axisAlign: 'center',
-    hugContentsVertically: true,
-    resizePolicies: [['intro text', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['entry area', {
-      height: 'fixed',
-      width: 'fill'
-    }]],
-    spacing: 20
-  }),
+  master: {
+    breakpoints: [
+      [pt(0, 0), component({
+        layout: new TilingLayout({
+          axis: 'column',
+          axisAlign: 'center',
+          resizePolicies: [['intro text', {
+            height: 'fixed',
+            width: 'fill'
+          }], ['entry area', {
+            height: 'fixed',
+            width: 'fill'
+          }]]
+        })
+      })],
+      [pt(800, 0), component({
+        layout: new TilingLayout({
+          axis: 'column',
+          axisAlign: 'center',
+          resizePolicies: [['intro text', {
+            height: 'fixed',
+            width: 'fixed'
+          }], ['entry area', {
+            height: 'fixed',
+            width: 'fill'
+          }]]
+        }),
+        submorphs: [{ name: 'intro text', width: 800, alignText: 'justify', fixedWidth: true }]
+      })]]
+  },
   submorphs: [
     {
       name: 'intro text',
       type: Text,
-      height: 200,
+      padding: rect(0, 0, 0, 30),
+      width: 650,
       selectionMode: 'native',
-      padding: rect(0, 30, 0, 0),
       lineWrapping: 'by-words',
       fontSize: 14,
       textAndAttributes: ['Welcome to the ', {

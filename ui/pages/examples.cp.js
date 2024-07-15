@@ -3,9 +3,8 @@ import { part } from 'lively.morphic/components/core.js';
 import { VideoLooper } from '../partials.cp.js';
 import { projectAsset } from 'lively.project/helpers.js';
 import { Color, rect, pt } from 'lively.graphics';
-// part(ExamplePage).openInWorld()
 
-const ExampleEntry = component({
+export const ExampleEntry = component({
   name: 'example',
   master: {
     breakpoints: [
@@ -89,7 +88,7 @@ const ExampleEntry = component({
 
 export const ExamplePage = component({
   name: 'hero',
-  extent: pt(1037, 1176),
+  extent: pt(903, 1396),
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
@@ -120,14 +119,28 @@ export const ExamplePage = component({
   position: pt(560, 80),
   submorphs: [{
     name: 'intro',
-    layout: new TilingLayout({
-      resizePolicies: [['intro text', {
-        height: 'fixed',
-        width: 'fill'
-      }]]
-    }),
-    borderColor: Color.rgb(23, 160, 251),
-    borderWidth: 1,
+    master: {
+      breakpoints: [
+        [pt(0, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            resizePolicies: [['intro text', {
+              height: 'fixed',
+              width: 'fill'
+            }]]
+          })
+        })],
+        [pt(800, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            resizePolicies: [['intro text', {
+              height: 'fixed',
+              width: 'fixed'
+            }]]
+          }),
+          submorphs: [{ name: 'intro text', width: 800, textAlign: 'justify' }]
+        })]]
+    },
     submorphs: [{
       type: Text,
       name: 'intro text',
@@ -248,9 +261,48 @@ export const ExamplePage = component({
       }
     ]
   }),
-
   part(ExampleEntry, {
     name: 'qinoq',
+    master: {
+      breakpoints: [
+        [pt(0, 0), component({
+          layout: new TilingLayout({
+            align: 'center',
+            axisAlign: 'center',
+            axis: 'column',
+            hugContentsVertically: true,
+            resizePolicies: [['example video', {
+              height: 'fixed',
+              width: 'fill'
+            }], ['hero text', {
+              height: 'fixed',
+              width: 'fill'
+            }]],
+            spacing: 50
+          })
+        })],
+        [pt(890, 0), component({
+          layout: new TilingLayout({
+            axisAlign: 'left',
+            axis: 'row',
+            align: 'top',
+            hugContentsVertically: true,
+            resizePolicies: [['example video', {
+              height: 'fixed',
+              width: 'fill'
+            }],
+            ['hero text', {
+              height: 'fixed',
+              width: 'fixed'
+            }]],
+            spacing: 50
+          }),
+          submorphs: [
+            { name: 'hero text', width: 500 }
+          ]
+        })]
+      ]
+    },
     submorphs: [
       {
         name: 'example video',
