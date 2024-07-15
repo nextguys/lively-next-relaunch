@@ -249,7 +249,7 @@ class EntryModel extends ViewModel {
     const { date: dateView, description, stepPictures, stepPicturesWrapper } = this.ui;
     const { date, title, pictures } = this.timestamp;
     dateView.textString = date;
-    description.textString = title;
+    description.textAndAttributes = title;
     if (pictures) {
       stepPictures.submorphs = pictures.map(({ img, yt, caption }) => {
         if (img) return createChronoPicture({ caption, src: img });
@@ -450,7 +450,7 @@ class HistoryPageModel extends ViewModel {
 
   viewDidLoad () {
     this.ui.chronoStepContainer.submorphs = historyData.map((timestamp, i) => {
-      const cpt = i % 2 == 0 ? ChronologicalEntry : ChronologicalEntryReverse;
+      const cpt = i % 2 === 0 ? ChronologicalEntry : ChronologicalEntryReverse;
       return part(cpt, {
         master: {
           breakpoints: [
