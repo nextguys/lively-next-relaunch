@@ -154,6 +154,7 @@ export const ChronoPicture = component({
     fixedWidth: true,
     fontStyle: 'italic',
     lineWrapping: 'by-words',
+    selectionMode: 'native',
     position: pt(-8.5, 46.6),
     textAndAttributes: ['The office space of the ', null, 'LivelyKernel', {
       fontStyle: 'normal',
@@ -344,7 +345,8 @@ export const ChronologicalEntry = component({
             extent: pt(203.2, 21.6),
             dynamicCursorColoring: true,
             fill: Color.rgba(255, 255, 255, 0),
-            fontSize: 14,
+            fontSize: 16,
+            selectionMode: 'native',
             fontWeight: '700',
             lineWrapping: 'by-words',
             padding: rect(1, 1, 0, 0),
@@ -353,6 +355,8 @@ export const ChronologicalEntry = component({
           }, {
             type: Text,
             name: 'description',
+            fontSize: 14,
+            selectionMode: 'native',
             dynamicCursorColoring: true,
             extent: pt(203.2, 47.3),
             fill: Color.rgba(255, 255, 255, 0),
