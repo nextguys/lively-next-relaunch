@@ -94,7 +94,7 @@ const FeatureHolder = component({
       })]
     ]
   },
-  extent: pt(1000, 420),
+  extent: pt(1000, 402),
   submorphs: [{
     name: 'all parts',
     layout: new TilingLayout({
@@ -102,7 +102,7 @@ const FeatureHolder = component({
       spacing: 20,
       wrapSubmorphs: true
     }),
-    extent: pt(1000, 420),
+    extent: pt(1000, 380),
     submorphs: [
       part(Feature, {
         name: 'building together',
@@ -279,7 +279,7 @@ const FeatureHolder = component({
 // part(LandingPage).openInWorld()
 export const LandingPage = component({
   name: 'page',
-  extent: pt(911.5, 1694.1),
+  extent: pt(1075, 1461.1),
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
@@ -312,7 +312,7 @@ export const LandingPage = component({
               align: 'center',
               axisAlign: 'center',
               hugContentsVertically: true,
-              wrapSubmorphs: true,
+              axis: 'column',
               padding: rect(20, 20, 0, 0),
               resizePolicies: [['hero wrapper', {
                 height: 'fixed',
@@ -324,12 +324,10 @@ export const LandingPage = component({
             submorphs: [
               {
                 name: 'hero text wrapper',
-
                 layout: new TilingLayout({
                   axisAlign: 'center',
                   align: 'center'
                 }),
-
                 submorphs: [{ name: 'hero text', width: 300 }]
               }
             ]
@@ -352,7 +350,7 @@ export const LandingPage = component({
                 layout: new TilingLayout({
                   axisAlign: 'center'
                 }),
-                submorphs: [{ name: 'hero text', width: 450 }]
+                submorphs: [{ name: 'hero text', width: 400 }]
               }
             ]
           })]
@@ -372,7 +370,7 @@ export const LandingPage = component({
       submorphs: [part(VideoLooper, {
         name: 'productive lively session',
         layout: new TilingLayout({
-          align: 'right',
+          align: 'center',
           hugContentsVertically: true,
           padding: rect(20, 20, 0, 0)
         }),
@@ -383,7 +381,6 @@ export const LandingPage = component({
           breakpoints: [
             [pt(0, 0), component({
               submorphs: [
-
                 {
                   name: 'video player',
                   extent: pt(310, 174)
@@ -392,7 +389,6 @@ export const LandingPage = component({
             })],
             [pt(455, 0), component({
               submorphs: [
-
                 {
                   name: 'video player',
                   extent: pt(450, 253)
@@ -408,17 +404,20 @@ export const LandingPage = component({
         submorphs: [{
           type: Text,
           name: 'hero text',
+          textAlign: 'justify',
           fontSize: 14,
           selectionMode: 'native',
           textAndAttributes: ['lively.next', {
             fontColor: Color.rgb(255, 119, 0),
-            fontWeight: '600'
-          }, ' is a personal programming kit.\nIt emphasizes ', null, 'liveness', {
-            fontStyle: 'italic'
+            fontWeight: '600',
+            fontSize: 16
+          }, ' is a personal programming kit.\nIt emphasizes ', { fontSize: 16 }, 'liveness', {
+            fontStyle: 'italic',
+            fontSize: 16
           }, ', ', null, 'directness', {
-            fontStyle: 'italic'
-          }, ' and ', null, 'interactivity', {
-            fontStyle: 'italic'
+            fontStyle: 'italic', fontSize: 16
+          }, ' and ', { fontSize: 16 }, 'interactivity', {
+            fontStyle: 'italic', fontSize: 16
           }, '. \n\n It combines rich ', null, 'live programming capabilities', {
             fontStyle: 'italic'
           }, ', in the spirit of Smalltalk, with a graphical ', null, 'direct manipulation', {
