@@ -148,6 +148,7 @@ class LivelyWebPageModel extends ViewModel {
 
 const LargeLogoSection = component({
   name: 'aMorph',
+  fill: Color.rgba(255, 255, 255, 0),
   nativeCursor: 'pointer',
   borderColor: Color.rgb(23, 160, 251),
   extent: pt(383.5, 109.5),
@@ -194,6 +195,7 @@ const LargeLogoSection = component({
 
 const SmallLogoSection = component(LargeLogoSection, {
   extent: pt(215, 109.5),
+  fill: Color.rgba(255, 255, 255, 0),
   submorphs: [{
     name: 'logo',
     extent: pt(50, 50)
@@ -210,7 +212,8 @@ const LogoSection = component(SmallLogoSection, {
       [pt(375, 0), LargeLogoSection]
     ]
   },
-  extent: pt(262.3, 100)
+  extent: pt(262.3, 100),
+  fill: Color.rgba(255, 255, 255, 0)
 });
 
 // page = part(LivelyWebPage)
@@ -236,6 +239,7 @@ export const LivelyWebPage = component({
   extent: pt(1189.2, 863.3),
   submorphs: [{
     name: 'website header',
+    fill: Color.rgba(255, 255, 255, 0),
     height: 138.5,
     master: {
       breakpoints: [
@@ -274,6 +278,7 @@ export const LivelyWebPage = component({
       part(LogoSection, { name: 'logo section' }),
       part(NavBar, {
         name: 'navigation',
+        clipMode: 'visible',
         fill: Color.transparent,
         submorphs: [{
           name: 'burger menu',
