@@ -1,5 +1,4 @@
 
-# Morphic
 `lively.next` ships with its own particular flavor of Morphic which was first introduced in [Self](https://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf) and since then implemented multiple times over in different ways such as [Squeak](https://wiki.squeak.org/squeak/morphic) and [LivelyKernel](https://en.wikipedia.org/wiki/Lively_Kernel).
 
 As the name Morphic implies, this framework assembles GUIs by means of malleable objects called Morphs. Each of these Morphs can potentially also carry a complete custom set of behavior that implements the GUIs interactivity. This characteristic of the framework originally referred to asliveness and directness allows to inspect and explore every piece of the GUI and application at hand while it is running. This is particulary suitable for self sustaining live development environments such as lively.next.
@@ -32,7 +31,7 @@ Different types of morphs are available to the user, which are implemented by (s
 ## Properties
 Morphs in `lively.next` come with a large set of properties. You can explore them in the interactive section below. They split up into what we call *visual properties* and *behavioral* properties.
 
-<--- __lv_expr__:{part}:lively.morphic:{MorphicPropertyEssay}:nextguys--lively-next-relaunch/ui/docs/interactive-doc.cp.js:part(MorphicPropertyEssay) -->
+<!-- __lv_expr__:{part}:lively.morphic:{MorphicPropertyEssay}:nextguys--lively-next-relaunch/ui/docs/interactive-doc.cp.js:part(MorphicPropertyEssay) -->
 
 ### Custom Subclasses
 
@@ -71,11 +70,11 @@ let aMorph = morph({
 ```
 Just instantiating a morph via an object, will not make it visible. For that to happen we need to mount it into the *World*. The *World* is itself a morph that is present at all times when `lively.morphic` framework is embedded (be it a bundled application or the `lively.next`-IDE). In fact this very document you are reading is mounted inside of a *World*. So lets go ahead and call `aMorph.openInWorld()`, you will see this:
 
-<--- __lv_expr__:{part}:lively.morphic:{InteractiveDie}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(InteractiveDie) -->
+<!-- __lv_expr__:{part}:lively.morphic:{InteractiveDie}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(InteractiveDie) -->
 
 You can now go ahead and manipulate the morph above in the workspace below. Try editing the code and running it via the button:
 
-<--- __lv_expr__:{part}:lively.morphic:{EditorSample1}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(EditorSample1) -->
+<!-- __lv_expr__:{part}:lively.morphic:{InteractiveDelay}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(InteractiveDelay, { viewModel: { loader: 'editor example 1' }}) -->
 
 ## Event System
 Morphic comes with its completely custom build event system. This for multiple reasons, since the DOM Event system...
@@ -88,10 +87,27 @@ Morphic comes with its completely custom build event system. This for multiple r
 ## Halo
 For more information on the Halo, please refer to the studio chapter.
 
- - uses the DOM events as entry points but then performs the dispatch completely on its own:
+<!--
+ - The event system in morphic consists entirely of synthesized events and a custom event dispatch.
+ - It uses the DOM events as entry points but from there follows an entirely custom algorithm:
    - The DOM Events are captured but then a custom traversal of the morphs is started, where the event object is also a custom lively object
    - Event propagation happens from the morph where the event originated up until it reaches the world morph
-   - Event propagation can be stopped
+   - Event propagation can be stopped via a `Event.stop()`
+   - The event object provides information about how the event location related to the scene graph made up of the morphs, as well as information about drag events such as the distance of the drag etc.
+- Further, there is a completely custom implementation of `blur()` and `focus()` which are not even derived from the browser events.
+  - Text input is implemented via a hidden dom input node which is manually focused on demand by the lively event system.
+  - Blur and Focus event are triggered by mouse click events on other targets as the currently focused one.
+  - A nice aspect about this system, is that we can have "global" keyboard events that do not require an input target. This is essential for implementing shortcuts.
+  -->
+
+The event system in Morphic is a completely custom implementation on top of the native browser events.
+DOM-Events that originate from the rendered elements in the browser are used as entry points and from then on a completely custom dispatch is performed.<br>
+Theses synthesized events are bubbling from the morph they originate from upwards until they reach the world morph.
+During bubbling the custom event callbacks are invoked on each of the traversed morph.
+The event object itself carries further meta information about the targeted morph, as well as information with respect to the type of event *(pressed key, mouse buttons, etc...)*.
+The propagation can be terminated by invoking the `event.stop()` method on the event object that is always passed to the event handler.
+There are also certain events that concern the keyboard events which are not only *augmented* but rather *simulated* beind the scenes.
+This is implemented via a hidden dom input node which is manually focused on demand via the event system. This gives us fine grained control about the redirection of keyboard events. For instance we can make any type of morph receive keyboard events as well as retrieve keyboard events even if no element is currently in focus (this is useful for the implementation of keyboard shortcuts).
 
 ### Classic Events
 There is a set of basic dom events which behave more or less the same as the do inside the dom:
@@ -99,12 +115,20 @@ There is a set of basic dom events which behave more or less the same as the do 
    - **onKey (Up/Down)** *In response to a key on the keyboard being pressed.*
    - **onContextMenu** *In response to the HTML context menu event. Is used to create custom morph based menus instead.*
 ### Customized Events
-There is a set of events that provides a different behavior to the native dom version.
+There is a set of events that provides a different behavior to the native dom version. One of them is the drag event, which compared to the HTML event further provides more *movement specific* meta information to the morph as well as specific callbacks marking the *start* and *end* of the drag process:
 
    ![An example of a morph being dragged across a scene](/local_projects/nextguys--lively-next-relaunch/assets/dragging.gif) 
-   - **onDrag** *Invoked continously while a morph is being dragged via touch gesture or mouse press and move. On each update it provides a drag delta that provides information about the drag speed.*
+   - **onDrag** *Invoked continously while a morph is being dragged via touch gesture or mouse press and move. On each update it provides a drag delta that tells us about the current drag speed.*
    - **onDragStart** *Invoked once at the start of the drag process before onDrag is getting called repeatedly.*
    - **onDragEnd** *Invoked once at the end of the drag process.*
+
+There are also completely synthesized versions of the focus and blur events. For one, unlike the browser, they cover all types of morphs, including the base morph. This is different to HTML which reserves the focus and blur events only for a certain set of elements of the text and input types.
+
+<!-- __lv_expr__:{part}:lively.morphic:{FocusBlurDiagram}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(FocusBlurDiagram) -->
+
+   - **onFocus** *Invoked if we call `focus()` on a morph where the `focusable` property is set to `true`. For text morphs the `focus()` function is called by default on a `mousedown` event.*
+   - **onBlur** *Invoked on a currently focused morph if `focus()` is called on another one.*
+
 ### Custom Events
 Further supports a custom set of purely morphic methods:
 
@@ -183,7 +207,7 @@ part(Die)
 
 Which will yield a morph that looks like this:
 
-<--- __lv_expr__:{part}:lively.morphic:{WrappedDie}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedDie) -->
+<!-- __lv_expr__:{part}:lively.morphic:{WrappedDie}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedDie) -->
 
 Now, we can go ahead and create other components that now in turn re-use this component as a part of their own definition. This also happens with the help of the `part()` function. Let's for instance define a component that resembles a poker table:
 
@@ -211,7 +235,7 @@ const PokerTable = component({
 
 The resulting morph should look something like this:
 
-<--- __lv_expr__:{part}:lively.morphic:{WrappedPokerTable}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedPokerTable) -->
+<!-- __lv_expr__:{part}:lively.morphic:{WrappedPokerTable}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedPokerTable) -->
 
 As you can see, by invoking the part calls within the submorph array we reused the component definition of `Die` within the component definition of `PokerTable`. Also notice, how in the  `part` calls we have passed some properties to adjust the properties of each die to place them at unique positions (and varying degrees of rotation). If we skipped these overrides, all dice would just sit on top of each other at the same position.
 
@@ -332,7 +356,7 @@ const DiversePokerTable = component(PokerTable, {
 
 Notice that in the resulting scene, the dice have changed their styling:
 
-<--- __lv_expr__:{part}:lively.morphic:{WrappedDiversePokerTable}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedDiversePokerTable) -->
+<!-- __lv_expr__:{part}:lively.morphic:{WrappedDiversePokerTable}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedDiversePokerTable) -->
 
 Also notice that some properties have remained untouched, this includes properties like `rotation` and `position`. These are *transform properties* and can not be overridden via assigning a new master. This can only be done by overriding them explicitly within the component definition.
 
@@ -547,6 +571,7 @@ const GoldenDie = component(Die, {
 
 ```
 
+<!--
 ### Template Masters
 
 > ⚠️ **Warning**
@@ -581,23 +606,33 @@ const Linus = component({
 });
 
 ```
- 
-### Reconciliation
-
-  - We previously described the programmatic interface to defining and deriving components.
-  - In order to provide a direct manipulation, purely visual workflow to create and modify component definitions, `lively.next` ships with a reconciliation engine which bridges the gap between visual represenation and symbolic description of componnent definitions.
-  - This is done by translating direct manipulation changes (such as draggin, dropping, edditing, style property changes) into changes to the module source code where the components are defined.
-  - To illustrate the point, below you can see a simplified example of what the reconciliation engine is able to archieve:
-
-<--- __lv_expr__:{part}:lively.morphic:{ReconciliationSample}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(ReconciliationSample) -->
-
-  - Besides evolving already existing component definitions purely visually, the user is also able to create entirely new component definitions from scratch.
-  - For more information on how to use reconciliation please refer to the studio chapter.
+-->
 
 ### Viewmodels
-  - Separating the view from the behavior
-  - Making behavior "pluggable"
+  - Separates the behavior from the morphs, making behavior "pluggable"
     - Since behavior just attached to the morphs from the outside, it is no longer tied to the component definitions
     - Behavior can be reused across multiple different designs for the same things (think of calculator designs, clock faces etc..)
+    - Behavior can be toggled at runtime. For more, see the controls for *Editing Components* in the **Studio Chapter**.
   - Allow behavior to be disabled dynamically which allows to switch between an *Interactive Mode* (useful for verifying correct behavior) and *Designer Mode* where the behavior is disabled in order not to interfere with manipulation of the GUI.
   - Define bindings in order to attach behavior to parts of a component declaratively
+  - A model is reponsible for the morph and all its descendants until one of the submorphs carries itself a viewmodel
+    - In that way a component scope is defined.
+  - Properties or methods can not be accessed from the morph directly, unless they are exposed by the model via the `expose` property.
+    - In the future we will also support the `@expose` decorator that can be attached to the method or property declaration.
+  - Bindings are static properties on the viewmodel classes, which define wich part of the morph the model is attached to triggers which actions/methods inside the model.
+    - Declarative way to look at how behavior is "wired up"
+    - Bindings are initialized when the model is attached to the morph and whenever the submorphs within the scope of the model are added or removed.
+    - Can only access members or signals that are defined or signaled on the morph. Access of the model methods or properties directly is not allowed. Exposed methods or properties are OK.
+  - Each binding id defines as follows: `{ target?, signal, handler, converter?, updater?, varMapping? }`
+    - ***target***: Defines which part of the morph the binding should hold on to. If target is ommitted, target is assumed to be the morph the model is directly attached to.
+    - ***signal***: Defines the method or signal the binding should react to.
+    - ***handler***: Defines the method that is called in response to the binding getting triggered. This can be either the name of the method or closure passed directly.
+    - ***converter***: An optional function that can transform the value passed to the signal or method. This is the same as the converter from `connect()`.
+    - ***updater***: An optional function that allows the user to fully control the way the handler is called. This is the same as the updater from `connect()`.
+    - ***varMapping***: Both `converter` and `updater` support the provision of the function as a string. In this case it is useful to have a varMapping that will ensure the closures are properly initialized.
+ - Further a viewmodel has various callbacks, that subclasses can use to control the lifecycle updates of the viewmodel accordingly:
+> ⚠️ **Warning**
+> The API of the viewmodels is subject to change in the future, this section will be updated accordingly.
+   - `onRefresh(propName)`: Called whenever a property in the model is changed. This is useful for performing view updates in response to model changes that we can no anticipate via bindings.
+   - `viewDidLoad()`: Called once when the model is attached to the view. This is similar to `onLoad()` but unlike the latter is only called when the entire view is ready not only the model itself is initialized. 
+   - `withoutBindingsDo(cb)`: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by backpropagation.

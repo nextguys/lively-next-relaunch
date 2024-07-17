@@ -1,49 +1,169 @@
-import { component, ShadowObject, config, ViewModel, ConstraintLayout, without, add, part, TilingLayout, Ellipse } from 'lively.morphic';
+import { component, ViewModel, Image, Label, ShadowObject, ConstraintLayout, without, add, part, TilingLayout, Ellipse } from 'lively.morphic';
 import { Color, RadialGradient, rect, LinearGradient, pt } from 'lively.graphics';
 import { num } from 'lively.lang';
-import { SystemButton } from 'lively.components/buttons.cp.js';
-import { ColorPicker } from 'lively.ide/styling/color-picker.cp.js';
-import { signal } from 'lively.bindings';
-import module from 'lively.modules/src/module.js';
-import JavaScriptEditorPlugin from 'lively.ide/js/editor-plugin.js';
-import { createFiles } from 'lively.resources';
 import { Path } from 'lively.morphic/morph.js';
 import { Text } from 'lively.morphic/text/morph.js';
-import { UserFlap } from 'lively.user/user-flap.cp.js';
 import { projectAsset } from 'lively.project/helpers.js';
+import { TiktokButton } from '../ui/pages/landing-page.cp.js';
+import { Spinner } from 'lively.components/loading-indicator.cp.js';
 
-export const ExampleFlap = component(UserFlap, {
-  defaultViewModel: null,
+class InteractiveDelayModel extends ViewModel {
+  static get properties () {
+    return {
+      loader: {
+        get () {
+          return ({
+            reconciliation: async () => {
+              const { ReconciliationSample } = await System.import('nextguys--lively-next-relaunch/explanation/interactive-examples.cp.js');
+              return part(ReconciliationSample);
+            },
+            'editor example 1': async () => {
+              const { EditorSample1 } = await System.import('nextguys--lively-next-relaunch/explanation/interactive-examples.cp.js');
+              return part(EditorSample1);
+            }
+          })[this.getProperty('loader')];
+        }
+      },
+      bindings: {
+        get () {
+          return [
+            { signal: 'onHoverIn', handler: 'onHoverIn' },
+            { signal: 'onHoverOut', handler: 'onHoverOut' },
+            { signal: 'onMouseMove', handler: 'repositionTextNode' },
+            { target: 'start btn', signal: 'onMouseDown', handler: 'loadInteractive' }
+          ];
+        }
+      }
+    };
+  }
+
+  __serialize__ () {
+    return {
+      __expr__: `{ loader: "${this.getProperty('loader')}" }`,
+      bindings: {}
+    };
+  }
+
+  repositionTextNode (evt) {
+    $world.env.eventDispatcher.keyInputHelper.setPosition(evt.positionIn($world));
+  }
+
+  onHoverIn () {
+    if (!this.isLoaded) return;
+    if (lively.FreezerRuntime) { $world.env.eventDispatcher.keyInputHelper.domState.textareaNode.removeAttribute('disabled'); }
+  }
+
+  onHoverOut (evt) {
+    if (evt.state.hover.hoveredOverMorphs.includes(this.view)) return;
+    if (lively.FreezerRuntime) { $world.env.eventDispatcher.keyInputHelper.domState.textareaNode.setAttribute('disabled', true); }
+  }
+
+  async prepareSystemIfNeeded () {
+    if (!System.global.babel) await System.import('esm://cache/@babel/standalone').then(({ default: babel }) => System.global.babel = babel);
+    if (System.transpiler !== 'lively.transpiler') {
+      await System.import('lively.modules/systemjs-init.js');
+      const { module } = await System.import('lively.modules');
+      System.trace = false;
+      System._fileCheckMap = {}; // populate this in order to populate
+      for (const mod in lively.FreezerRuntime.registry) {
+        if (!mod.startsWith('lively.')) continue;
+        const exports = lively.FreezerRuntime.exportsOf(mod); // for this to work, we need a resurrection build
+        System.set(System.baseURL + mod, System.newModule(exports));
+        const m = module(System.baseURL + mod);
+        m._recorder = exports;
+        // denote the exports
+        m._frozenModule = true;
+        System._fileCheckMap[System.baseURL + mod] = true;
+      }
+    }
+  }
+
+  async loadInteractive () {
+    this.view.submorphs = [part(Spinner, { viewModel: { color: 'black' }, fixedWidth: false, fixedHeight: false })];
+    await this.prepareSystemIfNeeded();
+
+    let interactive;
+    this.view.submorphs = [interactive = await this.loader()];
+    this.view.layout.setResizePolicyFor(interactive, { width: 'fill', height: 'fixed' });
+    this.view.layout.hugContentsVertically = true;
+    this.isLoaded = true;
+    if (lively.FreezerRuntime) { $world.env.eventDispatcher.keyInputHelper.domState.textareaNode.removeAttribute('disabled'); }
+  }
+}
+
+export const InteractiveDelay = component({
+  defaultViewModel: InteractiveDelayModel,
+  fill: Color.rgb(229, 231, 233),
+  extent: pt(430.2,344),
+  layout: new TilingLayout({
+    reactToSubmorphAnimations: false,
+    align: 'center',
+    axisAlign: 'center'
+  }),
+  submorphs: [part(TiktokButton, {
+    name: 'start btn',
+    position: pt(73.5, 241.9),
+    submorphs: [{
+      name: 'button label',
+      extent: pt(170, 47),
+      textAndAttributes: ['Start Demo', null]
+    }]
+  })]
+});
+
+export const ExampleFlap = component({
   borderColor: Color.rgb(215, 215, 215),
+  borderRadius: 7,
   borderWidth: 1,
-  borderWidth: 1,
+  clipMode: 'hidden',
   extent: pt(141, 52.3),
   fill: new LinearGradient({ stops: [{ offset: 0, color: Color.white }, { offset: 1, color: Color.rgb(225, 225, 225) }], vector: rect(0.49999999999999994, 0, 6.123233995736766e-17, 1) }),
-  position: pt(45.7, 494.3),
+  layout: new TilingLayout({
+    align: 'right',
+    axisAlign: 'center',
+    hugContentsHorizontally: true,
+    padding: rect(10, 10, 0, 0),
+    spacing: 10
+  }),
+  position: pt(1501, 1226.5),
   submorphs: [{
+    name: 'network-indicator',
+    borderRadius: 5,
+    extent: pt(5, 5),
+    fill: Color.rgb(0, 204, 0),
+    position: pt(10, 24),
+    reactsToPointer: false
+  }, {
+    type: Label,
     tooltip: '',
     name: 'left user label',
+    draggable: true,
+    fontColor: Color.rgb(102, 102, 102),
+    fontSize: 16,
     nativeCursor: 'text',
+    position: pt(25, 15),
     textAndAttributes: ['justin', null]
   }, {
+    type: Label,
     tooltip: 'Logout',
     name: 'right user label',
+    fontColor: Color.rgb(102, 102, 102),
+    fontSize: 16,
     nativeCursor: 'pointer',
+    position: pt(75, 15),
     textAndAttributes: ['', {
       fontFamily: 'Font Awesome',
       fontWeight: '900'
     }]
   }, {
+    type: Image,
     name: 'avatar',
+    borderRadius: 25,
+    clipMode: 'hidden',
+    dropShadow: new ShadowObject({ rotation: 72, color: Color.rgba(0, 0, 0, 0.47), blur: 5 }),
     extent: pt(30, 30),
-    imageUrl: projectAsset('justin.jpeg')
-  }, {
-    name: 'spinner',
-    html: '<div class=\"spinner black-spinner\"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>'
-  }, {
-    name: 'login button',
-    extent: pt(230, 40),
-    nativeCursor: 'pointer'
+    imageUrl: projectAsset('justin.jpeg'),
+    position: pt(101, 11)
   }]
 });
 
@@ -261,253 +381,7 @@ export const InteractiveDie = component({
   ]
 });
 
-class CodeEditorModel extends ViewModel {
-  static get properties () {
-    return {
-      initCode: { defaultValue: '' },
-      targetModule: { defaultValue: null },
-      knownGlobals: { defaultValue: [] },
-      expose: { get () { return ['targetModule', 'runEval']; } },
-      bindings: {
-        get () {
-          return [{
-            target: 'eval button', signal: 'fire', handler: 'runEval'
-          }];
-        }
-      }
-    };
-  }
-
-  async runEval () {
-    await this.ui.editor.editorPlugin.runEval(this.ui.editor.textString);
-    signal(this, 'runEval');
-  }
-
-  async refreshEditor () {
-    const ed = this.ui.editor;
-    const targetModule = this.targetModule || 'lively://lively.next-workspace/' + ed.id + '.cp.js';
-    ed.editorPlugin.evalEnvironment = {
-      knownGlobals: this.knownGlobals,
-      targetModule,
-      context: ed,
-      format: 'esm'
-    };
-    if (this.initCode) {
-      await this.ui.editor.editorPlugin.runEval(this.initCode);
-    } else ed.textString = await module(System, targetModule).source();
-    setTimeout(() => ed.editorPlugin.highlight());
-  }
-
-  onRefresh (change) {
-    if (change === 'targetModule') this.refreshEditor();
-  }
-
-  async viewDidLoad () {
-    this.ui.editor.plugins = [new JavaScriptEditorPlugin()];
-    this.refreshEditor();
-  }
-}
-
-export const CodeEditor = component({
-  defaultViewModel: CodeEditorModel,
-  extent: pt(438.6, 270.6),
-  layout: new TilingLayout({
-    axis: 'column',
-    axisAlign: 'right',
-    padding: rect(7, 7, 0, 0),
-    resizePolicies: [['editor', {
-      height: 'fill',
-      width: 'fill'
-    }]],
-    spacing: 7
-  }),
-  fill: Color.rgb(229, 231, 233),
-  submorphs: [{
-    type: 'text',
-    name: 'editor',
-    fixedWidth: true,
-    fixedHeight: true,
-    readOnly: false,
-    lineWrapping: 'by-chars',
-    fill: Color.white,
-    ...config.codeEditor.defaultStyle
-  }, part(SystemButton, {
-    name: 'eval button',
-    extent: pt(91.3, 25),
-    nativeCursor: 'pointer',
-    submorphs: [{
-      name: 'label',
-      extent: pt(76, 20),
-      textAndAttributes: ['run code ', null, '', {
-        fontFamily: 'Font Awesome',
-        fontWeight: '900'
-      }, ' ', {}]
-
-    }]
-  })]
-});
-
-export const EditorSample1 = component(CodeEditor, {
-  viewModel: {
-    initCode: 'let aMorph = $world.get(\'movable die 1\'); import { Color, pt } from "lively.graphics";',
-    knownGlobals: ['aMorph', 'Color']
-  },
-  submorphs: [{
-    name: 'editor',
-    textString: 'aMorph.show()'
-  }]
-});
-
-const demoDir = 'local://component-reconciliation-demo/';
-let testResources = {
-  die: {
-    'demo.cp.js': `
-import { component } from 'lively.morphic';
-import { pt, Color} from 'lively.graphics';
-  
-export const Die = component({
-    extent: pt(78.5, 78.7),
-    borderRadius: 13,
-    fill: Color.rgb(255, 0, 0),
-    submorphs: [{
-      type: 'ellipse',
-      name: 'eye',
-      extent: pt(15.9, 16.6),
-      position: pt(30.6, 31.5)
-    }]
-  })
-  `,
-    'package.json': '{"name": "die", "main": "demo.cp.js"}'
-  }
-};
-
-class ReconciliationSampleModel extends ViewModel {
-  static get properties () {
-    return {
-      bindings: {
-        get () {
-          return [{
-            target: 'color picker', signal: 'value', handler: 'updateColor'
-          }, {
-            target: 'code editor recon', signal: 'runEval', handler: 'updateTarget'
-          }];
-        }
-      }
-    };
-  }
-
-  updateColor (newColor) {
-    const [die] = this.ui.hFloater.submorphs;
-    die.withMetaDo({ reconcileChanges: true }, () => {
-      die.fill = newColor;
-    });
-  }
-
-  updateTarget () {
-    const [EditableComponent] = this.ui.hFloater.submorphs;
-    this.ui.colorPicker.focusOnMorph(EditableComponent, EditableComponent.fill);
-  }
-
-  async prepareEnv () {
-    let Die;
-    const modId = demoDir + 'die/demo.cp.js';
-    await createFiles(demoDir, testResources);
-    const mod = module(System, modId);
-    ({ Die } = await mod.load());
-    this.ui.codeEditorRecon.targetModule = modId;
-    Die.previouslyRemovedMorphs = new WeakMap();
-    const EditableComponent = await Die.edit();
-    this.ui.hFloater.submorphs = [EditableComponent];
-    // somehow connect the change tracker to the editor so it reconciles correctly
-    // FIXME: also implement a backwards propagation mechanism for the color picker
-    this.updateTarget();
-  }
-
-  viewDidLoad () {
-    this.prepareEnv();
-  }
-}
-
-// the reconciliation needs to be setup within the viewModel
-export const ReconciliationSample = component({
-  defaultViewModel: ReconciliationSampleModel,
-  fill: Color.rgb(229, 231, 233),
-  extent: pt(679.4, 933.1),
-  layout: new TilingLayout({
-    axis: 'column',
-    padding: rect(10, 10, 0, 0),
-    resizePolicies: [['h floater', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['b floater', {
-      height: 'fill',
-      width: 'fill'
-    }]],
-    spacing: 10
-  }),
-  submorphs: [{
-    name: 'h floater',
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center'
-    }),
-    height: 117.68359375,
-    position: pt(86.1, 72.1),
-    submorphs: [{
-      name: 'reconcilable die',
-      borderRadius: 13,
-      extent: pt(78.5, 78.7),
-      fill: Color.rgb(255, 0, 0),
-      position: pt(175.8, 15),
-      submorphs: [{
-        type: Ellipse,
-        name: 'eye',
-        extent: pt(15.9, 16.6),
-        position: pt(30.6, 31.5)
-      }]
-    }]
-  }, {
-    name: 'b floater',
-    layout: new TilingLayout({
-      align: 'center',
-      axisAlign: 'center',
-      padding: rect(0, 0, 10, 0),
-      resizePolicies: [['code editor recon', {
-        height: 'fill',
-        width: 'fill'
-      }]],
-      spacing: 10
-    }),
-    fill: Color.rgba(255, 255, 255, 0),
-    extent: pt(397.7, 128.9),
-    position: pt(48, 193.1),
-    submorphs: [
-      part(CodeEditor, {
-        name: 'code editor recon',
-        viewModel: { initCode: null },
-        submorphs: [{
-          name: 'eval button',
-          extent: pt(117.6, 25),
-          submorphs: [{
-            name: 'label',
-            extent: pt(99, 20),
-            textAndAttributes: ['save module', null, ' ', {
-              fontColor: Color.rgb(0, 200, 83)
-            }, '', {
-              fontColor: Color.rgb(0, 200, 83),
-              fontFamily: 'Font Awesome',
-              fontWeight: '900'
-            }, ' ', {}]
-
-          }]
-        }]
-      }),
-      part(ColorPicker, { viewModel: { embedded: true }, name: 'color picker' })
-    ]
-  }]
-});
-
-const FocusBlurDiagram = component({
+export const FocusBlurDiagram = component({
   fill: Color.rgb(229, 231, 233),
   extent: pt(567.5, 353.3),
   layout: new TilingLayout({

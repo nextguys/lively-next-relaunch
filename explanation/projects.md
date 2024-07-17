@@ -1,5 +1,3 @@
-# Lively Projects
-
 Work in `lively.next` is organized in so called projects. Other ways of thinking about these projects might be a folder, containing all relevant files for a specific application or, for the technical inclined readers, a `git` repository.
 
 This explanation is split in two parts: The first part will focus on how one interacts with these projects and describe the intended workflow for collaboration inside of `lively.next`. The second part will give some technical details on how these projects are implemented and working under the hood. The second part is only relevant for developers, while the first part is intended for all users of `lively.next`.

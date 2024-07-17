@@ -1,5 +1,3 @@
-# Serialization
-
  - Objects in lively.next (and in particular Morphs) support full serialization of the object state into a JSON format.
  - This JSON snapshot can then in turn be used to reinitialize *(deserialize)* the serialized objects into memory.
  - Since the control of the runtime in Javascript is limited (we can not yet create pure memory snapshots) there are caviats. For instance we are unable to reliably serialize closures.
