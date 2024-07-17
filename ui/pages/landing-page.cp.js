@@ -1,8 +1,43 @@
-import { TilingLayout, ShadowObject, part, component, Text } from 'lively.morphic';
+import { TilingLayout, easings, ShadowObject, part, component, Text } from 'lively.morphic';
 import { Color, rect, pt } from 'lively.graphics';
 import { LinearGradient } from 'lively.graphics/color.js';
 import { VideoLooper } from '../partials.cp.js';
 import { projectAsset } from 'lively.project/helpers.js';
+
+export const TiktokButton = component({
+  name: 'try it out button',
+  extent: pt(292.8, 53),
+  master: {
+    animate: { duration: 500, easing: easings.outExpo },
+    auto: component({
+      dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 8 })
+    }),
+    hover: component({
+      dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 15 })
+    })
+  },
+  fill: new LinearGradient({ stops: [{ offset: 0.1473074248342803, color: Color.rgb(255, 119, 0) }, { offset: 1, color: Color.rgba(255, 119, 0, 0.4538) }], vector: rect(0.49999999999999994, 0, 6.123233995736766e-17, 1) }),
+  nativeCursor: 'pointer',
+  layout: new TilingLayout({
+    align: 'center',
+    axisAlign: 'center'
+  }),
+  borderRadius: 5,
+  submorphs: [{
+    type: Text,
+    name: 'button label',
+    fontWeight: '600',
+    fontSize: 32,
+    fontColor: Color.rgb(255, 255, 255),
+    textAlign: 'center',
+    textAndAttributes: ['Try it out!', null],
+    reactsToPointer: false,
+    dynamicCursorColoring: true,
+    fill: Color.rgba(255, 255, 255, 0),
+    padding: rect(1, 1, 0, 0),
+    position: pt(126.7, 64.9)
+  }]
+});
 
 const Feature = component({
   name: 'feature',
@@ -142,8 +177,7 @@ const FeatureHolder = component({
             fontFamily: '\"IBM Plex Mono\"'
           }, ' ', {}, 'component library', {
             fontWeight: '600'
-          }, ' or make and reuse your own building blocks.', {}],
-          width: undefined
+          }, ' or make and reuse your own building blocks.', {}]
         }]
       }), part(Feature, {
         name: 'code generation',
@@ -202,8 +236,7 @@ const FeatureHolder = component({
           }, ', that allows you to easily host your work as static webpages.', {
             fontColor: Color.rgb(0, 0, 0),
             fontFamily: '\"IBM Plex Sans\"'
-          }],
-          width: undefined
+          }]
         }]
       }), part(Feature, {
         name: 'customize',
@@ -236,8 +269,7 @@ const FeatureHolder = component({
             fontWeight: '600'
           }, ' - allowing you to quickly build extremely powerful ', null, 'tools', {
             fontWeight: '600'
-          }, ', perfectly fitting your workflow and needs.', null],
-          width: undefined
+          }, ', perfectly fitting your workflow and needs.', null]
         }]
       }), part(Feature, {
         name: 'live programming',
@@ -269,8 +301,7 @@ const FeatureHolder = component({
           }, ' - of course also from within ', null, 'lively.next', {
             fontColor: Color.rgb(255, 119, 0),
             fontFamily: '\"IBM Plex Mono\"'
-          }, '.\n', null],
-          width: undefined
+          }, '.\n', null]
         }]
       })
     ]
@@ -474,31 +505,7 @@ export const LandingPage = component({
         padding: rect(5, 5, 0, 0),
         spacing: 5
       }),
-      submorphs: [{
-        name: 'try it out button',
-        fill: new LinearGradient({ stops: [{ offset: 0.1473074248342803, color: Color.rgb(255, 119, 0) }, { offset: 1, color: Color.rgba(255, 119, 0, 0.4538) }], vector: rect(0.49999999999999994, 0, 6.123233995736766e-17, 1) }),
-        nativeCursor: 'pointer',
-        layout: new TilingLayout({
-          align: 'center',
-          axisAlign: 'center'
-        }),
-        borderRadius: 5,
-        dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 8 }),
-        submorphs: [{
-          type: Text,
-          name: 'button label',
-          fontWeight: '600',
-          fontSize: 32,
-          fontColor: Color.rgb(255, 255, 255),
-          textAlign: 'center',
-          textAndAttributes: ['Try it out!', null],
-          reactsToPointer: false,
-          dynamicCursorColoring: true,
-          fill: Color.rgba(255, 255, 255, 0),
-          padding: rect(1, 1, 0, 0),
-          position: pt(126.7, 64.9)
-        }]
-      }, {
+      submorphs: [part(TiktokButton, { name: 'try it out button' }), {
         type: Text,
         name: 'license',
         extent: pt(354, 19.6),
