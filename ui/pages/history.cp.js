@@ -17,7 +17,7 @@ import { projectAsset } from 'lively.project/helpers.js';
 const historyData = [
   {
     date: '2007',
-    title: 'The first version of LivelyKernel is released to the public. This version is still developed within the context of SUN Labs.',
+    title: ['The first version of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is released to the public. Development happened at SUN Labs.', null],
     pictures: [
       {
         img: projectAsset('lively_kernel.png')
@@ -26,16 +26,17 @@ const historyData = [
   },
   {
     date: '2008',
-    title: 'Dan Ingalls present the first version of LivelyKernel at Google TechTalks. First implementation of Fabrik for Lively.',
+    title: ['Dan Ingalls', { fontWeight: 600 }, ' presents the first version of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' at "Google TechTalks". First implementation of ', null, 'Fabrik', { link: 'https://ieeexplore.ieee.org/abstract/document/5350243', fontColor: Color.black, textDecoration: 'underline', fontFamily: 'IBM Plex Mono' }, ' for ', null, 'Lively', { fontFamily: 'IBM Plex Mono' }, '.', null],
     pictures: [
       {
-        yt: 'gGw09RZjQf8'
+        yt: 'gGw09RZjQf8',
+        caption: 'Dan\\\'s TechTalk at Google'
       }
     ]
   },
   {
     date: '2009',
-    title: 'Dan Ingalls and the HPI Software Architecture Group start Collaborating on LivelyKernel. Work on Lively Wiki and Lively Webwerkstatt is started.',
+    title: ['Dan Ingalls', { fontWeight: 600 }, ' and the ', null, 'HPI Software Architecture Group', { fontWeight: 600, textDecoration: 'underline', fontColor: Color.black, link: 'https://www.hpi.uni-potsdam.de/hirschfeld/' }, ' start Collaborating on ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, '. Work on ', null, 'Lively Wiki', { fontFamily: 'IBM Plex Mono', fontStyle: 'italic' }, ' and ', null, 'Lively Webwerkstatt', { fontStyle: 'italic', fontFamily: 'IBM Plex Mono' }, ' is started.', null],
     pictures: [
       {
         img: projectAsset('hpi-lake.jpg'),
@@ -45,15 +46,15 @@ const historyData = [
   },
   {
     date: '2010',
-    title: 'After the acquisition of SUN by Oracle the future of LivelyKernel is in limbo. Funding for LivelyKernel is moved over to SAP Research in Palo Alto.'
+    title: ['After the acquisition of SUN by Oracle the future of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is in limbo. Funding for ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is moved over to SAP Research in Palo Alto.']
   },
   {
     date: '2011',
-    title: 'Development of the Lively Debugger is underway with major support from Marko Röder, Christopher Schuster and Robert Krahn.'
+    title: ['Development of a debugger inside of the ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is underway with major contributions from ', null, 'Marko Röder, Christopher Schuster and Robert Krahn', { fontWeight: 600 }, '.', null]
   },
   {
     date: '2012',
-    title: 'The server side of LivelyKernel is now fully implemented in NodeJS, allowing for flexibel server as well as client side scripting. This fullstack version of LivelyKernel is named Lively-Web.',
+    title: ['The server side of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is now fully implemented in ', null, 'NodeJS', { fontFamily: 'IBM Plex Mono' }, ', allowing for flexibel server as well as client side scripting. This fullstack version of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is named ', null, 'Lively-Web.', { fontFamily: 'IBM Plex Mono', fontStyle: 'italic' }],
     pictures: [
       {
         yt: 'QTJRwKOFddc',
@@ -63,37 +64,37 @@ const historyData = [
   },
   {
     date: '2013',
-    title: 'LivelyKernel Development moves over to the newly formed CDG (Communication Design Group) at SAP. '
+    title: ['LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' Development moves over to the newly formed CDG (Communication Design Group) at SAP.', null]
   }, {
     date: '2014',
-    title: 'Lively4 development is started at HPI by Jens Lincke. LivelyKernel collaborates with University of Victoria to teach students coding in LivelyKernel.'
+    title: ['Lively4', { fontStyle: 'italic', fontFamily: 'IBM Plex Mono', fontColor: Color.black, textDecoration: 'underline', link: 'https://github.com/LivelyKernel/lively4-core' }, ' development is started at HPI by ', null, 'Jens Lincke', { fontWeight: 600 }, '. ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' collaborates with University of Victoria to teach students coding in ', null, 'LivelyKernel.', { fontFamily: 'IBM Plex Mono' }]
   },
   {
     date: '2015',
-    title: 'CDG becomes part of HARC moving LivelyKernel development under the umbrella of Y-Combinator Research. Robert Krahn starts developing Clopxp a LivelyKernel that revolves around Closure instead of Javascript as its primary language environment.'
+    title: ['CDG becomes part of ', null, 'HARC', { fontWeight: 600 }, ' moving ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' development under the umbrella of ', null, 'Y-Combinator Research', { fontWeight: 600, link: 'https://www.ycombinator.com/blog/harc/', textDecoration: 'underline', fontColor: Color.black }, '. ', null, 'Robert Krahn', { fontWeight: 600 }, ' starts developing ', null, 'Clopxp', { fontFamily: 'IBM Plex Mono', fontStyle: 'italic' }, ' a ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' that revolves around ', null, 'Closure', { fontFamily: 'IBM Plex Mono' }, ' instead of ', null, 'Javascript', { fontFamily: 'IBM Plex Mono' }, ' as its primary language environment.', null]
   },
   {
     date: '2016',
-    title: 'Development for lively.next is started. The idea is to simplify LivelyKernel into modular packages and embrace the ECMAScript Module Syntax.',
+    title: ['Development of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is started. The idea is to simplify ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' into modular packages and embrace the ', null, 'ECMAScript', { fontFamily: 'IBM Plex Mono' }, ' Module Syntax.', null],
     pictures: [{
       img: projectAsset('lively-next-logo.png')
     }]
   },
   {
     date: '2017',
-    title: 'Funding for HARC and consequently lively.next stops. Past members of the project proceed to contribute to lively.next in their spare time.'
+    title: ['Funding for HARC and consequently ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' stops. Past members of the project proceed to contribute to ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' in their spare time.', null]
   },
   {
     date: '2018',
-    title: 'Typeshift and EngageLively try to commercialize lively.next and support the continued development financially.'
+    title: ['Typeshift', { link: 'https://typeshift.io', fontColor: Color.black, textDecoration: 'underline', fontWeight: 600 }, ' and ', null, 'EngageLively', { fontWeight: 600 }, ' try to commercialize ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' and support the continued development financially.', null]
   },
   {
     date: '2019',
-    title: 'Development of the lively.freezer commences. Primariy focus is to provide a bundler for projects in lively.next that allow users to ship applications and make them load fast.'
+    title: ['Development of the ', null, 'lively.freezer', { fontFamily: 'IBM Plex Mono' }, '. It\\\'s goal is to provide a bundler for projects in ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' that allow users to ship applications and make them load fast.', null]
   },
   {
     date: '2020',
-    title: 'BachelorProject between Typeshift and HPI Software Architecture Group develops Qinoq, and interactive tool built ontop of lively.next that allows for non programmers and programmers to collaborate on building Scrollytelling interactives.',
+    title: ['Bachelor project between ', null, 'Typeshift', { fontWeight: 600 }, ' and ', null, 'HPI Software Architecture Group', { fontWeight: 600 }, ' develops ', null, 'qinoq', { fontFamily: 'IBM Plex Mono' }, ', an interactive tool built on top of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' that allows for non-programmers and programmers to collaborate when building Scrollytelling interactives.', null],
     pictures: [
       {
         yt: 'O7pdYaSdZ3U',
@@ -102,16 +103,12 @@ const historyData = [
     ]
   },
   {
-    date: '2021',
-    title: ['Typeshift builds a ', null, 'Solar System Interactive', { link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840', fontWeight: 'bold', fontColor: Color.black }, ' in lively.next for the Science Magazine "Spektrum der Wissenschaft".', null]
-  },
-  {
     date: '2022',
-    title: 'New Funding for lively.next is secured, allowing Linus Hagemann to join the project full time. The new focus of lively.next is to 1.) build a solid versioning system integration. 2.) Create a more rigorous Pull Request based development process and 3.) To implement a fully working version of the new component architecture including reconciliation.'
+    title: ['New Funding for ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is secured, allowing ', null, 'Linus Hagemann', { fontWeight: 600 }, ' to join the project full time, alongside ', null, 'Robin Schreiber', { fontWeight: 600 }, '. The new focus of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is to 1.) build a solid versioning system integration, 2.) implement a fully working version of the new component architecture including reconciliation, and 3.) make the core stable enough for producitive work.', null]
   },
   {
     date: '2023',
-    title: 'Linus Hagemann presents the latest version of lively.next at Froscon in Germany.',
+    title: ['Linus Hagemann', { fontWeight: 600 }, ' presents the latest version of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' at FrOSCon \\\'23 in Germany.', null],
     pictures: [
       {
         yt: 'XaMYx-OCaYo'
@@ -120,7 +117,7 @@ const historyData = [
   },
   {
     date: '2024',
-    title: 'The new lively.next website launches, written entirely in lively.next itself.'
+    title: ['The new ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' website launches, written entirely in ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' itself.', null]
   }
 ];
 
