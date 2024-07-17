@@ -1,28 +1,58 @@
-import { component, part, ViewModel, TilingLayout } from 'lively.morphic';
+import { component, ShadowObject, part, ViewModel, TilingLayout } from 'lively.morphic';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
-import { Image } from 'lively.morphic/morph.js';
-import { Color } from 'lively.graphics/color.js';
+import { Image, Ellipse } from 'lively.morphic/morph.js';
+import { Color, LinearGradient } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
-
+import { HTMLMorph } from 'lively.morphic/html-morph.js';
+import { without } from 'lively.morphic/components/core.js';
+import { add, style, PolicyApplicator } from 'lively.morphic/components/policy.js';
 import { Footer } from './footer.cp.js';
 import { HashRouter } from 'lively.components/hash-router.js';
 import { Blog } from './blog.cp.js';
-import { entries } from '../assets/articles/entries.js';
-
+import { entries as blogEntries } from '../assets/articles/entries.js';
+import { CompiledHistoryPage } from './pages/compiled_history.cp.js';
 import { ImprintPage } from './pages/imprint.cp.js';
 import { ExamplePage } from './pages/examples.cp.js';
-import { CompiledHistoryPage } from './pages/compiled_history.cp.js';
 
 import { connect } from 'lively.bindings';
 import { NavBar } from './navigation.cp.js';
 import { LandingPage } from './pages/landing-page.cp.js';
 
 import { ErrorPage } from './pages/error.cp.js';
-import { DocumentationPage } from './pages/documentation.cp.js';
+import { DocumentationPage, BackToDocsButton } from './pages/documentation.cp.js';
+import { projectAsset } from 'lively.project/helpers.js';
+import { num } from 'lively.lang/index.js';
 
 class LivelyWebPageModel extends ViewModel {
   static get properties () {
     return {
+      documentationComponents: {
+        readOnly: true,
+        get () {
+          return {
+            morphic: {
+              load: async () => (await System.import('nextguys--lively-next-relaunch/explanation/morphic.cp.js')).morphic,
+              title: 'lively.morphic'
+            },
+            modules: {
+              load: async () => (await System.import('nextguys--lively-next-relaunch/explanation/modules.cp.js')).modules,
+              title: 'lively.modules'
+            },
+            projects: {
+              load: async () => (await System.import('nextguys--lively-next-relaunch/explanation/projects.cp.js')).projects,
+              title: 'lively.projects'
+            },
+            serialization: {
+              load: async () => (await System.import('nextguys--lively-next-relaunch/explanation/serialization.cp.js')).serialization,
+              title: 'lively.serialization'
+            },
+            studio: {
+              load: async () => (await System.import('nextguys--lively-next-relaunch/explanation/studio.cp.js')).studio,
+              title: 'lively.studio'
+            }
+          };
+        }
+      },
       expose: {
         get () {
           return ['relayout', 'onMouseDown', 'respondsToVisibleWindow'];
@@ -37,6 +67,8 @@ class LivelyWebPageModel extends ViewModel {
     this.ui.documentation.fontWeight = 'normal';
     this.ui.examples.fontWeight = 'normal';
     this.ui.blog.fontWeight = 'normal';
+    this.ui.body.submorphs = [];
+    if (lively.FreezerRuntime) { $world.env.eventDispatcher.keyInputHelper.domState.textareaNode.setAttribute('disabled', true); }
   }
 
   showErrorPage () {
@@ -52,7 +84,7 @@ class LivelyWebPageModel extends ViewModel {
     return page;
   }
 
-  route (hash) {
+  async route (hash) {
     this.hideAllPages();
 
     // base landing page
@@ -96,12 +128,30 @@ class LivelyWebPageModel extends ViewModel {
       this.ui.blog.fontWeight = 'bold';
       blogComponent = this.showInBody(Blog);
       const slug = hash.replace('blog/', '').replaceAll('/', '');
-      const entryToOpen = entries.find(e => e.slug === slug);
+      const entryToOpen = blogEntries.find(e => e.slug === slug);
       if (!entryToOpen) {
         this.showErrorPage();
         return;
       }
       blogComponent.openEntry(entryToOpen);
+      return;
+    }
+
+    if (hash.startsWith('documentation/')) {
+      const slug = hash.replace('documentation/', '').replaceAll('/', '');
+      if (!this.documentationComponents[slug]) {
+        this.showErrorPage();
+        return;
+      }
+      this.ui.documentation.fontWeight = 'bold';
+      this.showInBody(await this.documentationComponents[slug]?.load());
+      const backBtn = this.ui.body.addMorphBack(part(BackToDocsButton, {
+        name: 'go back to documentation',
+        submorphs: [{
+          name: 'chapter title', textAndAttributes: [this.documentationComponents[slug].title, null]
+        }]
+      }));
+      this.ui.body.layout.setResizePolicyFor(backBtn, { width: 'fill', height: 'fixed' });
       return;
     }
 
@@ -111,9 +161,10 @@ class LivelyWebPageModel extends ViewModel {
   onMouseDown (evt) {
     if (evt.targetMorphs[0].name === 'blog') this.router.route('blog', true);
     if (evt.targetMorphs[0].name === 'history') this.router.route('history', true);
-    if (evt.targetMorphs[0].name === 'documentation') this.router.route('documentation', true);
+    if (evt.targetMorphs[0].name === 'documentation' || evt.targetMorphs[0].name === 'go back to documentation') this.router.route('documentation', true);
+    if (this.documentationComponents[evt.targetMorphs[0].name]) this.router.route(`documentation/${evt.targetMorphs[0].name}`, true);
     if (evt.targetMorphs[0].name === 'examples') this.router.route('examples', true);
-    if (entries.map(e => e.slug).includes(evt.targetMorphs[0].name)) this.router.route(`blog/${evt.targetMorphs[0].name}`, true);
+    if (blogEntries.map(e => e.slug).includes(evt.targetMorphs[0].name)) this.router.route(`blog/${evt.targetMorphs[0].name}`, true);
     if (evt.targetMorphs[0].name === 'logo section') this.router.route(null, true);
   }
 
