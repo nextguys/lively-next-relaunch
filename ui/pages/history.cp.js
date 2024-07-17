@@ -5,7 +5,6 @@ import { Text } from 'lively.morphic/text/morph.js';
 import { part } from 'lively.morphic/components/core.js';
 import { YouTubeEmbed } from 'lively.components/youtube-morph.cp.js';
 import { projectAsset } from 'lively.project/helpers.js';
-import { num } from 'lively.lang/index.js';
 
 // 2007: The first version of LivelyKernel is released
 // 2008: Dan Ingalls presents the LivelyKernel at Google TechTalks
@@ -126,14 +125,12 @@ const historyData = [
 ];
 
 export const ChronoPicture = component({
-  extent: pt(429.7, 359.7),
+  extent: pt(767.7, 386.7),
   layout: new TilingLayout({
     axis: 'column',
+    axisAlign: 'center',
     resizePolicies: [['picture', {
       height: 'fill',
-      width: 'fill'
-    }], ['caption', {
-      height: 'fixed',
       width: 'fill'
     }]],
     spacing: 5
@@ -142,12 +139,12 @@ export const ChronoPicture = component({
   submorphs: [{
     type: Image,
     name: 'picture',
-    extent: pt(331.7, 248.6),
-    imageUrl: projectAsset('IMG_0466.png'),
+    ageUrl: projectAsset('IMG_0466.png'),
     position: pt(-41.1, 32.2)
   }, {
     type: Text,
     name: 'caption',
+    extent: pt(200, 33.6),
     textAlign: 'center',
     dynamicCursorColoring: true,
     fill: Color.rgba(255, 255, 255, 0),
@@ -189,33 +186,15 @@ const ChronoVideo = component(ChronoPicture, {
         resizePolicies: [['video', {
           height: 'fill',
           width: 'fill'
-        }], ['caption', {
-          height: 'fixed',
-          width: 'fill'
         }]]
       })
-    }),
-    breakpoints: [
-      [pt(400, 0), component({
-        layout: new TilingLayout({
-          axisAlign: 'center',
-          axis: 'column',
-          resizePolicies: [['video', {
-            height: 'fill',
-            width: 'fixed'
-          }], ['caption', {
-            height: 'fixed',
-            width: 'fill'
-          }]]
-        })
-      })]
-    ]
+    })
   },
   submorphs: [
     without('picture'),
     add(part(YouTubeEmbed, {
       name: 'video',
-      viewModel: { videoID: 'gGw09RZjQf8' },
+      viewModel: { videoID: 'gGw09RZjQf8', maxWidth: '400px' },
       extent: pt(400, 225),
       position: pt(13.1, 265)
     }), 'caption')
@@ -288,9 +267,12 @@ export const ChronologicalEntry = component({
     name: 'step pictures wrapper',
     fill: Color.transparent,
     layout: new TilingLayout({
-      resizePolicies: [
-        ['step pictures', { width: 'fill', height: 'fill' }]
-      ]
+      align: 'right',
+      resizePolicies: [['step pictures', {
+        height: 'fill',
+        width: 'fill'
+      }]],
+      spacing: 5
     }),
     extent: pt(428, 252.5),
     submorphs: [{
@@ -370,28 +352,116 @@ export const ChronologicalEntry = component({
   }]
 });
 
-const ChronologicalEntryReverse = component(ChronologicalEntry, {
-  rotation: num.toRadians(180.0),
-  submorphs: [
-    {
-      name: 'step pictures wrapper',
-      rotation: -num.toRadians(180.0)
-    },
-    {
-      name: 'step description wrapper',
-      submorphs: [{
+const ChronologicalEntryReverse = component({
+  defaultViewModel: EntryModel,
+  name: 'chronological entry',
+  fill: Color.rgba(255, 255, 255, 0),
+  clipMode: 'hidden',
+  layout: new TilingLayout({
+    align: 'center',
+    axisAlign: 'center',
+    hugContentsVertically: true,
+    padding: rect(0, 10, 0, 0),
+    resizePolicies: [['step pictures wrapper', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['step description wrapper', {
+      height: 'fixed',
+      width: 'fill'
+    }]],
+    spacing: 20
+  }),
+  position: pt(53.8, -2.9),
+  extent: pt(1070, 289),
+  submorphs: [{
+    name: 'step description wrapper',
+    layout: new TilingLayout({
+      align: 'right',
+      axisAlign: 'center',
+      hugContentsVertically: true
+    }),
+    fill: Color.transparent,
+    submorphs: [
+      {
+        type: Ellipse,
+        name: 'mobile step marker',
+        visible: false,
+        extent: pt(20, 20),
+        fill: Color.rgb(255, 119, 0),
+        position: pt(-5, 75)
+      },
+      {
         name: 'step description',
+        extent: pt(215.4, 69),
+        clipMode: 'hidden',
+        fill: Color.rgba(255, 255, 255, 0),
+        height: 66.5,
         layout: new TilingLayout({
           axis: 'column',
-          axisAlign: 'right',
           hugContentsVertically: true
         }),
-        rotation: num.toRadians(180.0)
+        position: pt(-692.8, -664.5),
+        submorphs: [
+          {
+            type: Text,
+            name: 'date',
+            fontFamily: '"Bree Serif"',
+            fixedWidth: true,
+            extent: pt(203.2, 21.6),
+            dynamicCursorColoring: true,
+            fill: Color.rgba(255, 255, 255, 0),
+            fontSize: 16,
+            selectionMode: 'native',
+            fontWeight: '700',
+            lineWrapping: 'by-words',
+            padding: rect(1, 1, 0, 0),
+            position: pt(20, 20),
+            textAndAttributes: ['1. October 2007', null]
+          }, {
+            type: Text,
+            name: 'description',
+            fontSize: 14,
+            selectionMode: 'native',
+            dynamicCursorColoring: true,
+            extent: pt(203.2, 47.3),
+            fill: Color.rgba(255, 255, 255, 0),
+            fixedWidth: true,
+            lineWrapping: 'by-words',
+            padding: rect(1, 1, 0, 0),
+            position: pt(20, 44),
+            textAndAttributes: ['The first version of the Lively Kernel is released to the public.', null]
+          }]
       }]
+  }, {
+    type: Ellipse,
+    name: 'step marker',
+    extent: pt(20, 20),
+    fill: Color.rgb(255, 119, 0),
+    position: pt(-5, 75)
+  }, {
+    // this is needed to fix a current rendering bug in the css layouts
+    name: 'step pictures wrapper',
+    position: pt(-505.5, -24.2),
+    fill: Color.transparent,
+    layout: new TilingLayout({
+      resizePolicies: [['step pictures', {
+        height: 'fill',
+        width: 'fill'
+      }]],
+      spacing: 5
+    }),
+    extent: pt(428, 252.5),
+    submorphs: [{
+      name: 'step pictures',
+      layout: new TilingLayout({
+        spacing: 10
+      }),
+      fill: Color.rgba(255, 255, 255, 0)
     }]
+  }]
 });
 
-const ChronologicalEntryMobile = component(ChronologicalEntry, {
+const ChronologicalEntryMobile = component(ChronologicalEntryReverse, {
   rotation: 0,
   layout: new TilingLayout({
     align: 'right',
@@ -408,7 +478,20 @@ const ChronologicalEntryMobile = component(ChronologicalEntry, {
     }]],
     spacing: 20
   }),
+  extent: pt(300, 358.1),
   submorphs: [{
+    name: 'step description wrapper',
+    layout: new TilingLayout({
+      axisAlign: 'center',
+      hugContentsVertically: true,
+      spacing: 20
+    }),
+    extent: pt(10, 57),
+    submorphs: [{
+      name: 'mobile step marker',
+      visible: true
+    }]
+  }, {
     name: 'step pictures wrapper',
     visible: true,
     layout: new TilingLayout({
@@ -422,18 +505,6 @@ const ChronologicalEntryMobile = component(ChronologicalEntry, {
   }, {
     name: 'step marker',
     visible: false
-  }, {
-    name: 'step description wrapper',
-    layout: new TilingLayout({
-      axisAlign: 'center',
-      hugContentsVertically: true,
-      spacing: 20
-    }),
-    extent: pt(10, 57),
-    submorphs: [{
-      name: 'mobile step marker',
-      visible: true
-    }]
   }]
 });
 
@@ -444,13 +515,16 @@ class HistoryPageModel extends ViewModel {
         get () {
           return [{ signal: 'extent', handler: 'relayout' }];
         }
-      }
+      },
+      mobile: { defaultValue: false }
     };
   }
 
   viewDidLoad () {
     this.ui.chronoStepContainer.submorphs = historyData.map((timestamp, i) => {
-      const cpt = i % 2 === 0 ? ChronologicalEntry : ChronologicalEntryReverse;
+      let cpt;
+      if (this.mobile) cpt = ChronologicalEntryReverse;
+      else cpt = i % 2 === 0 ? ChronologicalEntry : ChronologicalEntryReverse;
       return part(cpt, {
         master: {
           breakpoints: [
@@ -550,12 +624,15 @@ export const HistoryPageDesktop = component({
   ]
 });
 
-const HistoryPageMobile = component(HistoryPageDesktop, {
+export const HistoryPageMobile = component(HistoryPageDesktop, {
+  extent: pt(320, 5110),
+  viewModel: { mobile: true },
   submorphs: [{
     name: 'hero',
     submorphs: [{
       name: 'timeline container',
       layout: new TilingLayout({
+        hugContentsVertically: true,
         axis: 'column',
         padding: rect(20, 0, -20, 0),
         resizePolicies: [['timeline', {

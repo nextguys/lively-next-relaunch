@@ -1,18 +1,17 @@
-import { component, ShadowObject, part, ViewModel, TilingLayout } from 'lively.morphic';
+import { component, part, ViewModel, TilingLayout } from 'lively.morphic';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
-import { Image, Ellipse } from 'lively.morphic/morph.js';
-import { Color, LinearGradient } from 'lively.graphics/color.js';
+import { Image } from 'lively.morphic/morph.js';
+import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
-import { HTMLMorph } from 'lively.morphic/html-morph.js';
-import { without } from 'lively.morphic/components/core.js';
-import { add, style, PolicyApplicator } from 'lively.morphic/components/policy.js';
+
 import { Footer } from './footer.cp.js';
 import { HashRouter } from 'lively.components/hash-router.js';
 import { Blog } from './blog.cp.js';
 import { entries } from '../assets/articles/entries.js';
-import { HistoryPage } from './pages/history.cp.js';
+
 import { ImprintPage } from './pages/imprint.cp.js';
 import { ExamplePage } from './pages/examples.cp.js';
+import { CompiledHistoryPage } from './pages/compiled_history.cp.js';
 
 import { connect } from 'lively.bindings';
 import { NavBar } from './navigation.cp.js';
@@ -20,8 +19,6 @@ import { LandingPage } from './pages/landing-page.cp.js';
 
 import { ErrorPage } from './pages/error.cp.js';
 import { DocumentationPage } from './pages/documentation.cp.js';
-import { projectAsset } from 'lively.project/helpers.js';
-import { num } from 'lively.lang/index.js';
 
 class LivelyWebPageModel extends ViewModel {
   static get properties () {
@@ -66,7 +63,7 @@ class LivelyWebPageModel extends ViewModel {
 
     if (hash === 'history') {
       this.ui.history.fontWeight = 'bold';
-      this.showInBody(HistoryPage);
+      this.showInBody(CompiledHistoryPage);
       return;
     }
 
