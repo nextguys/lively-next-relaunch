@@ -35,9 +35,16 @@ The previously introduced subclasses of `Morph` are just the default ones that s
 In `lively.next` we favor a different approach, where custom subclassing of morphs should be kept to a minimum and DOMain specific behavior instead be implemented via a `ViewModel` that attaches to morph-compositions and augments their behavior accordingly. We discuss this in greater detail in the section on `ViewModel`s below.
 
 ## Properties
-Morphs in `lively.next` come with a large set of properties. You can explore them in the interactive section below. They split up into what we call *visual properties* and *behavioral* properties.
+Morphs in `lively.next` come with a large set of visual properties. You can explore some of them in the interactive section below.
 
 <!-- __lv_expr__:{part}:lively.morphic:{MorphicPropertyEssay}:nextguys--lively-next-relaunch/ui/docs/interactive-doc.cp.js:part(MorphicPropertyEssay) -->
+
+Aside from the visual properties, morphs also come with a large set of *behavioral properties* which will not be covered in this chapter. For more info on the latter, please refer to the [API Documentation](https://livelykernel.github.io/lively.next/).
+
+### Custom Subclasses
+
+The previously introduced subclasses of `Morph` are just the default ones that ship with `lively.morphic`. It is always possible to create further subclasses in order to implement custom types of morphs for special purposes. In fact this has been the default way of doing things in [Squeak](https://wiki.squeak.org/squeak/morphic) and [LivelyKernel](https://en.wikipedia.org/wiki/Lively_Kernel). Both LivelyKernel and the original Self implementation further had the ability to vary the behavior with *Traits* which made custom behaviors more pluggable.
+In `lively.next` we favor a different approach, where custom subclassing of morphs should be kept to a minimum and domain specific behavior instead be implemented via a `ViewModel` that attaches to morph-compositions and augments their behavior accordingly. We discuss this in greated detail in the [View Model Chapter](#ViewModels).
 
 ## Instantiating and using Morphs
 
@@ -600,3 +607,247 @@ In addition to the special `expose` and `bindings` properties, `ViewModel` provi
 - `onRefresh(propName)`: Called whenever a property in the model is changed. This is useful for performing view updates in response to model changes that we cannot anticipate via bindings. The callback is called for each property change separately, with the name of the changed property passed as an argument as a string. 
 - `viewDidLoad()`: Called once when the model is attached to the view. This is the place where initialization or setup code usually is placed best.
 - `withoutBindingsDo(cb)`: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by back-propagation.
+
+### Using Components and ViewModels
+ - Let us illustrate how viewmodels are used in conjunction with components by a final example
+ - For this we will implement a throw behavior for the dice we have been working with previouysly. The idea is that clicking on a die will cause it to shuffle and display a different face.
+ - In order to that, we will first define a component that has all the faces we may want to display and call it the universal die.
+
+```javascript
+const UniversalDie = component({
+  origin: pt(38.5, 37.1),
+  fill: Color.rgb(255, 0, 0),
+  extent: pt(78.5, 78.7),
+  borderRadius: 13,
+  submorphs: [
+    {
+      type: Ellipse,
+      name: 'eye0',
+      extent: pt(15.9, 16.6),
+      position: pt(-28.6, -29.5)
+    }, {
+      type: Ellipse,
+      name: 'eye1',
+      extent: pt(15.9, 16.6),
+      position: pt(12.5, -28.7)
+    }, {
+      type: Ellipse,
+      name: 'eye2',
+      extent: pt(15.9, 16.6),
+      position: pt(-28.8, 14.9)
+    }, {
+      type: Ellipse,
+      name: 'eye3',
+      extent: pt(15.9, 16.6),
+      position: pt(11.8, 15.8)
+    }, {
+      type: Ellipse,
+      name: 'eye4',
+      extent: pt(15.9, 16.6),
+      position: pt(-7.6, -7.6)
+    }, {
+      type: Ellipse,
+      name: 'eye5',
+      extent: pt(15.9, 16.6),
+      position: pt(-28.8, -7.4)
+    }, {
+      type: Ellipse,
+      name: 'eye6',
+      extent: pt(15.9, 16.6),
+      position: pt(12.2, -6.9)
+    }]
+});
+```
+
+ - We then derive it 6 times, where we adjust the styling in a way so that each die shows a different face.
+
+```javascript
+const Die1 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye0',
+    visible: false
+  }, {
+    name: 'eye1',
+    visible: false
+  }, {
+    name: 'eye2',
+    visible: false
+  }, {
+    name: 'eye3',
+    visible: false
+  }, {
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die2 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye1',
+    visible: false
+  }, {
+    name: 'eye2',
+    visible: false
+  }, {
+    name: 'eye4',
+    visible: false
+  }, {
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die3 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye1',
+    visible: false
+  }, {
+    name: 'eye2',
+    visible: false
+  }, {
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die4 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye4',
+    visible: false
+  }, {
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die5 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die6 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye4',
+    visible: false
+  }]
+});
+
+```
+
+<!-- __lv_expr__:{part}:lively.morphic:{AllFaces}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(AllFaces) -->
+
+ - We then define a view model, which can attach to the universal die and toggle the visibility of the eyes such that it shows different faces. We will achieve this by toggling between different component states.
+
+```javascript
+
+class ThrowableDieModel extends ViewModel {
+  get bindings () {
+    return [
+      // wire up the mouse down event with the throw method 
+      {
+        signal: 'onMouseDown', handler: 'throw'
+      }
+    ];
+  }
+
+  viewDidLoad () {
+    this.showFace(1); // default to face 1 when the morph and the viewmodel are initialized and ready
+  }
+
+  showFace (face) {
+    this.view.master.setState(face);
+  }
+
+  async throw () {
+    // we access the morph from the viewmodel via the view property
+    this.view.animate({ rotation: 16 * Math.PI, duration: 2000 }).then(() => {
+      this.view.rotation = 0;
+    });
+    await promise.delay(1000);
+    // and adjust the face randomly while it is spinning
+    this.showFace(num.random(1, 6));
+  }
+}
+
+const ThrowableDie = component(Die1, {
+  defaultViewModel: ThrowableDieModel, // this will make sure an instance of the component is initialized with the view model
+  master: {
+    states: {
+      1: Die1,
+      2: Die2,
+      3: Die3,
+      4: Die4,
+      5: Die5,
+      6: Die6
+    }
+  }
+});
+```
+
+ - Lets enhance this by also writing some custom behavior for the previously defined poker table.
+ - The custom code will trigger a shuffle of all the dice and then display the total value to the user.
+ - To achieve that we adjust the poker table by deriving it like so:
+
+```javascript
+
+const DynamicPokerTable = component(PokerTable, {
+  defaultViewModel: DynamicPokerTableModel,
+  submorphs: [
+   // replace the previous dice, since we need a completely new structure and behavior
+    replace('die1', part(ThrowableDie)),
+    reaplce('die2', part(ThrowableDie)),
+    replace('die3', part(ThrowableDie)),
+    // add a new label that shows that total face value to the user
+    add({
+      type: Text,
+      name: 'face value',
+      dropShadow: new ShadowObject({ color: Color.black, blur: 15, fast: false }),
+      dynamicCursorColoring: true,
+      fill: Color.rgba(255, 255, 255, 0),
+      fontColor: Color.rgb(255, 255, 255),
+      fontSize: 28,
+      fontWeight: '600',
+      position: pt(184.6, 110.3),
+      textAndAttributes: ['Total: 3', null]
+    })
+  ]
+});
+```
+
+- Where the code of the viewmodel looks like so:
+
+```javascript
+class DynamicPokerTableModel extends ViewModel {
+  get bindings () {
+    return [
+      { target: /die/, signal: 'faceValue', handler: 'showTotalFaceValue' }
+    ];
+  }
+
+  showTotalFaceValue () {
+    const { die1, die2, die3, faceValue } = this.ui;
+    faceValue.textString = `Total: ${die1.faceValue + die2.faceValue + die3.faceValue}`;
+  }
+}
+```
+
+- The resulting poker table looks like this. Click on the dice and observe how the total changes:
+
+<!-- __lv_expr__:{part}:lively.morphic:{WrappedDynamicPokerTable}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedDynamicPokerTable) -->
