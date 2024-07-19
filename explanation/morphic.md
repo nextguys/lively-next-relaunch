@@ -183,6 +183,7 @@ const Die = component({
 As you can see, the `component()` function is invoked similarly to the already introduced `morph()` function. We are passing properties and recursively define submorphs in the same manner down the line. Just as in `morph()` if a property is not mentioned it is assumed to take on its default value. We refer to this object as a *spec*.
 
 > ⚠️ **Warning**
+>
 > It is important that the names of each morph in a component are unique! If no name is specified,
 > the system may provide an auto generated one. In the future we want to experiment with implementations
 > where we only require for siblings to have unique names, but for now it is imperative that a morph name
@@ -200,6 +201,7 @@ Which will yield a morph that looks like this:
 <!-- __lv_expr__:{part}:lively.morphic:{WrappedDie}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedDie) -->
 
 > 💡 **Tip**
+>
 > It is important to let the difference between `component` and `part` sink in.
 > While `component` is used to **define** a reusable component (similar to components in other state-of-the-art web frameworks), `part` is used to **instantiate** such a component.
 
@@ -265,6 +267,7 @@ Looking further, we notice the structure of the spec which looks quite similar t
 ![](/local_projects/nextguys--lively-next-relaunch/assets/gold%20die.png) 
 
 > 💡 **Tip**
+>
 > When deriving components and overwriting parts of their `spec` in the definition of the derivation, it is important that each submorphs `name` property is specified correctly. Also consider the importance of unique names inside a component hierarchy mentioned above. You will always need to specify the complete path to a submorph (in the case of deeply nested submorphs). `lively.next` will not expand the hierarchy automatically. 
 
 
@@ -460,6 +463,7 @@ The resulting behavior looks like this:
 ![](/local_projects/nextguys--lively-next-relaunch/assets/responsive-poker-table.gif) 
 
 > 💡 **Tip**
+>
 > Note, that the breakpoints from any of the parent components are overridden if present and are not getting considered when the style is applied to the morph.
 
 #### Custom States
@@ -588,6 +592,7 @@ For more details on `converter`, `updater` and `varMapping`, see [this entry in 
 #### Callbacks provided by the `ViewModel` superclass
 
 > ⚠️ **Warning**
+>
 > The API of the viewmodels is subject to change in the future, this section will be updated accordingly.
 
 In addition to the special `expose` and `bindings` properties, `ViewModel` provides a set of handy callbacks than can be utilized to accommodate common use-cases:

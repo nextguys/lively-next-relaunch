@@ -9,7 +9,9 @@ In the following we will outline in detail the various different UI elements and
 The top bar is floating on top of the desktop at all times, providing the user with a variety of shortcuts for important actions and modes implemented in the system.
 
 ### World Menu
-> ⚠️ **Warning** The current form of the world menu is subject to change very soon. Currently it contains various actions that are either not supported or are overly specific and not designed for general use. We will update this area accordingly.
+> ⚠️ **Warning**
+>
+> The current form of the world menu is subject to change very soon. Currently it contains various actions that are either not supported or are overly specific and not designed for general use. We will update this area accordingly.
  - Reachable by pressing the lively icon on the top left of the screen.
  - Alternatively its also always summonable via a right click on an empty area of the world.
  - Generally speaking the world menu provides quick access to a set of common actions that are often invoked via shortcuts.
@@ -66,7 +68,9 @@ Note that if this is applied to a component, it will not copy the component but 
 This is also useful when you want to create new components from existing components: Simply copy an existing component and declare the derived morph to be a new component.
 #### Open Morph Menu
 Opens the default menu for morphs. This can be a custom set of menu items depending on what kind of morph is selected. For instance selecting an image will give rise to different menu items than selecting a textbox etc.
-> ⚠️ **Warning** The current default morph menu is subject to change very soon. Currently it contains various actions that are either not supported or are overly specific and not designed for general use. We will update this area accordingly.
+> ⚠️ **Warning**
+>
+> The current default morph menu is subject to change very soon. Currently it contains various actions that are either not supported or are overly specific and not designed for general use. We will update this area accordingly.
 
 #### Drag
 ![](/local_projects/nextguys--lively-next-relaunch/assets/drag-halo.gif) </br>
@@ -94,7 +98,9 @@ For more details please refer to the **Inspector Section**.
 - The different types of morphs that can be created are described in more detail in the **Morph Chapter**.
 
 ### Component Module
-> ⚠️ **Warning** Component Module Frames are currently still under construction and not yet available in lively.next. We will update this section accordingly once they are available.
+> ⚠️ **Warning**
+>
+> Component Module Frames are currently still under construction and not yet available in lively.next. We will update this section accordingly once they are available.
 
 ![](/local_projects/nextguys--lively-next-relaunch/assets/component%20module%20mock.png) </br>
 - allows to draw a frame on the world where the components of a specific component modules are laid out.
@@ -117,7 +123,10 @@ For more details please refer to the **Inspector Section**.
  - For more details on how assets are managed with respect to projects, please refer to the **Project Chapter**.
  - There are three kinds of assets currently supported by the asset manager: Video, Audio and Images.
    - If you are wondering about font files, these are handled by a dedicated *Font Manager* available in the *Rich Text Control* in the sidebar.
-> ⚠️ **Warning** As of now, the support for **video** and **audio** has not yet been implemented, since the corresponding morphs are not yet ready. We will update this section accordingly once we finalize support for these asset types.
+
+> ⚠️ **Warning**
+>
+> As of now, the support for **video** and **audio** has not yet been implemented, since the corresponding morphs are not yet ready. We will update this section accordingly once we finalize support for these asset types.
 
 ### Minimap
  - The world can be configured to support infinite scroll.
@@ -138,7 +147,9 @@ For more details please refer to the **Inspector Section**.
  - a shorthand button for logging out or logging in depending on the status
  - Login will guide the user to authenticate via github
  - avatar of the user account if available
- > ⚠️ **Warning** As of now lively.next only supports Github Accounts in order to authenticate. We are working on expanding the support to different plattform in the future and will update this section accordingly.
+ > ⚠️ **Warning**
+ >
+ > As of now lively.next only supports Github Accounts in order to authenticate. We are working on expanding the support to different plattform in the future and will update this section accordingly.
 
 ## World Zoom
  - provides an interactive zoom for the world
@@ -387,7 +398,9 @@ The Clipping Mode section determines whether the overflow content of the morph i
  - **Downsides:** While the component browser provides a nice way to find and use components, using it as a tool for managing custom design systems is cumbersome as one always has to select and edit the desired component through the component browser.
 
 ### Reconciliation via Component Module (preferred for Designer)
-> ⚠️ **Warning** At the point in time of this writing component modules have not been released yet. So the following is the outline of the concept, not the actual thing.
+> ⚠️ **Warning**
+>
+> At the point in time of this writing component modules have not been released yet. So the following is the outline of the concept, not the actual thing.
 
   ![](/local_projects/nextguys--lively-next-relaunch/assets/component%20module%20mock.png)
  - Allows to organize component modules as a design system in a visual manner.
@@ -403,7 +416,10 @@ The Clipping Mode section determines whether the overflow content of the morph i
    - Dragging and dropping a component onto anything else that is not also a component module will lead to a canceled drop (the component will snap back to its original position).
 
 ### Reconciliation via Component Editor (preferred for Designer/Engineer)
-> ⚠️ **Warning** At the point in time of this writing the component editor has not been implemented yet. So the following is the outline of the concept, not the actual thing.
+> ⚠️ **Warning**
+>
+> At the point in time of this writing the component editor has not been implemented yet. So the following is the outline of the concept, not the actual thing.
+
  - The Component Editor allows to edit the code of the view model as well as manipulate the component definition at the same time
  - It is also not blocking the editing of the component definition with reconciliation still active.
  - This is possible since the component editor is able to isolate both component definition and view model class definition, and manages the changes to the component module behind the scenes. 
@@ -422,7 +438,9 @@ The Clipping Mode section determines whether the overflow content of the morph i
 
 ## Object Editor
 
-> ⚠️ **Warning** The Object Editor in its current form is going to be deprecated in favor of the new component editor soon. The component editor will be basically a superset of the object editor and be able to edit both morphs, components and non visual objects (like in the case of remote server side scripting).
+> ⚠️ **Warning**
+>
+> The Object Editor in its current form is going to be deprecated in favor of the new component editor soon. The component editor will be basically a superset of the object editor and be able to edit both morphs, components and non visual objects (like in the case of remote server side scripting).
 
  - Can edit morph classes or view model classes
    - If both morph class and view model class are available, prompts the user to choose which one to edit

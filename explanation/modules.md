@@ -1,5 +1,6 @@
 
 > ⚠️ **Warning**
+>
 > This is about the module system we utilize in lively. It is internally referred to as lively.modules.
 > But this is not to scare you.
 
@@ -15,7 +16,9 @@
    - embedding of meta information to entities like classes, functions or component definitions. This includes module, package and source locations. This information is in turn used by many of the tools within the system. (Seem more about the **Source Transformations**)
 ## Classes in lively.next
 
-> ⚠️ **Attention** In the future, we are considering replacing the `static properties` notation of property definition in favor of a decorator syntax.
+> ⚠️ **Attention**
+> 
+> In the future, we are considering replacing the `static properties` notation of property definition in favor of a decorator syntax.
 
 - classes are transformed into a function call that synthesizes a new class based on a preexisting version of the class and a set of class members (methods, static methods) and soon also (decorators, class fields).
 
