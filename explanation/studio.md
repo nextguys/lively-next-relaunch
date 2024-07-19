@@ -9,9 +9,10 @@ In the following we will outline in detail the various different UI elements and
 The top bar is floating on top of the desktop at all times, providing the user with a variety of shortcuts for important actions and modes implemented in the system.
  
 ### Save Button
- - Allows you to save the current project or playground. For more details on this capability, please refer to the **Project Chapter**.
+Allows the user to save the current project or playground. Apart from the default *click and save* functionality, a variety of other saving modes can be triggered via the drop down menu. For more details on this button and its capability, please refer to the **Project Chapter**.
  
 ### Halo and Interaction Mode
+![](/local_projects/nextguys--lively-next-relaunch/assets/halo-mode.png){width=200px} <br>
 When working with designs or applications, there are various expectations for how the mouse cursor should behave.
 During the implementation or testing of an application, we want the cursor to function as it would for an end user interacting with the user interface.
 This behavior is referred to as *interactive mode* because it facilitates user interaction with the interface.
@@ -20,15 +21,15 @@ However, when designing an application or crafting a user interface, we prioriti
 In line with other Morphic implementations, selecting a morph to activate resize handles, property manipulation, or dragging is known as invoking a *Halo*.
 The halo can be activated via ***CMD-(left click)*** on Mac or ***(Ctrl-Shift-left click)*** on Linux or Windows when in interactive mode.
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/summon-halo.gif)
+![Depiction of a halo getting summoned on a morph.](/local_projects/nextguys--lively-next-relaunch/assets/summon-halo.gif){width=200px}
 
 To escalate the selection to the enclosing morph, one simply needs to meta click on the halo again, successively propagating the halo upwards until reaching the world level, at which point the halo selection is discarded.
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/propagate-halo.gif)
+![The halo selection can be propagated up a morph's owner chain.](/local_projects/nextguys--lively-next-relaunch/assets/propagate-halo.gif){width=200px}
 
 For convenience, users can enter halo mode, where a simple left click is sufficient to summon halos and outline the boundaries of the morph to be selected. This makes it easy to navigate a complex user interface and select the precise morph of interest.
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/hover-halo.gif)
+![Selection targets are displayed when in Halo mode.](/local_projects/nextguys--lively-next-relaunch/assets/hover-halo.gif){width=200px}
 
 In the top bar, the cursor mode button displays either a cursor in *halo mode* or a hand in *interactive mode*. Users can switch between these modes via a drop-down menu invoked by the caret next to the cursor mode button.
 
@@ -36,24 +37,31 @@ In the top bar, the cursor mode button displays either a cursor in *halo mode* o
 You may have noticed that once the halo is summoned, it dispalys a bunch of controls surrounding the selected morph. Let's go over each of these in detail and explain what they allow the user to do:
 
 #### Resize Handles
-![](/local_projects/nextguys--lively-next-relaunch/assets/resize-halo.gif) </br>
+![Resizing an object via the halo.](/local_projects/nextguys--lively-next-relaunch/assets/resize-halo.gif){width=200px}
+
 Allows the user to resize the selected object. Not that you can also grab the sides of the halo in order to adjust the width or height in isolation.
 Holding down the ***Shift-key*** while dragging one of the corners will lock the current proportion of the morph and adjust the extent proportionally.
 When resizing, the halo will automatically display visual guides (the yellow lines) that indicate how the center and bounds of the resizied morph relate to its surrounding morphs. If you hold down the ***Ctrl-key*** during resizing the morph will snap to these guides to make it easier to align 
 #### Name Tag
-![](/local_projects/nextguys--lively-next-relaunch/assets/rename-halo.gif) </br>
+![Changing the name of an object.](/local_projects/nextguys--lively-next-relaunch/assets/rename-halo.gif){width=200px}
+
 Displays the name of the selected morph and also allows the user to edit and change the name. Names are particulary important in lively, since they later on play key roles when attaching behavior to controls in a user interface.
 #### Rotation / Scale Control
+
+![Rotating via halo](/local_projects/nextguys--lively-next-relaunch/assets/rotate-halo.gif){width=200px}
+
 Allows to control the rotation as well as the scale factor of the selected morph.
-By default dragging the handle will adjust the rotation like illustrated below:</br>
-![](/local_projects/nextguys--lively-next-relaunch/assets/rotate-halo.gif) </br>
-However holding down the shift key will shift the halo to manipulate the scale property as well. Note how the icon of the handle changes in response to the shift key being pressed:</br>
-![](/local_projects/nextguys--lively-next-relaunch/assets/scale-halo.gif) </br>
+By default dragging the handle will adjust the rotation like illustrated above.</br>
+However holding down the shift key will shift the halo to manipulate the scale property as well. Note how the icon of the handle changes in response to the shift key being pressed:
+
+![Scaling via halo](/local_projects/nextguys--lively-next-relaunch/assets/scale-halo.gif){width=200px}
+
 Scaling an morph in the world this way is disabled when the world zoom is enabled. This is because the world zoom operates by scaling each of the morphs inside the world automatically. The world zoom is explained in more detail in the **World Zoom Section**
 #### Declare / Revoke Component
 Allows to turn a selected morph into a component definition or alternatively also revoke a component (i.e. remove the component and its definition). For more information about components please refer to the **Component Module Section**.
 #### Copy
-![](/local_projects/nextguys--lively-next-relaunch/assets/copy-halo.gif) </br>
+![Copying a morph via the halo.](/local_projects/nextguys--lively-next-relaunch/assets/copy-halo.gif){width=200px}
+
 Holding a dragging this control will copy the morph instance at hand and prepare the cursor to drop the new (copied) instance on a new target.
 Note that if this is applied to a component, it will not copy the component but rather create a new morph derived from that component.
 This is also useful when you want to create new components from existing components: Simply copy an existing component and declare the derived morph to be a new component.
@@ -64,40 +72,33 @@ Opens the default menu for morphs. This can be a custom set of menu items depend
 > The current default morph menu is subject to change very soon. Currently it contains various actions that are either not supported or are overly specific and not designed for general use. We will update this area accordingly.
 
 #### Drag
-![](/local_projects/nextguys--lively-next-relaunch/assets/drag-halo.gif) </br>
+![Dragging a morph via the halo handle.](/local_projects/nextguys--lively-next-relaunch/assets/drag-halo.gif){width=200px}
+
 In order to change a morph's position, the user can either use the drag handle of the halo, or drag the morph by dragging the inside of the halo itself.
 #### Grab
-![](/local_projects/nextguys--lively-next-relaunch/assets/grab-halo.gif) </br>
+![](/local_projects/nextguys--lively-next-relaunch/assets/grab-halo.gif){width=200px} </br>
 The structure of morph compositions can also be adjusted via the grab control on the halo. This allows the user to remove a morph from its parent and subsequently assign it to a different owner. Its also possible to place the morph into the world instead of a new owner morph.
 
 #### Remove
-![](/local_projects/nextguys--lively-next-relaunch/assets/remove-halo.gif) </br>
+![](/local_projects/nextguys--lively-next-relaunch/assets/remove-halo.gif){width=200px} </br>
 Pressing this button removes the selected morph entirely.
 #### Open Object/Component Editor
 For more details please refer to the **Object/Component Editor**.
 #### Open Inspector
 For more details please refer to the **Inspector Section**.
 ### Textbox Creator
-- When the mode is active dragging the cursor across the world with the left mouse button pressed will yield textbox with the extent being the dragged distance.
-- Once the drag is finished the textbox is created and the user will immediately enter the edit mode in order to input the desired text.
-  - This is a pretty standard behavior familiar from other CAD design tools
-- Alternatively it is also possible to click once on an empty area in the world in order to yield a single textbox where a default text has been placed beforehand.
-- Text can be further refined and customized via the *Rich Text Controls*. For more detail on this please refer to the **Rich Text Controls Section**.
+![](/local_projects/nextguys--lively-next-relaunch/assets/text-mode.png){width=200px} <br>
+Next we find the button that toggles the *Textbox Creation Mode*. This mode should be familiar to what is best practice in most CAD or Visuakl Design Applications. When active, the mode allows users to create new text boxes by either clicking on the world, in which case a default text box will be created at the spot or by dragging the cursor across the world which allows the users to define a textbox with arbitrary extent.
+In the case of the text box with arbitrary extent, the user will automatically enter the *edit mode* and be able to input the desired text into the box.
+When editing a textbox, the text can be further refined and customized via the *Rich Text Controls*. For more detail on this please refer to the **Rich Text Controls Section**.
 
 ### Shape Creator
+![](/local_projects/nextguys--lively-next-relaunch/assets/shape-mode.png){width=200px} <br>
 - Can create differen types of shapes by selecting the mode and then dragging on the world, analogous to the textbox creation explained previously.
 - The different types of morphs that can be created are described in more detail in the **Morph Chapter**.
 
-### Component Browser
- - Allows the user to browse all available components in the current project as well as the standard components provided by the system.
- - Also provides separate access to the Partsbin repository, where we maintain a bunch of useful, interesting or even reusable components to be used.
- - A selected component can be instantiated by dragging it from the component browser into the world
- - The user has the option to disable or enable to behavior of a component once it is instantiated. This is useful for cases, where I do not want the behavior to interfere with my work (for instance if we are in the process of building new components).
- - If the component is part of the current project and lively.next is configured accordingly, it is also possible to open up the component in the world in order to manipulate the definition.
- - Further the components can be queried via a global search
- - At all times the components can be grouped either by module (they are defined in) or by name, in which case each letter of the alphabet will define a group.
-
 ### Asset Browser
+![](/local_projects/nextguys--lively-next-relaunch/assets/asset-button.png){width=200px} </br>
  - Central tool for managing all assets that belong to the current project.
  - For more details on how assets are managed with respect to projects, please refer to the **Project Chapter**.
  - There are three kinds of assets currently supported by the asset manager: Video, Audio and Images.
@@ -107,8 +108,19 @@ For more details please refer to the **Inspector Section**.
 >
 > As of now, the support for **video** and **audio** has not yet been implemented, since the corresponding morphs are not yet ready. We will update this section accordingly once we finalize support for these asset types.
 
+### Component Browser
+![](/local_projects/nextguys--lively-next-relaunch/assets/component-button.png){width=200px} </br>
+Allows the user to browse all available components in the current project as well as the standard components provided by the system.
+ - Also provides separate access to the Partsbin repository, where we maintain a bunch of useful, interesting or even reusable components to be used.
+ - A selected component can be instantiated by dragging it from the component browser into the world
+ - The user has the option to disable or enable to behavior of a component once it is instantiated. This is useful for cases, where I do not want the behavior to interfere with my work (for instance if we are in the process of building new components).
+ - If the component is part of the current project and lively.next is configured accordingly, it is also possible to open up the component in the world in order to manipulate the definition.
+ - Further the components can be queried via a global search
+ - At all times the components can be grouped either by module (they are defined in) or by name, in which case each letter of the alphabet will define a group.
+
 ### Minimap
- - The world can be configured to support infinite scroll.
+![](/local_projects/nextguys--lively-next-relaunch/assets/mini-map-button.png){width=200px} </br>
+The world can be configured to support infinite scroll.
    - If enabled, the user is able to spread out all morphs on the world as far as needed.
    - Windows and Popups are excluded from the world scroll
  - When enabled, it is easy to loose track of certain elements that are scrolled out of the view.
@@ -131,7 +143,7 @@ For more details please refer to the **Inspector Section**.
  > As of now lively.next only supports Github Accounts in order to authenticate. We are working on expanding the support to different plattform in the future and will update this section accordingly.
 
 ## World Zoom
- - provides an interactive zoom for the world
+provides an interactive zoom for the world
  - zooms all morphs in the world, except for windows, popups and tools (side bars, top bar, halo)
  - Click on the world zoom indicator resets the zoom to 100% and also centers the viewport position to the origin
  
@@ -139,11 +151,11 @@ For more details please refer to the **Inspector Section**.
  - displays the current version of the lively.next system
  - it also allows the user to copy the version number which is useful for bug reports
  - finally there is a status icon that displays how the local version of lively.next relates to the latest public version
-    - up to date: The lively.next repository is on the latest commit on the main branch
-    - behind: The lively.next repository is on an outdated commit and can be updated. Provides shortcut for immediately updating lively.next to the latest version.
+    - **up to date:** The lively.next repository is on the latest commit on the main branch <br> ![](/local_projects/nextguys--lively-next-relaunch/assets/up-to-date.png){width=170px}
+    - **behind:** The lively.next repository is on an outdated commit and can be updated. Provides shortcut for immediately updating lively.next to the latest version.<br> ![](/local_projects/nextguys--lively-next-relaunch/assets/update-ready.gif){width=200px}
  - The following two will usually only be displayed to developers, or people who actively develop lively.next core:
-    - ahead: The user is on a more recent commit than the latest one on the main branch. This often happens when developing on lively.next core packages.
-    - out of sync: This usually only happens if the user is a on custom branch for the purpose of developing fixes, features. Means that the most recent version of lively.next is not to be found in the current branch. This can often be solved y rebasing onto the main branch.
+    - **ahead:** The user is on a more recent commit than the latest one on the main branch. This often happens when developing on lively.next core packages. <br> ![](/local_projects/nextguys--lively-next-relaunch/assets/ahead.png){width=170px}
+    - **out of sync:** This usually only happens if the user is a on custom branch for the purpose of developing fixes, features. Means that the most recent version of lively.next is not to be found in the current branch. This can often be solved by rebasing onto the main branch. If you are a designer and encounter this version tag, please contact one of the programmers in your team. They will most likely be able to help you out. <br> ![](/local_projects/nextguys--lively-next-relaunch/assets/out-of-sync.png){width=260px}
 
 ## Properties Panel
  - Provides a convenient way to inspect and adjust a majority of morphic properties.
