@@ -17,7 +17,10 @@ a {
   text-decoration-thickness: 2px;
 } 
 
-.markdown {
-  font-family: 'IBM Plex Sans';
+.markdown-body {
+  font-family: 'IBM Plex Sans', 'Noto Emoji Color Subset' !important; 
 }
 
+.markdown {
+  font-family: 'IBM Plex Sans', 'Noto Emoji Color Subset' !important; 
+}
