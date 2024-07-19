@@ -1,4 +1,4 @@
-Work in `lively.next` is organized in so called projects. Other ways of thinking about these projects might be a folder, containing all relevant files for a specific application or, for the technical inclined readers, a `git` repository.
+Work in `lively.next` is organized in so called "projects". Other ways of thinking about these projects might be a folder, containing all relevant files for a specific application or, for the technical inclined readers, a `git` repository.
 
 This explanation is split in two parts: The first part will focus on how one interacts with these projects and describe the intended workflow for collaboration inside of `lively.next`. The second part will give some technical details on how these projects are implemented and working under the hood. The second part is only relevant for developers, while the first part is intended for all users of `lively.next`.
 
@@ -8,9 +8,9 @@ Even when developing an application in `lively.next` on your own, creating a pro
 
 > 💡 **Tip**
 >
-> Coming from previous versions of lively, you might wonder why we do not prominently talk about working with [snapshots (exemplary: chapter 5.2 of "Evolving Tools in a Collaborative Self-supporting Development Environment". Jens Lincke, 2014.)](https://publishup.uni-potsdam.de/opus4-ubp/frontdoor/index/index/docId/9092). While snapshots are in principal available in `lively.next`, there are some unsolved problems with them that makes seamless collaboration still hard. We thus recommend the file-driven approach `lively.project` enables for now, while still acknowledging the potential that lies in the use of snapshot-driven approaches. Snapshots are called "playgrounds" inside of `lively.next`. You can start using them on the landing page. You might also encounter references to "worlds" throughout the code, the old name for `lively.next` playgrounds.
+> Coming from other versions of `lively`, you might wonder why we do not prominently talk about working with [snapshots (exemplary: chapter 5.2 of "Evolving Tools in a Collaborative Self-supporting Development Environment". Jens Lincke, 2014.)](https://publishup.uni-potsdam.de/opus4-ubp/frontdoor/index/index/docId/9092). While snapshots are in principal available in `lively.next`, there are some unsolved problems with them that makes seamless collaboration still hard. We thus recommend the file-driven approach `lively.project` enables for now, while still acknowledging the potential that lies in the use of snapshot-driven approaches. Snapshots are called "playgrounds" inside of `lively.next`. You can start using them on the landing page. You might also encounter references to "worlds" throughout the code, the old name for `lively.next` playgrounds.
 
-Lively projects takes care of saving your works, sharing your progress with contributors, sync changes made by contributors to your system, and also comes with some quality of life features such as easy deployment of applications to GitHub pages. 
+`lively.next` projects takes care of saving your works, sharing your progress with contributors, sync changes made by contributors to your system, and also comes with some quality of life features such as easy deployment of applications to GitHub pages. 
 
 ### Prerequisites
 
@@ -26,13 +26,13 @@ In the first case, you'll need to fill out the form. In the case you want to col
 
 Collaborators can then make the project available to them in `lively.next` by initializing a project from a remote and copying the GitHub URL of the repository.
 
-The dropdown menu in the project creation prompt allows you to specify the owner of the projects repository on GitHub. You can either create the repository under your own user account or create it under an organization you are a member of.
+The dropdown menu in the project creation prompt allows you to specify the owner of the projects repository on GitHub. You can either create the repository under your own user account or create it under an organization you are a member of. For the latter case, you'll need to grant sufficient permissions to the `lively.next` GitHub App when prompted.
 
 `lively.next` will now create the expected folder structure of a project for you and also take care of setting up a GitHub repository etc. for you, in case you chose to do so.
 
 ### Using Projects
 
-Working with `lively.next` projects is straight forward: Just open them inside of lively from the landing page and develop away! When you want to save your changes you can just press the save button in the top bar. `lively.next` will prompt you for a description of the changes you made. Clear and concise descriptions will make your life and that of all your collaborators easier. After you save your changes, they will also become available to all your collaborators.
+Working with `lively.next` projects is straight forward: Just open them inside of `lively.next` from the landing page and develop away! When you want to save your changes you can just press the save button in the top bar. `lively.next` will prompt you for a description of the changes you made. Clear and concise descriptions will make your life and that of all your collaborators easier. After you save your changes, they will also become available to all your collaborators.
 
 When opening a project from the landing page, `lively.next` will make sure that you got the latest saved changes from all your collaborators!
 
@@ -50,7 +50,7 @@ Projects come with a specified version of `lively.next` that they are "bound" to
 As applications and components developed in `lively.next` are structured in projects, you might want to use another project as a dependency in your project.
 A prime example of why one would like to do this is the development of a shared component library that you then want to use throughout multiple of your applications.
 
-To add a different `lively.next` project to your project as a dependency, you simply use one of the components of the dependency inside of your `lively.next` project. The recommended way of doing this is via the "Component Browser".
+To add a different `lively.next` project to your project as a dependency, you simply use one of the components of the dependency inside of your `lively.next` project. The recommended way of doing this is via the "Component Browser". While dependent projects are available via the "Components Browser", components therein cannot be edited while another project is opened. For More details, take a look at the [Introduction to `lively.next`'s Studio](#documentation/studio).
 
 Opening a project with a declared dependency inside of `lively.next` will also take care of ensuring all dependencies are available locally.
 
@@ -70,7 +70,7 @@ When opening a project with multiple dependencies that contradict each other or 
 When multiple people are working on the same project at the same time, it sometimes is easier when each member of the team uses their own, independent version of the project and they are unified at a later point in development. Programmers often call these different versions "branches". To save your own version independently of others, use the "Create a new branch to save on" option in the advanced options of the save dialogue. You can also see the name of the version you are currently saving to at the top of the save dialogue.
 **`lively.next` will still try to make changes to the unified version of the project (called main) available to you. Please note that there is currently no option to unify branches inside of `lively.next`. You will either need to create a [Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) on GitHub to do so or seek the help of a developer on your team.**
 
-## `lively.project` internals - Informations for Developers
+## `lively.project` internals - Information for Developers
 
 As you might have guessed from the above description, `lively.project` is simply a thin wrapper around `git`. Utilizing your local shell via `lively.2lively` and the GitHub API, we automatically commit, push, pull, and rebase a local repository. Our implementation is designed in a way that should allow non-technical users more-or-less seamless participation without learning (too much) about `git`, while still giving developers access to their accustomed workflows.
 
