@@ -7,15 +7,6 @@ In the following we will outline in detail the various different UI elements and
 
 ## Top Bar
 The top bar is floating on top of the desktop at all times, providing the user with a variety of shortcuts for important actions and modes implemented in the system.
-
-### World Menu
-> ⚠️ **Warning**
->
-> The current form of the world menu is subject to change very soon. Currently it contains various actions that are either not supported or are overly specific and not designed for general use. We will update this area accordingly.
- - Reachable by pressing the lively icon on the top left of the screen.
- - Alternatively its also always summonable via a right click on an empty area of the world.
- - Generally speaking the world menu provides quick access to a set of common actions that are often invoked via shortcuts.
- - The world menu is therefore especially convenient for people not yet familiar with the system and who want to explore the capabilities.
  
 ### Save Button
  - Allows you to save the current project or playground. For more details on this capability, please refer to the **Project Chapter**.
@@ -97,18 +88,6 @@ For more details please refer to the **Inspector Section**.
 - Can create differen types of shapes by selecting the mode and then dragging on the world, analogous to the textbox creation explained previously.
 - The different types of morphs that can be created are described in more detail in the **Morph Chapter**.
 
-### Component Module
-> ⚠️ **Warning**
->
-> Component Module Frames are currently still under construction and not yet available in lively.next. We will update this section accordingly once they are available.
-
-![](/local_projects/nextguys--lively-next-relaunch/assets/component%20module%20mock.png) </br>
-- allows to draw a frame on the world where the components of a specific component modules are laid out.
-- visualizes the relationships between the components (how they are derived from each other)
-- allows to easily edit, rename or remove components inside of a component module
-- Component Frames can be created by selecting the component module option in the shape creator by dragging the cursor analogous to the textbox or shape creation.
-- The user can then select to either create a new component module from scratch or fill the contents of the frame with components from a preexisting module.
-
 ### Component Browser
  - Allows the user to browse all available components in the current project as well as the standard components provided by the system.
  - Also provides separate access to the Partsbin repository, where we maintain a bunch of useful, interesting or even reusable components to be used.
@@ -176,23 +155,6 @@ For more details please refer to the **Inspector Section**.
  - Is only displayed if no target is selected (this is basically the default).
 
 ### Shape
-<!--
- - Is always displayed whenever a target is selected.
- - Allows us to control the properties of a morph that constitute its *shape*. This includes:
-   - Width and Height
-     - user can select the lock toggle in order to ensure that when one of either width or height inputs are changed, the extent proportions are preserved.
-   - Position
-   - Border Radius (rounded borders)
-     - Also allows the user to individually adjust the radius of each corner in isolation by toggling the "invidivual corner control".
-   - Rotation
-   - Clipping mode (wether overflow is visible or cropped)
-     - In the case of cropped overflows, the user can also choose to select a scroll overflow, in which case the morph will allow the clipped content to be scrolled as well.
-   - Resizing Behavior (usually depending on the applied layout)
-     - Fixed Dimension (default resizing behavior)
-     - Fill Dimension (if controlled by layout, will a remaining empty space)
-     - Hug Dimension (if layout permits, hug the content e.g. a document or a set of children)
-     - Shrink Dimension (is a combination of hugging and fill, where if fill were to exceed the size of hug, we would resort to hug and else behave as shrink) (not yet implemented)
--->
 
 The Shape Control Panel is always displayed whenever a target is selected. This panel provides comprehensive control over the properties of a morph that define its *shape*. These properties can be finely tuned to achieve the desired appearance and behavior of the morph.
 
@@ -212,7 +174,6 @@ The Resizing Behavior control provides options for how the morph should resize, 
 - **Fixed Dimension:** The default resizing behavior, where the morph maintains a fixed size as specified by its width or height value.
 - **Fill Dimension:** The morph will expand to fill any remaining empty space within its parent container.
 - **Hug Dimension:** The morph will hug its content, resizing to fit precisely around the content, such as a document or a set of children, if the layout permits.
-- **Shrink Dimension:** A combination of hugging and filling behavior. If filling exceeds the size of hugging, the morph will default to hugging. *This feature is not yet implemented.*
 
 ### Border Radius
 
@@ -297,7 +258,6 @@ The Clipping Mode section determines whether the overflow content of the morph i
  - Is always displayed when a target is selected.
  - Default allows to control the color fill of a morph.
  - In case of image morph, displays controls for the image texture.
- - In case of video morph, displays controls for the displayed video. (not yet implemented)
 
 ### Stroke
  - Is always displayed when a target is selected.
@@ -396,33 +356,6 @@ The Clipping Mode section determines whether the overflow content of the morph i
  - the user opens up the component by pressing the edit button (this will open the component edit  instance instead of a derived instance)
  - the user adjusts the component via direct manipulation, the code is updated in the background completely transparent to the user
  - **Downsides:** While the component browser provides a nice way to find and use components, using it as a tool for managing custom design systems is cumbersome as one always has to select and edit the desired component through the component browser.
-
-### Reconciliation via Component Module (preferred for Designer)
-> ⚠️ **Warning**
->
-> At the point in time of this writing component modules have not been released yet. So the following is the outline of the concept, not the actual thing.
-
-  ![](/local_projects/nextguys--lively-next-relaunch/assets/component%20module%20mock.png)
- - Allows to organize component modules as a design system in a visual manner.
- - Derivation relationships between components are visualized via arrows that track which component is derived from which.
- - Allows the user to organize the components on the canvas freely, while also providing a default ordering that uses the structure of the component module source code as a template.
- - The user can utilize the top left hyperlink to navigate to the component module inside the system browser.
- - Again, all changes to the components will be reconciled back into the component module.
- - In particular the following interactions will also get reconciled accordingly:
-   - Removing a component from the module space will delete the definition, and perform the corresponding adjustments (like deleting all the derivations if they are not detached).
-   - Components that are derived can be detached from their parents, in which case tehy preserve all of their current props but forget their ancestor.
-   - Dropping a component into the space or declaring a previously non component inside a component, will insert the corresponding component definition in the module source code behind the scenes.
-   - Dragging and dropping a component will move the component and all of its derivatives over to another component. In case a cyclical dependency would result, the drag and drop is canceled by the system.
-   - Dragging and dropping a component onto anything else that is not also a component module will lead to a canceled drop (the component will snap back to its original position).
-
-### Reconciliation via Component Editor (preferred for Designer/Engineer)
-> ⚠️ **Warning**
->
-> At the point in time of this writing the component editor has not been implemented yet. So the following is the outline of the concept, not the actual thing.
-
- - The Component Editor allows to edit the code of the view model as well as manipulate the component definition at the same time
- - It is also not blocking the editing of the component definition with reconciliation still active.
- - This is possible since the component editor is able to isolate both component definition and view model class definition, and manages the changes to the component module behind the scenes. 
 
 ## Inspector
 - A tool mostly used by experts or people familiar with programming, it is usually too detailed for users not interested in the internal state of objects.
