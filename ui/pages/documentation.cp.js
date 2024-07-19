@@ -2,9 +2,8 @@ import { component, ShadowObject, Text, TilingLayout } from 'lively.morphic';
 import { part, add } from 'lively.morphic/components/core.js';
 import { projectAsset } from 'lively.project/helpers.js';
 import { Color, rect, pt } from 'lively.graphics';
-import { Image, Polygon } from 'lively.morphic/morph.js';
+import { Image } from 'lively.morphic/morph.js';
 import { TiktokButton } from './landing-page.cp.js';
-import { LinearGradient } from 'lively.graphics/color.js';
 
 export const DocumentationEntry = component({
   name: 'example',
@@ -126,7 +125,7 @@ export const BackToDocsButton = component({
 // part(DocumentationPage).openInWorld()
 export const DocumentationPage = component({
   name: 'hero',
-  extent: pt(1734, 1895.7),
+  extent: pt(1892, 1482.6),
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
@@ -244,33 +243,30 @@ export const DocumentationPage = component({
     submorphs: [
       {
         name: 'example video',
-        imageUrl: projectAsset('morphic.png'),
-        viewModel: {
-          srcURL: projectAsset('snowfall.mp4')
-        }
+        imageUrl: projectAsset('morphic.png')
       },
       {
         name: 'description wrapper',
         submorphs: [{
           name: 'hero text',
-          textAndAttributes: ['Interactive Tutorial on our GUI Framework morphic and lively.nexts Component System\n', {
+          height: 125,
+          textAndAttributes: ['Interactive Tutorial on our GUI Framework morphic and ', {
             fontSize: 16,
             fontWeight: '600'
-          }, '\n', null, 'lively.next', {
-            fontColor: Color.lively,
-            fontFamily: 'IBM Plex Mono'
-          }, ' is especially well suited for the development of highly customized, interactive web content. This example is a scrollytelling which takes its readers on a journey to the origins of a snowflake. The content is discovered by use of scrolling while other means of interaction are also included. The scrollytelling is optimized for use on mobile devices.\n\n', null, ' ', {
-            fontColor: Color.rgb(0, 0, 0),
-            fontFamily: 'Font Awesome',
-            fontWeight: '900',
-            link: 'https://typeshift.io/snowflakes/'
-          }, 'Try it out', {
-            fontColor: Color.rgb(0, 0, 0),
-            link: 'https://typeshift.io/snowflakes/',
-            textDecoration: 'underline'
-          }, ' for yourself!', {
-            fontColor: Color.rgb(0, 0, 0)
-          }]
+          }, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"',
+            fontSize: 16,
+            fontWeight: '600'
+          }, '\'s Component System\n', {
+            fontSize: 16,
+            fontWeight: '600'
+          }, '\nLearn about ', null, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"'
+          }, '\'s GUI framework ', null, 'morphic', {
+            fontFamily: '\"IBM Plex Mono\"'
+          }, ' and how to use it compose your own GUI elements, create reuasable components and add custom behavior to them via a View-ViewModel-Architecture.', null]
         }, add(part(TiktokButton, {
           name: 'morphic',
           extent: pt(129.1, 36.3),
@@ -296,31 +292,30 @@ export const DocumentationPage = component({
         name: 'description wrapper',
         submorphs: [{
           name: 'hero text',
-          textAndAttributes: ['Showcase of the Tooling available in the lively.next IDE\n', {
+          height: 64,
+          textAndAttributes: ['Showcase of the Tooling available in the ', {
             fontSize: 16,
             fontWeight: '600'
-          }, '\nA simulation of our solar system, showing all orbital tracks and how different celestial bodies interact to create solar eclipses etc. The 3D scene is created using the ', null, 'zdog', {
-            fontColor: Color.black,
-            fontFamily: 'IBM Plex Mono',
-            link: 'https://zzz.dog/',
-            textDecoration: 'underline'
-          }, ' library and is entirely scripted inside of ', null, 'lively.next', {
-            fontColor: Color.lively,
-            fontFamily: 'IBM Plex Mono'
-          }, ', showcasing how the entire power of the web as a platform can be leveraged inside of ', null, 'lively.next', {
-            fontColor: Color.lively,
-            fontFamily: 'IBM Plex Mono'
-          }, '!\n\n', null, '', {
-            fontColor: Color.black,
-            fontFamily: 'Tabler Icons',
-            link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840'
+          }, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"',
+            fontSize: 16,
+            fontWeight: '600'
           }, ' ', {
-            link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840'
-          }, 'Find out when the next eclipse is coming', {
-            fontColor: Color.rgb(0, 0, 0),
-            link: 'https://www.spektrum.de/news/interaktive-planetengrafik-action-im-sonnensystem/1891840',
-            textDecoration: 'underline'
-          }, '! ', {}]
+            fontFamily: '\"IBM Plex Sans\"',
+            fontSize: 16,
+            fontWeight: '600'
+          }, 'IDE\n', {
+            fontFamily: '\"IBM Plex Mono\"',
+            fontSize: 16,
+            fontWeight: '600'
+          }, '\n', null, 'Get to know the tools that comprise the', {}, ' ', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Sans\"'
+          }, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"'
+          }, ' IDE! ', {}]
         }, add(part(TiktokButton, {
           name: 'studio',
           extent: pt(129, 36),
@@ -351,7 +346,13 @@ export const DocumentationPage = component({
             fontWeight: '600'
           }, 's\n', {
             fontWeight: '600'
-          }, '\nFind out how work in lively.next is managed and organized, how to collaborate with designers, programmers, and other stakeholders and what lively.next supports you with when it comes to deploying and developing your application!', null]
+          }, '\nFind out how work in ', null, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"'
+          }, ' is managed and organized, how to collaborate with designers, programmers, and other stakeholders and how', null, ' lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"'
+          }, ' supports you when it comes to deploying and developing your application!', null]
         }, add(part(TiktokButton, {
           name: 'projects',
           extent: pt(129, 36),
@@ -416,36 +417,27 @@ export const DocumentationPage = component({
         extent: pt(500, 381.2),
         submorphs: [{
           name: 'hero text',
-          textAndAttributes: ['Learn about lively.modules and our Approach to Live Programming in the Browser \n', {
+          height: 166,
+          textAndAttributes: ['Learn about ', {
             fontSize: 16,
             fontWeight: '600'
-          }, '\nThe whole power of ', null, 'lively.next', {
-            fontColor: Color.lively,
-            fontFamily: 'IBM Plex Mono'
-          }, ' being a self-contained system becomes apparent when developing custom tooling for specific use cases to foster custom workflows.\n', null, 'qinoq', {
-            fontFamily: 'IBM Plex Mono'
-          }, ' is an example of such a spezialed tool. It\'s aimed at the creation of interactive content in the form of scrollytellings, allowing users to organize content in scenes akin to video cutting programs. Animations coupled to the current scroll position are easy to create in a graphical manner, while more advanced interactions can still be programmed in a way that is easily accessible for programmers.\n\n', null, '', {
-            fontFamily: 'Font Awesome Brands',
-            fontWeight: '400'
-          }, ' Watch the ', {}, 'presentation', {
-            fontColor: Color.rgb(0, 0, 0),
-            link: 'https://www.youtube.com/watch?v=O7pdYaSdZ3U',
-            textDecoration: 'underline'
-          }, ' of qinoq (in German)\n', {}, '', {
-            fontFamily: 'Font Awesome',
-            fontWeight: '900'
-          }, ' Read the ', {}, 'technical report\n', {
-            fontColor: Color.rgb(0, 0, 0),
-            link: 'https://publishup.uni-potsdam.de/opus4-ubp/frontdoor/deliver/index/docId/51857/file/tbhpi141.pdf',
-            textDecoration: 'underline'
-          }, '', {
-            fontFamily: 'Font Awesome Brands',
-            fontWeight: '400'
-          }, ' Find the source code on ', {}, 'GitHub', {
-            fontColor: Color.rgb(0, 0, 0),
-            link: 'https://github.com/hpi-swa-lab/qinoq',
-            textDecoration: 'underline'
-          }]
+          }, 'lively.modules', {
+            fontFamily: '\"IBM Plex Mono\"',
+            fontSize: 16,
+            fontWeight: '600'
+          }, ' and our Approach to Live Programming in the Browser \n', {
+            fontSize: 16,
+            fontWeight: '600'
+          }, '\nLearn about how ', null, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"'
+          }, ' works under the hood.\nThis is an advanced topic that is of special interest to readers that want to dive deeper into the technical details of ', null, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"'
+          }, '. It is not necessary to read (or understand) this to use ', null, 'lively.next', {
+            fontColor: Color.rgb(255, 119, 0),
+            fontFamily: '\"IBM Plex Mono\"'
+          }, '!', null]
         }, add(part(TiktokButton, {
           name: 'modules',
           extent: pt(129, 36),
