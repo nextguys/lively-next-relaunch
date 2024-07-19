@@ -219,7 +219,7 @@ export const DocumentationPage = component({
         fontFamily: 'Noto Emoji Color Subset',
         fontSize: 14,
         quote: 1
-      }, ' We are working on expanding this list! If some things are unclear or yoare missing information, we appreciate you reaching out via ', {
+      }, ' We are working on expanding this list! If some things are unclear or you are missing information, we appreciate you reaching out via ', {
         fontSize: 14,
         quote: 1
       }, '📧', {
