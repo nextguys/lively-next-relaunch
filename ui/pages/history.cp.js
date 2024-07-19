@@ -5,6 +5,7 @@ import { Text } from 'lively.morphic/text/morph.js';
 import { part } from 'lively.morphic/components/core.js';
 import { YouTubeEmbed } from 'lively.components/youtube-morph.cp.js';
 import { projectAsset } from 'lively.project/helpers.js';
+import { obj } from 'lively.lang';
 
 // 2007: The first version of LivelyKernel is released
 // 2008: Dan Ingalls presents the LivelyKernel at Google TechTalks
@@ -40,13 +41,21 @@ const historyData = [
     pictures: [
       {
         img: projectAsset('hpi-lake.jpg'),
+        copyright: ['© Jonas Witt', null],
         caption: 'The campus of the Hasso Plattner Institute in Potsdam, Germany.'
       }
     ]
   },
   {
     date: '2010',
-    title: ['After the acquisition of SUN by Oracle the future of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is in limbo. Funding for ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is moved over to SAP Research in Palo Alto.']
+    title: ['After the acquisition of SUN by Oracle the future of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is in limbo. Funding for ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is moved over to SAP Research in Palo Alto.'],
+    pictures: [
+      {
+        img: projectAsset('palo-alto-labs.jpg'),
+        copyright: ['© Robert Krahn', null],
+        caption: 'View from the hills behind the office buildings of (at that time) SAP Research Labs in Palo Alto.'
+      }
+    ]
   },
   {
     date: '2011',
@@ -64,14 +73,40 @@ const historyData = [
   },
   {
     date: '2013',
-    title: ['LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' Development moves over to the newly formed CDG (Communication Design Group) at SAP.', null]
+    title: ['LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' Development moves over to the newly formed CDG (Communication Design Group) at SAP.', null],
+    height: 400,
+    pictures: [
+      {
+        img: projectAsset('IMG_0466.png'),
+        caption: ['The office space of the ', null, 'LivelyKernel', {
+          fontStyle: 'normal',
+          fontWeight: '600'
+        }, ' ', {
+          fontWeight: '600'
+        }, 'team at South Park, SF around Summer of 2014. Still funded by SAP at the time, the lively team relocated to San Francisco to pursue the project within the newly established Communications Design Group.', null]
+      }
+    ]
   }, {
     date: '2014',
-    title: ['Lively4', { fontStyle: 'italic', fontFamily: 'IBM Plex Mono', fontColor: Color.black, textDecoration: 'underline', link: 'https://github.com/LivelyKernel/lively4-core' }, ' development is started at HPI by ', null, 'Jens Lincke', { fontWeight: 600 }, '. ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' collaborates with University of Victoria to teach students coding in ', null, 'LivelyKernel.', { fontFamily: 'IBM Plex Mono' }]
+    title: ['Lively4', { fontStyle: 'italic', fontFamily: 'IBM Plex Mono', fontColor: Color.black, textDecoration: 'underline', link: 'https://github.com/LivelyKernel/lively4-core' }, ' development is started at HPI by ', null, 'Jens Lincke', { fontWeight: 600 }, '. ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' collaborates with University of Victoria to teach students coding in ', null, 'LivelyKernel.', { fontFamily: 'IBM Plex Mono' }],
+    height: 425,
+    pictures: [
+      {
+        img: projectAsset('IMG_1378.png'),
+        copyright: ['© Robert Krahn', null],
+        caption: ['Snapshot of the team at South Park during lunch break. This was just before redevelopment took place around San Francisco\\\'s oldest public area in 2016. People from left to right: Astrid Thomschke, Felix Wolff, Robin Schreiber, Marco Röder, Lars Wassermann and Dan Ingalls. (Robert Krahn taking picture, unfortunately not depicted).', null]
+      }
+    ]
   },
   {
     date: '2015',
-    title: ['CDG becomes part of ', null, 'HARC', { fontWeight: 600 }, ' moving ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' development under the umbrella of ', null, 'Y-Combinator Research', { fontWeight: 600, link: 'https://www.ycombinator.com/blog/harc/', textDecoration: 'underline', fontColor: Color.black }, '. ', null, 'Robert Krahn', { fontWeight: 600 }, ' starts developing ', null, 'Clopxp', { fontFamily: 'IBM Plex Mono', fontStyle: 'italic' }, ' a ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' that revolves around ', null, 'Closure', { fontFamily: 'IBM Plex Mono' }, ' instead of ', null, 'Javascript', { fontFamily: 'IBM Plex Mono' }, ' as its primary language environment.', null]
+    title: ['CDG becomes part of ', null, 'HARC', { fontWeight: 600 }, ' moving ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' development under the umbrella of ', null, 'Y-Combinator Research', { fontWeight: 600, link: 'https://www.ycombinator.com/blog/harc/', textDecoration: 'underline', fontColor: Color.black }, '. ', null, 'Robert Krahn', { fontWeight: 600 }, ' starts developing ', null, 'Cloxp', { fontStyle: 'italic', fontFamily: 'IBM Plex Mono', fontColor: Color.black, textDecoration: 'underline', link: 'https://cloxp.github.io/cloxp-intro.html' }, ' a ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' that revolves around ', null, 'Closure', { fontFamily: 'IBM Plex Mono' }, ' instead of ', null, 'Javascript', { fontFamily: 'IBM Plex Mono' }, ' as its primary language environment.', null],
+    pictures: [
+      {
+        img: projectAsset('cloxp-logo.png'),
+        copyright: ['© Robert Krahn', null]
+      }
+    ]
   },
   {
     date: '2016',
@@ -129,6 +164,9 @@ export const ChronoPicture = component({
     resizePolicies: [['picture', {
       height: 'fill',
       width: 'fill'
+    }], ['caption', {
+      height: 'fixed',
+      width: 'fill'
     }]],
     spacing: 5
   }),
@@ -136,11 +174,27 @@ export const ChronoPicture = component({
   submorphs: [{
     type: Image,
     name: 'picture',
+    layout: new TilingLayout({
+      axisAlign: 'right'
+    }),
     ageUrl: projectAsset('IMG_0466.png'),
-    position: pt(-41.1, 32.2)
+    position: pt(-41.1, 32.2),
+    submorphs: [{
+      type: Text,
+      name: 'copyright',
+      visible: false,
+      borderRadius: 29,
+      padding: rect(7, 3, -1, 0),
+      fontColor: Color.rgb(255, 255, 255),
+      dynamicCursorColoring: true,
+      fill: Color.rgba(0, 0, 0, 0.5006),
+      position: pt(266.2, 226.1),
+      textAndAttributes: ['© Robin Schreiber', null]
+    }]
   }, {
     type: Text,
     name: 'caption',
+    padding: rect(0, 0, 10, 0),
     extent: pt(200, 33.6),
     textAlign: 'center',
     dynamicCursorColoring: true,
@@ -159,34 +213,40 @@ export const ChronoPicture = component({
   }]
 });
 
-const createChronoPicture = ({ src, caption }) => part(ChronoPicture, {
+const createChronoPicture = ({ src, caption, copyright }) => part(ChronoPicture, {
   fill: Color.transparent,
   submorphs: [
     {
       name: 'picture',
-      imageUrl: src
+      imageUrl: src,
+      submorphs: [
+        {
+          name: 'copyright',
+          visible: !!copyright,
+          textAndAttributes: copyright || ['', null]
+        }
+      ]
     },
     {
       name: 'caption',
       visible: !!caption,
-      textAndAttributes: caption ? [caption, null] : ['', null]
+      textAndAttributes: caption ? obj.isString(caption) ? [caption, null] : caption : ['', null]
     }
   ]
 });
 
 const ChronoVideo = component(ChronoPicture, {
-  master: {
-    auto: component({
-      layout: new TilingLayout({
-        axisAlign: 'center',
-        axis: 'column',
-        resizePolicies: [['video', {
-          height: 'fill',
-          width: 'fill'
-        }]]
-      })
-    })
-  },
+  layout: new TilingLayout({
+    axis: 'column',
+    axisAlign: 'center',
+    resizePolicies: [['video', {
+      height: 'fill',
+      width: 'fill'
+    }], ['caption', {
+      height: 'fixed',
+      width: 'fill'
+    }]]
+  }),
   submorphs: [
     without('picture'),
     add(part(YouTubeEmbed, {
@@ -208,7 +268,7 @@ const createChronoVideo = ({ src, caption }) => part(ChronoVideo, {
     {
       name: 'caption',
       visible: !!caption,
-      textAndAttributes: caption ? [caption, null] : ['', null]
+      textAndAttributes: caption ? obj.isString(caption) ? [caption, null] : caption : ['', null]
     }
   ]
 });
@@ -223,12 +283,13 @@ class EntryModel extends ViewModel {
 
   viewDidLoad () {
     const { date: dateView, description, stepPictures, stepPicturesWrapper } = this.ui;
-    const { date, title, pictures } = this.timestamp;
+    const { date, title, pictures, height } = this.timestamp;
     dateView.textString = date;
     description.textAndAttributes = title;
     if (pictures) {
-      stepPictures.submorphs = pictures.map(({ img, yt, caption }) => {
-        if (img) return createChronoPicture({ caption, src: img });
+      if (height) stepPicturesWrapper.height = height;
+      stepPictures.submorphs = pictures.map(({ img, yt, caption, copyright }) => {
+        if (img) return createChronoPicture({ caption, src: img, copyright });
         if (yt) return createChronoVideo({ caption, src: yt });
       });
       stepPictures.submorphs.forEach(m => stepPictures.layout.setResizePolicyFor(m, { width: 'fill', height: 'fill' }));
@@ -242,7 +303,6 @@ export const ChronologicalEntry = component({
   defaultViewModel: EntryModel,
   name: 'chronological entry',
   fill: Color.rgba(255, 255, 255, 0),
-  clipMode: 'hidden',
   layout: new TilingLayout({
     align: 'center',
     axisAlign: 'center',
@@ -508,6 +568,7 @@ const ChronologicalEntryMobile = component(ChronologicalEntryReverse, {
 class HistoryPageModel extends ViewModel {
   static get properties () {
     return {
+      expose: { get () { return ['relayout']; } },
       bindings: {
         get () {
           return [{ signal: 'extent', handler: 'relayout' }];

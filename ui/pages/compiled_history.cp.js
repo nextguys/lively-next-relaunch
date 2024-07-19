@@ -2,7 +2,7 @@ import { component, TilingLayout, part, HTMLMorph } from 'lively.morphic';
 import { pt } from 'lively.graphics';
 import { CompiledHistoryPageDesktopHTML } from './compiled_desktop.js';
 import { CompiledHistoryPageMobileHTML } from './compiled_mobile.js';
-import liteYouTubeEmbed from 'lite-youtube-embed'; // eslint-disable-line no-unused-vars
+import liteYouTubeEmbed from 'esm://cache/lite-youtube-embed'; // eslint-disable-line no-unused-vars
 
 // Browsers do not like us importing this in more than once place...
 // We need to import here in order to ensure that the lib is present in the bundle
@@ -11,6 +11,7 @@ window.liteYouTubeEmbed = liteYouTubeEmbed;
 export const CompiledHistoryPageDesktop = component({
   name: 'page',
   type: HTMLMorph,
+  extent: pt(684.7,4335),
   html: CompiledHistoryPageDesktopHTML,
   fixedHeight: false
 });
