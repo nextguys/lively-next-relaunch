@@ -1,7 +1,7 @@
 
-`lively.next` ships with its own particular flavor of Morphic which was first introduced in [Self](https://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf) and since then implemented multiple times over in different ways such as [Squeak](https://wiki.squeak.org/squeak/morphic) and [LivelyKernel](https://en.wikipedia.org/wiki/Lively_Kernel).
+`lively.next` ships with its own particular flavor of the GUI framework `morphic`, which was first introduced in [`Self`](https://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf) and since then has been implemented multiple times, for example in [`Squeak`](https://wiki.squeak.org/squeak/morphic) and in [`LivelyKernel`](https://en.wikipedia.org/wiki/Lively_Kernel).
 
-As the name Morphic implies, this framework assembles GUIs by means of malleable objects called Morphs. Each of these Morphs can potentially also carry a complete custom set of behavior that implements the GUIs interactivity. This characteristic of the framework originally referred to asliveness and directness allows to inspect and explore every piece of the GUI and application at hand while it is running. This is particulary suitable for self sustaining live development environments such as lively.next.
+As the name `morphic` implies, this framework assembles GUIs by means of malleable objects called `Morphs`. Each of these `Morphs` can potentially also carry a complete custom set of behavior that implements the GUIs interactivity. These characteristic of the framework originally referred to as "liveness" and "directness" allows to inspect and explore every piece of the GUI and application at hand while it is running. This is particularly suitable for self sustaining live development environments such as `lively.next`. In `morphic`, GUIs are composed of tree-like structures where morphs contain sub-morphs, similar to the way tags are nested in `HTML`.
 
 ## Types
 Different types of morphs are available to the user, which are implemented by (sub)class(es) of `Morph`.
@@ -12,39 +12,40 @@ Different types of morphs are available to the user, which are implemented by (s
 *Very similar to the basic morph, but automatically maintains an elliptical shape. Obliterates the need to manually adjust the border radius once the extent changes.*
 
 - **Image**
-*Standard container for any kind of web supported image file (notably also GIFs!). Supports two different layout methods where the image is either scaled to fill the size of the morph or resized to fit the entire area.*
+*Standard container for any kind of web supported image file (notably also GIFs!). Supports two different layout methods where the image is either scaled to fill the size of the morph (while respecting the ratio of the original image) or resized to fit the entire area.*
 
 - **Text**
-*One of the most powerful morphs that allows to display read-only text (for elements like UI labels or static website contents) but also allows for interactive richt-text editing.*
+*One of the most powerful morphs that allows to display read-only text (for elements like UI labels or static website contents) but also allows for interactive rich-text editing.*
 
 - **HTML**
-*Allows to directly render custom HTML and bypass the standard morphic renderer. Useful in cases where we want to embedd 3rd part libraries and create wrapper morphs for them.*
+*Allows to directly render custom HTML and bypass the standard morphic renderer. Useful in cases where we want to embed 3rd-party-libraries and create wrapper morphs for them.*
 
 - **Canvas**
-*Similar to the HTML Morph yet specialized for the case where we want to render to a canvas. Provides convenience methods to access the canvas context. Useful for integrating 3rd party canvas libraries that render 2d or 3d content.*
+*Similar to the HTMLMorph yet specialized for the case where we want to render to a canvas. Provides convenience methods to access the canvas context. Useful for integrating 3rd-party canvas libraries that render 2D or 3D content.*
 
 - **Path**
 *Allows to draw SVG paths via the morph interface.*
-  - ***Polygon***
-  *Specialized subclass of Path where the vertices form a closed path. Also allows to clip the submorphs via its shape.*
+
+- **Polygon**
+*Specialized subclass of `Path` where the vertices form a closed path. Also allows to clip the submorphs via its shape.*
+
+### Custom Subclasses
+
+The previously introduced subclasses of `Morph` are just the default ones that ship with `lively.morphic`. It is always possible to create further subclasses in order to implement custom types of morphs for special purposes. In fact this has been the default way of doing things in [`Squeak`](https://wiki.squeak.org/squeak/morphic) and [`LivelyKernel`](https://en.wikipedia.org/wiki/Lively_Kernel). Both `LivelyKernel` and the original `Self` implementation further had the ability to vary the behavior with *Traits*, which made custom behaviors more pluggable.
+In `lively.next` we favor a different approach, where custom subclassing of morphs should be kept to a minimum and DOMain specific behavior instead be implemented via a `ViewModel` that attaches to morph-compositions and augments their behavior accordingly. We discuss this in greater detail in the section on `ViewModel`s below.
 
 ## Properties
 Morphs in `lively.next` come with a large set of properties. You can explore them in the interactive section below. They split up into what we call *visual properties* and *behavioral* properties.
 
 <!-- __lv_expr__:{part}:lively.morphic:{MorphicPropertyEssay}:nextguys--lively-next-relaunch/ui/docs/interactive-doc.cp.js:part(MorphicPropertyEssay) -->
 
-### Custom Subclasses
-
-The previously introduced subclasses of `Morph` are just the default ones that ship with `lively.morphic`. It is always possible to create further subclasses in order to implement custom types of morphs for special purposes. In fact this has been the default way of doing things in [Squeak](https://wiki.squeak.org/squeak/morphic) and [LivelyKernel](https://en.wikipedia.org/wiki/Lively_Kernel). Both LivelyKernel and the original Self implementation further had the ability to vary the behavior with *Traits* which made custom behaviors more pluggable.
-In `lively.next` we favor a different approach, where custom subclassing of morphs should be kept to a minimum and domain specific behavior instead be implemented via a `ViewModel` that attaches to morph-compositions and augments their behavior accordingly. We discuss this in greated detail in the [View Model Chapter](#ViewModels).
-
 ## Instantiating and using Morphs
 
-Given a Morph class, we can instantiate it simply via the constructor:
+Given a `Morph` class, we can instantiate it simply via the constructor:
 ```javascript
 new Morph();
 ```
-We can also pass morph properties to the constructor, like so:
+We can also pass morph properties to the constructor, like this:
 ```javascript
 new Morph({ name: 'foo', fill: Color.red, borderWidth: 2 });
 ```
@@ -52,8 +53,8 @@ We refer to the property object above as the *spec* of a morph. Instead of direc
 ```javascript
 morph({ type: Morph, name: 'foo', fill: Color.red, borderWidth: 2})
 ```
-Notice how we now pass the class of the morph as the type property inside the spec.
-If the type is just `Morph` we can also leave out the `type` property alltogether since that is the default value.
+Notice how we now pass the class of the morph as the type property inside of the spec.
+If the type is just `Morph` we can also leave out the `type` property since this is the default value.
 Via the spec we can further define not only the morph itself but also its submorphs and sub-submorphs (and so on) like so:
 ```javascript
 let aMorph = morph({
@@ -68,7 +69,7 @@ let aMorph = morph({
   }]
 })
 ```
-Just instantiating a morph via an object, will not make it visible. For that to happen we need to mount it into the *World*. The *World* is itself a morph that is present at all times when `lively.morphic` framework is embedded (be it a bundled application or the `lively.next`-IDE). In fact this very document you are reading is mounted inside of a *World*. So lets go ahead and call `aMorph.openInWorld()`, you will see this:
+Just instantiating a morph via an object will not make it visible. For that to happen we need to mount it into the *World*. The *World* is itself a morph that is present at all times when the `lively.morphic` framework is embedded (be it a bundled application or the `lively.next`-IDE). In fact this very document you are reading is mounted inside of a *World*. So lets go ahead and call `aMorph.openInWorld()`, you will see this:
 
 <!-- __lv_expr__:{part}:lively.morphic:{InteractiveDie}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(InteractiveDie) -->
 
@@ -77,45 +78,34 @@ You can now go ahead and manipulate the morph above in the workspace below. Try 
 <!-- __lv_expr__:{part}:lively.morphic:{InteractiveDelay}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(InteractiveDelay, { viewModel: { loader: 'editor example 1' }}) -->
 
 ## Event System
-Morphic comes with its completely custom build event system. This for multiple reasons, since the DOM Event system...
+Morphic comes with its completely custom build event system. This is for multiple reasons, since the classic DOM Event system...
 
 1. is severely broken *(have you tried using onDrag?)*.
-2. does not support the same event types that we expect in morphic, for instance hovering.
-3. also does match the morph object in the bubbling phase, since some morphs consists of multiple different dom nodes.
+2. does not support the same event types that we expect in `morphic`, for instance hovering.
+3. also does not match the morph object in the bubbling phase, since some morphs are rendered as multiple different DOM nodes.
 
 
 ## Halo
-For more information on the Halo, please refer to the studio chapter.
-
-<!--
- - The event system in morphic consists entirely of synthesized events and a custom event dispatch.
- - It uses the DOM events as entry points but from there follows an entirely custom algorithm:
-   - The DOM Events are captured but then a custom traversal of the morphs is started, where the event object is also a custom lively object
-   - Event propagation happens from the morph where the event originated up until it reaches the world morph
-   - Event propagation can be stopped via a `Event.stop()`
-   - The event object provides information about how the event location related to the scene graph made up of the morphs, as well as information about drag events such as the distance of the drag etc.
-- Further, there is a completely custom implementation of `blur()` and `focus()` which are not even derived from the browser events.
-  - Text input is implemented via a hidden dom input node which is manually focused on demand by the lively event system.
-  - Blur and Focus event are triggered by mouse click events on other targets as the currently focused one.
-  - A nice aspect about this system, is that we can have "global" keyboard events that do not require an input target. This is essential for implementing shortcuts.
-  -->
+For more information on the Halo, please refer to the [`lively.next` studio Guide](#documentation/studio).
 
 The event system in Morphic is a completely custom implementation on top of the native browser events.
-DOM-Events that originate from the rendered elements in the browser are used as entry points and from then on a completely custom dispatch is performed.<br>
-Theses synthesized events are bubbling from the morph they originate from upwards until they reach the world morph.
-During bubbling the custom event callbacks are invoked on each of the traversed morph.
+DOM-Events that originate from the rendered elements in the browser are used as entry points and from then on a completely custom dispatch is performed.
+
+Theses synthesized events are bubbling from the `morph` they originate from upwards until they reach the world `morph`.
+During bubbling, the custom event callbacks are invoked on each of the traversed morph.
 The event object itself carries further meta information about the targeted morph, as well as information with respect to the type of event *(pressed key, mouse buttons, etc...)*.
 The propagation can be terminated by invoking the `event.stop()` method on the event object that is always passed to the event handler.
-There are also certain events that concern the keyboard events which are not only *augmented* but rather *simulated* beind the scenes.
-This is implemented via a hidden dom input node which is manually focused on demand via the event system. This gives us fine grained control about the redirection of keyboard events. For instance we can make any type of morph receive keyboard events as well as retrieve keyboard events even if no element is currently in focus (this is useful for the implementation of keyboard shortcuts).
+There are also certain events that concern the keyboard which are not only *augmented* but rather *simulated* behind the scenes.
+This is implemented via a hidden DOM input node which is manually focused on demand via the event system. This gives us fine grained control about the redirection of keyboard events. For instance we can make any type of morph receive keyboard events as well as retrieve keyboard events even if no element is currently in focus, which is useful for the implementation of keyboard shortcuts.
 
 ### Classic Events
-There is a set of basic dom events which behave more or less the same as the do inside the dom:
+There is a set of basic DOM events which behave more or less the same as they do inside the DOM:
    - **onMouse (Down/Up/Move/Wheel)** *In response to the mouse buttons getting pressed.*
    - **onKey (Up/Down)** *In response to a key on the keyboard being pressed.*
    - **onContextMenu** *In response to the HTML context menu event. Is used to create custom morph based menus instead.*
+  
 ### Customized Events
-There is a set of events that provides a different behavior to the native dom version. One of them is the drag event, which compared to the HTML event further provides more *movement specific* meta information to the morph as well as specific callbacks marking the *start* and *end* of the drag process:
+There is a set of events that provide a different behavior to the native DOM version. One of them is the drag event, which compared to the `HTML` event further provides more *movement specific* meta information to the morph as well as specific callbacks marking the *start* and *end* of the drag process:
 
    ![An example of a morph being dragged across a scene](/local_projects/nextguys--lively-next-relaunch/assets/dragging.gif) 
    - **onDrag** *Invoked continously while a morph is being dragged via touch gesture or mouse press and move. On each update it provides a drag delta that tells us about the current drag speed.*
@@ -130,35 +120,35 @@ There are also completely synthesized versions of the focus and blur events. For
    - **onBlur** *Invoked on a currently focused morph if `focus()` is called on another one.*
 
 ### Custom Events
-Further supports a custom set of purely morphic methods:
+`lively.morphic` further supports a custom set of purely custom events:
 
    ![An example of a morph being grabbed between morphs](/local_projects/nextguys--lively-next-relaunch/assets/grabbing.gif) 
-   - **onGrab** *If the morph is grabbable or has been grabbed via the halo, this callback is invoked once the morph is removed from its parent.*
+   - **onGrab** *If the morph is `grabbable` or has been grabbed via the halo, this callback is invoked once the morph is removed from its parent.*
    - **onDrop** *If the morph was grabbed and is now getting dropped onto another morph, this callback is invoked.*
-   - **onBeingDroppedOn** *Similar to onDrop, but is invoked *right before* the drop happens.*
+   - **onBeingDroppedOn** *Similar to `onDrop`, but is invoked \*right before\* the drop happens.*
    - **onHoverIn** *Triggered when the mouse cursor enters the bounds of the morph.*
    - **onHoverOut** *Triggered when the mouse cursor exits the morph bounds.*
-   - **onDropHoverIn** *Trigged when *onHoverIn* is invoked while at the same time a morph is being grabbed by the user. This is useful to implement logic for UIs that respond to drag and drop gestures.*
-   - **onDropHoverOut** *Triggered when *onHoverOut* is invoked while a grab is in process.*
+   - **onDropHoverIn** *Trigged when `onHoverIn` is invoked while at the same time a morph is being grabbed by the user. This is useful to implement logic for UIs that respond to drag and drop gestures.*
+   - **onDropHoverOut** *Triggered when `onHoverOut` is invoked while a grab is in process.*
    - **onDropHoverUpdate** *Triggered while a morph is being grabbed and the cursor is hovering over a particular morph.*
 
 ## Component System
 
-The component system in *lively.next* really presents one of the strongest diversions from the more vanilla implementations of Morphic. Some would argue it even turns *lively.next*'s Morphic into something entirely different.
-However the components are designed as a superset to the underlying Morphic system we have described so far. So one can still write all of the applications in a flavor that is entirely *pure* Morphic. It's just arguably more difficult to write applications in such a way that leverages the benefits of direct manipulation for both developers and *non-programmers* (i.e. designers). 
+The component system in `lively.next` really presents one of the strongest diversions from the more vanilla implementations of `Morphic`. Some would argue it even turns `lively.next`'s `Morphic` into something entirely different.
+However the components are designed as a superset to the underlying `Morphic` system we have described so far. So one can still write all of the applications in a flavor that is entirely *pure* `Morphic`. It's just arguably more difficult to write applications in such a way that leverages the benefits of direct manipulation for both **developers** and **non-programmers** (i.e. designers). 
 
 We designed the component system in a way that tries to achieve the following:
 
-1. It should keep visual and behavior implementation separate. In particular this allows us to develop GUIs with their behavioral aspects disabled, and vice versa. This is especially useful in a self sustained live development environment such as lively.next. It is our experience that keeping behavior too closely tied to the GUI can complicate implementation and maintenance of applications by a lot.
+1. It should keep visual and behavior implementation separate. In particular this allows us to develop GUIs with their behavioral aspects disabled, and vice versa. This is especially useful in a self sustained live development environment such as `lively.next`. In our experience that keeping behavior too closely tied to the GUI can complicate implementation and maintenance of applications by a lot.
 
-2. It should support modularity, which allows parts (visual as well as behavioral) to be composed and reused with ease. Basically we try to keep whats nice about the Partsbin and reconcile it with the world of mainstream development where everything revolves around source code and modules.
+2. It should support modularity, which allows parts (visual as well as behavioral) to be composed and reused with ease. Basically we try to keep what's nice about the [Partsbin](http://hpi.uni-potsdam.de/hirschfeld/publications/media/LinckeKrahnIngallsRoederHirschfeld_2012_TheLivelyPartsBinACloudBasedRepositoryForCollaborativeDevelopmentOfActiveWebContent_IEEE.pdf) and reconcile it with the world of mainstream development where everything revolves around source code and modules. You can find more information on this in our [introduction to `lively.project`s](#documentation/projects).
 
 3. It should support evolving the GUI in a purely visual way, that does not break modularity of the visual and behavioral parts of the system. This entails enhancing the existing Morphic Halo system into something that is closer to current state of the art design applications like Adobe XD or Figma.
 
 ### Component Definitions
 
-In order to define a component we need to specify its structure and appearance. This is done by employing the `component` function, which will return us a component that can in turn be instantiated as a morph. As you will see, the signature of `component` resembles the one of `morph` quite closely and this is by design.
-To get started let us look at a simple example that illustrates the point. We start with a simple component that represents a die with its face showing 4:
+In order to define a component we need to specify its structure and appearance. This is done by calling the `component` function, which will return a component that can then be instantiated as a morph. Therefore, the signature of `component` resembles the one of `morph` quite closely.
+To get started let us look at a simple example, a component that represents a die with its face showing 4:
 
 ```javascript
 
@@ -190,14 +180,14 @@ const Die = component({
 });
 
 ```
-As you can see, the `component()` function is invoked similarily to the already introduced `morph()` function. We are passing properties and recursively define submorphs in the same manner down the line. Just as in `morph()` if a property is not mentioned it is assumed to take on its default value. We refer to this object as a *spec*.
+As you can see, the `component()` function is invoked similarly to the already introduced `morph()` function. We are passing properties and recursively define submorphs in the same manner down the line. Just as in `morph()` if a property is not mentioned it is assumed to take on its default value. We refer to this object as a *spec*.
 
 > ⚠️ **Warning**
 > It is important that the names of each morph in a component are unique! If no name is specified,
-> the system may provide an auto generated one. In the future we are experimenting with implementations
-> where we only require for siblings to have unique names, but for now it is imperative a morph name
+> the system may provide an auto generated one. In the future we want to experiment with implementations
+> where we only require for siblings to have unique names, but for now it is imperative that a morph name
 > is unique within the entire component definition. Unique names are also important for attaching behavior
-> to elements once we introduce the viewmodels.
+> to elements once we introduce `ViewModel`s later on.
    
 We can now instantiate the `Die` component with the help of the `part()` function:
 
@@ -209,7 +199,11 @@ Which will yield a morph that looks like this:
 
 <!-- __lv_expr__:{part}:lively.morphic:{WrappedDie}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedDie) -->
 
-Now, we can go ahead and create other components that now in turn re-use this component as a part of their own definition. This also happens with the help of the `part()` function. Let's for instance define a component that resembles a poker table:
+> 💡 **Tip**
+> It is important to let the difference between `component` and `part` sink in.
+> While `component` is used to **define** a reusable component (similar to components in other state-of-the-art web frameworks), `part` is used to **instantiate** such a component.
+
+Now, we can go ahead and create other components that now in turn re-use this component as a part of their own definition. This also happens with the help of the `part()` function. Let's define a component that resembles a poker table:
 
 ```javascript
 const PokerTable = component({
@@ -242,7 +236,7 @@ As you can see, by invoking the part calls within the submorph array we reused t
 ### Component Derivations
 
 While reusing component definitions to compose new components is useful, we also want to be able to expand or customize existing component definitions to suit our needs. For instance we may want to have different color themes of the same system button in order to match different styles of tools.
-In order to archieve that, the component system allows to derive a component similar to subclassing a class:
+In order to achieve that, the component system allows to derive a component similar to subclassing a class:
 
 ```javascript
 
@@ -252,11 +246,7 @@ const goldGradient =  new LinearGradient({
 });
 
 const GoldenDie = component(Die, {
-  fill: Color.black,
-  submorphs: [{
-    name: 'eye',
-    fill: goldGradient
-  }, {
+  fill: Color.black,javascript
     name: 'eye1',
     fill: goldGradient
   }, {
@@ -274,13 +264,18 @@ Looking further, we notice the structure of the spec which looks quite similar t
 
 ![](/local_projects/nextguys--lively-next-relaunch/assets/gold%20die.png) 
 
-For the well trained eye, it should become apparent that component definitions constitue something others refer to as *nested classes*. However instead of utilizing the native javascript class syntax we opted for this function notation for two reasons:
+> 💡 **Tip**
+> When deriving components and overwriting parts of their `spec` in the definition of the derivation, it is important that each submorphs `name` property is specified correctly. Also consider the importance of unique names inside a component hierarchy mentioned above. You will always need to specify the complete path to a submorph (in the case of deeply nested submorphs). `lively.next` will not expand the hierarchy automatically. 
+
+
+For the well trained eye, it should become apparent that component definitions constitute something others refer to as *nested classes*. However, instead of utilizing the native `JavaScript` class syntax we opted for this function notation for two reasons:
 1. It is slightly less verbose than class declarations
-2. The property dispatch happens not as a simple single dispatch (as is the norm in javascript classes) but constitutes a multiple dispatch taking into account the **component itself**, the **component's parent**, the **component's states** and also the **state of the morph** being styled. *(More on that later)*.
+2. The property dispatch happens not as a simple single dispatch (as is the norm in `JavaScript` classes) but constitutes a multiple dispatch taking into account the **component itself**, the **component's parent**, the **component's states** and also the **state of the morph** being styled.
 
 #### Altering Structure
-Obviously, when deriving a component from a different one, we often want to adjust aspects about its structure. For instance we may want to remove certain morphs from the component, that are not useful for the current component. We also may want to add new morphs which are needed to implement a different set of functionality.
-Altering structure can not easily be expressed with the property overriding mechanism, which is why a set of three convenience functions is provided: `add()`, `remove()` and `replace()`.
+Obviously, when deriving a component from a different one, we often want to adjust aspects about its structure. For instance, we may want to remove certain morphs from the component, that are not useful for the current component. We also may want to add new morphs which are needed to implement a different set of functionality.
+
+Altering structure cannot easily be expressed with the property overriding mechanism, which is why a set of three convenience functions is provided: `add()`, `remove()`.
 Let's illustrate how each of them is used by returning to our dice example. When we want to create versions of each dice each of which shows a different face, we will want to adjust the structure.
 For instance turning the original `Die` into a `FiveDie` could look something like this:
 
@@ -295,7 +290,7 @@ const FiveDie = component(Die, {
 });
 ```
 
-In case we want to insert a new morph at a particular index in the submorphs array, we can pass the name of the proceeding sibling as a second argument like so:
+In case we want to insert a new morph at a particular index in the submorphs array, we can pass the name of the **proceeding** sibling as a second argument like so:
 
 ```javascript
 const FiveDie = component(Die, {
@@ -308,7 +303,7 @@ const FiveDie = component(Die, {
 });
 ```
 
-In turn creating a die that shows the three face requires removing and adjusting certain eyes:
+In turn, creating a die that shows the three face requires removing and adjusting certain eyes:
 
 ```javascript
 const ThreeDie = component(Die, {
@@ -321,27 +316,9 @@ const ThreeDie = component(Die, {
 });
 ```
 
-> ⚠️ **Warning**
-> As of the point of this writing, `replace` is not yet implemented.
-
-In some rare cases, adding and removing is not enough, and we want to replace an element with a different one. This is for instance useful, if we decide to alter the input method for a particular value inside a form. Here we want the morph of the name to be preserved but just replace its structure and styling.
-In the case of the `PokerTable` we can replace some of the dice with a new `D12` (a 12 sided dice) like so:
-
-```javascript
-const DiversePokerTable = component(PokerTable, {
-  submorphs: [
-    replace('die2', part(Dodecahedron, {
-      name: 'die2',
-      position: pt(375.5,90.1)
-    })
-   ) 
-  ]
-});
-```
-
 #### Overriding Masters
 
-In order to adjust morphs in derived components its often simpler to *reassign* a different master component to style a particular morph rather then simply overriding each property of a morph by hand.
+In order to adjust morphs in derived components its often simpler to *reassign* a different **master component** to style a particular morph rather then simply overriding each property of a morph by hand.
 For instance, going back to our poker table example, we may want to apply different styles to some of the dice in a derived component like so:
 
 ```javascript
@@ -367,11 +344,11 @@ In the example of the dice for instance, imagine a scenario where each eye was i
 
 So far we have just talked about using master components to define and inherit structure *(component derivations)* and applying styles *(overriding masters)*. We will now turn to some master configurations that allow components to also be applied *dynamically*.
 
-Note, that for one component definition only one component state can be active at a time. There is not parallel application of two (or more) components via multiple component states where the result will be merged in some way. While this semantic is theoretically possible, we refrained from doing so in order to avoid overly complex behavior and hard to trace unintended styling effects.
+Note, that for one component definition only one component state can be active at a time. There is no parallel application of two (or more) components via multiple component states where the result will be merged in some way. While this semantic is theoretically possible, we refrained from doing so in order to avoid overly complex behavior and hard to trace unintended styling effects.
 
 #### Event States
 
-The most straight forward dynamic application of master components is in the case of morphic events. For this, the component system supports defining component to be applied in case of a *click* or *hover* event. This is achieved by overriding the `master` property just as we did in the previoust section. However this time, we pass a spec object instead of a component reference like so:
+The most straight forward dynamic application of master components is in the case of morphic events. For this, the component system supports defining component to be applied in case of a *click* or *hover* event. This is achieved by overriding the `master` property just as we did in the previous section. However, this time, we pass a `spec` object instead of a component reference like so:
 
 ```javascript
 const HoveredDie = component(Die, { fill: Color.red.darker() });
@@ -409,7 +386,7 @@ const InteractiveDie = component(Die, {
 });
 ```
 
-In scenarios where we still want to override the master statically but also want to attach dynamic event master styles, we can utilize the `auto` field which will apply the specified master in just the same way as was the case when we directly overwrote the master in the above section. However with the additional dynamic master styles stepping in when applicable:
+In scenarios where we still want to override the master statically, but also want to attach dynamic event master styles, we can utilize the `auto` field which will apply the specified master in just the same way as was the case when we directly overwrote the master in the above section. However with the additional dynamic master styles stepping in when applicable:
 
 ```javascript
 const ClickedDie = component(Die, { fill: Color.red.lighter() });
@@ -435,31 +412,16 @@ const InteractiveGoldenDie = component(Die, {
   }
 });
 ```
- 
-#### Color Scheme States
 
-In lively.next, we are able to specify a preferred theme for dark or bright environments (i.e. *dark mode* and *light mode*).
-This option can be found in `lively.morphic/config.js` and can be overridden in the `localconfig.js`.
-By default, lively assumes the preferred theme as dictated by the system.
-
-In order to easily manage the appearance of a morph in response to this setting, component definitions support custom states for both `dark` and `light` which match the preferred theme:
-
-```javascript
-const DynamicDie = component(Die, {
-  master: {
-    light: Die, // not really needed here but illustrates the point
-    dark: GoldenDie
-  }
-});
-```
+We refer to these types of implicit declarations as **inline master/inline components**.
   
 #### Breakpoints
 
-When implementing a responsive design for a website or application we often want to select between different master component based on the extent of a morph. Based on the viewport size, a morph warrants entirely different presentations of contents.
-For instance a morph that implements a link to a blogpost should have different font sizes, layout settings and displayed elements depending on the size it is alottet.
-This is where *breakpoint states* come in handy, since they allow us to define right withint the component definition itself at what height(s) or width(s) of the morph which component(s) are supposed to be applied.
+When implementing a responsive design for a website or application, we often want to select between different master component based on the extent of a morph. Based on the viewport size, a morph warrants entirely different presentations of contents.
+For instance a morph that implements a link to a blogpost should have different font sizes, layout settings and displayed elements depending on the size it is allotted.
+This is where *breakpoint states* come in handy, since they allow us to define at what height(s) or width(s) of the morph which component(s) are supposed to be applied, right within the component definition itself.
 
-An example for we can have a poker table that depending on its size, shows varrying amounts of dice:
+The following example showcases how we can have a poker table that, depending on its size, shows varying amounts of dice:
 
 ```javascript
 const PokerTableLarge = component(PokerTable, {
@@ -497,11 +459,12 @@ The resulting behavior looks like this:
 
 ![](/local_projects/nextguys--lively-next-relaunch/assets/responsive-poker-table.gif) 
 
-Note that the breakpoints from any of the parent components are overridden if present and are not getting considered when the style is applied to the morph.
+> 💡 **Tip**
+> Note, that the breakpoints from any of the parent components are overridden if present and are not getting considered when the style is applied to the morph.
 
 #### Custom States
 
-Aside from the hard wired event states, it is often nessecary to define some domain specific component states which can only be triggered via code execution. Examples for this include different styles to distinguish between an *active* or *inactive* states of GUI elements. Other examples include *selection styles* that add an accent to a particular element or even *mode styles* that allow to cycle between different states such as *warning*,*error* or others.
+Aside from the hard wired event states mentioned above, it is often handy to define some domain-specific component states which can only be triggered via code execution. Examples for this include different styles to distinguish between an *active* or *inactive* state of GUI elements. Other examples include *selection styles* that add an accent to a particular element or even *mode styles* that allow to cycle between different states such as *warning*,*error* or others.
 
 In order to define a custom style, we again invoke the `master` property as in the previous example, yet this time we add another field `states` to which we pass the definition of the custom states:
 
@@ -529,7 +492,7 @@ const InteractivePokerTable = component(PokerTable, {
 });
 ```
 
-We can trigger the custom state, by calling `setState()` on the master object like so:
+We can trigger the custom state by calling `setState()` on the master object like so:
 
 ```javascript
 const table = part(InteractivePokertable); // instantiate the table
@@ -537,102 +500,98 @@ table.master.setState('empty'); // applies the empty style
 table.master.setState(null); // reverts back to the default styling
 ```
 
-Note that just as the breakpoints, the custom state object does not get merged in case you override the custom states from one of the parent components. If for instance the `PokerTable` in the above example would itself define a custom component state called `foo` setting `table.master.setState('foo')` would have not effect since `foo` is not mentioned in the component states of `InteractivePokerTable`.
+Note that, just as the breakpoints, the custom state object does not get merged in case you override the custom states from one of the parent components. If for instance the `PokerTable` in the above example would itself define a custom component state called `foo` setting `table.master.setState('foo')` would have no effect, since `foo` is not mentioned in the component states of `InteractivePokerTable`.
 
-### Style Palettes
+### Adding Behavior via `ViewModel`s
 
-> ⚠️ **Warning**
-> As of the point of this writing, style systems have not been implemented yet.
+Based on the past experiences with live systems such as `LivelyKernel`, we decided that there is an immense value in the option to easily toggle interactive behavior of components on and off. This does not only lead to more concise and reusable code, but also makes it so that we can toggle the behavior during runtime inside of `lively.next`. This leads to a smoother transition between the design stage of a component and the phase where the behavior is implemented. See the [Introduction to lively.next's Studio](#documentation/studio) for more details on this.
 
-Sometimes we want to assign the value of a particular properly a certain role that it plays in the grand scheme of a design. For instance oftentimes, a designer selects a particular color for an element to be *primary*, *secondary* or *accent* in nature. This allows for an easier swapping of color designs later in the design process.
-
-In `lively.next` supports this management of style systems via *style palettes*. A style palette can be created for different kinds of properties. These includes: *color properties*, *layout properties*, *text style properties* and *effect properties* such as *drop shadow* and *opacity*.
-
-For instance, we can rewrite our earlier example with where we defined `GoldenDie` as follows:
+A `ViewModel` is first and foremost a class that will need to inherit from the base `ViewModel` class:
 
 ```javascript
+class CustomViewModel extends ViewModel {
 
-const GoldenDie = component(Die, {
-  fill: palette.color.dark,
-  submorphs: [{
-    name: 'eye',
-    fill: palette.color.gold
-  }, {
-    name: 'eye1',
-    fill: palette.color.gold
-  }, {
-    name: 'eye2',
-    fill: palette.color.fold
-  }, {
-    name: 'eye3',
-    fill: palette.color.gold
-  }]
-});
-
+} 
 ```
 
-<!--
-### Template Masters
+In order to actually trigger behavior, you will need to connect the default morph functions to methods inside of your view model code. Consider the following example that shows how we can trigger a custom `clickHandler` when the morph that stems from a component definition is clicked. Remember, that the default `morphic` method for click handling in `lively.next` is `onMouseDown`.
 
-> ⚠️ **Warning**
-> As of the point of this writing, template masters are not yet supported. For the time being
-> we solve this by passing parametrized masters as viewModel properties to the viewModel.
-
- - Sometimes it does not make sense to stick to one master for a part of a component
- - We then want to parametrize the component from the outside in a convenient way
- - The parametrization should work nicely in a programmatic way as well as via tool support
- - Code sample:
- 
 ```javascript
-const Alice = component({
-   submorphs: [
-     {
-       name: 'bob',
-       master: template('masterForBob', Bob)
-     }
-   ]
-})
+class CustomViewModel extends ViewModel {
+  static get properties () {
+    return {
+      customProperty: {},
+      bindings: {
+        get () {
+          return [
+            { signal: 'onMouseDown', handler: 'clickHandler' }
+          ];
+        }
+      }
+    };
+  }
 
-// which can then be controlled when creating an instance like this:
-
-part(Alice, { masterForBob: Foo });
-
-// Or adjust in component definitions:
-
-const Linus = component({
-   submorphs: [
-     part(Alice, { masterForBob: Bar }))
-   ]
-});
-
+  clickHandler () {
+    // custom behavior here
+  }
+}
 ```
--->
 
-### Viewmodels
-  - Separates the behavior from the morphs, making behavior "pluggable"
-    - Since behavior just attached to the morphs from the outside, it is no longer tied to the component definitions
-    - Behavior can be reused across multiple different designs for the same things (think of calculator designs, clock faces etc..)
-    - Behavior can be toggled at runtime. For more, see the controls for *Editing Components* in the **Studio Chapter**.
-  - Allow behavior to be disabled dynamically which allows to switch between an *Interactive Mode* (useful for verifying correct behavior) and *Designer Mode* where the behavior is disabled in order not to interfere with manipulation of the GUI.
-  - Define bindings in order to attach behavior to parts of a component declaratively
-  - A model is reponsible for the morph and all its descendants until one of the submorphs carries itself a viewmodel
-    - In that way a component scope is defined.
-  - Properties or methods can not be accessed from the morph directly, unless they are exposed by the model via the `expose` property.
-    - In the future we will also support the `@expose` decorator that can be attached to the method or property declaration.
-  - Bindings are static properties on the viewmodel classes, which define wich part of the morph the model is attached to triggers which actions/methods inside the model.
-    - Declarative way to look at how behavior is "wired up"
-    - Bindings are initialized when the model is attached to the morph and whenever the submorphs within the scope of the model are added or removed.
-    - Can only access members or signals that are defined or signaled on the morph. Access of the model methods or properties directly is not allowed. Exposed methods or properties are OK.
-  - Each binding id defines as follows: `{ target?, signal, handler, converter?, updater?, varMapping? }`
-    - ***target***: Defines which part of the morph the binding should hold on to. If target is ommitted, target is assumed to be the morph the model is directly attached to.
-    - ***signal***: Defines the method or signal the binding should react to.
-    - ***handler***: Defines the method that is called in response to the binding getting triggered. This can be either the name of the method or closure passed directly.
-    - ***converter***: An optional function that can transform the value passed to the signal or method. This is the same as the converter from `connect()`.
-    - ***updater***: An optional function that allows the user to fully control the way the handler is called. This is the same as the updater from `connect()`.
-    - ***varMapping***: Both `converter` and `updater` support the provision of the function as a string. In this case it is useful to have a varMapping that will ensure the closures are properly initialized.
- - Further a viewmodel has various callbacks, that subclasses can use to control the lifecycle updates of the viewmodel accordingly:
+In order to add a view model class to a component, add the `defaultViewModel` property inside of the `component` call with the corresponding class as value.
+
+You can also initialize components (or specific instances) with dynamic values for properties that are defined on the view model. It is important that these values are declared as properties on the view model class, like `customProperty` in the example above. To set a dynamic value, you will need to specify the `viewModel` property in the `part` call like this: `viewModel: { customProperty: 'Hello!' }`.
+
+As usual, it is possible to reach from the model code inside of the view to react to programmatic changes. The outer-most morph of a component is available via `this.view` inside of the view model.
+In order to access a nested morph inside of the components hierarchy, we provide a synthesized `ui` property on the model object. To access a morph called `deepMorph` inside of a component in its model, you would access `this.ui.deepMorph`, regardless of the position of the morph inside of the hierarchy. Consider our above warning about unique morph names!
+
+A model is responsible for the outer-most morph of a component (the *view* of the *model*) and all its descendants until one of the submorphs itself carries a `ViewModel`!
+
+While the building blocks of the view are accessible from within the model, it is not possible to access specific properties or methods of a model by accessing the morph of the components instance!
+As it is sometimes handy to make parts of the model accessible to the outside world, we provide an `expose` property. Only properties and functions mentioned inside of this are available from the outside. The following example showcases how to utilize the `expose` property:
+
+```javascript
+class CustomViewModel extends ViewModel {
+  static get properties () {
+    return {
+      customPropertyInternal: { defaultValue: 'this is secret'},
+      customPropertyExternal: { defaultValue: 'this is not secret'},
+      expose: {
+        get () {
+          return ['customPropertyExternal'];
+        }
+      }
+    };
+  }
+}
+
+const ExposeComponent = { name: 'demo morph', defaultViewModel: CustomViewModel};
+const exposeInstance = part(ExposeComponent);
+exposeInstance.customPropertyInternal // -> will result in an error
+exposeInstance.customPropertyExternal // -> will result in 'this is not secret'
+```
+
+Therefore, you can think of the `expose` property of a view model as defining the programmatic interface of the corresponding component.
+
+#### Bindings - In Depth
+
+Each binding is defines as follows: `{ target?, signal, handler, converter?, updater?, varMapping? }`
+
+- **target**: Defines which morph of the component the binding should hold on to. If `target` is omitted, `target` is assumed to be the morph the model is directly attached to.
+- **signal**: Defines the method or signal the binding should react to. This is usually a method from the base `Morph` class.
+- **handler**: Defines the method that is called in response to the binding getting triggered. This can be either the name of the method or a closure passed directly.
+- **converter**: An optional function that can transform the value passed to the signal or method. This is the same as the converter from `connect()`. By default, the arguments from the signal are passed.
+- **updater**: An optional function that allows the user to fully control the way the handler is called. This is the same as the updater from `connect()`.
+- **varMapping**: Both `converter` and `updater` support the provision of the function as a string. In this case it is useful to have a varMapping that will ensure the closures are properly initialized.
+
+For more details on `converter`, `updater` and `varMapping`, see [this entry in the wiki of `lively.next`](https://github.com/LivelyKernel/lively.next/wiki/Bindings,-Connections-and-Signals).
+
+#### Callbacks provided by the `ViewModel` superclass
+
 > ⚠️ **Warning**
 > The API of the viewmodels is subject to change in the future, this section will be updated accordingly.
-   - `onRefresh(propName)`: Called whenever a property in the model is changed. This is useful for performing view updates in response to model changes that we can no anticipate via bindings.
-   - `viewDidLoad()`: Called once when the model is attached to the view. This is similar to `onLoad()` but unlike the latter is only called when the entire view is ready not only the model itself is initialized. 
-   - `withoutBindingsDo(cb)`: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by backpropagation.
+
+In addition to the special `expose` and `bindings` properties, `ViewModel` provides a set of handy callbacks than can be utilized to accommodate common use-cases:
+
+- `onRefresh(propName)`: Called whenever a property in the model is changed. This is useful for performing view updates in response to model changes that we cannot anticipate via bindings. The callback is called for each property change separately, with the name of the changed property passed as an argument as a string. 
+- `viewDidLoad()`: Called once when the model is attached to the view. This is the place where initialization or setup code usually is placed best.
+- `withoutBindingsDo(cb)`: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by back-propagation.
