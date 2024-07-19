@@ -1,11 +1,12 @@
 import { component, ViewModel, Image, Label, ShadowObject, ConstraintLayout, without, add, part, TilingLayout, Ellipse } from 'lively.morphic';
 import { Color, RadialGradient, rect, LinearGradient, pt } from 'lively.graphics';
-import { num } from 'lively.lang';
+import { num, promise } from 'lively.lang';
 import { Path } from 'lively.morphic/morph.js';
 import { Text } from 'lively.morphic/text/morph.js';
 import { projectAsset } from 'lively.project/helpers.js';
 import { TiktokButton } from '../ui/pages/landing-page.cp.js';
 import { Spinner } from 'lively.components/loading-indicator.cp.js';
+import { signal } from 'lively.bindings';
 
 export class InteractiveDelayModel extends ViewModel {
   static get properties () {
@@ -195,6 +196,219 @@ const Die = component({
     }]
 });
 
+class ThrowableDieModel extends ViewModel {
+  static get properties () {
+    return {
+      faceValue: { defaultValue: 1 }
+    };
+  }
+
+  get bindings () {
+    return [
+      {
+        signal: 'onMouseDown', handler: 'throw'
+      }
+    ];
+  }
+
+  get expose () {
+    return ['faceValue'];
+  }
+
+  viewDidLoad () {
+    this.showFace(1); // default to face 1
+  }
+
+  showFace (face) {
+    this.view.master.setState(face);
+    this.faceValue = face;
+  }
+
+  async throw () {
+    // we access the morph from the viewmodel via the view property
+    this.view.animate({ rotation: 16 * Math.PI, duration: 2000 }).then(() => {
+      this.view.rotation = 0;
+    });
+    await promise.delay(1000);
+    this.showFace(num.random(1, 6));
+  }
+}
+
+const UniversalDie = component({
+  origin: pt(38.5, 37.1),
+  fill: Color.rgb(255, 0, 0),
+  extent: pt(78.5, 78.7),
+  borderRadius: 13,
+  nativeCursor: 'grab',
+  submorphs: [
+    {
+      type: Ellipse,
+      name: 'eye0',
+      extent: pt(15.9, 16.6),
+      position: pt(-28.6, -29.5)
+    }, {
+      type: Ellipse,
+      name: 'eye1',
+      extent: pt(15.9, 16.6),
+      position: pt(12.5, -28.7)
+    }, {
+      type: Ellipse,
+      name: 'eye2',
+      extent: pt(15.9, 16.6),
+      position: pt(-28.8, 14.9)
+    }, {
+      type: Ellipse,
+      name: 'eye3',
+      extent: pt(15.9, 16.6),
+      position: pt(11.8, 15.8)
+    }, {
+      type: Ellipse,
+      name: 'eye4',
+      extent: pt(15.9, 16.6),
+      position: pt(-7.6, -7.6)
+    }, {
+      type: Ellipse,
+      name: 'eye5',
+      extent: pt(15.9, 16.6),
+      position: pt(-28.8, -7.4)
+    }, {
+      type: Ellipse,
+      name: 'eye6',
+      extent: pt(15.9, 16.6),
+      position: pt(12.2, -6.9)
+    }]
+});
+
+const Die1 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye0',
+    visible: false
+  }, {
+    name: 'eye1',
+    visible: false
+  }, {
+    name: 'eye2',
+    visible: false
+  }, {
+    name: 'eye3',
+    visible: false
+  }, {
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die2 = component(UniversalDie, {
+  dropShadow: null,
+  dropShadow: null,
+  reactsToPointer: true,
+  submorphs: [{
+    name: 'eye1',
+    visible: false
+  }, {
+    name: 'eye2',
+    visible: false
+  }, {
+    name: 'eye4',
+    visible: false
+  }, {
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die3 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye1',
+    visible: false
+  }, {
+    name: 'eye2',
+    visible: false
+  }, {
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die4 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye4',
+    visible: false
+  }, {
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die5 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye5',
+    visible: false
+  }, {
+    name: 'eye6',
+    visible: false
+  }]
+});
+
+const Die6 = component(UniversalDie, {
+  submorphs: [{
+    name: 'eye4',
+    visible: false
+  }]
+});
+
+const ThrowableDie = component(Die1, {
+  defaultViewModel: ThrowableDieModel,
+  master: {
+    states: {
+      1: Die1,
+      2: Die2,
+      3: Die3,
+      4: Die4,
+      5: Die5,
+      6: Die6
+    }
+  }
+});
+
+export const AllFaces = component({
+  extent: pt(691.9, 314.9),
+  borderWidth: 7,
+  borderColor: Color.rgb(229, 231, 233),
+  layout: new TilingLayout({
+    align: 'center',
+    axisAlign: 'center',
+    padding: rect(10, 10, 0, 0),
+    wrapSubmorphs: true
+  }),
+  submorphs: [
+    part(Die1, {
+      name: 'die1'
+    }), part(Die2, {
+      name: 'die2'
+    }), part(Die3, {
+      name: 'die3'
+    }), part(Die4, {
+      name: 'die4'
+    }), part(Die5, {
+      name: 'die5'
+    }), part(Die6, {
+      name: 'die6'
+    })]
+});
+
 export const WrappedDie = component({
   extent: pt(490, 304.1),
   borderWidth: 7,
@@ -265,6 +479,66 @@ const PokerTable = component({
     name: 'die3',
     rotation: num.toRadians(20.0),
     position: pt(180.3, 211.7)
+  })]
+});
+
+class DynamicPokerTableModel extends ViewModel {
+  get bindings () {
+    return [
+      { target: /die/, signal: 'faceValue', handler: 'showTotalFaceValue' }
+    ];
+  }
+
+  showTotalFaceValue () {
+    const { die1, die2, die3, faceValue } = this.ui;
+    faceValue.textString = `Total: ${die1.faceValue + die2.faceValue + die3.faceValue}`;
+  }
+}
+
+const DynamicPokerTable = component(PokerTable, {
+  defaultViewModel: DynamicPokerTableModel,
+  submorphs: [
+    without('die1'),
+    add(part(ThrowableDie, {
+      name: 'die1',
+      position: pt(72.4, 96.9)
+    })),
+    without('die2'),
+    add(part(ThrowableDie, {
+      name: 'die2',
+      rotation: num.toRadians(77.0),
+      position: pt(398.1, 137.6)
+    })),
+    without('die3'),
+    add(part(ThrowableDie, {
+      name: 'die3',
+      rotation: num.toRadians(20.0),
+      position: pt(202.9, 259.2)
+    })), add({
+      type: Text,
+      name: 'face value',
+      dropShadow: new ShadowObject({ color: Color.black, blur: 15, fast: false }),
+      dynamicCursorColoring: true,
+      fill: Color.rgba(255, 255, 255, 0),
+      fontColor: Color.rgb(255, 255, 255),
+      fontSize: 28,
+      fontWeight: '600',
+      position: pt(184.6, 110.3),
+      textAndAttributes: ['Total: 3', null]
+    })
+  ]
+});
+
+export const WrappedDynamicPokerTable = component({
+  extent: pt(482.1, 453.8),
+  borderWidth: 7,
+  borderColor: Color.rgb(229, 231, 233),
+  layout: new TilingLayout({
+    align: 'center',
+    axisAlign: 'center'
+  }),
+  submorphs: [part(DynamicPokerTable, {
+    name: 'poker table'
   })]
 });
 
