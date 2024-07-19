@@ -166,6 +166,7 @@ class LivelyWebPageModel extends ViewModel {
     if (evt.targetMorphs[0].name === 'examples') this.router.route('examples', true);
     if (blogEntries.map(e => e.slug).includes(evt.targetMorphs[0].name)) this.router.route(`blog/${evt.targetMorphs[0].name}`, true);
     if (evt.targetMorphs[0].name === 'logo section') this.router.route(null, true);
+    if (evt.targetMorphs[0].name === 'try it out button') window.open('https://github.com/LivelyKernel/lively.next', '_blank');
   }
 
   async viewDidLoad () {
@@ -174,8 +175,6 @@ class LivelyWebPageModel extends ViewModel {
       debugMode: !lively.FreezerRuntime
     });
     window.router = this.router; // FIXME:
-
-    this.view.get('try it out button').onMouseDown = () => window.open('https://github.com/LivelyKernel/lively.next', '_blank');
     connect(this.router, 'routed', this, 'route');
     if (lively.FreezerRuntime) this.relayout();
     let loadedHash = window.location.hash;
