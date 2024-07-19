@@ -6,6 +6,7 @@ import { num } from 'lively.lang';
 import { Polygon } from 'lively.morphic/morph.js';
 import { part } from 'lively.morphic/components/core.js';
 import { SearchField } from 'lively.components/inputs.cp.js';
+import { InteractiveDelayModel } from '../../explanation/examples.cp.js';
 
 class PropertyVisualizerModel extends ViewModel {
   static get properties () {
@@ -611,18 +612,17 @@ export const InteractiveDie = component({
   ]
 });
 
-class MorphicPropertyEssayModel extends ViewModel {
+class MorphicPropertyEssayModel extends InteractiveDelayModel {
   static get properties () {
-    return {
-      bindings: {
-        get () {
-          return [
-            { target: 'visual prop filter', signal: 'searchInput', handler: 'filterVisualProperties' },
-            { target: 'behavioral prop filter', signal: 'searchInput', handler: 'filterBehavioralProperties' }
-          ];
-        }
-      }
-    };
+    return { isLoaded: { get () { return true; } } };
+  }
+
+  get bindings () {
+    return [
+      ...super.bindings,
+      { target: 'visual prop filter', signal: 'searchInput', handler: 'filterVisualProperties' },
+      { target: 'behavioral prop filter', signal: 'searchInput', handler: 'filterBehavioralProperties' }
+    ];
   }
 
   filterVisualProperties () {
@@ -655,6 +655,9 @@ const MorphicPropertyEssay = component({
       height: 'fixed',
       width: 'fill'
     }], ['visual property collection', {
+      height: 'fixed',
+      width: 'fill'
+    }], ['behavioral properties intro', {
       height: 'fixed',
       width: 'fill'
     }], ['behavioral properties', {
@@ -734,6 +737,7 @@ const MorphicPropertyEssay = component({
     })]
   }, {
     name: 'behavioral properties intro',
+    visible: false,
     extent: pt(794, 0),
     layout: new TilingLayout({
       axis: 'column',
@@ -764,6 +768,7 @@ const MorphicPropertyEssay = component({
     })]
   }, {
     name: 'behavioral properties',
+    visible: false,
     layout: new TilingLayout({
       axis: 'column',
       hugContentsVertically: true,

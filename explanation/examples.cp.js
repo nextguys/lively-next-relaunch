@@ -7,7 +7,7 @@ import { projectAsset } from 'lively.project/helpers.js';
 import { TiktokButton } from '../ui/pages/landing-page.cp.js';
 import { Spinner } from 'lively.components/loading-indicator.cp.js';
 
-class InteractiveDelayModel extends ViewModel {
+export class InteractiveDelayModel extends ViewModel {
   static get properties () {
     return {
       loader: {
@@ -94,7 +94,7 @@ class InteractiveDelayModel extends ViewModel {
 export const InteractiveDelay = component({
   defaultViewModel: InteractiveDelayModel,
   fill: Color.rgb(229, 231, 233),
-  extent: pt(430.2,344),
+  extent: pt(430.2, 344),
   layout: new TilingLayout({
     reactToSubmorphAnimations: false,
     align: 'center',
