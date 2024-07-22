@@ -608,12 +608,10 @@ In addition to the special `expose` and `bindings` properties, `ViewModel` provi
 - `viewDidLoad()`: Called once when the model is attached to the view. This is the place where initialization or setup code usually is placed best.
 - `withoutBindingsDo(cb)`: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by back-propagation.
 
-### Using Components and ViewModels together
+### Using Components and ViewModels
+Let us go over a final example that combines the various aspects discussed in this chapter. We will implement a throw behavior for the dice we have been working with previously. The idea is that clicking on a die will cause it to shuffle and display a different face.
 
-Let us illustrate how `ViewModel`s are used in conjunction with components by a final example.
-For this, we will implement a throw behavior for the dice we have been working on previously. The idea is that clicking on a die will cause it to shuffle and display a different face.
-
-In order to that, we will first define a component that has all the faces we may want to display and call it the universal die:
+First, we define a component that includes all the faces we may want to display, which we will call the universal die.
 
 ```javascript
 const UniversalDie = component({
@@ -661,7 +659,7 @@ const UniversalDie = component({
 });
 ```
 
-We then derive it 6 times, where we adjust the styling in a way so that each die shows a different face.
+Notice how the die has an eye in every position potentially needed, totaling seven eyes. We then derive this component six times, adjusting the styling so that each die shows a different face by varying the visibility of each eye.
 
 ```javascript
 const Die1 = component(UniversalDie, {
@@ -755,7 +753,7 @@ const Die6 = component(UniversalDie, {
 
 <!-- __lv_expr__:{part}:lively.morphic:{AllFaces}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(AllFaces) -->
 
- We now define a `ViewModel`, which can attach to the universal die and toggle the visibility of the eyes such that it shows different faces. We will achieve this by toggling between different component states.
+Next, we define a view model that can attach to the universal die and toggle the visibility of the eyes to show different faces. This is achieved by toggling between different component states.
 
 ```javascript
 
@@ -803,7 +801,13 @@ const ThrowableDie = component(Die1, {
 });
 ```
 
-Let's enhance this by also writing some custom behavior for the previously defined poker table. The custom code will trigger a shuffle of all the dice and then display the total value to the user. To achieve that we adjust the poker table by deriving it like so:
+The resulting die looks like this. Try triggering the throw mechanism by clicking on the die.
+
+<!-- __lv_expr__:{part}:lively.morphic:{WrappedThrowableDie}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedThrowableDie) -->
+
+With this interactive version of the dice in place, we can implement an interactive version of the previously defined poker table. The custom behavior will allow each of the dice to be shuffled independently, displaying the new total of the dice on the poker table.
+
+To achieve this, we derive the poker table from the standard poker table, replacing the instances of the old static dice with the new dynamic ones. We also add a label that enables us to display the face value of all the dice on the table.
 
 ```javascript
 
@@ -831,7 +835,7 @@ const DynamicPokerTable = component(PokerTable, {
 });
 ```
 
-With the code of the `ViewModel` looking like this:
+We further define a new view model that we can attach to the dynamic poker table. It wires up the changes in the `faceValue` of each die that gets triggered when they are shuffled and triggers a method `showTotalFaceValue`, which updates the label we just added to the component accordingly.
 
 ```javascript
 class DynamicPokerTableModel extends ViewModel {
