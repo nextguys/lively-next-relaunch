@@ -5,7 +5,7 @@ import { ExampleFlap, InteractiveDelay } from "./examples.cp.js";
 import { Color } from "lively.graphics/color.js";
 const studio = component({
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,26345),
+  extent: pt(420,26783),
   layout: new TilingLayout({
   axis: "column",
   hugContentsVertically: true,
@@ -14,11 +14,11 @@ const studio = component({
         width: "fill"
       }]]
 }),
-  position: pt(823,472),
+  position: pt(750,297),
   submorphs: [{
   name: 'aMorph',
   clipMode: 'auto',
-  extent: pt(420,26345),
+  extent: pt(420,26783),
   fill: Color.transparent,
   layout: new TilingLayout({
   axis: "column",
@@ -45,52 +45,52 @@ const studio = component({
   submorphs: [{
   type: HTMLMorph,
   name: 'markdown 0',
-  extent: pt(385,10467.6),
+  extent: pt(375,10720.5),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"0\" data-htmlline=\"2\">Generally speaking, lively.next presents itself as a desktop OS running inside the browser. It comes with all of the standard elements from these kinds of systems, such as a desktop, mouse, context menus, menu bars and windows.\n\
 Given the fact that these things very essentially invented in Smalltalk and lively.next regards itself as a descendant of such systems this should not be surprising.</p>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"3\" data-htmlline=\"4\">In the following we will outline in detail the various different UI elements and tools that lively.next comes with, how they interact, how you are supposed to use them, and which tools may be introduced in the near future.</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/lively-desktop.png\" alt=\"\"></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/lively-desktop.png\" alt=\"\"></figure>\n\
 <h2 class=\"markdown-line-marker\" data-mdline=\"7\" data-htmlline=\"8\">Top Bar</h2>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"8\" data-htmlline=\"9\">The top bar is floating on top of the desktop at all times, providing the user with a variety of shortcuts for important actions and modes implemented in the system.</p>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"10\" data-htmlline=\"11\">Save Button</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"11\" data-htmlline=\"12\">Allows the user to save the current project or playground. Apart from the default <em>click and save</em> functionality, a variety of other saving modes can be triggered via the drop down menu. For more details on this button and its capability, please refer to the <strong>Project Chapter</strong>.</p>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"13\" data-htmlline=\"14\">Halo and Interaction Mode</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"14\" data-htmlline=\"18\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/halo-mode.png\" alt=\"\" width=\"200px\"> <br>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"14\" data-htmlline=\"18\"><img src=\"./assets/halo-mode.png\" alt=\"\" width=\"200px\"> <br>\n\
 When working with designs or applications, there are various expectations for how the mouse cursor should behave.\n\
 During the implementation or testing of an application, we want the cursor to function as it would for an end user interacting with the user interface.\n\
 This behavior is referred to as <em>interactive mode</em> because it facilitates user interaction with the interface.</p>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"19\" data-htmlline=\"22\">However, when designing an application or crafting a user interface, we prioritize the easy selection and manipulation of morphs without interference from interactive behaviors.\n\
 In line with other Morphic implementations, selecting a morph to activate resize handles, property manipulation, or dragging is known as invoking a <em>Halo</em>.\n\
 The halo can be activated via <em><strong>CMD-(left click)</strong></em> on Mac or <em><strong>(Ctrl-Shift-left click)</strong></em> on Linux or Windows when in interactive mode.</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/summon-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Depiction of a halo getting summoned on a morph.</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/summon-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Depiction of a halo getting summoned on a morph.</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"25\" data-htmlline=\"26\">To escalate the selection to the enclosing morph, one simply needs to meta click on the halo again, successively propagating the halo upwards until reaching the world level, at which point the halo selection is discarded.</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/propagate-halo.gif\" alt=\"\" width=\"200px\"><figcaption>The halo selection can be propagated up a morph’s owner chain.</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/propagate-halo.gif\" alt=\"\" width=\"200px\"><figcaption>The halo selection can be propagated up a morph’s owner chain.</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"29\" data-htmlline=\"30\">For convenience, users can enter halo mode, where a simple left click is sufficient to summon halos and outline the boundaries of the morph to be selected. This makes it easy to navigate a complex user interface and select the precise morph of interest.</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/hover-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Selection targets are displayed when in Halo mode.</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/hover-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Selection targets are displayed when in Halo mode.</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"33\" data-htmlline=\"34\">In the top bar, the cursor mode button displays either a cursor in <em>halo mode</em> or a hand in <em>interactive mode</em>. Users can switch between these modes via a drop-down menu invoked by the caret next to the cursor mode button.</p>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"35\" data-htmlline=\"36\">Halo Controls</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"36\" data-htmlline=\"37\">You may have noticed that once the halo is summoned, it dispalys a bunch of controls surrounding the selected morph. Let’s go over each of these in detail and explain what they allow the user to do:</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"38\" data-htmlline=\"39\">Resize Handles</h4>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/resize-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Resizing an object via the halo.</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/resize-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Resizing an object via the halo.</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"41\" data-htmlline=\"44\">Allows the user to resize the selected object. Not that you can also grab the sides of the halo in order to adjust the width or height in isolation.\n\
 Holding down the <em><strong>Shift-key</strong></em> while dragging one of the corners will lock the current proportion of the morph and adjust the extent proportionally.\n\
 When resizing, the halo will automatically display visual guides (the yellow lines) that indicate how the center and bounds of the resizied morph relate to its surrounding morphs. If you hold down the <em><strong>Ctrl-key</strong></em> during resizing the morph will snap to these guides to make it easier to align</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"44\" data-htmlline=\"45\">Name Tag</h4>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/rename-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Changing the name of an object.</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/rename-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Changing the name of an object.</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"47\" data-htmlline=\"48\">Displays the name of the selected morph and also allows the user to edit and change the name. Names are particulary important in lively, since they later on play key roles when attaching behavior to controls in a user interface.</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"48\" data-htmlline=\"49\">Rotation / Scale Control</h4>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/rotate-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Rotating via halo</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/rotate-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Rotating via halo</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"52\" data-htmlline=\"55\">Allows to control the rotation as well as the scale factor of the selected morph.\n\
 By default dragging the handle will adjust the rotation like illustrated above.<br>\n\
 However holding down the shift key will shift the halo to manipulate the scale property as well. Note how the icon of the handle changes in response to the shift key being pressed:</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/scale-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Scaling via halo</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/scale-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Scaling via halo</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"58\" data-htmlline=\"59\">Scaling an morph in the world this way is disabled when the world zoom is enabled. This is because the world zoom operates by scaling each of the morphs inside the world automatically. The world zoom is explained in more detail in the <strong>World Zoom Section</strong></p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"59\" data-htmlline=\"60\">Declare / Revoke Component</h4>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"60\" data-htmlline=\"61\">Allows to turn a selected morph into a component definition or alternatively also revoke a component (i.e. remove the component and its definition). For more information about components please refer to the <strong>Component Module Section</strong>.</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"61\" data-htmlline=\"62\">Copy</h4>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/copy-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Copying a morph via the halo.</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/copy-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Copying a morph via the halo.</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"64\" data-htmlline=\"67\">Holding a dragging this control will copy the morph instance at hand and prepare the cursor to drop the new (copied) instance on a new target.\n\
 Note that if this is applied to a component, it will not copy the component but rather create a new morph derived from that component.\n\
 This is also useful when you want to create new components from existing components: Simply copy an existing component and declare the derived morph to be a new component.</p>\n\
@@ -101,31 +101,31 @@ This is also useful when you want to create new components from existing compone
 <p>The current default morph menu is subject to change very soon. Currently it contains various actions that are either not supported or are overly specific and not designed for general use. We will update this area accordingly.</p>\n\
 </blockquote>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"73\" data-htmlline=\"74\">Drag</h4>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/drag-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Dragging a morph via the halo handle.</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/drag-halo.gif\" alt=\"\" width=\"200px\"><figcaption>Dragging a morph via the halo handle.</figcaption></figure>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"76\" data-htmlline=\"77\">In order to change a morph’s position, the user can either use the drag handle of the halo, or drag the morph by dragging the inside of the halo itself.</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"77\" data-htmlline=\"78\">Grab</h4>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"78\" data-htmlline=\"80\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/grab-halo.gif\" alt=\"\" width=\"200px\"> <br>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"78\" data-htmlline=\"80\"><img src=\"./assets/grab-halo.gif\" alt=\"\" width=\"200px\"> <br>\n\
 The structure of morph compositions can also be adjusted via the grab control on the halo. This allows the user to remove a morph from its parent and subsequently assign it to a different owner. Its also possible to place the morph into the world instead of a new owner morph.</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"81\" data-htmlline=\"82\">Remove</h4>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"82\" data-htmlline=\"84\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/remove-halo.gif\" alt=\"\" width=\"200px\"> <br>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"82\" data-htmlline=\"84\"><img src=\"./assets/remove-halo.gif\" alt=\"\" width=\"200px\"> <br>\n\
 Pressing this button removes the selected morph entirely.</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"84\" data-htmlline=\"85\">Open Object/Component Editor</h4>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"85\" data-htmlline=\"86\">For more details please refer to the <strong>Object/Component Editor</strong>.</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"86\" data-htmlline=\"87\">Open Inspector</h4>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"87\" data-htmlline=\"88\">For more details please refer to the <strong>Inspector Section</strong>.</p>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"88\" data-htmlline=\"89\">Textbox Creator</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"89\" data-htmlline=\"93\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/text-mode.png\" alt=\"\" width=\"200px\"> <br>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"89\" data-htmlline=\"93\"><img src=\"./assets/text-mode.png\" alt=\"\" width=\"200px\"> <br>\n\
 Next we find the button that toggles the <em>Textbox Creation Mode</em>. This mode should be familiar to what is best practice in most CAD or Visuakl Design Applications. When active, the mode allows users to create new text boxes by either clicking on the world, in which case a default text box will be created at the spot or by dragging the cursor across the world which allows the users to define a textbox with arbitrary extent.\n\
 In the case of the text box with arbitrary extent, the user will automatically enter the <em>edit mode</em> and be able to input the desired text into the box.\n\
 When editing a textbox, the text can be further refined and customized via the <em>Rich Text Controls</em>. For more detail on this please refer to the <strong>Rich Text Controls Section</strong>.</p>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"94\" data-htmlline=\"95\">Shape Creator</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"95\" data-htmlline=\"96\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/shape-mode.png\" alt=\"\" width=\"200px\"> <br></p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"95\" data-htmlline=\"96\"><img src=\"./assets/shape-mode.png\" alt=\"\" width=\"200px\"> <br></p>\n\
 <ul>\n\
 <li>Can create differen types of shapes by selecting the mode and then dragging on the world, analogous to the textbox creation explained previously.</li>\n\
 <li>The different types of morphs that can be created are described in more detail in the <strong>Morph Chapter</strong>.</li>\n\
 </ul>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"99\" data-htmlline=\"100\">Asset Browser</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"100\" data-htmlline=\"101\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/asset-button.png\" alt=\"\" width=\"200px\"> <br></p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"100\" data-htmlline=\"101\"><img src=\"./assets/asset-button.png\" alt=\"\" width=\"200px\"> <br></p>\n\
 <ul>\n\
 <li>Central tool for managing all assets that belong to the current project.</li>\n\
 <li>For more details on how assets are managed with respect to projects, please refer to the <strong>Project Chapter</strong>.</li>\n\
@@ -140,7 +140,7 @@ When editing a textbox, the text can be further refined and customized via the <
 <p>As of now, the support for <strong>video</strong> and <strong>audio</strong> has not yet been implemented, since the corresponding morphs are not yet ready. We will update this section accordingly once we finalize support for these asset types.</p>\n\
 </blockquote>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"110\" data-htmlline=\"111\">Component Browser</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"111\" data-htmlline=\"113\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/component-button.png\" alt=\"\" width=\"200px\"> <br>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"111\" data-htmlline=\"113\"><img src=\"./assets/component-button.png\" alt=\"\" width=\"200px\"> <br>\n\
 Allows the user to browse all available components in the current project as well as the standard components provided by the system.</p>\n\
 <ul>\n\
 <li>Also provides separate access to the Partsbin repository, where we maintain a bunch of useful, interesting or even reusable components to be used.</li>\n\
@@ -151,7 +151,7 @@ Allows the user to browse all available components in the current project as wel
 <li>At all times the components can be grouped either by module (they are defined in) or by name, in which case each letter of the alphabet will define a group.</li>\n\
 </ul>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"120\" data-htmlline=\"121\">Minimap</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"121\" data-htmlline=\"123\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/mini-map-button.png\" alt=\"\" width=\"200px\"> <br>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"121\" data-htmlline=\"123\"><img src=\"./assets/mini-map-button.png\" alt=\"\" width=\"200px\"> <br>\n\
 The world can be configured to support infinite scroll.</p>\n\
 <ul>\n\
 <li>If enabled, the user is able to spread out all morphs on the world as far as needed.</li>\n\
@@ -171,11 +171,11 @@ The world can be configured to support infinite scroll.</p>\n\
   position: pt(15,15)
 }, part(ExampleFlap, {
   name: 'embedded 1',
-  position: pt(15,10498)
+  position: pt(15,10543)
 }), {
   type: HTMLMorph,
   name: 'markdown 2',
-  extent: pt(385,12675.5),
+  extent: pt(375,13437.8),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <ul>\n\
@@ -201,14 +201,14 @@ The world can be configured to support infinite scroll.</p>\n\
 <li>it also allows the user to copy the version number which is useful for bug reports</li>\n\
 <li>finally there is a status icon that displays how the local version of lively.next relates to the latest public version\n\
 <ul>\n\
-<li><strong>up to date:</strong> The lively.next repository is on the latest commit on the main branch <br> <img src=\"/local_projects/nextguys--lively-next-relaunch/assets/up-to-date.png\" alt=\"\" width=\"170px\"></li>\n\
-<li><strong>behind:</strong> The lively.next repository is on an outdated commit and can be updated. Provides shortcut for immediately updating lively.next to the latest version.<br> <img src=\"/local_projects/nextguys--lively-next-relaunch/assets/update-ready.gif\" alt=\"\" width=\"200px\"></li>\n\
+<li><strong>up to date:</strong> The lively.next repository is on the latest commit on the main branch <br> <img src=\"./assets/up-to-date.png\" alt=\"\" width=\"170px\"></li>\n\
+<li><strong>behind:</strong> The lively.next repository is on an outdated commit and can be updated. Provides shortcut for immediately updating lively.next to the latest version.<br> <img src=\"./assets/update-ready.gif\" alt=\"\" width=\"200px\"></li>\n\
 </ul>\n\
 </li>\n\
 <li>The following two will usually only be displayed to developers, or people who actively develop lively.next core:\n\
 <ul>\n\
-<li><strong>ahead:</strong> The user is on a more recent commit than the latest one on the main branch. This often happens when developing on lively.next core packages. <br> <img src=\"/local_projects/nextguys--lively-next-relaunch/assets/ahead.png\" alt=\"\" width=\"170px\"></li>\n\
-<li><strong>out of sync:</strong> This usually only happens if the user is a on custom branch for the purpose of developing fixes, features. Means that the most recent version of lively.next is not to be found in the current branch. This can often be solved by rebasing onto the main branch. If you are a designer and encounter this version tag, please contact one of the programmers in your team. They will most likely be able to help you out. <br> <img src=\"/local_projects/nextguys--lively-next-relaunch/assets/out-of-sync.png\" alt=\"\" width=\"260px\"></li>\n\
+<li><strong>ahead:</strong> The user is on a more recent commit than the latest one on the main branch. This often happens when developing on lively.next core packages. <br> <img src=\"./assets/ahead.png\" alt=\"\" width=\"170px\"></li>\n\
+<li><strong>out of sync:</strong> This usually only happens if the user is a on custom branch for the purpose of developing fixes, features. Means that the most recent version of lively.next is not to be found in the current branch. This can often be solved by rebasing onto the main branch. If you are a designer and encounter this version tag, please contact one of the programmers in your team. They will most likely be able to help you out. <br> <img src=\"./assets/out-of-sync.png\" alt=\"\" width=\"260px\"></li>\n\
 </ul>\n\
 </li>\n\
 </ul>\n\
@@ -308,21 +308,21 @@ Note that these inputs are disabled if the width or height is controlled by a la
 <li><strong>Fixed</strong>\n\
 <ul>\n\
 <li>left, top, right, bottom, left and right or bottom and top\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/fixed-default.gif\" alt=\"\"> <br>\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/fixed-bottom.gif\" alt=\"\"> <br>\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/fixed-top-bottom.gif\" alt=\"\"> <br></li>\n\
+<img src=\"./assets/fixed-default.gif\" alt=\"\"> <br>\n\
+<img src=\"./assets/fixed-bottom.gif\" alt=\"\"> <br>\n\
+<img src=\"./assets/fixed-top-bottom.gif\" alt=\"\"> <br></li>\n\
 </ul>\n\
 </li>\n\
 <li><strong>Scale</strong>\n\
 <ul>\n\
 <li>horizontal or vertical\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/scale.gif\" alt=\"\"> <br></li>\n\
+<img src=\"./assets/scale.gif\" alt=\"\"> <br></li>\n\
 </ul>\n\
 </li>\n\
 <li><strong>Center</strong>\n\
 <ul>\n\
 <li>horizontal or vertical\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/centered.gif\" alt=\"\"> <br></li>\n\
+<img src=\"./assets/centered.gif\" alt=\"\"> <br></li>\n\
 </ul>\n\
 </li>\n\
 </ul>\n\
@@ -333,16 +333,16 @@ Note that these inputs are disabled if the width or height is controlled by a la
 <li>Is always displayed when a target is selected</li>\n\
 <li>Layouts are not supported for <strong>Textbox</strong>.</li>\n\
 <li>Supports aligning submorphs across a vertical or horizontal axis:\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/item-axis.gif\" alt=\"\"> <br></li>\n\
+<img src=\"./assets/item-axis.gif\" alt=\"\"> <br></li>\n\
 <li>Supports a spacing distance that is applied between the morphs across the axis\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/item-spacing.gif\" alt=\"\"> <br></li>\n\
+<img src=\"./assets/item-spacing.gif\" alt=\"\"> <br></li>\n\
 <li>Supports wrapping of the axis, if submorphs do not fit.\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/wrap-items.gif\" alt=\"\"> <br></li>\n\
+<img src=\"./assets/wrap-items.gif\" alt=\"\"> <br></li>\n\
 <li>Supports a padding similar to the text padding, only applied to the laid out submorphs instead.</li>\n\
 <li>We can further also control the alignment of the axis themselves. A total of 9 configurations is possible, which can be selected from this helpful popover:\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/align-axis.gif\" alt=\"\"> <br></li>\n\
+<img src=\"./assets/align-axis.gif\" alt=\"\"> <br></li>\n\
 <li>Lastly we can also configure the spacing of the morphs within of the axis: This can either be packed (so the morphs sit tightly next to each other) or spaced (the morphs try to keep the maximum distance apart from each other):\n\
-<img src=\"/local_projects/nextguys--lively-next-relaunch/assets/axis-spacing.gif\" alt=\"\"> <br></li>\n\
+<img src=\"./assets/axis-spacing.gif\" alt=\"\"> <br></li>\n\
 </ul>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"134\" data-htmlline=\"135\">Fill</h3>\n\
 <ul>\n\
@@ -475,16 +475,16 @@ Note that these inputs are disabled if the width or height is controlled by a la
 </ul>\n\
 \n\
 </div>',
-  position: pt(15,10565)
+  position: pt(15,10610)
 }, part(InteractiveDelay, {
   name: 'embedded 3',
-  extent: pt(385,344),
-  position: pt(15,23255),
+  extent: pt(375,344),
+  position: pt(15,23660),
   viewModel: { loader: "reconciliation" }
 }), {
   type: HTMLMorph,
   name: 'markdown 4',
-  extent: pt(385,2710.6),
+  extent: pt(375,2998.6),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <ul>\n\
@@ -552,7 +552,7 @@ Note that these inputs are disabled if the width or height is controlled by a la
 </ul>\n\
 \n\
 </div>',
-  position: pt(15,23614)
+  position: pt(15,24019)
 }]
 }]
 });

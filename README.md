@@ -14,6 +14,8 @@ To ensure perfect availability of all used emojis, we ship our website with a su
 
 After making changes to blog articles, run `node ./tools/create_entries.mjs` from the base of the repository.
 
+Run `python3 tools/fix_asset_links.py` **before** running `npm run build`! After `npm run build`, execute `cp "assets"/*.{jpg,jpeg,png,gif} "build/assets/"` from the root of the project.
+
 ### History Page
 
 After changing the history page, you will need to go into the `compile_history.js` module in lively and execute the following two function calls therein:
@@ -25,9 +27,13 @@ compileHistory('mobile');
 
 These will precompile the necessary components in order to significantly speed up the loading time of the page.
 
+Run `python3 tools/fix_asset_links.py` **before** running `npm run build`! After `npm run build`, execute `cp "assets"/*.{jpg,jpeg,png,gif} "build/assets/"` from the root of the project.
+
 ### Documentation Subpages
 
 After changes, execute `await compileAllMarkdown()` from within the `explanation/compile-markdown.js` in `lively.next`.
+
+Run `python3 tools/fix_asset_links.py` **before** running `npm run build`! After `npm run build`, execute `cp "assets"/*.{jpg,jpeg,png,gif} "build/assets/"` from the root of the project.
 
 ## License
 

@@ -4,15 +4,15 @@ import { HTMLMorph } from "lively.morphic/html-morph.js";
 const modules = component({
   type: HTMLMorph,
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,3392.4),
+  extent: pt(420,3472.4),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <blockquote>\n\
-<p>⚠️ <strong>Warning</strong>\n\
-This is about the module system we utilize in lively. It is internally referred to as lively.modules.\n\
+<p>⚠️ <strong>Warning</strong></p>\n\
+<p>This is about the module system we utilize in lively. It is internally referred to as lively.modules.\n\
 But this is not to scare you.</p>\n\
 </blockquote>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"5\" data-htmlline=\"6\">SystemJS</h2>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"6\" data-htmlline=\"7\">SystemJS</h2>\n\
 <ul>\n\
 <li>Is a framework that was developed directly in tandem with the early drafts of the EcmaScript Module System proposal.\n\
 <ul>\n\
@@ -30,31 +30,32 @@ But this is not to scare you.</p>\n\
 </ul>\n\
 </li>\n\
 </ul>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"15\" data-htmlline=\"16\">Classes in lively.next</h2>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"16\" data-htmlline=\"17\">Classes in lively.next</h2>\n\
 <blockquote>\n\
-<p>⚠️ <strong>Attention</strong> In the future, we are considering replacing the <code>static properties</code> notation of property definition in favor of a decorator syntax.</p>\n\
+<p>⚠️ <strong>Attention</strong></p>\n\
+<p>In the future, we are considering replacing the <code>static properties</code> notation of property definition in favor of a decorator syntax.</p>\n\
 </blockquote>\n\
 <ul>\n\
 <li>classes are transformed into a function call that synthesizes a new class based on a preexisting version of the class and a set of class members (methods, static methods) and soon also (decorators, class fields).</li>\n\
 </ul>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"21\" data-htmlline=\"22\">Source Transformations</h2>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"24\" data-htmlline=\"25\">Source Transformations</h2>\n\
 <ul>\n\
 <li>more details about which entities are transformed and what that entails for the user</li>\n\
 </ul>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"23\" data-htmlline=\"24\">Module Environments and Evaluation Contexts</h2>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"26\" data-htmlline=\"27\">Module Environments and Evaluation Contexts</h2>\n\
 <ul>\n\
 <li>basically this is lively.vm stuff</li>\n\
 </ul>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"25\" data-htmlline=\"26\">Hot Reloading</h2>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"28\" data-htmlline=\"29\">Hot Reloading</h2>\n\
 <ul>\n\
 <li>how hot reloading works and how we are leveraging SystemJS to perform this</li>\n\
 </ul>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"27\" data-htmlline=\"28\">Caching Optimization</h2>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"30\" data-htmlline=\"31\">Caching Optimization</h2>\n\
 <ul>\n\
 <li>server side compression of core source code</li>\n\
 <li>local source transform caching</li>\n\
 </ul>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"30\" data-htmlline=\"31\">Fast vs Slow Loading</h2>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"33\" data-htmlline=\"34\">Fast vs Slow Loading</h2>\n\
 <ul>\n\
 <li>lively.next loads by bootstrapping itself outside of a bundled version of itself.</li>\n\
 <li>The user can very the degree of diversion from the bootstrapped instance. There is a choice between what we call the <em>slow load</em> and the <em>fast load</em>.</li>\n\
@@ -73,7 +74,7 @@ But this is not to scare you.</p>\n\
 </ul>\n\
 </li>\n\
 </ul>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"41\" data-htmlline=\"42\">Bundling (aka. Freezing)</h2>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"44\" data-htmlline=\"45\">Bundling (aka. Freezing)</h2>\n\
 <ul>\n\
 <li>Smalltalk and other Smalltalk-like systems can basically only “ship” their apps together with their runtimes.</li>\n\
 <li>This usually requires a person that wants to run Self to have Self installed. Likewise a person that wants to run a Smalltalk app needs to have a Squeak Image available or provided.</li>\n\
@@ -90,7 +91,7 @@ But this is not to scare you.</p>\n\
 \n\
 </div>',
   layout: null,
-  position: pt(813,472)
+  position: pt(750,297)
 });
 
 

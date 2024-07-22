@@ -6,7 +6,7 @@ import { InteractiveDie, WrappedDynamicPokerTable, AllFaces, WrappedDiversePoker
 import { Color } from "lively.graphics/color.js";
 const morphic = component({
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,35110),
+  extent: pt(420,35859),
   layout: new TilingLayout({
   axis: "column",
   hugContentsVertically: true,
@@ -15,11 +15,11 @@ const morphic = component({
         width: "fill"
       }]]
 }),
-  position: pt(823,472),
+  position: pt(750,297),
   submorphs: [{
   name: 'aMorph',
   clipMode: 'auto',
-  extent: pt(420,35110),
+  extent: pt(420,35859),
   fill: Color.transparent,
   layout: new TilingLayout({
   axis: "column",
@@ -88,7 +88,7 @@ const morphic = component({
   submorphs: [{
   type: HTMLMorph,
   name: 'markdown 0',
-  extent: pt(385,2197.4),
+  extent: pt(375,2245),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"1\" data-htmlline=\"2\"><code>lively.next</code> ships with its own particular flavor of the GUI framework <code>morphic</code>, which was first introduced in <a href=\"https://ftp.squeak.org/docs/Self-4.0-UI-Framework.pdf\" target=\"_blank\"><code>Self</code></a> and since then has been implemented multiple times, for example in <a href=\"https://wiki.squeak.org/squeak/morphic\" target=\"_blank\"><code>Squeak</code></a> and in <a href=\"https://en.wikipedia.org/wiki/Lively_Kernel\" target=\"_blank\"><code>LivelyKernel</code></a>.</p>\n\
@@ -139,8 +139,8 @@ In <code>lively.next</code> we favor a different approach, where custom subclass
   position: pt(15,15)
 }, part(MorphicPropertyEssay, {
   name: 'embedded 1',
-  extent: pt(385,1834),
-  position: pt(15,2227),
+  extent: pt(375,1834),
+  position: pt(15,2275),
   submorphs: [{
   name: 'visual property intro',
   submorphs: [{
@@ -198,7 +198,7 @@ In <code>lively.next</code> we favor a different approach, where custom subclass
 }), {
   type: HTMLMorph,
   name: 'markdown 2',
-  extent: pt(385,1793.2),
+  extent: pt(375,1861.2),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">Aside from the visual properties, morphs also come with a large set of <em>behavioral properties</em> which will not be covered in this chapter. For more info on the latter, please refer to the <a href=\"https://livelykernel.github.io/lively.next/\" target=\"_blank\">API Documentation</a>.</p>\n\
@@ -233,13 +233,13 @@ Via the spec we can further define not only the morph itself but also its submor
 <p class=\"markdown-line-marker\" data-mdline=\"39\" data-htmlline=\"40\">Just instantiating a morph via an object will not make it visible. For that to happen we need to mount it into the <em>World</em>. The <em>World</em> is itself a morph that is present at all times when the <code>lively.morphic</code> framework is embedded (be it a bundled application or the <code>lively.next</code>-IDE). In fact this very document you are reading is mounted inside of a <em>World</em>. So lets go ahead and call <code>aMorph.openInWorld()</code>, you will see this:</p>\n\
 \n\
 </div>',
-  position: pt(15,4076)
+  position: pt(15,4124)
 }, part(InteractiveDie, {
   name: 'embedded 3',
-  extent: pt(385,304.9),
+  extent: pt(375,304.9),
   layout: new ConstraintLayout({
   lastExtent: {
-    x: 385,
+    x: 375,
     y: 304.9
   },
   reactToSubmorphAnimations: false,
@@ -248,31 +248,31 @@ Via the spec we can further define not only the morph itself but also its submor
         y: "center"
       }]]
 }),
-  position: pt(15,5885),
+  position: pt(15,6000),
   submorphs: [{
   name: 'movable die 1',
   extent: pt(78.5,78.7),
-  position: pt(148.5,111)
+  position: pt(143.6,111.4)
 }]
 }), {
   type: HTMLMorph,
   name: 'markdown 4',
-  extent: pt(385,72),
+  extent: pt(375,72),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">You can now go ahead and manipulate the morph above in the workspace below. Try editing the code and running it via the button:</p>\n\
 \n\
 </div>',
-  position: pt(15,6204)
+  position: pt(15,6320)
 }, part(InteractiveDelay, {
   name: 'embedded 5',
-  extent: pt(385,344),
-  position: pt(15,6291),
+  extent: pt(375,344),
+  position: pt(15,6407),
   viewModel: { loader: "editor example 1" }
 }), {
   type: HTMLMorph,
   name: 'markdown 6',
-  extent: pt(385,2311.8),
+  extent: pt(375,2381.1),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <h2 class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">Event System</h2>\n\
@@ -301,7 +301,7 @@ This is implemented via a hidden DOM input node which is manually focused on dem
 </ul>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"29\" data-htmlline=\"30\">Customized Events</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"30\" data-htmlline=\"31\">There is a set of events that provide a different behavior to the native DOM version. One of them is the drag event, which compared to the <code>HTML</code> event further provides more <em>movement specific</em> meta information to the morph as well as specific callbacks marking the <em>start</em> and <em>end</em> of the drag process:</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/dragging.gif\" alt=\"\"><figcaption>An example of a morph being dragged across a scene</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/dragging.gif\" alt=\"\"><figcaption>An example of a morph being dragged across a scene</figcaption></figure>\n\
 <ul>\n\
 <li><strong>onDrag</strong> <em>Invoked continously while a morph is being dragged via touch gesture or mouse press and move. On each update it provides a drag delta that tells us about the current drag speed.</em></li>\n\
 <li><strong>onDragStart</strong> <em>Invoked once at the start of the drag process before onDrag is getting called repeatedly.</em></li>\n\
@@ -310,11 +310,11 @@ This is implemented via a hidden DOM input node which is manually focused on dem
 <p class=\"markdown-line-marker\" data-mdline=\"37\" data-htmlline=\"38\">There are also completely synthesized versions of the focus and blur events. For one, unlike the browser, they cover all types of morphs, including the base morph. This is different to HTML which reserves the focus and blur events only for a certain set of elements of the text and input types.</p>\n\
 \n\
 </div>',
-  position: pt(15,6650)
+  position: pt(15,6766)
 }, part(FocusBlurDiagram, {
   name: 'embedded 7',
-  extent: pt(385,353.3),
-  position: pt(15,8977),
+  extent: pt(375,353.3),
+  position: pt(15,9162),
   submorphs: [{
   name: 'diagram',
   submorphs: [{
@@ -328,7 +328,7 @@ This is implemented via a hidden DOM input node which is manually focused on dem
 }), {
   type: HTMLMorph,
   name: 'markdown 8',
-  extent: pt(385,3773.5),
+  extent: pt(375,3819.1),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <ul>\n\
@@ -337,7 +337,7 @@ This is implemented via a hidden DOM input node which is manually focused on dem
 </ul>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"5\" data-htmlline=\"6\">Custom Events</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"6\" data-htmlline=\"7\"><code>lively.morphic</code> further supports a custom set of purely custom events:</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/grabbing.gif\" alt=\"\"><figcaption>An example of a morph being grabbed between morphs</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/grabbing.gif\" alt=\"\"><figcaption>An example of a morph being grabbed between morphs</figcaption></figure>\n\
 <ul>\n\
 <li><strong>onGrab</strong> <em>If the morph is <code>grabbable</code> or has been grabbed via the halo, this callback is invoked once the morph is removed from its parent.</em></li>\n\
 <li><strong>onDrop</strong> <em>If the morph was grabbed and is now getting dropped onto another morph, this callback is invoked.</em></li>\n\
@@ -410,15 +410,15 @@ to elements once we introduce <code>ViewModel</code>s later on.</p>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"82\" data-htmlline=\"83\">Which will yield a morph that looks like this:</p>\n\
 \n\
 </div>',
-  position: pt(15,9346)
+  position: pt(15,9530)
 }, part(WrappedDie, {
   name: 'embedded 9',
-  extent: pt(385,304.1),
-  position: pt(15,13134)
+  extent: pt(375,304.1),
+  position: pt(15,13364)
 }), {
   type: HTMLMorph,
   name: 'markdown 10',
-  extent: pt(385,789.3),
+  extent: pt(375,847.3),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <blockquote>\n\
@@ -450,15 +450,15 @@ While <code>component</code> is used to <strong>define</strong> a reusable compo
 <p class=\"markdown-line-marker\" data-mdline=\"31\" data-htmlline=\"32\">The resulting morph should look something like this:</p>\n\
 \n\
 </div>',
-  position: pt(15,13453)
+  position: pt(15,13684)
 }, part(WrappedPokerTable, {
   name: 'embedded 11',
-  extent: pt(385,453.8),
-  position: pt(15,14257)
+  extent: pt(375,453.8),
+  position: pt(15,14546)
 }), {
   type: HTMLMorph,
   name: 'markdown 12',
-  extent: pt(385,4046.2),
+  extent: pt(375,4191),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">As you can see, by invoking the part calls within the submorph array we reused the component definition of <code>Die</code> within the component definition of <code>PokerTable</code>. Also notice, how in the  <code>part</code> calls we have passed some properties to adjust the properties of each die to place them at unique positions (and varying degrees of rotation). If we skipped these overrides, all dice would just sit on top of each other at the same position.</p>\n\
@@ -486,7 +486,7 @@ In order to achieve that, the component system allows to derive a component simi
 </code></pre>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"30\" data-htmlline=\"32\">The first argument to <code>component()</code> is now the component that we are using to derive a new component definition. When thinking about the component definition as a class, we can think about this first argument as the superclass. Internally we refer to this component as the component’s <em>parent</em>.\n\
 Looking further, we notice the structure of the spec which looks quite similar to the one we passed initially to <code>component</code> when we were defining <code>Die</code>. However this time, the properties here only define the <em>overridden</em> properties for each morph with respect to the way they were defined in the parent component. You can think of the resulting component definition as a <em>deep merge</em> of the spec found in the parent and the spec provided here in the derived component. Since this component derivation adjusts the fill of various parts of the die, the resulting component looks like this:</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/gold%20die.png\" alt=\"\"></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/gold%20die.png\" alt=\"\"></figure>\n\
 <blockquote>\n\
 <p>💡 <strong>Tip</strong></p>\n\
 <p>When deriving components and overwriting parts of their <code>spec</code> in the definition of the derivation, it is important that each submorphs <code>name</code> property is specified correctly. Also consider the importance of unique names inside a component hierarchy mentioned above. You will always need to specify the complete path to a submorph (in the case of deeply nested submorphs). <code>lively.next</code> will not expand the hierarchy automatically.</p>\n\
@@ -544,15 +544,15 @@ For instance, going back to our poker table example, we may want to apply differ
 <p class=\"markdown-line-marker\" data-mdline=\"103\" data-htmlline=\"104\">Notice that in the resulting scene, the dice have changed their styling:</p>\n\
 \n\
 </div>',
-  position: pt(15,14726)
+  position: pt(15,15015)
 }, part(WrappedDiversePokerTable, {
   name: 'embedded 13',
-  extent: pt(385,465.7),
-  position: pt(15,18787)
+  extent: pt(375,465.7),
+  position: pt(15,19221)
 }), {
   type: HTMLMorph,
   name: 'markdown 14',
-  extent: pt(385,12904.3),
+  extent: pt(375,13084.1),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">Also notice that some properties have remained untouched, this includes properties like <code>rotation</code> and <code>position</code>. These are <em>transform properties</em> and can not be overridden via assigning a new master. This can only be done by overriding them explicitly within the component definition.</p>\n\
@@ -650,7 +650,7 @@ This is where <em>breakpoint states</em> come in handy, since they allow us to d
 });\n\
 </code></pre>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"122\" data-htmlline=\"123\">The resulting behavior looks like this:</p>\n\
-<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/responsive-poker-table.gif\" alt=\"\"></figure>\n\
+<figure data-type=\"image\"><img src=\"./assets/responsive-poker-table.gif\" alt=\"\"></figure>\n\
 <blockquote>\n\
 <p>💡 <strong>Tip</strong></p>\n\
 <p>Note, that the breakpoints from any of the parent components are overridden if present and are not getting considered when the style is applied to the morph.</p>\n\
@@ -762,38 +762,7 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 <li><code>viewDidLoad()</code>: Called once when the model is attached to the view. This is the place where initialization or setup code usually is placed best.</li>\n\
 <li><code>withoutBindingsDo(cb)</code>: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by back-propagation.</li>\n\
 </ul>\n\
-<!--\n\
-> ⚠️ **Warning**  \n\
-> The API of the viewmodels is subject to change in the future, and this section will be updated accordingly.\n\
-  - Separates the behavior from the morphs, making behavior \"pluggable\"\n\
-    - Since behavior just attached to the morphs from the outside, it is no longer tied to the component definitions\n\
-    - Behavior can be reused across multiple different designs for the same things (think of calculator designs, clock faces etc..)\n\
-    - Behavior can be toggled at runtime. For more, see the controls for *Editing Components* in the **Studio Chapter**.\n\
-  - Allow behavior to be disabled dynamically which allows to switch between an *Interactive Mode* (useful for verifying correct behavior) and *Designer Mode* where the behavior is disabled in order not to interfere with manipulation of the GUI.\n\
-  - Define bindings in order to attach behavior to parts of a component declaratively\n\
-  - A model is reponsible for the morph and all its descendants until one of the submorphs carries itself a viewmodel\n\
-    - In that way a component scope is defined.\n\
-  - Properties or methods can not be accessed from the morph directly, unless they are exposed by the model via the `expose` property.\n\
-    - In the future we will also support the `@expose` decorator that can be attached to the method or property declaration.\n\
-  - Bindings are static properties on the viewmodel classes, which define wich part of the morph the model is attached to triggers which actions/methods inside the model.\n\
-    - Declarative way to look at how behavior is \"wired up\"\n\
-    - Bindings are initialized when the model is attached to the morph and whenever the submorphs within the scope of the model are added or removed.\n\
-    - Can only access members or signals that are defined or signaled on the morph. Access of the model methods or properties directly is not allowed. Exposed methods or properties are OK.\n\
-  - Each binding id defines as follows: `{ target?, signal, handler, converter?, updater?, varMapping? }`\n\
-    - ***target***: Defines which part of the morph the binding should hold on to. If target is ommitted, target is assumed to be the morph the model is directly attached to.\n\
-    - ***signal***: Defines the method or signal the binding should react to.\n\
-    - ***handler***: Defines the method that is called in response to the binding getting triggered. This can be either the name of the method or closure passed directly.\n\
-    - ***converter***: An optional function that can transform the value passed to the signal or method. This is the same as the converter from `connect()`.\n\
-    - ***updater***: An optional function that allows the user to fully control the way the handler is called. This is the same as the updater from `connect()`.\n\
-    - ***varMapping***: Both `converter` and `updater` support the provision of the function as a string. In this case it is useful to have a varMapping that will ensure the closures are properly initialized.\n\
- - Further a viewmodel has various callbacks, that subclasses can use to control the lifecycle updates of the viewmodel accordingly:\n\
-> ⚠️ **Warning**\n\
-> The API of the viewmodels is subject to change in the future, this section will be updated accordingly.\n\
-   - `onRefresh(propName)`: Called whenever a property in the model is changed. This is useful for performing view updates in response to model changes that we can no anticipate via bindings.\n\
-   - `viewDidLoad()`: Called once when the model is attached to the view. This is similar to `onLoad()` but unlike the latter is only called when the entire view is ready not only the model itself is initialized. \n\
-   - `withoutBindingsDo(cb)`: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by backpropagation.\n\
--->\n\
-<h3 class=\"markdown-line-marker\" data-mdline=\"298\" data-htmlline=\"299\">Using Components and ViewModels</h3>\n\
+<h3 class=\"markdown-line-marker\" data-mdline=\"265\" data-htmlline=\"266\">Using Components and ViewModels</h3>\n\
 <ul>\n\
 <li>Let us illustrate how viewmodels are used in conjunction with components by a final example</li>\n\
 <li>For this we will implement a throw behavior for the dice we have been working with previouysly. The idea is that clicking on a die will cause it to shuffle and display a different face.</li>\n\
@@ -936,15 +905,15 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 </code></pre>\n\
 \n\
 </div>',
-  position: pt(15,19268)
+  position: pt(15,19701)
 }, part(AllFaces, {
   name: 'embedded 15',
-  extent: pt(385,314.9),
-  position: pt(15,32187)
+  extent: pt(375,314.9),
+  position: pt(15,32800)
 }), {
   type: HTMLMorph,
   name: 'markdown 16',
-  extent: pt(385,2089.1),
+  extent: pt(375,2215.1),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <ul>\n\
@@ -1044,20 +1013,20 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 </ul>\n\
 \n\
 </div>',
-  position: pt(15,32517)
+  position: pt(15,33130)
 }, part(WrappedDynamicPokerTable, {
   name: 'embedded 17',
-  extent: pt(385,453.8),
-  position: pt(15,34621)
+  extent: pt(375,453.8),
+  position: pt(15,35360)
 }), {
   type: HTMLMorph,
   name: 'markdown 18',
-  extent: pt(385,0),
+  extent: pt(375,0),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 \n\
 </div>',
-  position: pt(15,35090)
+  position: pt(15,35829)
 }]
 }]
 });
