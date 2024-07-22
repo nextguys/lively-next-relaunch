@@ -17,6 +17,10 @@ a {
   text-decoration: none;
 }
 
+lite-youtube {
+  margin: 0 auto !important;
+}
+
 .dashed a {
   text-decoration: underline dashed #FF7700;
   text-decoration-thickness: 2px;
