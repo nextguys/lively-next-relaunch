@@ -12,9 +12,9 @@ const DIR = resource('http://localhost:9011/').join('local_projects').join('next
 async function compileHistory (type) { // eslint-disable-line no-unused-vars
   const comp = type === 'desktop' ? HistoryPageDesktop : HistoryPageMobile;
   const page = part(comp, { width: (type === 'desktop' ? 500 : 450) }).openInWorld();
-  await page.whenRendered();
+  await promise.delay(5000);
   page.relayout();
-  await page.whenRendered();
+  await promise.delay(5000);
   const nodeToPreserve = page.env.renderer.getNodeForMorph(page);
   const code = nodeToPreserve.getHTML();
   page.remove();
