@@ -5,7 +5,14 @@
 figcaption {
   font-style: italic;
   color: gray;
+  text-align: center;
 }
+
+figure {
+  margin: 0 auto !important;
+  display: table !important;
+}
+
 a {
   text-decoration: none;
 }
@@ -18,6 +25,11 @@ a {
 .markdown-body {
   font-family: 'IBM Plex Sans', 'Noto Emoji Color Subset' !important;
   user-select: text !important;
+}
+
+.markdown-body img {
+  margin: 0 auto !important;
+  display: table !important;
 }
 
 .markdown {
