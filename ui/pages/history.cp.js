@@ -195,6 +195,7 @@ export const ChronoPicture = component({
     type: Text,
     name: 'caption',
     padding: rect(0, 0, 10, 0),
+    styleClasses: ['history-caption'],
     extent: pt(200, 33.6),
     textAlign: 'center',
     dynamicCursorColoring: true,

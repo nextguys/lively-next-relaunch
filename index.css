@@ -24,6 +24,15 @@ a {
   font-family: 'IBM Plex Sans', 'Noto Emoji Color Subset' !important;
 }
 
+.history-caption {
+  height: fit-content !important;
+}
+
+.history-caption > .newtext-text-layer {
+  height: fit-content !important;
+  position: relative !important;
+}
+
 /* https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.css */
 
 pre code.hljs {
