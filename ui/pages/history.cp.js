@@ -139,7 +139,7 @@ const historyData = [
   },
   {
     date: '2022',
-    title: ['New Funding for ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is secured, allowing ', null, 'Linus Hagemann', { fontWeight: 600 }, ' to join the project full time, alongside ', null, 'Robin Schreiber', { fontWeight: 600 }, '. The new focus of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is to 1.) build a solid versioning system integration, 2.) implement a fully working version of the new component architecture including reconciliation, and 3.) make the core stable enough for producitive work.', null]
+    title: ['New Funding for ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is secured, allowing ', null, 'Linus Hagemann', { fontWeight: 600 }, ' to join the project full time, alongside ', null, 'Robin Schreiber', { fontWeight: 600 }, '. The new focus of ', null, 'lively.next', { fontFamily: 'IBM Plex Mono', fontColor: Color.lively }, ' is to 1.) build a solid versioning system integration, 2.) implement a fully working version of the new component architecture including reconciliation, and 3.) make the core stable enough for productive work.', null]
   },
   {
     date: '2023',
