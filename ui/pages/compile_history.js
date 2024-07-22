@@ -16,7 +16,7 @@ async function compileHistory (type) { // eslint-disable-line no-unused-vars
   page.relayout();
   await promise.delay(5000);
   const nodeToPreserve = page.env.renderer.getNodeForMorph(page);
-  const code = nodeToPreserve.getHTML();
+  const code = nodeToPreserve.getHTML().replaceAll(/(?:\r\n|\r|\n)/g, '');
   page.remove();
   const compiledDesktopModule = DIR.join(`compiled_${type === 'desktop' ? 'desktop' : 'mobile'}.js`);
   await compiledDesktopModule.write(`export const ${type === 'desktop' ? 'CompiledHistoryPageDesktopHTML' : 'CompiledHistoryPageMobileHTML'} = '${code}';`);
