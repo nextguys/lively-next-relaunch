@@ -35,6 +35,10 @@ After changes, execute `await compileAllMarkdown()` from within the `explanation
 
 Run `python3 tools/fix_asset_links.py` **before** running `npm run build`! After `npm run build`, execute `cp "assets"/*.{jpg,jpeg,png,gif} "build/assets/"` from the root of the project.
 
+## Deploy
+
+You will need to run the necessary compilation steps as mentioned above. You will not need to run `npm run build`. That will be taken care of by CI. The pipeline will also make sure that all assets are present in the bundle. You will need to trigger the GitHub Action **Enhanced Deployment to GitHub Pages** manually.
+
 ## License
 
 MIT. © Linus Hagemann, Robin Schreiber. 2024 onwards.

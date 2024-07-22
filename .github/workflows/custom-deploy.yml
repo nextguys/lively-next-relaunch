@@ -1,4 +1,4 @@
-name: Deploy Project to GitHub Pages
+name: Enhanced Deployment to GitHub Pages
 
 on:
   workflow_dispatch:
@@ -55,6 +55,9 @@ jobs:
           path: local_projects/nextguys--lively-next-relaunch
       - name: Build Project
         run: npm run build-minified --prefix local_projects/nextguys--lively-next-relaunch
+      - name: Copy over all assets
+        working-directory: local_projects/nextguys--lively-next-relaunch
+        run:  cp "assets"/*.{jpg,jpeg,png,gif} "build/assets/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
