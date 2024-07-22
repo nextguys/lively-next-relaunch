@@ -1,14 +1,14 @@
 import { resource } from 'lively.resources';
 import { MarkdownPreviewMorph } from 'lively.ide/md/morphs.js';
 import { defaultMarkdownOptions } from 'lively.ide/md/editor-plugin.js';
-import { createInitialComponentDefinition, insertComponentDefinition } from 'lively.ide/components/reconciliation.js';
+import { insertComponentDefinition } from 'lively.ide/components/reconciliation.js';
 import { module } from 'lively.modules/index.js';
 import { string, obj } from 'lively.lang';
 import { HTMLMorph, Morph } from 'lively.morphic';
 
 // run this module and it will convert all the mardown files into component modules that can be included into the website
 // await compileAllMarkdown()
-async function compileAllMarkdown () {
+async function compileAllMarkdown () { // eslint-disable-line no-unused-vars
   const markdownFiles = await resource($world.openedProject.url).join('explanation').dirList(1, { exclude: /.js/ });
   for (let mdFile of markdownFiles) {
     // mdFile = markdownFiles[1]
