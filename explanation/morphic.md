@@ -39,7 +39,7 @@ Morphs in `lively.next` come with a large set of visual properties. You can expl
 
 <!-- __lv_expr__:{part}:lively.morphic:{MorphicPropertyEssay}:nextguys--lively-next-relaunch/ui/docs/interactive-doc.cp.js:part(MorphicPropertyEssay) -->
 
-Aside from the visual properties, morphs also come with a large set of *behavioral properties* which will not be covered in this chapter. For more info on the latter, please refer to the [API Documentation](https://livelykernel.github.io/lively.next/).
+Aside from the visual properties, morphs also come with a large set of *behavioral properties* which will not be covered in this chapter. For more info on the latter, please refer to our [API Documentation](https://livelykernel.github.io/lively.next/).
 
 ### Custom Subclasses
 
@@ -585,7 +585,7 @@ Therefore, you can think of the `expose` property of a view model as defining th
 
 #### Bindings - In Depth
 
-Each binding is defines as follows: `{ target?, signal, handler, converter?, updater?, varMapping? }`
+Each binding is defined as follows: `{ target?, signal, handler, converter?, updater?, varMapping? }`
 
 - **target**: Defines which morph of the component the binding should hold on to. If `target` is omitted, `target` is assumed to be the morph the model is directly attached to.
 - **signal**: Defines the method or signal the binding should react to. This is usually a method from the base `Morph` class.
@@ -608,10 +608,12 @@ In addition to the special `expose` and `bindings` properties, `ViewModel` provi
 - `viewDidLoad()`: Called once when the model is attached to the view. This is the place where initialization or setup code usually is placed best.
 - `withoutBindingsDo(cb)`: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by back-propagation.
 
-### Using Components and ViewModels
- - Let us illustrate how viewmodels are used in conjunction with components by a final example
- - For this we will implement a throw behavior for the dice we have been working with previouysly. The idea is that clicking on a die will cause it to shuffle and display a different face.
- - In order to that, we will first define a component that has all the faces we may want to display and call it the universal die.
+### Using Components and ViewModels together
+
+Let us illustrate how `ViewModel`s are used in conjunction with components by a final example.
+For this, we will implement a throw behavior for the dice we have been working on previously. The idea is that clicking on a die will cause it to shuffle and display a different face.
+
+In order to that, we will first define a component that has all the faces we may want to display and call it the universal die:
 
 ```javascript
 const UniversalDie = component({
@@ -659,7 +661,7 @@ const UniversalDie = component({
 });
 ```
 
- - We then derive it 6 times, where we adjust the styling in a way so that each die shows a different face.
+We then derive it 6 times, where we adjust the styling in a way so that each die shows a different face.
 
 ```javascript
 const Die1 = component(UniversalDie, {
@@ -753,7 +755,7 @@ const Die6 = component(UniversalDie, {
 
 <!-- __lv_expr__:{part}:lively.morphic:{AllFaces}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(AllFaces) -->
 
- - We then define a view model, which can attach to the universal die and toggle the visibility of the eyes such that it shows different faces. We will achieve this by toggling between different component states.
+ We now define a `ViewModel`, which can attach to the universal die and toggle the visibility of the eyes such that it shows different faces. We will achieve this by toggling between different component states.
 
 ```javascript
 
@@ -801,9 +803,7 @@ const ThrowableDie = component(Die1, {
 });
 ```
 
- - Lets enhance this by also writing some custom behavior for the previously defined poker table.
- - The custom code will trigger a shuffle of all the dice and then display the total value to the user.
- - To achieve that we adjust the poker table by deriving it like so:
+Let's enhance this by also writing some custom behavior for the previously defined poker table. The custom code will trigger a shuffle of all the dice and then display the total value to the user. To achieve that we adjust the poker table by deriving it like so:
 
 ```javascript
 
@@ -812,7 +812,7 @@ const DynamicPokerTable = component(PokerTable, {
   submorphs: [
    // replace the previous dice, since we need a completely new structure and behavior
     replace('die1', part(ThrowableDie)),
-    reaplce('die2', part(ThrowableDie)),
+    replace('die2', part(ThrowableDie)),
     replace('die3', part(ThrowableDie)),
     // add a new label that shows that total face value to the user
     add({
@@ -831,7 +831,7 @@ const DynamicPokerTable = component(PokerTable, {
 });
 ```
 
-- Where the code of the viewmodel looks like so:
+With the code of the `ViewModel` looking like this:
 
 ```javascript
 class DynamicPokerTableModel extends ViewModel {
@@ -848,6 +848,6 @@ class DynamicPokerTableModel extends ViewModel {
 }
 ```
 
-- The resulting poker table looks like this. Click on the dice and observe how the total changes:
+The resulting poker table looks like this. **Click on the dice and observe how the total changes**:
 
 <!-- __lv_expr__:{part}:lively.morphic:{WrappedDynamicPokerTable}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(WrappedDynamicPokerTable) -->

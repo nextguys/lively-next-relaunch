@@ -42,7 +42,7 @@ const historyData = [
       {
         img: projectAsset('hpi-lake.jpg'),
         copyright: ['© Jonas Witt', null],
-        caption: 'The campus of the Hasso Plattner Institute in Potsdam, Germany.'
+        caption: 'The campus of the Hasso-Plattner-Institute in Potsdam, Germany.'
       }
     ]
   },
@@ -83,7 +83,12 @@ const historyData = [
           fontWeight: '600'
         }, ' ', {
           fontWeight: '600'
-        }, 'team at South Park, SF around Summer of 2014. Still funded by SAP at the time, the lively team relocated to San Francisco to pursue the project within the newly established Communications Design Group.', null]
+        }, 'team at South Park, SF around Summer of 2014. Still funded by SAP at the time, the ', null, 'LivelyKernel', {
+          fontStyle: 'normal',
+          fontWeight: '600'
+        }, ' ', {
+          fontWeight: '600'
+        }, 'team relocated to San Francisco to pursue the project within the newly established Communications Design Group.', null]
       }
     ]
   }, {
