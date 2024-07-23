@@ -55,7 +55,7 @@ class LivelyWebPageModel extends ViewModel {
       },
       expose: {
         get () {
-          return ['relayout', 'onMouseDown', 'respondsToVisibleWindow'];
+          return ['onMouseDown'];
         }
       }
     };
@@ -176,7 +176,6 @@ class LivelyWebPageModel extends ViewModel {
     });
     window.router = this.router; // FIXME:
     connect(this.router, 'routed', this, 'route');
-    if (lively.FreezerRuntime) this.relayout();
     let loadedHash = window.location.hash;
     if (loadedHash.startsWith('#')) loadedHash = loadedHash.replace('#', '');
     this.route(loadedHash, true);
@@ -269,7 +268,6 @@ const LogoSection = component(SmallLogoSection, {
 export const LivelyWebPage = component({
   name: 'lively web site',
   defaultViewModel: LivelyWebPageModel,
-  respondsToVisibleWindow: true,
   layout: new TilingLayout({
     align: 'center',
     axis: 'column',
