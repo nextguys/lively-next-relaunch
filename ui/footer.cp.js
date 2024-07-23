@@ -21,13 +21,13 @@ const WideFooter = component({
     padding: rect(30, 0, 0, 0),
     spacing: 30
   }),
-  extent: pt(1078.5, 40),
+  extent: pt(915, 44),
   submorphs: [{
     name: 'left',
     width: 299.5,
     layout: new TilingLayout({
       axisAlign: 'center',
-      padding: rect(30, 0, -30, 0)
+      hugContentsHorizontally: true
     }),
     submorphs: [{
       type: Text,
@@ -83,17 +83,18 @@ const WideFooter = component({
     }]
   }, {
     name: 'right',
-    extent: pt(320, 10),
+    extent: pt(300, 10),
     width: 372,
     layout: new TilingLayout({
+      align: 'right',
       axisAlign: 'center',
-      padding: rect(0, 0, 16, 0)
+      hugContentsHorizontally: true
     }),
     submorphs: [{
       type: Text,
       selectionMode: 'native',
       name: 'funding',
-      padding: rect(0, 0, 30, 0),
+      textAlign: 'center',
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
       position: pt(-107, 23.5),
@@ -116,15 +117,33 @@ const NarrowFooter = component(WideFooter, {
     padding: rect(0, 5, 0, 0)
   }),
   submorphs: [{
+    name: 'center',
+    layout: new TilingLayout({
+      align: 'right',
+      axisAlign: 'center',
+      justifySubmorphs: 'spaced',
+      padding: rect(0, 10, 0, -10),
+      spacing: 20
+    }),
+    fill: Color.rgba(255, 255, 255, 0)
+  }, {
     name: 'right',
     extent: pt(372, 10),
     layout: new TilingLayout({
-      axisAlign: 'center',
-      hugContentsHorizontally: true
+      align: 'right',
+      hugContentsHorizontally: true,
+      padding: rect(0, 10, 0, 0)
     }),
     submorphs: [{
       name: 'funding',
       padding: rect(0, 0, 0, 0)
+    }]
+  }, {
+    name: 'left',
+    extent: pt(243, 10),
+    submorphs: [{
+      name: 'aText',
+      padding: rect(0, 10, 0, -10)
     }]
   }]
 });
@@ -134,7 +153,7 @@ export const Footer = component(NarrowFooter, {
   master: {
     breakpoints: [
       [pt(0, 0), NarrowFooter],
-      [pt(950, 0), WideFooter]
+      [pt(915, 0), WideFooter]
     ]
   },
   extent: pt(906.2, 44)
