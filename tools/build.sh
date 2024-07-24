@@ -9,4 +9,9 @@ done
 . ../../scripts/lively-next-env.sh
 lively_next_env "$(dirname "$(dirname "$(pwd)")")"
 export FLATN_DEV_PACKAGE_DIRS=$FLATN_DEV_PACKAGE_DIRS:$(pwd);
+
+python3 ./tools/fix_asset_links.py
+
 node --no-experimental-fetch --no-warnings --experimental-import-meta-resolve --experimental-loader ../../flatn/resolver.mjs ./tools/build.mjs $verbose
+
+cp -r ./assets/* ./build/assets
