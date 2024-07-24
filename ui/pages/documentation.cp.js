@@ -270,7 +270,6 @@ export const DocumentationPage = component({
         }, add(part(TiktokButton, {
           name: 'morphic',
           extent: pt(129.1, 36.3),
-          dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 8 }),
           submorphs: [{
             name: 'button label',
             textAndAttributes: ['Read more', null],

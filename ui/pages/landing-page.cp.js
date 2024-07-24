@@ -7,15 +7,7 @@ import { projectAsset } from 'lively.project/helpers.js';
 export const TiktokButton = component({
   name: 'try it out button',
   extent: pt(292.8, 53),
-  master: {
-    animate: { duration: 500, easing: easings.outExpo },
-    auto: component({
-      dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 8 })
-    }),
-    hover: component({
-      dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 15 })
-    })
-  },
+  dropShadow: new ShadowObject({ distance: 4.242640687119285, color: Color.rgba(0, 0, 0, 0.62), blur: 8 }),
   fill: new LinearGradient({ stops: [{ offset: 0.1473074248342803, color: Color.rgb(255, 119, 0) }, { offset: 1, color: Color.rgba(255, 119, 0, 0.4538) }], vector: rect(0.49999999999999994, 0, 6.123233995736766e-17, 1) }),
   nativeCursor: 'pointer',
   layout: new TilingLayout({
