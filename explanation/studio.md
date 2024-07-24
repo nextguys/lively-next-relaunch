@@ -117,12 +117,6 @@ The structure of morph compositions can also be adjusted via the grab control on
 
 Pressing this button removes the selected morph entirely.
 
-#### Open Object/Component Editor
-
-![The object editor halo](/local_projects/nextguys--lively-next-relaunch/assets/object_editor_halo.png)
-
-For more details please refer to the section on the **Object/Component Editor** below.
-
 #### Open Inspector
 
 ![The inspector halo](/local_projects/nextguys--lively-next-relaunch/assets/inspector_halo.png)
@@ -502,23 +496,6 @@ The Inspector displays all properties of a morph or any object that is inspected
 ![](/local_projects/nextguys--lively-next-relaunch/assets/search.png)
 
 The "System Search" can be opened via the world menu or by pressing ***Ctrl-Shift-F***. It is a handy tool to perform a global search inside of the `lively.next` codebase, as well as the currently loaded project. A case-sensitive search mode, as well as support for regular expressions can be toggled. Found matches for a search can open up a "System Browser" right at the code location by double clicking the result you are interested in.
-
-## Object Editor
-
-> ⚠️ **Warning**
->
-> The Object Editor in its current form is going to be deprecated in favor of the new component editor soon. The component editor will be basically a superset of the object editor and be able to edit both morphs, components and non visual objects (like in the case of remote server side scripting).
-
- - Can edit morph classes or view model classes
-   - If both morph class and view model class are available, prompts the user to choose which one to edit
- - Inspect subclass hierarchy on the left hand
- - Continously allows for the evaluation of snippets inside of the editable area where the context is bound to the object editor target
- - Saving changes in the object editor has an immediate effect on the edited class, changes propage among all instances
- - Imports can be managed via a sidebar menu
- - Subclasses can be created as well
-   - The object editor performs the subclassing, module adjustment and reassignment of the class to the current instance automatically in the abckground
-   - The new subclass will be declared and exported from the same module as its superclass, as long as the superclass is not part of the lively.next core.
-     - If we are subclassing a core class, a new module is created solely for the purpose of storing the new subclass
 
 ## File Browser
 
