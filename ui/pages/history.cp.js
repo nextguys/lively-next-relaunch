@@ -400,6 +400,7 @@ export const ChronologicalEntry = component({
           }, {
             type: Text,
             name: 'description',
+            styleClasses: ['history-caption'],
             fontSize: 14,
             selectionMode: 'native',
             dynamicCursorColoring: true,
@@ -483,6 +484,7 @@ const ChronologicalEntryReverse = component({
           }, {
             type: Text,
             name: 'description',
+            styleClasses: ['history-caption'],
             fontSize: 14,
             selectionMode: 'native',
             dynamicCursorColoring: true,
