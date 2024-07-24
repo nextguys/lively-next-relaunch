@@ -384,29 +384,49 @@ const ThrowableDie = component(Die1, {
 });
 
 export const AllFaces = component({
-  extent: pt(691.9, 314.9),
+  extent: pt(725.1, 337.8),
   borderWidth: 7,
   borderColor: Color.rgb(229, 231, 233),
   layout: new TilingLayout({
     align: 'center',
     axisAlign: 'center',
     padding: rect(10, 10, 0, 0),
+    spacing: 23,
     wrapSubmorphs: true
   }),
+  // the wrapping below is due to a layout margin rendering bug that is not yet fixed
   submorphs: [
-    part(Die1, {
-      name: 'die1'
-    }), part(Die2, {
-      name: 'die2'
-    }), part(Die3, {
-      name: 'die3'
-    }), part(Die4, {
-      name: 'die4'
-    }), part(Die5, {
-      name: 'die5'
-    }), part(Die6, {
-      name: 'die6'
-    })]
+    {
+      fill: Color.transparent,
+      submorphs: [part(Die1, {
+        name: 'die1'
+      })]
+    }, {
+      fill: Color.transparent,
+      submorphs: [part(Die2, {
+        name: 'die2'
+      })]
+    }, {
+      fill: Color.transparent,
+      submorphs: [part(Die3, {
+        name: 'die3'
+      })]
+    }, {
+      fill: Color.transparent,
+      submorphs: [part(Die4, {
+        name: 'die4'
+      })]
+    }, {
+      fill: Color.transparent,
+      submorphs: [part(Die5, {
+        name: 'die5'
+      })]
+    }, {
+      fill: Color.transparent,
+      submorphs: [part(Die6, {
+        name: 'die6'
+      })]
+    }]
 });
 
 export const WrappedDie = component({
@@ -421,6 +441,24 @@ export const WrappedDie = component({
     name: 'die1',
     position: pt(194.3, 115.4)
   })]
+});
+
+export const WrappedThrowableDie = component({
+  extent: pt(490, 304.1),
+  borderWidth: 7,
+  borderColor: Color.rgb(229, 231, 233),
+  layout: new TilingLayout({
+    align: 'center',
+    axisAlign: 'center'
+  }),
+  submorphs: [{
+    name: 'wrapper',
+    extent: pt(205.8, 100.2),
+    submorphs: [part(ThrowableDie, {
+      name: 'die1',
+      position: pt(102, 49.6)
+    })]
+  }]
 });
 
 const FiveDie = component(Die, {
