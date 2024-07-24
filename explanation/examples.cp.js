@@ -60,7 +60,7 @@ export class InteractiveDelayModel extends ViewModel {
   }
 
   async prepareSystemIfNeeded () {
-    if (!System.global.babel) await System.import('esm://cache/@babel/standalone').then(({ default: babel }) => System.global.babel = babel);
+    if (!System.global.babel) await System.import('esm://cache/@babel/standalone@7.18.3').then(({ default: babel }) => System.global.babel = babel);
     if (System.transpiler !== 'lively.transpiler') {
       await System.import('lively.modules/systemjs-init.js');
       const { module } = await System.import('lively.modules');
