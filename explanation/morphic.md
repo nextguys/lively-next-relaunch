@@ -285,7 +285,8 @@ For the well trained eye, it should become apparent that component definitions c
 #### Altering Structure
 Obviously, when deriving a component from a different one, we often want to adjust aspects about its structure. For instance, we may want to remove certain morphs from the component, that are not useful for the current component. We also may want to add new morphs which are needed to implement a different set of functionality.
 
-Altering structure cannot easily be expressed with the property overriding mechanism, which is why a set of three convenience functions is provided: `add()`, `remove()`.
+Altering structure cannot easily be expressed with the property overriding mechanism, which is why a set of three convenience functions is provided: `add()`, `without()`, and `replace()`.
+
 Let's illustrate how each of them is used by returning to our dice example. When we want to create versions of each dice each of which shows a different face, we will want to adjust the structure.
 For instance turning the original `Die` into a `FiveDie` could look something like this:
 
@@ -325,6 +326,8 @@ const ThreeDie = component(Die, {
   }]
 });
 ```
+
+`replace` will take two arguments, a morph name and a morph (or `part` call, as that will return a morph as well). Calling `replace` is basically the same as a call to `without(myName)`, followed by a `add(myName, newMorph), but in one function call for convenience.
 
 #### Overriding Masters
 
@@ -608,7 +611,8 @@ In addition to the special `expose` and `bindings` properties, `ViewModel` provi
 - `viewDidLoad()`: Called once when the model is attached to the view. This is the place where initialization or setup code usually is placed best.
 - `withoutBindingsDo(cb)`: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by back-propagation.
 
-### Using Components and ViewModels
+### Combining Components and `ViewModel`s
+
 Let us go over a final example that combines the various aspects discussed in this chapter. We will implement a throw behavior for the dice we have been working with previously. The idea is that clicking on a die will cause it to shuffle and display a different face.
 
 First, we define a component that includes all the faces we may want to display, which we will call the universal die.

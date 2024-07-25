@@ -1,4 +1,4 @@
-import { component, ViewModel, Image, Label, ShadowObject, ConstraintLayout, without, add, part, TilingLayout, Ellipse } from 'lively.morphic';
+import { component, ViewModel, Image, Label, ShadowObject, ConstraintLayout, without, add, part, replace, TilingLayout, Ellipse } from 'lively.morphic';
 import { Color, RadialGradient, rect, LinearGradient, pt } from 'lively.graphics';
 import { num, promise } from 'lively.lang';
 import { Path } from 'lively.morphic/morph.js';
@@ -6,7 +6,6 @@ import { Text } from 'lively.morphic/text/morph.js';
 import { projectAsset } from 'lively.project/helpers.js';
 import { TiktokButton } from '../ui/pages/landing-page.cp.js';
 import { Spinner } from 'lively.components/loading-indicator.cp.js';
-import { signal } from 'lively.bindings';
 
 export class InteractiveDelayModel extends ViewModel {
   static get properties () {
@@ -536,19 +535,16 @@ class DynamicPokerTableModel extends ViewModel {
 const DynamicPokerTable = component(PokerTable, {
   defaultViewModel: DynamicPokerTableModel,
   submorphs: [
-    without('die1'),
-    add(part(ThrowableDie, {
+    replace('die1', part(ThrowableDie, {
       name: 'die1',
       position: pt(72.4, 96.9)
     })),
-    without('die2'),
-    add(part(ThrowableDie, {
+    replace('die2', part(ThrowableDie, {
       name: 'die2',
       rotation: num.toRadians(77.0),
       position: pt(398.1, 137.6)
     })),
-    without('die3'),
-    add(part(ThrowableDie, {
+    replace('die3', part(ThrowableDie, {
       name: 'die3',
       rotation: num.toRadians(20.0),
       position: pt(202.9, 259.2)

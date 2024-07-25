@@ -2,11 +2,11 @@ import { part, component, TilingLayout, ConstraintLayout } from "lively.morphic/
 import { pt, rect } from "lively.graphics/geometry-2d.js";
 import { HTMLMorph } from "lively.morphic/html-morph.js";
 import { MorphicPropertyEssay } from "../ui/docs/interactive-doc.cp.js";
-import { InteractiveDie, WrappedDynamicPokerTable, AllFaces, WrappedDiversePokerTable, WrappedPokerTable, WrappedDie, FocusBlurDiagram, InteractiveDelay } from "./examples.cp.js";
+import { InteractiveDie, WrappedDynamicPokerTable, WrappedThrowableDie, AllFaces, WrappedDiversePokerTable, WrappedPokerTable, WrappedDie, FocusBlurDiagram, InteractiveDelay } from "./examples.cp.js";
 import { Color } from "lively.graphics/color.js";
 const morphic = component({
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,35859),
+  extent: pt(420,36604),
   layout: new TilingLayout({
   axis: "column",
   hugContentsVertically: true,
@@ -19,7 +19,7 @@ const morphic = component({
   submorphs: [{
   name: 'aMorph',
   clipMode: 'auto',
-  extent: pt(420,35859),
+  extent: pt(420,36604),
   fill: Color.transparent,
   layout: new TilingLayout({
   axis: "column",
@@ -80,6 +80,12 @@ const morphic = component({
         height: "fixed",
         width: "fill"
       }], ["markdown 18", {
+        height: "fixed",
+        width: "fill"
+      }], ["embedded 19", {
+        height: "fixed",
+        width: "fill"
+      }], ["markdown 20", {
         height: "fixed",
         width: "fill"
       }]],
@@ -201,7 +207,7 @@ In <code>lively.next</code> we favor a different approach, where custom subclass
   extent: pt(375,1861.2),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
-<p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">Aside from the visual properties, morphs also come with a large set of <em>behavioral properties</em> which will not be covered in this chapter. For more info on the latter, please refer to the <a href=\"https://livelykernel.github.io/lively.next/\" target=\"_blank\">API Documentation</a>.</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">Aside from the visual properties, morphs also come with a large set of <em>behavioral properties</em> which will not be covered in this chapter. For more info on the latter, please refer to our <a href=\"https://livelykernel.github.io/lively.next/\" target=\"_blank\">API Documentation</a>.</p>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"4\" data-htmlline=\"5\">Custom Subclasses</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"6\" data-htmlline=\"8\">The previously introduced subclasses of <code>Morph</code> are just the default ones that ship with <code>lively.morphic</code>. It is always possible to create further subclasses in order to implement custom types of morphs for special purposes. In fact this has been the default way of doing things in <a href=\"https://wiki.squeak.org/squeak/morphic\" target=\"_blank\">Squeak</a> and <a href=\"https://en.wikipedia.org/wiki/Lively_Kernel\" target=\"_blank\">LivelyKernel</a>. Both LivelyKernel and the original Self implementation further had the ability to vary the behavior with <em>Traits</em> which made custom behaviors more pluggable.\n\
 In <code>lively.next</code> we favor a different approach, where custom subclassing of morphs should be kept to a minimum and domain specific behavior instead be implemented via a <code>ViewModel</code> that attaches to morph-compositions and augments their behavior accordingly. We discuss this in greated detail in the <a href=\"#ViewModels\" target=\"_blank\">View Model Chapter</a>.</p>\n\
@@ -458,7 +464,7 @@ While <code>component</code> is used to <strong>define</strong> a reusable compo
 }), {
   type: HTMLMorph,
   name: 'markdown 12',
-  extent: pt(375,4191),
+  extent: pt(375,4369),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">As you can see, by invoking the part calls within the submorph array we reused the component definition of <code>Die</code> within the component definition of <code>PokerTable</code>. Also notice, how in the  <code>part</code> calls we have passed some properties to adjust the properties of each die to place them at unique positions (and varying degrees of rotation). If we skipped these overrides, all dice would just sit on top of each other at the same position.</p>\n\
@@ -498,8 +504,8 @@ Looking further, we notice the structure of the spec which looks quite similar t
 </ol>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"44\" data-htmlline=\"45\">Altering Structure</h4>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"45\" data-htmlline=\"46\">Obviously, when deriving a component from a different one, we often want to adjust aspects about its structure. For instance, we may want to remove certain morphs from the component, that are not useful for the current component. We also may want to add new morphs which are needed to implement a different set of functionality.</p>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"47\" data-htmlline=\"50\">Altering structure cannot easily be expressed with the property overriding mechanism, which is why a set of three convenience functions is provided: <code>add()</code>, <code>remove()</code>.\n\
-Let’s illustrate how each of them is used by returning to our dice example. When we want to create versions of each dice each of which shows a different face, we will want to adjust the structure.\n\
+<p class=\"markdown-line-marker\" data-mdline=\"47\" data-htmlline=\"48\">Altering structure cannot easily be expressed with the property overriding mechanism, which is why a set of three convenience functions is provided: <code>add()</code>, <code>without()</code>, and <code>replace()</code>.</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"49\" data-htmlline=\"51\">Let’s illustrate how each of them is used by returning to our dice example. When we want to create versions of each dice each of which shows a different face, we will want to adjust the structure.\n\
 For instance turning the original <code>Die</code> into a <code>FiveDie</code> could look something like this:</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">FiveDie</span> = <span class=\"hljs-title function_\">component</span>(<span class=\"hljs-title class_\">Die</span>, {\n\
   <span class=\"hljs-attr\">submorphs</span>: [<span class=\"hljs-title function_\">add</span>({\n\
@@ -510,7 +516,7 @@ For instance turning the original <code>Die</code> into a <code>FiveDie</code> c
   })]\n\
 });\n\
 </code></pre>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"62\" data-htmlline=\"63\">In case we want to insert a new morph at a particular index in the submorphs array, we can pass the name of the <strong>proceeding</strong> sibling as a second argument like so:</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"63\" data-htmlline=\"64\">In case we want to insert a new morph at a particular index in the submorphs array, we can pass the name of the <strong>proceeding</strong> sibling as a second argument like so:</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">FiveDie</span> = <span class=\"hljs-title function_\">component</span>(<span class=\"hljs-title class_\">Die</span>, {\n\
   <span class=\"hljs-attr\">submorphs</span>: [<span class=\"hljs-title function_\">add</span>({\n\
     <span class=\"hljs-attr\">type</span>: <span class=\"hljs-title class_\">Ellipse</span>,\n\
@@ -520,7 +526,7 @@ For instance turning the original <code>Die</code> into a <code>FiveDie</code> c
   }), <span class=\"hljs-string\">\'eye\'</span>]\n\
 });\n\
 </code></pre>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"75\" data-htmlline=\"76\">In turn, creating a die that shows the three face requires removing and adjusting certain eyes:</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"76\" data-htmlline=\"77\">In turn, creating a die that shows the three face requires removing and adjusting certain eyes:</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">ThreeDie</span> = <span class=\"hljs-title function_\">component</span>(<span class=\"hljs-title class_\">Die</span>, {\n\
   <span class=\"hljs-attr\">submorphs</span>: [\n\
     <span class=\"hljs-title function_\">without</span>(<span class=\"hljs-string\">\'eye2\'</span>), <span class=\"hljs-comment\">// we remove one eye by referencing its name</span>\n\
@@ -530,8 +536,9 @@ For instance turning the original <code>Die</code> into a <code>FiveDie</code> c
   }]\n\
 });\n\
 </code></pre>\n\
-<h4 class=\"markdown-line-marker\" data-mdline=\"88\" data-htmlline=\"89\">Overriding Masters</h4>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"90\" data-htmlline=\"92\">In order to adjust morphs in derived components its often simpler to <em>reassign</em> a different <strong>master component</strong> to style a particular morph rather then simply overriding each property of a morph by hand.\n\
+<p class=\"markdown-line-marker\" data-mdline=\"89\" data-htmlline=\"90\"><code>replace</code> will take two arguments, a morph name and a morph (or <code>part</code> call, as that will return a morph as well). Calling <code>replace</code> is basically the same as a call to <code>without(myName)</code>, followed by a `add(myName, newMorph), but in one function call for convenience.</p>\n\
+<h4 class=\"markdown-line-marker\" data-mdline=\"91\" data-htmlline=\"92\">Overriding Masters</h4>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"93\" data-htmlline=\"95\">In order to adjust morphs in derived components its often simpler to <em>reassign</em> a different <strong>master component</strong> to style a particular morph rather then simply overriding each property of a morph by hand.\n\
 For instance, going back to our poker table example, we may want to apply different styles to some of the dice in a derived component like so:</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">DiversePokerTable</span> = <span class=\"hljs-title function_\">component</span>(<span class=\"hljs-title class_\">PokerTable</span>, {\n\
   <span class=\"hljs-attr\">submorphs</span>: [\n\
@@ -541,18 +548,18 @@ For instance, going back to our poker table example, we may want to apply differ
   ]\n\
 });\n\
 </code></pre>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"103\" data-htmlline=\"104\">Notice that in the resulting scene, the dice have changed their styling:</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"106\" data-htmlline=\"107\">Notice that in the resulting scene, the dice have changed their styling:</p>\n\
 \n\
 </div>',
   position: pt(15,15015)
 }, part(WrappedDiversePokerTable, {
   name: 'embedded 13',
   extent: pt(375,465.7),
-  position: pt(15,19221)
+  position: pt(15,19399)
 }), {
   type: HTMLMorph,
   name: 'markdown 14',
-  extent: pt(375,13084.1),
+  extent: pt(375,13117.3),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">Also notice that some properties have remained untouched, this includes properties like <code>rotation</code> and <code>position</code>. These are <em>transform properties</em> and can not be overridden via assigning a new master. This can only be done by overriding them explicitly within the component definition.</p>\n\
@@ -741,7 +748,7 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 </code></pre>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"238\" data-htmlline=\"239\">Therefore, you can think of the <code>expose</code> property of a view model as defining the programmatic interface of the corresponding component.</p>\n\
 <h4 class=\"markdown-line-marker\" data-mdline=\"240\" data-htmlline=\"241\">Bindings - In Depth</h4>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"242\" data-htmlline=\"243\">Each binding is defines as follows: <code>{ target?, signal, handler, converter?, updater?, varMapping? }</code></p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"242\" data-htmlline=\"243\">Each binding is defined as follows: <code>{ target?, signal, handler, converter?, updater?, varMapping? }</code></p>\n\
 <ul>\n\
 <li><strong>target</strong>: Defines which morph of the component the binding should hold on to. If <code>target</code> is omitted, <code>target</code> is assumed to be the morph the model is directly attached to.</li>\n\
 <li><strong>signal</strong>: Defines the method or signal the binding should react to. This is usually a method from the base <code>Morph</code> class.</li>\n\
@@ -762,12 +769,9 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 <li><code>viewDidLoad()</code>: Called once when the model is attached to the view. This is the place where initialization or setup code usually is placed best.</li>\n\
 <li><code>withoutBindingsDo(cb)</code>: Allows the code in the callback function to operate on the view without triggering the bindings. This prevents updated loops caused by back-propagation.</li>\n\
 </ul>\n\
-<h3 class=\"markdown-line-marker\" data-mdline=\"265\" data-htmlline=\"266\">Using Components and ViewModels</h3>\n\
-<ul>\n\
-<li>Let us illustrate how viewmodels are used in conjunction with components by a final example</li>\n\
-<li>For this we will implement a throw behavior for the dice we have been working with previouysly. The idea is that clicking on a die will cause it to shuffle and display a different face.</li>\n\
-<li>In order to that, we will first define a component that has all the faces we may want to display and call it the universal die.</li>\n\
-</ul>\n\
+<h3 class=\"markdown-line-marker\" data-mdline=\"265\" data-htmlline=\"266\">Combining Components and <code>ViewModel</code>s</h3>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"267\" data-htmlline=\"268\">Let us go over a final example that combines the various aspects discussed in this chapter. We will implement a throw behavior for the dice we have been working with previously. The idea is that clicking on a die will cause it to shuffle and display a different face.</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"269\" data-htmlline=\"270\">First, we define a component that includes all the faces we may want to display, which we will call the universal die.</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">UniversalDie</span> = <span class=\"hljs-title function_\">component</span>({\n\
   <span class=\"hljs-attr\">origin</span>: <span class=\"hljs-title function_\">pt</span>(<span class=\"hljs-number\">38.5</span>, <span class=\"hljs-number\">37.1</span>),\n\
   <span class=\"hljs-attr\">fill</span>: <span class=\"hljs-title class_\">Color</span>.<span class=\"hljs-title function_\">rgb</span>(<span class=\"hljs-number\">255</span>, <span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>),\n\
@@ -812,9 +816,7 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
     }]\n\
 });\n\
 </code></pre>\n\
-<ul>\n\
-<li>We then derive it 6 times, where we adjust the styling in a way so that each die shows a different face.</li>\n\
-</ul>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"317\" data-htmlline=\"318\">Notice how the die has an eye in every position potentially needed, totaling seven eyes. We then derive this component six times, adjusting the styling so that each die shows a different face by varying the visibility of each eye.</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">Die1</span> = <span class=\"hljs-title function_\">component</span>(<span class=\"hljs-title class_\">UniversalDie</span>, {\n\
   <span class=\"hljs-attr\">submorphs</span>: [{\n\
     <span class=\"hljs-attr\">name</span>: <span class=\"hljs-string\">\'eye0\'</span>,\n\
@@ -905,20 +907,18 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 </code></pre>\n\
 \n\
 </div>',
-  position: pt(15,19701)
+  position: pt(15,19879)
 }, part(AllFaces, {
   name: 'embedded 15',
-  extent: pt(375,314.9),
-  position: pt(15,32800)
+  extent: pt(375,337.8),
+  position: pt(15,33012)
 }), {
   type: HTMLMorph,
   name: 'markdown 16',
-  extent: pt(375,2215.1),
+  extent: pt(375,1070.9),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
-<ul>\n\
-<li>We then define a view model, which can attach to the universal die and toggle the visibility of the eyes such that it shows different faces. We will achieve this by toggling between different component states.</li>\n\
-</ul>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">Next, we define a view model that can attach to the universal die and toggle the visibility of the eyes to show different faces. This is achieved by toggling between different component states.</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\">\n\
 <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">ThrowableDieModel</span> <span class=\"hljs-keyword\">extends</span> <span class=\"hljs-title class_ inherited__\">ViewModel</span> {\n\
   get bindings () {\n\
@@ -963,18 +963,29 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
   }\n\
 });\n\
 </code></pre>\n\
-<ul>\n\
-<li>Lets enhance this by also writing some custom behavior for the previously defined poker table.</li>\n\
-<li>The custom code will trigger a shuffle of all the dice and then display the total value to the user.</li>\n\
-<li>To achieve that we adjust the poker table by deriving it like so:</li>\n\
-</ul>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"50\" data-htmlline=\"51\">The resulting die looks like this. Try triggering the throw mechanism by clicking on the die.</p>\n\
+\n\
+</div>',
+  position: pt(15,33364)
+}, part(WrappedThrowableDie, {
+  name: 'embedded 17',
+  extent: pt(375,304.1),
+  position: pt(15,34450)
+}), {
+  type: HTMLMorph,
+  name: 'markdown 18',
+  extent: pt(375,1321),
+  fixedHeight: false,
+  html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
+<p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">With this interactive version of the dice in place, we can implement an interactive version of the previously defined poker table. The custom behavior will allow each of the dice to be shuffled independently, displaying the new total of the dice on the poker table.</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"4\" data-htmlline=\"5\">To achieve this, we derive the poker table from the standard poker table, replacing the instances of the old static dice with the new dynamic ones. We also add a label that enables us to display the face value of all the dice on the table.</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\">\n\
 <span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">DynamicPokerTable</span> = <span class=\"hljs-title function_\">component</span>(<span class=\"hljs-title class_\">PokerTable</span>, {\n\
   <span class=\"hljs-attr\">defaultViewModel</span>: <span class=\"hljs-title class_\">DynamicPokerTableModel</span>,\n\
   <span class=\"hljs-attr\">submorphs</span>: [\n\
    <span class=\"hljs-comment\">// replace the previous dice, since we need a completely new structure and behavior</span>\n\
     <span class=\"hljs-title function_\">replace</span>(<span class=\"hljs-string\">\'die1\'</span>, <span class=\"hljs-title function_\">part</span>(<span class=\"hljs-title class_\">ThrowableDie</span>)),\n\
-    <span class=\"hljs-title function_\">reaplce</span>(<span class=\"hljs-string\">\'die2\'</span>, <span class=\"hljs-title function_\">part</span>(<span class=\"hljs-title class_\">ThrowableDie</span>)),\n\
+    <span class=\"hljs-title function_\">replace</span>(<span class=\"hljs-string\">\'die2\'</span>, <span class=\"hljs-title function_\">part</span>(<span class=\"hljs-title class_\">ThrowableDie</span>)),\n\
     <span class=\"hljs-title function_\">replace</span>(<span class=\"hljs-string\">\'die3\'</span>, <span class=\"hljs-title function_\">part</span>(<span class=\"hljs-title class_\">ThrowableDie</span>)),\n\
     <span class=\"hljs-comment\">// add a new label that shows that total face value to the user</span>\n\
     <span class=\"hljs-title function_\">add</span>({\n\
@@ -992,9 +1003,7 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
   ]\n\
 });\n\
 </code></pre>\n\
-<ul>\n\
-<li>Where the code of the viewmodel looks like so:</li>\n\
-</ul>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"32\" data-htmlline=\"33\">We further define a new view model that we can attach to the dynamic poker table. It wires up the changes in the <code>faceValue</code> of each die that gets triggered when they are shuffled and triggers a method <code>showTotalFaceValue</code>, which updates the label we just added to the component accordingly.</p>\n\
 <pre><code class=\"language-javascript hljs\" data-highlighted=\"yes\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">DynamicPokerTableModel</span> <span class=\"hljs-keyword\">extends</span> <span class=\"hljs-title class_ inherited__\">ViewModel</span> {\n\
   get bindings () {\n\
     <span class=\"hljs-keyword\">return</span> [\n\
@@ -1008,25 +1017,23 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
   }\n\
 }\n\
 </code></pre>\n\
-<ul>\n\
-<li>The resulting poker table looks like this. Click on the dice and observe how the total changes:</li>\n\
-</ul>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"49\" data-htmlline=\"50\">The resulting poker table looks like this. <strong>Click on the dice and observe how the total changes</strong>:</p>\n\
 \n\
 </div>',
-  position: pt(15,33130)
+  position: pt(15,34769)
 }, part(WrappedDynamicPokerTable, {
-  name: 'embedded 17',
+  name: 'embedded 19',
   extent: pt(375,453.8),
-  position: pt(15,35360)
+  position: pt(15,36105)
 }), {
   type: HTMLMorph,
-  name: 'markdown 18',
+  name: 'markdown 20',
   extent: pt(375,0),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 \n\
 </div>',
-  position: pt(15,35829)
+  position: pt(15,36574)
 }]
 }]
 });
