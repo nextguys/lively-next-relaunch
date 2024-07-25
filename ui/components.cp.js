@@ -171,25 +171,13 @@ class LivelyWebPageModel extends ViewModel {
 
   async viewDidLoad () {
     window.LIVELY_PAGE = this.view;
-    this.router = new HashRouter({
-      debugMode: !lively.FreezerRuntime
-    });
-    window.router = this.router; // FIXME:
+    this.router = new HashRouter();
+    window.router = this.router; // to make this available from within the blog
     connect(this.router, 'routed', this, 'route');
     let loadedHash = window.location.hash;
     if (loadedHash.startsWith('#')) loadedHash = loadedHash.replace('#', '');
     this.route(loadedHash, true);
   }
-
-  relayout () {
-    // this.ui.body.width = this.view.width > 1200 ? 1200 : this.view.width;
-    // this.view.applyLayoutIfNeeded();
-    if (!lively.FreezerRuntime) return;
-    this.view.position = pt(0, 0);
-    this.view.extent = $world.windowBounds().extent();
-  }
-
-  get respondsToVisibleWindow () { return lively.FreezerRuntime; }
 }
 
 const LargeLogoSection = component({
