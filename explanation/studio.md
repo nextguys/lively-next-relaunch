@@ -460,29 +460,24 @@ The browser comes with editing modes for multiple different file types, such as 
 
 ## Reconciliation
 
-  - We previously described the programmatic interface to defining and deriving components.
-  - In order to provide a direct manipulation, purely visual workflow to create and modify component definitions, `lively.next` ships with a reconciliation engine which bridges the gap between visual represenation and symbolic description of componnent definitions.
-  - This is done by translating direct manipulation changes (such as draggin, dropping, edditing, style property changes) into changes to the module source code where the components are defined.
-  - To illustrate the point, below you can see a simplified example of what the reconciliation engine is able to archieve:
+In our [introduction to `lively.morphic`](#explanations/morphic), we introduced our component system and how to use it to build composable and reusable UI building blocks. Using this code driven approach might be handy for developers, but this workflow is not accessible for non-programmers. Even for programmers, navigating large component hierarchies might be burdensome at some times. **One of our goals for the `lively.next` project is to change this and provide our users with a graphical, direct manipulation workflow for the definition and derivation of components.** For this reason, `lively.ide` comes with a **reconciliation** mechanism that seamlessly translates between the code and visual representation  of components.
+
+To illustrate this point, below you can see a simplified example of what the reconciliation engine is able to achieve:
 
 <!-- __lv_expr__:{part}:lively.morphic:{InteractiveDelay}:nextguys--lively-next-relaunch/explanation/examples.cp.js:part(InteractiveDelay, { viewModel: { loader: 'reconciliation' }}) -->
 
-  - Besides evolving already existing component definitions purely visually, the user is also able to create entirely new component definitions from scratch.
+The reconciliation mechanism is accessible via two different ways:
 
 ### Reconciliation inside the System Browser
- - the user browses to a component module and finds the component definition
- - the system browser displays a edit button to start an edit session
- - once changes are propagated back, a revert button becomes active
- - the user can also toggle the behavior of the component
- - during active behavior, the reconciliation is temporarily disabled
- - **Downsides:** The user can not edit the code of the module while the reconciliation is active. Once the user starts to edit the module code, the system prompts the user to exit the reconciliation sessons affecting this module.
+
+When browsing a component module (`.cp.js`), there is an "Edit Component" button besides each component definition. Clicking this button will open a visual representation of the component definition. It can subsequently be changed in the same way as all others morphs in the system, utilizing the **Properties Panel** as described above. Changes will be propagated back into the source code in real time. Once changes have been made, you can revert them using the appropriate button at the side of component definition. When the component in question has a `ViewModel` setup, its behavior can be activated, again by using the appropriate button. This allows to easily test the behavior of a component and is thus a handy option for developers as well. When the behavior of a component is activated, the reconciliation will temporarily be disabled, in order to keep the separation between visual representation and the behavior implementation in order.
+
+> **⚠️ Warning**
+> When reconciliation is active, it is not possible to edit the code inside of the module by hand. Editing the source code will prompt the user to exit the reconciliation session.
 
 ### Reconciliation via the Component Browser
- - the user browses to a component module and finds the component that they want to edit
- - in case the user has the permission to edit this component the edit button is displayed next to the import button
- - the user opens up the component by pressing the edit button (this will open the component edit  instance instead of a derived instance)
- - the user adjusts the component via direct manipulation, the code is updated in the background completely transparent to the user
- - **Downsides:** While the component browser provides a nice way to find and use components, using it as a tool for managing custom design systems is cumbersome as one always has to select and edit the desired component through the component browser.
+
+Alternatively, it is possible to open a component without usage of the **System Browser** by choosing it in the **Component Browser**. It is only possible to edit components in the currently loaded project (see our guide to projects for more info). If this condition is met, you will see an edit button once a component is selected. Again, the visual representation of the component opens in the world an can be changed by using the **Properties Panel**. The code will automatically be updated by the system, total transparent to the user.
 
 ## Inspector
 
@@ -499,6 +494,24 @@ The "System Search" can be opened via the world menu or by pressing ***Ctrl-Shif
 
 ## File Browser
 
+![The 'File Browser' browsing the contents of the project for this website.](/local_projects/nextguys--lively-next-relaunch/assets/file_browser.png)
+
+The **System Browser** (see above) tries to execute modules you load and save, automatically lints your `JS` code and provides lots of other useful features. However, it does currently not support all file types. Additionally, sometimes you might not want the opinionated behavior of the **System Browser** and just want to edit a plain text file. For this reason, we provide the "File Browser", which again can be opened via the world menu. It allows you to navigate the contents of your `lively.next` directory in a tree structure, create and delete files, and change their contents. Editing and other operations are available via the buttons at the bottom of the browser. 
+
 ## Workspace
 
+![A `JavaScrpipt` workspace evaluating a simple expression.](/local_projects/nextguys--lively-next-relaunch/assets/workspace.mp4)
+
+The **Workspace** can be summoned with ***Ctrl-K*** or via the *world menu*. There are multiple flavours available, although the `JavaScript` workspace is the one that will be used most in most circumstances.
+
+The idea behind all workspaces is that they allow you to write code and immediately evaluate the code you have written. You can import arbitrary code from anywhere in the system or external libraries via a CDN. You can execute each line independently, either via right-clicking on a selection or via ***Alt-Enter*** (Win/Linux) or ***Cmd+D*** (macOS). The workspace is an extremely useful tool to quickly prototype something and allows you to feel the benefits of a truly live programming system such as `lively.next` the fastest!
+
 ## Terminal 
+
+![Demonstration of executing shell commands from inside of `lively.next`.](/local_projects/nextguys--lively-next-relaunch/assets/shell_terminal.mp4)
+
+Through the `lively.server`, `lively.next` allows you to execute shell commands directly from inside the browser. The terminal is accessible through the *world menu*. The output of the last command that was executed is visible inside of the terminal. Interactive programs, such as `vi` are not supported. However, this can be handy to quickly commit your work from inside of lively, perform file systems from the command line, etc.
+
+> **⚠️ Warning**
+> 
+> As this gives essentially arbitrary access to all parts of your system, we do not recommend deploying `lively.next` servers openly on the web at this time**
