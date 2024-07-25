@@ -9,7 +9,10 @@ figcaption {
 }
 
 figure {
-  margin: 0 auto !important;
+  margin-top: 0px !important;
+  margin-bottom: 10px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   display: table !important;
 }
 
@@ -43,6 +46,16 @@ lite-youtube {
 .history-caption > .newtext-text-layer {
   height: fit-content !important;
   position: relative !important;
+}
+
+.responsive-video > video {
+  max-width: 400px; /*TODO: */
+  width: 100%;
+  margin-top: 0px !important;
+  margin-bottom: 10px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: table;
 }
 
 /* https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.css */
