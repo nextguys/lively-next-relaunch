@@ -4,7 +4,7 @@ This repository contains the code for the [homepage](lively-next.org) of the `li
 
 ## Build Processes
 
-Changes to specific parts of the website require you to run explicit build steps before commiting.
+Changes to specific parts of the website require you to run explicit build steps before committing.
 
 ### Emoji Usage
 
@@ -29,7 +29,7 @@ These will precompile the necessary components in order to significantly speed u
 
 Run `python3 tools/fix_asset_links.py` **before** running `npm run build`! After `npm run build`, execute `cp "assets"/*.{jpg,jpeg,png,gif} "build/assets/"` from the root of the project.
 
-### Documentation Subpages
+### Documentation Sub-Pages
 
 After changes, execute `await compileAllMarkdown()` from within the `explanation/compile-markdown.js` in `lively.next`.
 
@@ -38,6 +38,10 @@ Run `python3 tools/fix_asset_links.py` **before** running `npm run build`! After
 ## Deploy
 
 You will need to run the necessary compilation steps as mentioned above. You will not need to run `npm run build`. That will be taken care of by CI. The pipeline will also make sure that all assets are present in the bundle. You will need to trigger the GitHub Action **Enhanced Deployment to GitHub Pages** manually.
+
+### Use latest `lively.next` version
+
+At this time, it is necessary to update the hash of the `lively.next` version to use inside of `.github/workflows/custom-deploy.yml` manually.
 
 ## License
 
