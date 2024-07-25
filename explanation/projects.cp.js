@@ -4,7 +4,7 @@ import { HTMLMorph } from "lively.morphic/html-morph.js";
 const projects = component({
   type: HTMLMorph,
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,7408.4),
+  extent: pt(420,8009.8),
   fixedHeight: false,
   html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"0\" data-htmlline=\"1\">Work in <code>lively.next</code> is organized in so called “projects”. Other ways of thinking about these projects might be a folder, containing all relevant files for a specific application or, for the technical inclined readers, a <code>git</code> repository.</p>\n\
@@ -53,10 +53,16 @@ When saving a project, <code>lively.next</code> will by default increase the pat
 <h3 class=\"markdown-line-marker\" data-mdline=\"67\" data-htmlline=\"68\">Working with Multiple Version of Projects in Parallel</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"69\" data-htmlline=\"71\">When multiple people are working on the same project at the same time, it sometimes is easier when each member of the team uses their own, independent version of the project and they are unified at a later point in development. Programmers often call these different versions “branches”. To save your own version independently of others, use the “Create a new branch to save on” option in the advanced options of the save dialogue. You can also see the name of the version you are currently saving to at the top of the save dialogue.\n\
 <strong><code>lively.next</code> will still try to make changes to the unified version of the project (called main) available to you. Please note that there is currently no option to unify branches inside of <code>lively.next</code>. You will either need to create a <a href=\"https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests\" target=\"_blank\">Pull Request</a> on GitHub to do so or seek the help of a developer on your team.</strong></p>\n\
-<h2 class=\"markdown-line-marker\" data-mdline=\"72\" data-htmlline=\"73\"><code>lively.project</code> internals - Information for Developers</h2>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"74\" data-htmlline=\"75\">As you might have guessed from the above description, <code>lively.project</code> is simply a thin wrapper around <code>git</code>. Utilizing your local shell via <code>lively.2lively</code> and the GitHub API, we automatically commit, push, pull, and rebase a local repository. Our implementation is designed in a way that should allow non-technical users more-or-less seamless participation without learning (too much) about <code>git</code>, while still giving developers access to their accustomed workflows.</p>\n\
-<h3 class=\"markdown-line-marker\" data-mdline=\"76\" data-htmlline=\"77\">What makes a Project</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"78\" data-htmlline=\"80\">A project is defined by its folder structure. In theory, it would be possible to create a <code>lively.next</code> project by hand, by just creating all these files manually. Most important is the <code>package.json</code> file, that stores a lot of important meta data about the project that we utilize at runtime.\n\
+<h3 class=\"markdown-line-marker\" data-mdline=\"72\" data-htmlline=\"73\">Online and Offline Mode</h3>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"74\" data-htmlline=\"75\">The top bar allows you to toggle between online and offline mode. <strong>It is highly recommended to use online mode whenever possible.</strong>  However, when you currently do not have an active internet connection, you can enable offline mode to circumvent the automatic syncing of projects. Doing so means that <code>lively.next</code> will not try to retrieve the latest changes to your project upon load and saving will also not lead to your changes being published. <strong>Working in such a manner might result in problems later on, when conflicting changes have been made.</strong> You will need to be logged in already when enabling offline-mode in order for everything to work as expected. Logging out in offline mode might therefore be a bad idea.</p>\n\
+<blockquote>\n\
+<p><strong>💡 Tip</strong></p>\n\
+<p>Offline mode does not necessarily mean that all work can seamlessly performed offline, as we use some dependencies provided by a CDN. However, we provide a caching mechanism for those, so that work without an internet connection is possible once the cache is warmed up.</p>\n\
+</blockquote>\n\
+<h2 class=\"markdown-line-marker\" data-mdline=\"80\" data-htmlline=\"81\"><code>lively.project</code> internals - Information for Developers</h2>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"82\" data-htmlline=\"83\">As you might have guessed from the above description, <code>lively.project</code> is simply a thin wrapper around <code>git</code>. Utilizing your local shell via <code>lively.2lively</code> and the GitHub API, we automatically commit, push, pull, and rebase a local repository. Our implementation is designed in a way that should allow non-technical users more-or-less seamless participation without learning (too much) about <code>git</code>, while still giving developers access to their accustomed workflows.</p>\n\
+<h3 class=\"markdown-line-marker\" data-mdline=\"84\" data-htmlline=\"85\">What makes a Project</h3>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"86\" data-htmlline=\"88\">A project is defined by its folder structure. In theory, it would be possible to create a <code>lively.next</code> project by hand, by just creating all these files manually. Most important is the <code>package.json</code> file, that stores a lot of important meta data about the project that we utilize at runtime.\n\
 When creating a new project, the folder structure is as follow:</p>\n\
 <pre><code class=\"language-sh\"># &gt;$ tree\n\
 .\n\
@@ -77,34 +83,34 @@ When creating a new project, the folder structure is as follow:</p>\n\
     └── default.workspace.js\n\
 \n\
 </code></pre>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"102\" data-htmlline=\"103\">Projects are stored inside of the <code>lively.next</code> installation directory inside of the <code>local_projects</code> folder. The folder of a project needs to follow a specific naming convention: <code>&lt;OwningGitHubUser&gt;--&lt;NameOfTheProject&gt;</code>.</p>\n\
-<h3 class=\"markdown-line-marker\" data-mdline=\"104\" data-htmlline=\"105\">Git Operations in Projects</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"106\" data-htmlline=\"107\">Projects will execute the following <code>git</code> operations at the specified points in time:</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"110\" data-htmlline=\"111\">Projects are stored inside of the <code>lively.next</code> installation directory inside of the <code>local_projects</code> folder. The folder of a project needs to follow a specific naming convention: <code>&lt;OwningGitHubUser&gt;--&lt;NameOfTheProject&gt;</code>.</p>\n\
+<h3 class=\"markdown-line-marker\" data-mdline=\"112\" data-htmlline=\"113\">Git Operations in Projects</h3>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"114\" data-htmlline=\"115\">Projects will execute the following <code>git</code> operations at the specified points in time:</p>\n\
 <ul>\n\
 <li>Opening a project will try pull the remote version of the currently checked out branch. In the case of local commits, it will try to rebase them. In the presence of uncommitted changed, those will be stashed and applied after pulling/rebasing if possible.</li>\n\
 <li>Saving a project will commit all changed files and try to push.</li>\n\
 <li>Saving on a new branch will create a new branch at the currently checked out commit and switch to it.</li>\n\
 </ul>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"112\" data-htmlline=\"113\">In the case of something going amiss (especially during the application of a stash or while rebasing) <code>lively.next</code> will give up rather easily and show an error message to the user. In these cases they will need help by a developer. Cleanly committing all desired changes and cleaning up the stash by hand will normally resolve all problems. <strong>Projects can always be committed to manually. There is no expectation towards the history from the standpoint of <code>lively.next</code>.</strong></p>\n\
-<h3 class=\"markdown-line-marker\" data-mdline=\"114\" data-htmlline=\"115\">Advanced GitHub Integrations</h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"116\" data-htmlline=\"117\">Projects come with some advanced integration for GitHub Actions. As of writing this, we automatically provide three actions for you:</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"120\" data-htmlline=\"121\">In the case of something going amiss (especially during the application of a stash or while rebasing) <code>lively.next</code> will give up rather easily and show an error message to the user. In these cases they will need help by a developer. Cleanly committing all desired changes and cleaning up the stash by hand will normally resolve all problems. <strong>Projects can always be committed to manually. There is no expectation towards the history from the standpoint of <code>lively.next</code>.</strong></p>\n\
+<h3 class=\"markdown-line-marker\" data-mdline=\"122\" data-htmlline=\"123\">Advanced GitHub Integrations</h3>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"124\" data-htmlline=\"125\">Projects come with some advanced integration for GitHub Actions. As of writing this, we automatically provide three actions for you:</p>\n\
 <ol>\n\
 <li>An action to run the tests of your project in CI.</li>\n\
 <li>An action to build your project in CI and download the build as artifact, that can subsequently be used to serve a static website on any web-hoster.</li>\n\
 <li>An action to build and deploy your site using GitHub Pages. <a href=\"https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages\" target=\"_blank\">Note, that for private repositories GitHub pages requires a paid plan</a>.</li>\n\
 </ol>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"122\" data-htmlline=\"123\">These actions are setup in a way to automatically keep the used <code>lively.next</code> version up to date. Inside of the project settings dialogue, available via the top bar inside of <code>lively.next</code>, you can change them to either run on each push to main or to be run manually on GitHub (default setting).</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"130\" data-htmlline=\"131\">These actions are setup in a way to automatically keep the used <code>lively.next</code> version up to date. Inside of the project settings dialogue, available via the top bar inside of <code>lively.next</code>, you can change them to either run on each push to main or to be run manually on GitHub (default setting).</p>\n\
 <blockquote>\n\
 <p>⚠️ <strong>Warning</strong></p>\n\
 <p>You should not change these files manually. However, feel free to add new actions or scripts!</p>\n\
 </blockquote>\n\
-<h3 class=\"markdown-line-marker\" data-mdline=\"128\" data-htmlline=\"129\">Deploying/Bundling Applications build with <code>lively.next</code></h3>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"130\" data-htmlline=\"131\">We automatically provide a build script for the bundler of <code>lively.next</code>, called the <code>freezer</code>, with your project. In most circumstances, no changes to this script should be necessary. To run it locally, just execute <code>npm run build</code> inside of the folder of your project.</p>\n\
+<h3 class=\"markdown-line-marker\" data-mdline=\"136\" data-htmlline=\"137\">Deploying/Bundling Applications build with <code>lively.next</code></h3>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"138\" data-htmlline=\"139\">We automatically provide a build script for the bundler of <code>lively.next</code>, called the <code>freezer</code>, with your project. In most circumstances, no changes to this script should be necessary. To run it locally, just execute <code>npm run build</code> inside of the folder of your project.</p>\n\
 <blockquote>\n\
 <p>🏗️ <strong>Notice</strong></p>\n\
 <p>This section will be expanded on in the future! For further questions, right now the best course of action is to <a href=\"https://matrix.to/#/#lively.next:matrix.org\" target=\"_blank\">reach out to us via matrix</a>!</p>\n\
 </blockquote>\n\
-<p class=\"markdown-line-marker\" data-mdline=\"136\" data-htmlline=\"137\">The entrypoint for the bundled application is the <code>main()</code> function inside of the <code>index.js</code> file in your project. Here, you should create at least an instance of the <code>Morph</code> representing your application and open it in the world. Further actions are of course possible.</p>\n\
+<p class=\"markdown-line-marker\" data-mdline=\"144\" data-htmlline=\"145\">The entrypoint for the bundled application is the <code>main()</code> function inside of the <code>index.js</code> file in your project. Here, you should create at least an instance of the <code>Morph</code> representing your application and open it in the world. Further actions are of course possible.</p>\n\
 \n\
 </div>',
   layout: null,

@@ -70,6 +70,14 @@ When opening a project with multiple dependencies that contradict each other or 
 When multiple people are working on the same project at the same time, it sometimes is easier when each member of the team uses their own, independent version of the project and they are unified at a later point in development. Programmers often call these different versions "branches". To save your own version independently of others, use the "Create a new branch to save on" option in the advanced options of the save dialogue. You can also see the name of the version you are currently saving to at the top of the save dialogue.
 **`lively.next` will still try to make changes to the unified version of the project (called main) available to you. Please note that there is currently no option to unify branches inside of `lively.next`. You will either need to create a [Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) on GitHub to do so or seek the help of a developer on your team.**
 
+### Online and Offline Mode
+
+The top bar allows you to toggle between online and offline mode. **It is highly recommended to use online mode whenever possible.**  However, when you currently do not have an active internet connection, you can enable offline mode to circumvent the automatic syncing of projects. Doing so means that `lively.next` will not try to retrieve the latest changes to your project upon load and saving will also not lead to your changes being published. **Working in such a manner might result in problems later on, when conflicting changes have been made.** You will need to be logged in already when enabling offline-mode in order for everything to work as expected. Logging out in offline mode might therefore be a bad idea.
+
+> **💡 Tip**
+>
+> Offline mode does not necessarily mean that all work can seamlessly performed offline, as we use some dependencies provided by a CDN. However, we provide a caching mechanism for those, so that work without an internet connection is possible once the cache is warmed up.
+
 ## `lively.project` internals - Information for Developers
 
 As you might have guessed from the above description, `lively.project` is simply a thin wrapper around `git`. Utilizing your local shell via `lively.2lively` and the GitHub API, we automatically commit, push, pull, and rebase a local repository. Our implementation is designed in a way that should allow non-technical users more-or-less seamless participation without learning (too much) about `git`, while still giving developers access to their accustomed workflows.
