@@ -111,6 +111,7 @@ export const BackToDocsButton = component({
     }, {
       type: Text,
       name: 'chapter title',
+      fontFamily: 'Bree Serif',
       fontWeight: '600',
       fontSize: 30,
       dynamicCursorColoring: true,
