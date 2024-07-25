@@ -26,18 +26,14 @@ lite-youtube {
   text-decoration-thickness: 2px;
 } 
 
-.markdown-body {
-  font-family: 'IBM Plex Sans', 'Noto Emoji Color Subset' !important;
-  user-select: text !important;
-}
-
 .markdown-body img {
   margin: 0 auto !important;
   display: table !important;
 }
 
-.markdown {
+.markdown { /* For Styling the Blog entries */
   font-family: 'IBM Plex Sans', 'Noto Emoji Color Subset' !important;
+  user-select: text !important;
 }
 
 .history-caption {
