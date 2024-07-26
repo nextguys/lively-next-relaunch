@@ -3,9 +3,6 @@ Given the fact that these things very essentially invented in Smalltalk and `liv
 
 ![A `lively.next` instance showcasing various tools.](/local_projects/nextguys--lively-next-relaunch/assets/lively-desktop.png){width=800px}
 
-</br>
-
-
 In the following we will outline in detail the various different UI elements and tools that `lively.next` comes with, how they interact, how you are supposed to use them, and which tools may be introduced in the near future.
 
 ## Top Bar
@@ -100,20 +97,20 @@ Opens the default menu for morphs. This can be a custom set of menu items, depen
 
 #### Drag
 
-![Dragging a morph via the halo handle.](/local_projects/nextguys--lively-next-relaunch/assets/drag-halo.gif){width=200px}
+![Dragging a morph via the halo handle.](/local_projects/nextguys--lively-next-relaunch/assets/drag-halo.gif){width=300px}
 
 In order to change a morph's position, the user can either use the drag handle of the halo, or 
 drag the morph by dragging the inside of the halo itself.
 
 #### Grab
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/grab-halo.gif){width=200px}
+![Grabbing a morph via the halo handle.](/local_projects/nextguys--lively-next-relaunch/assets/grab-halo.gif){300px}
 
 The structure of morph compositions can also be adjusted via the grab control on the halo. This allows the user to remove a morph from its parent and subsequently assign it to a different owner. Its also possible to place the morph into the world instead of a new owner morph.
 
 #### Remove
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/remove-halo.gif){width=200px}
+![](/local_projects/nextguys--lively-next-relaunch/assets/remove-halo.gif){width=300px}
 
 Pressing this button removes the selected morph entirely.
 
@@ -153,16 +150,15 @@ You can use the Asset Browser to see all assets currently available in your proj
 >
 > As of now, the support for **video** and **audio** has not yet been implemented, since the corresponding morphs are not yet ready for primetime. We will update this section accordingly once we finalize support for these asset types.
 
-![An opened Asset Browser, including the assets for this website.](/local_projects/nextguys--lively-next-relaunch/assets/asset_browser_opened.png)
+![An opened Asset Browser, including the assets for this website.](/local_projects/nextguys--lively-next-relaunch/assets/asset_browser_open.png){width=400px}
 
 ### Component Browser
 
 ![The button to open the Component Browser in the top bar.](/local_projects/nextguys--lively-next-relaunch/assets/component-button.png){width=200px}
 
-![An opened Component Browser, showing the component that is this website.](/local_projects/nextguys--lively-next-relaunch/assets/component-button.png){width=200px}
-
-
 Allows the user to browse all available components in the current project as well as the standard components provided by the system. Also provides separate access to the [`partsbin` repository](https://github.com/LivelyKernel/partsbin), where we maintain a bunch of useful, interesting or even reusable components to be used.
+
+![An opened Component Browser, showing the component that is this website.](/local_projects/nextguys--lively-next-relaunch/assets/component_browser_open.png){width=400px}
 
 A selected component can be instantiated by dragging it from the component browser into the world. The user has the option to disable or enable to behavior of a component once it is instantiated. This is useful for cases, where we do not want the behavior of a component to interfere with my work immediately (for instance if we are in the process of building new components). If the component is part of the currently opened project it is also possible to open up the component in the world in order to manipulate the definition.
 
@@ -175,7 +171,7 @@ Additionally, you can also zoom in and out of the world, by using ***Ctrl-Mousew
 
 When *canvas mode* enabled, it is easy to loose track of certain elements that are scrolled out of the view. For this purpose, a minimap can be shown which displays the currently displayed part of the world as well as where other morphs are located that are scrolled out of the world bounds.
 
-![The zoom indicator, at the side of an opened minimap, showing a zoom value when zoomed in.](/local_projects/nextguys--lively-next-relaunch/assets/zoom_indicator.png)
+![The zoom indicator, at the side of an opened minimap, showing a zoom value when zoomed in.](/local_projects/nextguys--lively-next-relaunch/assets/zoom_indicator.png){width=300px}
 
 The currently active zoom factor is visible at all times in the zoom indicator in the bottom-right corner. Clicking the indicator will reset the viewport and the zoom to its default values.
 
@@ -212,7 +208,7 @@ There are multiple icons that might be displayed which show how the currently ru
 
 - **behind:** The lively.next repository is on an outdated commit and can be updated. Provides shortcut for immediately updating lively.next to the latest version.
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/update-ready.gif){width=200px}
+![](/local_projects/nextguys--lively-next-relaunch/assets/update.png){width=200px}
 
 - **ahead:** The user is on a more recent commit than the latest one on the main branch. This often happens when working on `lively.next` core packages.
 
@@ -236,7 +232,7 @@ This controls the background of the workspace (which is basically the fill of th
 
 ### Shape
 
-![The Shape Control Widget](/local_projects/nextguys--lively-next-relaunch/assets/shape_control.png){width=170px}
+![The Shape Control Widget](/local_projects/nextguys--lively-next-relaunch/assets/shape_control.png){width=400px}
 
 The Shape Control Panel is always displayed whenever a target is selected. This panel provides comprehensive control over the properties of a morph that define its *shape*. These properties can be finely tuned to achieve the desired appearance and behavior of the morph. From top to bottom, the following properties are available:
 
@@ -275,7 +271,7 @@ The "Clipping Mode" section determines whether the overflow content of the morph
 
 ### Rich Text
 
-![The Rich Text Widget](/local_projects/nextguys--lively-next-relaunch/assets/rich_text_controls.png){width=170px}
+![The Rich Text Widget](/local_projects/nextguys--lively-next-relaunch/assets/rich_text_controls.png){width=400px}
 
 The "Rich Text Controls" appear only when a Textmorph is selected.  It comes with all of the standard text properties that one would expect and should resemble what you know from Tools like "MS Office Word" and others. The following properties are available:
 
@@ -296,13 +292,13 @@ The "Rich Text Controls" appear only when a Textmorph is selected.  It comes wit
 The bottom in the top-right allows to open the "Font Manager", which allows the user to import font files and configure them accordingly.
 While `lively.next` ships with a wide variety of fonts with an permissive license that you can use and bundle in your applications, in some cases you might want to your your own font files. The font manager allows uploading and using additional fonts.
 
-![The Rich Text Widget with an opened Font Manager](/local_projects/nextguys--lively-next-relaunch/assets/font_manager.png){width=170px}
+![The Rich Text Widget with an opened Font Manager](/local_projects/nextguys--lively-next-relaunch/assets/font_manager.png){width=800px}
 
 #### Interactive Editing and Styling of Rich Text
 
 Naturally, rich text allows us not only to perform text styling on the entire textbox, but also on a selected piece of the text. To summon the appropriate popup, you will need to interactively edit some text (usually by double clicking into the text) and select some text *by dragging the selection with the mouse*.
 
-![The Rich Text Formatting Popup](/local_projects/nextguys--lively-next-relaunch/assets/rich_text_popup.png){width=170px}
+![The Rich Text Formatting Popup](/local_projects/nextguys--lively-next-relaunch/assets/rich_text_popup.png){width=400px}
 
 The formatting popup gives you access to some exclusive styling properties, which only make sense when targeting specific pieces of text, namely the definition of links and quotes.
 
@@ -321,24 +317,24 @@ A constraints based layout positions and resizes a morph in relation to its pare
 
 Keeps the posittion of a morph fixed in relation to specific fix-points of its outer container. It is often helpful to think of these "positions" as fixed distances to the borders of the outer container
 
-![A morph that has a fixed position in relation to the container left and top border.](/local_projects/nextguys--lively-next-relaunch/assets/fixed-default.gif)
+![A morph that has a fixed position in relation to the container left and top border.](/local_projects/nextguys--lively-next-relaunch/assets/fixed-default.gif){width=300px}
 
-![A morph that has a fixed position in relation to the container right and bottom border.](/local_projects/nextguys--lively-next-relaunch/assets/fixed-bottom.gif)
+![A morph that has a fixed position in relation to the container right and bottom border.](/local_projects/nextguys--lively-next-relaunch/assets/fixed-bottom.gif){width=300px}
 
-![A morph that has a fixed position in relation to the containers top **and** bottom border at the same time.](/local_projects/nextguys--lively-next-relaunch/assets/fixed-top-bottom.gif)
+![A morph that has a fixed position in relation to the containers top **and** bottom border at the same time.](/local_projects/nextguys--lively-next-relaunch/assets/fixed-top-bottom.gif){width=300px}
 
 ##### Centered Positioning
 
 This option can keep a morph centered in relation to its parent in either horizontal and vertical dimension.
 
-![A Constraint Layout centering a morph.](/local_projects/nextguys--lively-next-relaunch/assets/centered.gif)
+![A Constraint Layout centering a morph.](/local_projects/nextguys--lively-next-relaunch/assets/centered.gif){width=300px}
  
  
 ##### Scaling Positioning
 
 Resizes a morph in relation to the bounds of its parent.
 
-![A Constraint Layout resizing a morph in relation to its container.](/local_projects/nextguys--lively-next-relaunch/assets/scale.gif)
+![A Constraint Layout resizing a morph in relation to its container.](/local_projects/nextguys--lively-next-relaunch/assets/scale.gif){width=300px}
    
 #### Auto Layout
 
@@ -346,25 +342,25 @@ While a constraint based layout is specified on the basis of the child morphs of
 
 An auto layout allows you to either position the children of a container along rows or columns:
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/item-axis.gif)
+![](/local_projects/nextguys--lively-next-relaunch/assets/item-axis.gif){width=300px}
 
 The distance between the child items can be controlled via the "spacing" option of the layout:
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/item-spacing.gif)
+![](/local_projects/nextguys--lively-next-relaunch/assets/item-spacing.gif){width=300px}
 
 These layouts also allow for the specification of a padding that will control the distance between the children of a container and its border.
 
 When the children of a container are too large to be spaced according to the specified axis, wrapping can be enabled:
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/wrap-items.gif)
+![](/local_projects/nextguys--lively-next-relaunch/assets/wrap-items.gif){width=300px}
 
 Further, we can also control the alignment of the axis itself inside of the container. In total, nine different configurations are possible, which can be selected via a popover:
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/align-axis.gif)
+![](/local_projects/nextguys--lively-next-relaunch/assets/align-axis.gif){width=300px}
 
 Lastly we can also configure the spacing of the morphs within the axis. They can either be packed (so the morphs sit tightly next to each other) or spaced (the morphs try to keep the maximum distance apart from each other):
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/axis-spacing.gif)
+![](/local_projects/nextguys--lively-next-relaunch/assets/axis-spacing.gif){width=300px}
 
 ### Fill
 
@@ -376,11 +372,11 @@ The "Stroke Widget" is always visible when a target is selected. It allows to co
 
 For all morphs except `Path` and `Polygon` you can also activate an advanced mode that allows you to control each side of the border independently.
 
-![The advanced border control popup.](/local_projects/nextguys--lively-next-relaunch/assets/advanced_stroke.gif)
+![The advanced border control popup.](/local_projects/nextguys--lively-next-relaunch/assets/advanced_stroke.png){width=400px}
 
 ### Component Control
 
-![The component controls without any master components specified on the target.](/local_projects/nextguys--lively-next-relaunch/assets/component_controls.gif)
+![The component controls without any master components specified on the target.](/local_projects/nextguys--lively-next-relaunch/assets/component_controls.png){width=400px}
 
 The component section allows you to configure the overall master component of a morph and in respect to click and hover event. Clicking on the "link" button opens a popup similar to the "Component Browser" which you can use to set the specified master.
 
@@ -397,7 +393,7 @@ For modern web-design, designing with multiple different view-ports in mind at a
 
 To define the different view-port sizes that are to be styled independently, one utilized the responsive halo:
 
-![Defining and editing breakpoint via the "Responsive Halo".](/local_projects/nextguys--lively-next-relaunch/assets/responsive_halo.gif)
+![Defining and editing breakpoint via the "Responsive Halo".](/local_projects/nextguys--lively-next-relaunch/assets/responsive_halo.mp4){.responsive-video}
 
 ### Effects Controller
 
@@ -433,7 +429,7 @@ Changes the cursor style while hovering over a morph. Most of the default browse
 
 At the opposite site of the properties panel, at the left border of the workspace, a similar flap can be opened and closed. It contains the scene graph.
 
-![Partial "Scene Graph" for the design of this webiste.](/local_projects/nextguys--lively-next-relaunch/assets/scene_graph.png)
+![Partial "Scene Graph" for the design of this webiste.](/local_projects/nextguys--lively-next-relaunch/assets/scene_graph.png){width=400px}
 
 Each node of the scene graph represents a morph present in the world. Some special morphs, such as windows and other tooling, are excluded as to not clutter the graph. Hierarchies can be collapsed and uncollapsed. For each node, you can toggle its visibility and whether it is to be controlled by layouts, and observe its name and layout, if applicable.
 
@@ -443,12 +439,12 @@ You can click on each node to target the morph it represents and open its halo. 
 
 ## System Browser
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/system_browser.png)
+![](/local_projects/nextguys--lively-next-relaunch/assets/system_browser.png){width=800px}
 
 
 The "System Browser" is one of the main tools for programmers inside of `lively.next`. It allows you, amongst other things, to read and write source code, integrates with the system search of `lively.next` and gives you quick access to other tools such as our 'Test Runner'. It can be opened with ***Ctrl-B*** or via the world menu, accessible by right-clicking anywhere on the world.
 
-The core of `lively.next` is structured into multiple packages. For example, `lively.morphic` is one such package. All available packages are displayed in the left-most column of the *System Browser* (F). The browser categorizes loaded packages into packages belonging to the lively *core*, loaded *projects*, and other loaded packages which are controled via a bare `git` repository but are not part of the `lively.next` core.
+The core of `lively.next` is structured into multiple packages. For example, `lively.morphic` is one such package. All available packages are displayed in the left-most column of the *System Browser* (F). The browser categorizes loaded packages into packages belonging to the lively *core*, loaded *projects*, and other loaded packages which are controlled via a bare `git` repository but are not part of the `lively.next` core.
 
 Each package consists of multiple files and maybe folders. These are visible in the second colum (G). Depending on whether a folder or a file is selected in the second column, the contents of the third and subsequent columns (H) change. In the above screenshot, it contains the classes and top-level functions defined in `morph.js`. Selecting a class in column (H) will open a new column, containing the functions inside of the class and so on. This concept of a dynamic number of columns should be familiar to users with previous exposure to Smalltalk Browsers and is known as [Miller Columns](https://en.wikipedia.org/wiki/Miller_columns).
 
@@ -488,19 +484,19 @@ The Inspector displays all properties of a morph or any object that is inspected
 
 ## System Search
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/search.png)
+![](/local_projects/nextguys--lively-next-relaunch/assets/search.png){width=600px}
 
 The "System Search" can be opened via the world menu or by pressing ***Ctrl-Shift-F***. It is a handy tool to perform a global search inside of the `lively.next` codebase, as well as the currently loaded project. A case-sensitive search mode, as well as support for regular expressions can be toggled. Found matches for a search can open up a "System Browser" right at the code location by double clicking the result you are interested in.
 
 ## File Browser
 
-![The 'File Browser' browsing the contents of the project for this website.](/local_projects/nextguys--lively-next-relaunch/assets/file_browser.png)
+![The 'File Browser' browsing the contents of the project for this website.](/local_projects/nextguys--lively-next-relaunch/assets/file_browser.png){width=600px}
 
 The **System Browser** (see above) tries to execute modules you load and save, automatically lints your `JS` code and provides lots of other useful features. However, it does currently not support all file types. Additionally, sometimes you might not want the opinionated behavior of the **System Browser** and just want to edit a plain text file. For this reason, we provide the "File Browser", which again can be opened via the world menu. It allows you to navigate the contents of your `lively.next` directory in a tree structure, create and delete files, and change their contents. Editing and other operations are available via the buttons at the bottom of the browser. 
 
 ## Workspace
 
-![A `JavaScrpipt` workspace evaluating a simple expression.](/local_projects/nextguys--lively-next-relaunch/assets/workspace.mp4)
+![A `JavaScrpipt` workspace evaluating a simple expression.](/local_projects/nextguys--lively-next-relaunch/assets/workspace.mp4){.responsive-video}
 
 The **Workspace** can be summoned with ***Ctrl-K*** or via the *world menu*. There are multiple flavours available, although the `JavaScript` workspace is the one that will be used most in most circumstances.
 
@@ -508,10 +504,10 @@ The idea behind all workspaces is that they allow you to write code and immediat
 
 ## Terminal 
 
-![Demonstration of executing shell commands from inside of `lively.next`.](/local_projects/nextguys--lively-next-relaunch/assets/shell_terminal.mp4)
+![Demonstration of executing shell commands from inside of `lively.next`.](/local_projects/nextguys--lively-next-relaunch/assets/shell_terminal.mp4){.responsive-video}
 
 Through the `lively.server`, `lively.next` allows you to execute shell commands directly from inside the browser. The terminal is accessible through the *world menu*. The output of the last command that was executed is visible inside of the terminal. Interactive programs, such as `vi` are not supported. However, this can be handy to quickly commit your work from inside of lively, perform file systems from the command line, etc.
 
 > **⚠️ Warning**
 > 
-> As this gives essentially arbitrary access to all parts of your system, we do not recommend deploying `lively.next` servers openly on the web at this time**
+> **As this gives essentially arbitrary access to all parts of your system, we do not recommend deploying `lively.next` servers openly on the web at this time**
