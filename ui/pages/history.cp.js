@@ -63,7 +63,7 @@ const historyData = [
   },
   {
     date: '2012',
-    title: ['The server side of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is now fully implemented in ', null, 'NodeJS', { fontFamily: 'IBM Plex Mono' }, ', allowing for flexibel server as well as client side scripting. This fullstack version of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is named ', null, 'Lively-Web.', { fontFamily: 'IBM Plex Mono', fontStyle: 'italic' }],
+    title: ['The server side of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is now fully implemented in ', null, 'NodeJS', { fontFamily: 'IBM Plex Mono' }, ', allowing for flexibel server as well as client side scripting. This fullstack version of ', null, 'LivelyKernel', { fontFamily: 'IBM Plex Mono' }, ' is named ', null, 'Lively-Web.', { fontFamily: 'IBM Plex Mono', fontStyle: 'italic' }, 'You can visit a running instance of ', null, 'Lively-Web', { fontFamily: 'IBM Plex Mono', fontStyle: 'italic' }, ' at ', null, 'the Computer History Museum', { link: 'https://smalltalkzoo.thechm.org/', textDecoration: 'underline', fontColor: Color.black }, '.', null],
     pictures: [
       {
         yt: 'QTJRwKOFddc',
