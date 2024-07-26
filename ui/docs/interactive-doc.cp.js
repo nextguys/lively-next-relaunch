@@ -70,7 +70,7 @@ class BorderColorVisualizerModel extends PropertyVisualizerModel {
 class BorderRadiusVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     this.ui.dummy.animate({
-      borderRadius: this.ui.dummy.borderRadius == 1 ? 15 : 1
+      borderRadius: this.ui.dummy.borderRadius === 1 ? 15 : 1
     });
   }
 
@@ -81,10 +81,10 @@ class BorderWidthVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     const { dummy, dummyPoly } = this.ui;
     dummy.animate({
-      borderWidth: dummy.borderWidth == 1 ? 10 : 1
+      borderWidth: dummy.borderWidth === 1 ? 10 : 1
     });
     dummyPoly.animate({
-      borderWidth: dummyPoly.borderWidth == 1 ? 10 : 1
+      borderWidth: dummyPoly.borderWidth === 1 ? 10 : 1
     });
   }
 }
@@ -222,19 +222,7 @@ const DropShadowVisualizer = component(BorderRadiusVisualizer, {
   submorphs: [{
     name: 'property name',
     textAndAttributes: ['dropShadow', null]
-  }, add({
-    type: Text,
-    name: 'shaped dummy',
-    fontColor: Color.rgb(51, 152, 219),
-    fontSize: 46,
-    dynamicCursorColoring: true,
-    fill: Color.rgba(255, 255, 255, 0),
-    position: pt(95, 47.8),
-    textAndAttributes: ['', {
-      fontFamily: '"Font Awesome 6 Free", "Font Awesome 6 Brands"',
-      fontWeight: '900'
-    }]
-  })]
+  }]
 });
 
 class ExtentVisualizerModel extends PropertyVisualizerModel {
@@ -242,7 +230,7 @@ class ExtentVisualizerModel extends PropertyVisualizerModel {
 
   animateProperty () {
     this.ui.dummy.animate({
-      extent: this.ui.dummy.width == 100 ? pt(40, 20) : pt(100, 100)
+      extent: this.ui.dummy.width === 100 ? pt(40, 20) : pt(100, 100)
     });
   }
 }
@@ -294,7 +282,7 @@ const FillVisualizer = component(BorderColorVisualizer, {
 class RotationVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     this.ui.dummy.animate({
-      rotation: this.ui.dummy.rotation == 0 ? Math.PI * 2.5 : 0
+      rotation: this.ui.dummy.rotation === 0 ? Math.PI * 2.5 : 0
     });
   }
 }
@@ -354,7 +342,7 @@ class PositionVisualizerModel extends PropertyVisualizerModel {
 
   animateProperty () {
     this.ui.dummy.animate({
-      left: this.ui.dummy.left == 175 ? 50 : 175
+      left: this.ui.dummy.left === 175 ? 50 : 175
     });
   }
 }
@@ -398,7 +386,7 @@ class ScaleVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     const { dummy } = this.ui;
     dummy.animate({
-      scale: dummy.scale == 1 ? 2 : 1
+      scale: dummy.scale === 1 ? 2 : 1
     });
   }
 }
@@ -432,7 +420,7 @@ class VisibilityVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     const { dummy } = this.ui;
     this.view.withAnimationDo(() => {
-      dummy.opacity = dummy.opacity == 0 ? 1 : 0;
+      dummy.opacity = dummy.opacity === 0 ? 1 : 0;
       dummy.isLayoutable = !dummy.isLayoutable;
       this.ui.dummyContainer.applyLayoutIfNeeded();
     });
@@ -523,7 +511,7 @@ class OpacityVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     const { dummy } = this.ui;
     dummy.animate({
-      opacity: dummy.opacity == 1 ? .2 : 1
+      opacity: dummy.opacity === 1 ? .2 : 1
     });
   }
 }
