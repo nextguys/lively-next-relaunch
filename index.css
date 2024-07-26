@@ -48,6 +48,10 @@ lite-youtube {
   position: relative !important;
 }
 
+.docs-image > img {
+  filter: drop-shadow(5px 1px 5px #4a4a4a);
+}
+
 .responsive-video > video {
   max-width: 400px; /*TODO: */
   width: 100%;

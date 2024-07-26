@@ -1,4 +1,4 @@
-import { component, ShadowObject, Text, TilingLayout } from 'lively.morphic';
+import { component, Text, TilingLayout } from 'lively.morphic';
 import { part, add } from 'lively.morphic/components/core.js';
 import { projectAsset } from 'lively.project/helpers.js';
 import { Color, rect, pt } from 'lively.graphics';
@@ -52,7 +52,9 @@ export const DocumentationEntry = component({
   position: pt(402, 667.5),
   submorphs: [{
     type: Image,
+    styleClasses: ['docs-image'],
     name: 'example video',
+    clipMode: 'visible',
     extent: pt(335, 250),
     fill: Color.rgb(255, 255, 255),
     position: pt(-103.5, 23.5)
