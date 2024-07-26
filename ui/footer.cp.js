@@ -98,9 +98,9 @@ const WideFooter = component({
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
       position: pt(-107, 23.5),
-      textAndAttributes: ['We are looking for funding! ', null, '💌', { fontFamily: 'Noto Emoji Color Subset', link: 'mailto:hello@example.com' }, ' funding@lively-next.org', {
+      textAndAttributes: ['We are looking for funding! ', null, '💌', { fontFamily: 'Noto Emoji Color Subset', link: 'mailto:funding@lively-next.org' }, ' funding@lively-next.org', {
         fontColor: Color.rgb(0, 0, 0),
-        link: 'mailto:hello@example.com'
+        link: 'mailto:funding@lively-next.org'
       }]
 
     }]

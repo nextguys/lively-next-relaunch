@@ -228,8 +228,15 @@ export const DocumentationPage = component({
       }, '📧', {
         fontFamily: 'Noto Emoji Color Subset',
         fontSize: 14,
+        link: 'mailto:hi@lively-next.org',
         quote: 1
-      }, ' E-Mail! We also appreciate any hints in case you found an error anywhere on this page!\n', {
+      }, ' E-Mail!', {
+        fontSize: 14,
+        link: 'mailto:hi@lively-next.org',
+        textDecoration: 'underline',
+        quote: 1,
+        fontColor: Color.black
+      }, ' We are also thankful for any hints in case you found an error anywhere on this page!\n', {
         fontSize: 14,
         quote: 1
       }, '\n', null],

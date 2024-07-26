@@ -31,7 +31,7 @@ export const ImprintPage = component({
       fontColor: Color.rgb(255, 119, 0),
       fontWeight: '600',
       fontSize: 16
-    }, '\nRobin Schreiber & Linus Hagemann\nKemperplatz 1\nc/o WeWork\n10785 Berlin, Germany\n\nYou can contact us via 📧: ', null, 'mail @ lively-next.org\n', {
+    }, '\nRobin Schreiber & Linus Hagemann\nKemperplatz 1\nc/o WeWork\n10785 Berlin, Germany\n\nYou can contact us via 📧: ', null, 'hi @ lively-next.org\n', {
       fontColor: Color.rgb(255, 119, 0),
       fontWeight: '600'
     }, '\n', null, 'Privacy notice\n', {
