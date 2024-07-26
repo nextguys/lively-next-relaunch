@@ -39,6 +39,18 @@ lite-youtube {
   user-select: text !important;
 }
 
+.markdown-body { /* For Styling the Documentation Sub-Pages */
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #24292e;
+  font-family: "IBM Plex Sans", "Noto Color Emoji", "Font Awesome", "Tabler Icons", "Material Icons";
+  user-select: text;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
 .history-caption {
   height: fit-content !important;
 }
