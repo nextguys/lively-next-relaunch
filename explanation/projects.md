@@ -63,7 +63,7 @@ Opening a project with a declared dependency inside of `lively.next` will also t
 > Projects are versioned using a three number versioning system that follows [semver semantics](https://semver.org/).
 > When saving a project, `lively.next` will by default increase the patch version of the project. Especially when having other projects that depend on your project, it is important that you cautiously keep the version updated. When saving a project, you can also increase the major and minor version numbers of a project under the advanced settings.
 
-When opening a project with multiple dependencies that contradict each other or that are not all satisfiable, there will be a short prompt with this information upon opening the project. This mechanism is currently only intended to make you aware of this problem. Most importantly, there currently is no way for lively to "downgrade" a dependency to an older version. More sophisticated support for dependency management might be implemented in the future. As of writing this, you should however still be aware of these limitations.
+When opening a project with multiple dependencies that contradict each other or that are not all satisfiable, there will be a short prompt with this information upon opening the project. This mechanism is currently only intended to make you aware of this problem. Most importantly, there currently is no way for `lively.next` to "downgrade" a dependency to an older version. More sophisticated support for dependency management might be implemented in the future. As of writing this, you should however still be aware of these limitations.
 
 ### Working with Multiple Version of Projects in Parallel
 
