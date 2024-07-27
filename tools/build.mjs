@@ -29,6 +29,7 @@ const build = await rollup({
         '@rollup/plugin-commonjs',
         'rollup-plugin-polyfill-node',
         'babel-plugin-transform-jsx',                                   
+        'mermaid-it-markdown'
       ],
       resolver
     }),
