@@ -4,6 +4,7 @@
 
 `lively.next` draws inspiration from Smalltalk, aiming to provide a flexible, efficient, and interactive coding experience. The following chapter outlines the key features and mechanisms of lively.next, highlighting its advanced class management, source transformations, module system, performance optimizations for loading the system, and bundling techniques.
 
+
 ## Transpilation in lively.next
 
 Since lively.next lives in the Browser and Node.JS runtimes, it does not have the luxury of a pure Smalltalk system where scopes and runtime stacks are fist class objects or mutable classes are built into the system core. Instead we need to tweak the default behavior of the javascript syntax with a little sprinkle of transpilation magic.
@@ -185,7 +186,8 @@ In the case of the `lively.next` framework, System.js serves as the foundation f
 
 ```mermaid
 flowchart TD
-    esm["ESM Module Source"]
+
+    esm["ESMModule Source"]
     custom["Custom lively.next transpilation"]
     format["System.register format transpilation"]
     system[System.js]
@@ -273,8 +275,8 @@ flowchart TB
       direction TB
       a1-->a2-->a3
     end
-    A--"Reflective *Slow Load*"-->B
-    A--"Non-Reflective *Fast Load*"-->C
+    A--"`Reflective *Slow Load*`"-->B
+    A--"`Non-Reflective *Fast Load*`"-->C
     B-->C
     subgraph B
       direction TB
@@ -330,15 +332,15 @@ Besides optimizing the loading time of the source code itself, reducing the time
 
 ```mermaid
 graph TD
-   S[Server]
-   storage[Local Storage]
+   S[Servers]
+   storage[Local Storage Obj]
    modules[lively.modules]
    S--compressed module archive-->sources
-   S--"per module source (3)"-->modules
+   S--"`**per module source (3)**`"-->modules
    subgraph Client
      modules--write cache-->transpiled
-     sources--"read memory (2)"-->modules;
-     transpiled--"read cache (1)"-->modules
+     sources--"`**read memory 2**`"-->modules;
+     transpiled--"`**read cache (1)**`"-->modules
      subgraph storage
        sources
        transpiled
@@ -393,10 +395,5 @@ To address these needs, lively.next features a comprehensive bundling system. Th
 
 The resulting bundle utilizes the [System.register() module format](https://github.com/systemjs/systemjs/blob/main/docs/system-register.md). This format allows for lazy loading of code chunks, which improves the initial load time for applications that use a wide range of lively.next functionalities, such as interactive essays.
 
-### Configuration
-
- - basically works by parametrizing the rollup plugin.
- - The supported configuration is the explained here:
-
-### Bundling
+When you create a project, `lively.next` will automatically generate the nessecary build scripts for you, so that you can invoke them easily by running `npm run build` from the console.
 
