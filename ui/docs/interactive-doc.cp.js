@@ -112,10 +112,7 @@ class BorderStyleVisualizerModel extends PropertyVisualizerModel {
 class DropShadowVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     this.ui.dummy.animate({
-      dropShadow: !this.ui.dummy.dropShadow ? new ShadowObject({ distance: 5 }) : null
-    });
-    this.ui.shapedDummy.animate({
-      dropShadow: !this.ui.shapedDummy.dropShadow ? new ShadowObject({ distance: 5, fast: false }) : null
+      dropShadow: !this.ui.dummy.dropShadow ? new ShadowObject({ distance: 5, fast: false }) : null
     });
   }
 }
