@@ -4,9 +4,9 @@ import { HTMLMorph } from "lively.morphic/html-morph.js";
 const projects = component({
   type: HTMLMorph,
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,8010.2),
+  extent: pt(420,8022.2),
   fixedHeight: false,
-  html: '<link type=\"text/css\" rel=\"stylesheet\" id=\"github-markdown\" href=\"/lively.ide/md/github-markdown.css\"><div class=\"markdown-body\" style=\"margin: 5px\">\n\
+  html: '<div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"0\" data-htmlline=\"1\">Work in <code>lively.next</code> is organized in so called “projects”. Other ways of thinking about these projects might be a folder, containing all relevant files for a specific application or, for the technical inclined readers, a <code>git</code> repository.</p>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">This explanation is split in two parts: The first part will focus on how one interacts with these projects and describe the intended workflow for collaboration inside of <code>lively.next</code>. The second part will give some technical details on how these projects are implemented and working under the hood. The second part is only relevant for developers, while the first part is intended for all users of <code>lively.next</code>.</p>\n\
 <h2 class=\"markdown-line-marker\" data-mdline=\"4\" data-htmlline=\"5\">Working with lively.projects - Informations for all Users</h2>\n\

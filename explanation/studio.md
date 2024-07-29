@@ -25,7 +25,7 @@ However, when designing an application or crafting a user interface, we prioriti
 In line with other Morphic implementations, selecting a morph to activate resize handles, property manipulation, or dragging is known as invoking a *Halo*.
 The halo can be activated via ***CMD-(left click)*** when in interactive mode.
 
-![Depiction of a halo getting summoned on a morph.](/local_projects/nextguys--lively-next-relaunch/assets/summon-halo.gif){width=200px}
+  ![Depiction of a halo getting summoned on a morph.](/local_projects/nextguys--lively-next-relaunch/assets/summon-halo.gif){width=200px}
 
 To propagate the selection to the enclosing morph, one simply needs to meta click on the halo again, successively propagating the halo upwards until reaching the world level, at which point the halo selection is discarded.
 
@@ -104,7 +104,7 @@ drag the morph by dragging the inside of the halo itself.
 
 #### Grab
 
-![Grabbing a morph via the halo handle.](/local_projects/nextguys--lively-next-relaunch/assets/grab-halo.gif){300px}
+![Grabbing a morph via the halo handle.](/local_projects/nextguys--lively-next-relaunch/assets/grab-halo.gif){width=300px}
 
 The structure of morph compositions can also be adjusted via the grab control on the halo. This allows the user to remove a morph from its parent and subsequently assign it to a different owner. Its also possible to place the morph into the world instead of a new owner morph.
 
@@ -484,13 +484,13 @@ The Inspector displays all properties of a morph or any object that is inspected
 
 ## System Search
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/search.png){width=600px}
+![](/local_projects/nextguys--lively-next-relaunch/assets/search.png){width=400px}
 
 The "System Search" can be opened via the world menu or by pressing ***Ctrl-Shift-F***. It is a handy tool to perform a global search inside of the `lively.next` codebase, as well as the currently loaded project. A case-sensitive search mode, as well as support for regular expressions can be toggled. Found matches for a search can open up a "System Browser" right at the code location by double clicking the result you are interested in.
 
 ## File Browser
 
-![The 'File Browser' browsing the contents of the project for this website.](/local_projects/nextguys--lively-next-relaunch/assets/file_browser.png){width=600px}
+![The 'File Browser' browsing the contents of the project for this website.](/local_projects/nextguys--lively-next-relaunch/assets/file_browser.png){width=400px}
 
 The **System Browser** (see above) tries to execute modules you load and save, automatically lints your `JS` code and provides lots of other useful features. However, it does currently not support all file types. Additionally, sometimes you might not want the opinionated behavior of the **System Browser** and just want to edit a plain text file. For this reason, we provide the "File Browser", which again can be opened via the world menu. It allows you to navigate the contents of your `lively.next` directory in a tree structure, create and delete files, and change their contents. Editing and other operations are available via the buttons at the bottom of the browser. 
 

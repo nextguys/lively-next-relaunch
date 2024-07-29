@@ -6,14 +6,15 @@ import { module } from 'lively.modules/index.js';
 import { string, obj } from 'lively.lang';
 import { HTMLMorph, Morph } from 'lively.morphic';
 
-// run this module and it will convert all the mardown files into component modules that can be included into the website
+// run this module and it will convert all the markdown files into component modules that can be included into the website
 // await compileAllMarkdown()
 async function compileAllMarkdown () { // eslint-disable-line no-unused-vars
   const markdownFiles = await resource($world.openedProject.url).join('explanation').dirList(1, { exclude: /.js/ });
+  const markdownOptions = { ...defaultMarkdownOptions, linkedCSS: null };
   for (let mdFile of markdownFiles) {
     // mdFile = markdownFiles[1]
     const markdownSource = await mdFile.read();
-    const renderedMorph = new MarkdownPreviewMorph({ markdownSource, markdownOptions: defaultMarkdownOptions }).openInWorld();
+    const renderedMorph = new MarkdownPreviewMorph({ disableInternalScroll: true, clipMode: 'visible', markdownSource, markdownOptions: markdownOptions }).openInWorld();
     await renderedMorph.renderMarkdown();
     obj.adoptObject(renderedMorph, HTMLMorph);
     if (renderedMorph.submorphs.length > 0) {

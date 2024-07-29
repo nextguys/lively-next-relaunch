@@ -106,18 +106,21 @@ There are also certain events that concern the keyboard which are not only *augm
 This is implemented via a hidden DOM input node which is manually focused on demand via the event system. This gives us fine grained control about the redirection of keyboard events. For instance we can make any type of morph receive keyboard events as well as retrieve keyboard events even if no element is currently in focus, which is useful for the implementation of keyboard shortcuts.
 
 ### Classic Events
+
 There is a set of basic DOM events which behave more or less the same as they do inside the DOM:
-   - **onMouse (Down/Up/Move/Wheel)** *In response to the mouse buttons getting pressed.*
-   - **onKey (Up/Down)** *In response to a key on the keyboard being pressed.*
-   - **onContextMenu** *In response to the HTML context menu event. Is used to create custom morph based menus instead.*
+
+- **onMouse (Down/Up/Move/Wheel)** *In response to the mouse buttons getting pressed.*
+- **onKey (Up/Down)** *In response to a key on the keyboard being pressed.*
+- **onContextMenu** *In response to the HTML context menu event. Is used to create custom morph based menus instead.*
   
 ### Customized Events
 There is a set of events that provide a different behavior to the native DOM version. One of them is the drag event, which compared to the `HTML` event further provides more *movement specific* meta information to the morph as well as specific callbacks marking the *start* and *end* of the drag process:
 
-   ![An example of a morph being dragged across a scene](/local_projects/nextguys--lively-next-relaunch/assets/dragging.gif) 
-   - **onDrag** *Invoked continously while a morph is being dragged via touch gesture or mouse press and move. On each update it provides a drag delta that tells us about the current drag speed.*
-   - **onDragStart** *Invoked once at the start of the drag process before onDrag is getting called repeatedly.*
-   - **onDragEnd** *Invoked once at the end of the drag process.*
+![An example of a morph being dragged across a scene](/local_projects/nextguys--lively-next-relaunch/assets/dragging.gif){width=100px}
+
+- **onDrag** *Invoked continously while a morph is being dragged via touch gesture or mouse press and move. On each update it provides a drag delta that tells us about the current drag speed.*
+- **onDragStart** *Invoked once at the start of the drag process before onDrag is getting called repeatedly.*
+- **onDragEnd** *Invoked once at the end of the drag process.*
 
 There are also completely synthesized versions of the focus and blur events. For one, unlike the browser, they cover all types of morphs, including the base morph. This is different to HTML which reserves the focus and blur events only for a certain set of elements of the text and input types.
 
@@ -129,15 +132,16 @@ There are also completely synthesized versions of the focus and blur events. For
 ### Custom Events
 `lively.morphic` further supports a custom set of purely custom events:
 
-   ![An example of a morph being grabbed between morphs](/local_projects/nextguys--lively-next-relaunch/assets/grabbing.gif) 
-   - **onGrab** *If the morph is `grabbable` or has been grabbed via the halo, this callback is invoked once the morph is removed from its parent.*
-   - **onDrop** *If the morph was grabbed and is now getting dropped onto another morph, this callback is invoked.*
-   - **onBeingDroppedOn** *Similar to `onDrop`, but is invoked \*right before\* the drop happens.*
-   - **onHoverIn** *Triggered when the mouse cursor enters the bounds of the morph.*
-   - **onHoverOut** *Triggered when the mouse cursor exits the morph bounds.*
-   - **onDropHoverIn** *Trigged when `onHoverIn` is invoked while at the same time a morph is being grabbed by the user. This is useful to implement logic for UIs that respond to drag and drop gestures.*
-   - **onDropHoverOut** *Triggered when `onHoverOut` is invoked while a grab is in process.*
-   - **onDropHoverUpdate** *Triggered while a morph is being grabbed and the cursor is hovering over a particular morph.*
+![An example of a morph being grabbed between morphs](/local_projects/nextguys--lively-next-relaunch/assets/grabbing.gif) 
+
+- **onGrab** *If the morph is `grabbable` or has been grabbed via the halo, this callback is invoked once the morph is removed from its parent.*
+- **onDrop** *If the morph was grabbed and is now getting dropped onto another morph, this callback is invoked.*
+- **onBeingDroppedOn** *Similar to `onDrop`, but is invoked \*right before\* the drop happens.*
+- **onHoverIn** *Triggered when the mouse cursor enters the bounds of the morph.*
+- **onHoverOut** *Triggered when the mouse cursor exits the morph bounds.*
+- **onDropHoverIn** *Trigged when `onHoverIn` is invoked while at the same time a morph is being grabbed by the user. This is useful to implement logic for UIs that respond to drag and drop gestures.*
+- **onDropHoverOut** *Triggered when `onHoverOut` is invoked while a grab is in process.*
+- **onDropHoverUpdate** *Triggered while a morph is being grabbed and the cursor is hovering over a particular morph.*
 
 ## Component System
 
