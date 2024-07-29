@@ -120,7 +120,7 @@ class DropShadowVisualizerModel extends PropertyVisualizerModel {
 const PropertyVisualizer = component({
   borderColor: Color.rgb(189, 195, 199),
   borderStyle: 'dashed',
-  extent: pt(253.7, 130),
+  extent: pt(240, 130),
   fill: Color.rgb(253, 254, 254),
   submorphs: [{
     type: Text,
@@ -167,7 +167,7 @@ const BorderColorVisualizer = component(PropertyVisualizer, {
     borderWidth: 5,
     extent: pt(59.9, 55.4),
     fill: Color.rgb(52, 152, 219),
-    position: pt(98.2, 52.7),
+    position: pt(81.2, 52.7),
     rotation: 2.449293598294707e-16,
     vertices: [({ position: pt(46.0394, 27.6816), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(59.918, 44.7898), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(37.1136, 38.4775), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(22.8866, 55.3633), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(22.6713, 34.3538), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(0, 27.6816), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(22.6713, 21.0094), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(22.8866, 0), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(37.1136, 16.8858), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(59.918, 10.5734), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } }), ({ position: pt(46.0394, 27.6816), isSmooth: false, controlPoints: { next: pt(0, 0), previous: pt(0, 0) } })]
   }), add({
@@ -176,7 +176,7 @@ const BorderColorVisualizer = component(PropertyVisualizer, {
     borderWidth: 4,
     extent: pt(59.3, 53),
     fill: Color.rgb(52, 152, 219),
-    position: pt(188.5, 53.2)
+    position: pt(162.5, 53.7)
   })]
 });
 
@@ -318,6 +318,7 @@ const OriginVisualizer = component(BorderRadiusVisualizer, {
     textAndAttributes: ['origin', null]
   }, {
     name: 'dummy',
+    position: pt(136, 56),
     rotation: -0.3839724354387525,
     submorphs: [add({
       name: 'sub dummy b',
@@ -395,8 +396,9 @@ const ScaleVisualizer = component(ScrollVisualizer, {
     textAndAttributes: ['scale', null]
   }, {
     name: 'dummy',
-    position: pt(209.2, 92.9),
-    origin: pt(45.5, 40.2),
+    extent: pt(61, 53),
+    position: pt(151.3, 92.9),
+    origin: pt(41.2, 40.2),
     clipMode: 'visible',
     submorphs: [{
       name: 'sub dummy b',
@@ -613,7 +615,7 @@ class MorphicPropertyEssayModel extends InteractiveDelayModel {
 
 const MorphicPropertyEssay = component({
   defaultViewModel: MorphicPropertyEssayModel,
-  extent: pt(818.3, 7232),
+  extent: pt(280, 812),
   fill: Color.rgb(229, 231, 233),
   width: 800,
   layout: new TilingLayout({
@@ -635,6 +637,10 @@ const MorphicPropertyEssay = component({
       axis: 'column',
       hugContentsVertically: true,
       padding: rect(20, 20, 0, 0),
+      resizePolicies: [['aText copy', {
+        height: 'fixed',
+        width: 'fill'
+      }]],
       spacing: 10
     }),
     extent: pt(653.8, 174.8),
@@ -642,12 +648,12 @@ const MorphicPropertyEssay = component({
       type: Text,
       name: 'aText copy',
       clipMode: 'hidden',
-      extent: pt(445.3, 107),
+      extent: pt(656.3, 107),
       fixedWidth: true,
       fontColor: '#24292e',
       fontSize: 16,
       lineHeight: 1.5,
-      lineWrapping: true,
+      lineWrapping: 'by-words',
       position: pt(18.5, 9.5),
       textAlign: 'left',
       textAndAttributes: ['Visual Properties\n', {
