@@ -34,6 +34,11 @@ lite-youtube {
   display: table !important;
 }
 
+.markdown-body a {
+  color: black;
+  text-decoration: underline;
+}
+
 .markdown { /* For Styling the Blog entries */
   font-family: 'IBM Plex Sans', 'Noto Emoji Color Subset' !important;
   user-select: text !important;
@@ -43,12 +48,22 @@ lite-youtube {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   line-height: 1.5;
-  color: #24292e;
+  color: black;
   font-family: "IBM Plex Sans", "Noto Color Emoji", "Font Awesome", "Tabler Icons", "Material Icons";
   user-select: text;
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
 }
 
 .history-caption {
@@ -65,7 +80,7 @@ lite-youtube {
 }
 
 .responsive-video > video {
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
   margin-top: 0px !important;
   margin-bottom: 10px !important;
