@@ -5,7 +5,6 @@ import { Text } from 'lively.morphic/text/morph.js';
 import { num } from 'lively.lang';
 import { Polygon } from 'lively.morphic/morph.js';
 import { part } from 'lively.morphic/components/core.js';
-import { SearchField } from 'lively.components/inputs.cp.js';
 import { InteractiveDelayModel } from '../../explanation/examples.cp.js';
 
 class PropertyVisualizerModel extends ViewModel {
@@ -367,7 +366,8 @@ const ScrollVisualizer = component(OriginVisualizer, {
     textAndAttributes: ['scroll', null]
   }, {
     name: 'dummy',
-    clipMode: 'scroll',
+    extent: pt(67.3, 53),
+    clipMode: 'auto',
     position: pt(163.9, 56.9),
     rotation: num.toRadians(0.3),
     submorphs: [{
@@ -403,9 +403,11 @@ const ScaleVisualizer = component(ScrollVisualizer, {
     clipMode: 'visible',
     submorphs: [{
       name: 'sub dummy b',
+      clipMode: 'visible',
       position: pt(-24.5, -21.5)
     }, {
       name: 'sub dummy a',
+      clipMode: 'visible',
       position: pt(-37, -16.7)
     }]
   }]
@@ -607,26 +609,8 @@ class MorphicPropertyEssayModel extends InteractiveDelayModel {
 
   get bindings () {
     return [
-      ...super.bindings,
-      { target: 'visual prop filter', signal: 'searchInput', handler: 'filterVisualProperties' },
-      { target: 'behavioral prop filter', signal: 'searchInput', handler: 'filterBehavioralProperties' }
+      ...super.bindings
     ];
-  }
-
-  filterVisualProperties () {
-    const filter = this.ui.visualPropFilter;
-    const visualProps = this.ui.visualPropertyCollection.submorphs;
-    visualProps.forEach(prop => {
-      prop.visible = filter.matches(prop.name);
-    });
-  }
-
-  filterBehavioralProperties () {
-    const filter = this.ui.behavioralPropFilter;
-    const virtualProps = this.ui.behavioralProperties.submorphs;
-    virtualProps.forEach(prop => {
-      prop.visible = filter.matches(prop.name);
-    });
   }
 }
 
@@ -679,16 +663,7 @@ const MorphicPropertyEssay = component({
         fontSize: 20,
         fontWeight: 'bold'
       }, 'These are properties that directly affect the way the morphs are being rendered and expose themselves without any form of user interaction.', null]
-    }, part(SearchField, {
-      name: 'visual prop filter',
-      extent: pt(189.6, 24.9),
-      borderColor: Color.rgb(112, 112, 112),
-      position: pt(17.6, 125.3),
-      submorphs: [{
-        name: 'search input',
-        textAndAttributes: ['', null]
-      }]
-    })]
+    }]
   }, {
     name: 'visual property collection',
     layout: new TilingLayout({
@@ -749,11 +724,7 @@ const MorphicPropertyEssay = component({
       lineWrapping: 'by-words',
       position: pt(20, 20),
       textAlign: 'left'
-    }, part(SearchField, {
-      name: 'behavioral prop filter',
-      borderColor: Color.rgb(112, 112, 112),
-      extent: pt(189.6, 24.9)
-    })]
+    }]
   }, {
     name: 'behavioral properties',
     visible: false,
