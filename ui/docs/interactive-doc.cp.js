@@ -69,11 +69,11 @@ class BorderColorVisualizerModel extends PropertyVisualizerModel {
 class BorderRadiusVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     this.ui.dummy.animate({
-      borderRadius: this.ui.dummy.borderRadius === 1 ? 15 : 1
+      borderRadius: this.ui.dummy.borderRadius.bottomLeft === 1 ? 15 : 1
     });
   }
 
-  reset () { this.ui.dummy.borderRadius = 0; }
+  reset () { this.ui.dummy.borderRadius = 1; }
 }
 
 class BorderWidthVisualizerModel extends PropertyVisualizerModel {
