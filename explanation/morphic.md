@@ -276,7 +276,7 @@ const GoldenDie = component(Die, {
 The first argument to `component()` is now the component that we are using to derive a new component definition. When thinking about the component definition as a class, we can think about this first argument as the superclass. Internally we refer to this component as the component's *parent*.
 Looking further, we notice the structure of the spec which looks quite similar to the one we passed initially to `component` when we were defining `Die`. However this time, the properties here only define the *overridden* properties for each morph with respect to the way they were defined in the parent component. You can think of the resulting component definition as a *deep merge* of the spec found in the parent and the spec provided here in the derived component. Since this component derivation adjusts the fill of various parts of the die, the resulting component looks like this:
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/gold%20die.png){style="max-width:150"}
+![](/local_projects/nextguys--lively-next-relaunch/assets/gold%20die.png){style="max-width:150px"}
 
 > 💡 **Tip**
 >

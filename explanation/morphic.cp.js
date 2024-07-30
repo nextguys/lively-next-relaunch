@@ -6,7 +6,7 @@ import { InteractiveDie, WrappedDynamicPokerTable, WrappedThrowableDie, AllFaces
 import { Color } from "lively.graphics/color.js";
 const morphic = component({
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,36595),
+  extent: pt(420,36394),
   layout: new TilingLayout({
   axis: "column",
   hugContentsVertically: true,
@@ -18,7 +18,7 @@ const morphic = component({
   position: pt(750,297),
   submorphs: [{
   name: 'aMorph',
-  extent: pt(420,36595),
+  extent: pt(420,36394),
   fill: Color.transparent,
   layout: new TilingLayout({
   axis: "column",
@@ -288,7 +288,7 @@ This is implemented via a hidden DOM input node which is manually focused on dem
 </ul>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"31\" data-htmlline=\"32\">Customized Events</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"32\" data-htmlline=\"33\">There is a set of events that provide a different behavior to the native DOM version. One of them is the drag event, which compared to the <code>HTML</code> event further provides more <em>movement specific</em> meta information to the morph as well as specific callbacks marking the <em>start</em> and <em>end</em> of the drag process:</p>\n\
-<figure data-type=\"image\"><img src=\"./assets/dragging.gif\" alt=\"\" style=\"max-width:400px\"><figcaption>An example of a morph being dragged across a scene</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/dragging.gif\" alt=\"\" style=\"max-width:400px\"><figcaption>An example of a morph being dragged across a scene</figcaption></figure>\n\
 <ul>\n\
 <li><strong>onDrag</strong> <em>Invoked continously while a morph is being dragged via touch gesture or mouse press and move. On each update it provides a drag delta that tells us about the current drag speed.</em></li>\n\
 <li><strong>onDragStart</strong> <em>Invoked once at the start of the drag process before onDrag is getting called repeatedly.</em></li>\n\
@@ -324,7 +324,7 @@ This is implemented via a hidden DOM input node which is manually focused on dem
 </ul>\n\
 <h3 class=\"markdown-line-marker\" data-mdline=\"5\" data-htmlline=\"6\">Custom Events</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"6\" data-htmlline=\"7\"><code>lively.morphic</code> further supports a custom set of purely custom events:</p>\n\
-<figure data-type=\"image\"><img src=\"./assets/grabbing.gif\" alt=\"\" style=\"max-width:400px\"><figcaption>An example of a morph being grabbed between morphs</figcaption></figure>\n\
+<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/grabbing.gif\" alt=\"\" style=\"max-width:400px\"><figcaption>An example of a morph being grabbed between morphs</figcaption></figure>\n\
 <ul>\n\
 <li><strong>onGrab</strong> <em>If the morph is <code>grabbable</code> or has been grabbed via the halo, this callback is invoked once the morph is removed from its parent.</em></li>\n\
 <li><strong>onDrop</strong> <em>If the morph was grabbed and is now getting dropped onto another morph, this callback is invoked.</em></li>\n\
@@ -445,7 +445,7 @@ While <code>component</code> is used to <strong>define</strong> a reusable compo
 }), {
   type: HTMLMorph,
   name: 'markdown 12',
-  extent: pt(390,4368.5),
+  extent: pt(390,4166.9),
   fixedHeight: false,
   html: '<div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"2\" data-htmlline=\"3\">As you can see, by invoking the part calls within the submorph array we reused the component definition of <code>Die</code> within the component definition of <code>PokerTable</code>. Also notice, how in the  <code>part</code> calls we have passed some properties to adjust the properties of each die to place them at unique positions (and varying degrees of rotation). If we skipped these overrides, all dice would just sit on top of each other at the same position.</p>\n\
@@ -474,7 +474,7 @@ In order to achieve that, the component system allows to derive a component simi
 </code></pre>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"31\" data-htmlline=\"33\">The first argument to <code>component()</code> is now the component that we are using to derive a new component definition. When thinking about the component definition as a class, we can think about this first argument as the superclass. Internally we refer to this component as the component’s <em>parent</em>.\n\
 Looking further, we notice the structure of the spec which looks quite similar to the one we passed initially to <code>component</code> when we were defining <code>Die</code>. However this time, the properties here only define the <em>overridden</em> properties for each morph with respect to the way they were defined in the parent component. You can think of the resulting component definition as a <em>deep merge</em> of the spec found in the parent and the spec provided here in the derived component. Since this component derivation adjusts the fill of various parts of the die, the resulting component looks like this:</p>\n\
-<figure data-type=\"image\"><img src=\"./assets/gold%20die.png\" alt=\"\" style=\"max-width:150\"></figure>\n\
+<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/gold%20die.png\" alt=\"\" style=\"max-width:150px\"></figure>\n\
 <blockquote>\n\
 <p>💡 <strong>Tip</strong></p>\n\
 <p>When deriving components and overwriting parts of their <code>spec</code> in the definition of the derivation, it is important that each submorphs <code>name</code> property is specified correctly. Also consider the importance of unique names inside a component hierarchy mentioned above. You will always need to specify the complete path to a submorph (in the case of deeply nested submorphs). <code>lively.next</code> will not expand the hierarchy automatically.</p>\n\
@@ -537,7 +537,7 @@ For instance, going back to our poker table example, we may want to apply differ
 }, part(WrappedDiversePokerTable, {
   name: 'embedded 13',
   extent: pt(390,465.7),
-  position: pt(15,19287)
+  position: pt(15,19085)
 }), {
   type: HTMLMorph,
   name: 'markdown 14',
@@ -639,7 +639,7 @@ This is where <em>breakpoint states</em> come in handy, since they allow us to d
 });\n\
 </code></pre>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"122\" data-htmlline=\"123\">The resulting behavior looks like this:</p>\n\
-<figure data-type=\"image\"><img src=\"./assets/responsive-poker-table.gif\" alt=\"\" style=\"max-width:500px\"></figure>\n\
+<figure data-type=\"image\"><img src=\"/local_projects/nextguys--lively-next-relaunch/assets/responsive-poker-table.gif\" alt=\"\" style=\"max-width:500px\"></figure>\n\
 <blockquote>\n\
 <p>💡 <strong>Tip</strong></p>\n\
 <p>Note, that the breakpoints from any of the parent components are overridden if present and are not getting considered when the style is applied to the morph.</p>\n\
@@ -889,11 +889,11 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 </code></pre>\n\
 \n\
 </div>',
-  position: pt(15,19768)
+  position: pt(15,19566)
 }, part(AllFaces, {
   name: 'embedded 15',
   extent: pt(390,337.8),
-  position: pt(15,32930)
+  position: pt(15,32728)
 }), {
   type: HTMLMorph,
   name: 'markdown 16',
@@ -948,11 +948,11 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 <p class=\"markdown-line-marker\" data-mdline=\"50\" data-htmlline=\"51\">The resulting die looks like this. Try triggering the throw mechanism by clicking on the die.</p>\n\
 \n\
 </div>',
-  position: pt(15,33283)
+  position: pt(15,33081)
 }, part(WrappedThrowableDie, {
   name: 'embedded 17',
   extent: pt(390,304.1),
-  position: pt(15,34414)
+  position: pt(15,34213)
 }), {
   type: HTMLMorph,
   name: 'markdown 18',
@@ -1002,11 +1002,11 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 <p class=\"markdown-line-marker\" data-mdline=\"49\" data-htmlline=\"50\">The resulting poker table looks like this. <strong>Click on the dice and observe how the total changes</strong>:</p>\n\
 \n\
 </div>',
-  position: pt(15,34733)
+  position: pt(15,34532)
 }, part(WrappedDynamicPokerTable, {
   name: 'embedded 19',
   extent: pt(390,453.8),
-  position: pt(15,36106)
+  position: pt(15,35905)
 }), {
   type: HTMLMorph,
   name: 'markdown 20',
@@ -1015,7 +1015,7 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
   html: '<div class=\"markdown-body\" style=\"margin: 5px\">\n\
 \n\
 </div>',
-  position: pt(15,36575)
+  position: pt(15,36374)
 }]
 }]
 });

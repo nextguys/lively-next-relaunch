@@ -24,29 +24,6 @@ To alleviate that, `lively.next` provides a scope capturing transpilation for mo
 These entities inside of the written source-code are then rewritten to be captured by a synthesized recording object that keeps all declared variables stored transparent to the user. So a module scope that on the surface looks something like this:
 
 ```javascript
-
-const goldGradient =  new LinearGradient({
-  stops: [{ offset: 0, color: Color.rgb(244, 171, 4) }, { offset: 1, color: Color.rgb(246, 138, 9) }],
-  vector: rect(0.49999999999999994, 0, 6.123233995736766e-17, 1)
-});
-
-const GoldenDie = component(Die, {
-  fill: Color.black,
-  submorphs: [{
-    name: 'eye1',
-    fill: goldGradient
-  }, {
-    name: 'eye2',
-    fill: goldGradient
-  }, {
-    name: 'eye3',
-    fill: goldGradient
-  }]
-});
-```
-
-```javascript
-
 const foo = 'bar';
 
 function alice() { returns 'bob' }
