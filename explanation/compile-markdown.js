@@ -3,7 +3,7 @@ import { MarkdownPreviewMorph } from 'lively.ide/md/morphs.js';
 import { defaultMarkdownOptions } from 'lively.ide/md/editor-plugin.js';
 import { insertComponentDefinition } from 'lively.ide/components/reconciliation.js';
 import { module } from 'lively.modules/index.js';
-import { string, obj } from 'lively.lang';
+import { string, promise, obj } from 'lively.lang';
 import { HTMLMorph, Morph } from 'lively.morphic';
 
 // run this module and it will convert all the markdown files into component modules that can be included into the website
@@ -16,6 +16,7 @@ async function compileAllMarkdown () { // eslint-disable-line no-unused-vars
     const markdownSource = await mdFile.read();
     const renderedMorph = new MarkdownPreviewMorph({ disableInternalScroll: true, clipMode: 'visible', markdownSource, markdownOptions: markdownOptions }).openInWorld();
     await renderedMorph.renderMarkdown();
+    await promise.delay(2000);
     obj.adoptObject(renderedMorph, HTMLMorph);
     if (renderedMorph.submorphs.length > 0) {
       obj.adoptObject(renderedMorph, Morph);
