@@ -6,6 +6,7 @@ import { Text } from 'lively.morphic/text/morph.js';
 import { projectAsset } from 'lively.project/helpers.js';
 import { TiktokButton } from '../ui/pages/landing-page.cp.js';
 import { Spinner } from 'lively.components/loading-indicator.cp.js';
+import bowser from 'esm://run/bowser';
 
 export class InteractiveDelayModel extends ViewModel {
   static get properties () {
@@ -42,6 +43,12 @@ export class InteractiveDelayModel extends ViewModel {
       __expr__: `{ loader: "${this.getProperty('loader')}" }`,
       bindings: {}
     };
+  }
+
+  viewDidLoad () {
+    if (bowser.parse(navigator.userAgent).platform.type === 'mobile') {
+      this.view.master.setState('disabled');
+    }
   }
 
   repositionTextNode (evt) {
@@ -91,14 +98,20 @@ export class InteractiveDelayModel extends ViewModel {
   }
 }
 
-export const InteractiveDelay = component({
-  defaultViewModel: InteractiveDelayModel,
+const InteractiveDelayActive = component({
+  // FIXME: having inline components here fail to apply to
+  //        embedded parts for some reason, so we have to
+  //        solve this issue for the time being via derivations.
   fill: Color.rgb(229, 231, 233),
   extent: pt(430.2, 344),
+  clipMode: 'hidden',
   layout: new TilingLayout({
-    reactToSubmorphAnimations: false,
     align: 'center',
-    axisAlign: 'center'
+    axisAlign: 'center',
+    resizePolicies: [['mobile notification', {
+      height: 'fixed',
+      width: 'fill'
+    }]]
   }),
   submorphs: [part(TiktokButton, {
     name: 'start btn',
@@ -108,7 +121,41 @@ export const InteractiveDelay = component({
       extent: pt(170, 47),
       textAndAttributes: ['Start Demo', null]
     }]
-  })]
+  }), {
+    name: 'mobile notification',
+    type: 'text',
+    fontColor: Color.rgba(0, 0, 0, 0.4),
+    height: 77,
+    lineWrapping: 'by-words',
+    textAlign: 'center',
+    reactsToPointer: false,
+    readOnly: true,
+    fixedWidth: true,
+    visible: false,
+    fontSize: 18,
+    textAndAttributes: ['', {
+      fontFamily: 'Font Awesome',
+      fontSize: 93,
+      fontWeight: '900'
+    }, ' \n', {
+      fontSize: 93
+    }, 'This section is not supported on mobile devices.', {
+      fontSize: 20,
+      fontWeight: '600'
+    }]
+  }]
+});
+
+const InteractiveDelayInactive = component(InteractiveDelayActive, {
+  submorphs: [
+    { name: 'start btn', visible: false },
+    { name: 'mobile notification', visible: true }
+  ]
+});
+
+export const InteractiveDelay = component(InteractiveDelayActive, {
+  defaultViewModel: InteractiveDelayModel,
+  master: { states: { disabled: InteractiveDelayInactive } }
 });
 
 export const ExampleFlap = component({
