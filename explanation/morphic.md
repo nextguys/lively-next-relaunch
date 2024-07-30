@@ -116,7 +116,7 @@ There is a set of basic DOM events which behave more or less the same as they do
 ### Customized Events
 There is a set of events that provide a different behavior to the native DOM version. One of them is the drag event, which compared to the `HTML` event further provides more *movement specific* meta information to the morph as well as specific callbacks marking the *start* and *end* of the drag process:
 
-![An example of a morph being dragged across a scene](/local_projects/nextguys--lively-next-relaunch/assets/dragging.gif){width=100px}
+![An example of a morph being dragged across a scene](/local_projects/nextguys--lively-next-relaunch/assets/dragging.gif){style="max-width:400px"}
 
 - **onDrag** *Invoked continously while a morph is being dragged via touch gesture or mouse press and move. On each update it provides a drag delta that tells us about the current drag speed.*
 - **onDragStart** *Invoked once at the start of the drag process before onDrag is getting called repeatedly.*
@@ -132,7 +132,7 @@ There are also completely synthesized versions of the focus and blur events. For
 ### Custom Events
 `lively.morphic` further supports a custom set of purely custom events:
 
-![An example of a morph being grabbed between morphs](/local_projects/nextguys--lively-next-relaunch/assets/grabbing.gif) 
+![An example of a morph being grabbed between morphs](/local_projects/nextguys--lively-next-relaunch/assets/grabbing.gif){style="max-width:400px"}
 
 - **onGrab** *If the morph is `grabbable` or has been grabbed via the halo, this callback is invoked once the morph is removed from its parent.*
 - **onDrop** *If the morph was grabbed and is now getting dropped onto another morph, this callback is invoked.*
@@ -259,7 +259,8 @@ const goldGradient =  new LinearGradient({
 });
 
 const GoldenDie = component(Die, {
-  fill: Color.black,javascript
+  fill: Color.black,
+  submorphs: [{
     name: 'eye1',
     fill: goldGradient
   }, {
@@ -275,7 +276,7 @@ const GoldenDie = component(Die, {
 The first argument to `component()` is now the component that we are using to derive a new component definition. When thinking about the component definition as a class, we can think about this first argument as the superclass. Internally we refer to this component as the component's *parent*.
 Looking further, we notice the structure of the spec which looks quite similar to the one we passed initially to `component` when we were defining `Die`. However this time, the properties here only define the *overridden* properties for each morph with respect to the way they were defined in the parent component. You can think of the resulting component definition as a *deep merge* of the spec found in the parent and the spec provided here in the derived component. Since this component derivation adjusts the fill of various parts of the die, the resulting component looks like this:
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/gold%20die.png) 
+![](/local_projects/nextguys--lively-next-relaunch/assets/gold%20die.png){style="max-width:150"}
 
 > 💡 **Tip**
 >
@@ -474,7 +475,7 @@ const ResponsivePokerTable = component(PokerTable, {
 
 The resulting behavior looks like this:
 
-![](/local_projects/nextguys--lively-next-relaunch/assets/responsive-poker-table.gif) 
+![](/local_projects/nextguys--lively-next-relaunch/assets/responsive-poker-table.gif){style="max-width:500px"}
 
 > 💡 **Tip**
 >

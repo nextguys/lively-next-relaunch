@@ -4,7 +4,7 @@ import { HTMLMorph } from "lively.morphic/html-morph.js";
 const projects = component({
   type: HTMLMorph,
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,8022.2),
+  extent: pt(420,8091.2),
   fixedHeight: false,
   html: '<div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"0\" data-htmlline=\"1\">Work in <code>lively.next</code> is organized in so called “projects”. Other ways of thinking about these projects might be a folder, containing all relevant files for a specific application or, for the technical inclined readers, a <code>git</code> repository.</p>\n\

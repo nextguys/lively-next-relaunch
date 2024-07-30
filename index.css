@@ -2,6 +2,11 @@
 /* Do NOT create other CSS files in this folder, as they will not be available in the bundled application! */
 /* `@imports` fetching remote CSS are okay. */
 
+div > [id^="mermaid-svg"] {
+  margin: 0 auto;
+  display: table;
+}
+
 figcaption {
   font-style: italic;
   color: gray;
@@ -14,6 +19,7 @@ figure {
   margin-left: auto !important;
   margin-right: auto !important;
   display: table !important;
+  width: 100%;
 }
 
 a {
@@ -32,6 +38,7 @@ lite-youtube {
 .markdown-body img {
   margin: 0 auto !important;
   display: table !important;
+  width: 100%;
 }
 
 .markdown-body a {
