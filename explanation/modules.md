@@ -134,20 +134,6 @@ Every other piece of meta information on the other hand is generated during tran
 
 ### Dynamic Code Evaluation
 
-<!--- Another key element to Smalltalk-like systems is the ubiqutous ability to evaluate expressions.
-  - This is a key idea that Smalltalk inherited from LISP like systems it was inspired from.
-- The standard `eval()` in javascript has various weird rules attached to it, that make it hard to use in practice.
-  - One of them is that the default scope the evaluation is awlays bound to the local scope of the function it was called in
-  - However there are some [additional weird rules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#description)
-- In order to alleviate this, `lively.next` provides its own wrapper around the native `eval()` of Javascript, which applies custom source transformations in order to make the evaluation behavior more predictable and flexible.
-- Evaluation is performed with custom bindings that can be provided alongside the code to be executed.
-- The different environments can be:
-  - A custom variable mapping, where variables names are manually assigned certain values.
-  - A module where all the variables that where captured by the custom transpilation will be made available to the expression.
-    - It also allows for partial module specific expressions (such as import or export statements) to be evaluated.
-    - This is not supported by the native `eval()` and is achieved by transpiling the module specific syntax into statements that extract the correct values from the module's recorder object.
-  - A remote runtime such as a different browser, server or a lively.next running on a different hardware. Here the source transpilation also ensures that all required modules and packages are imported to fullfill the evaluation in the separate environment.-->
-
 In Smalltalk-like systems, a crucial feature is the pervasive capability to evaluate expressions. This concept is rooted in the influences of LISP-like systems from which Smalltalk drew inspiration. In JavaScript, the standard `eval()` function has a number of peculiarities that can complicate its practical use. Notably, the evaluation context is tied to the local scope of the function from which it was invoked. Additionally, there are several other specific rules and behaviors associated with `eval()`, which are outlined in detail on resources like the Mozilla Developer Network.
 
 To address these limitations, the `lively.next` framework offers a custom wrapper around JavaScript's native `eval()` function. This wrapper applies unique source transformations, thereby providing a more predictable and flexible evaluation behavior. It allows for custom bindings to be provided alongside the code being evaluated, offering various styles of evaluation:
@@ -163,18 +149,6 @@ To address these limitations, the `lively.next` framework offers a custom wrappe
 The modules system in `lively.next` is its own spin on the now widely adopted [EcmaScript Module System](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). It provides a fully reflective interpretation of the former, allowing for runtime inspection and modification of each and every modules in the system. In the following we will go over the different technical bits that play a key role in its implementation.
 
 ### System.js
-
-<!--- Is a framework that was developed directly in tandem with the early drafts of the EcmaScript Module System proposal.
-   - It has over time always kept up with the semantics and changes of the standard, which changed various times over the years until it reached its present final form.
- - The idea of SystemJS was that it provides a working version of the standard as early as possible while also easing the adaption of JS modules into the wider Javascript ecosystem.
- - The approach was that since the syntax support was not yet available in the browser, provide an alternative programmatic format that semantically is equivalent to the ESM Module System.
-   - This was accompanyied by an easily adaptable transpilation interface where one could translate ESM syntax into the SystemJS compliant format.
- - Nowadays SystemJS main utility is for lively development of js module based applications since it still comes with a handy hot swapping engine that still is (and probably never will be) supported by browsers.
-
-- lively.next utilizes SystemJS as its backbone for implementing various custom aspects that are not supported by native Javascript modules.
- - This is achived by wrapping the aforementioned custom transpilation logic as a plugin to systemjs.
-   - In addition to the lively specific transformations described earlier, we also in a final step apply a ESM module to SystemJS transpilation step.
-   - The transpiled module code is then fed into SystemJS such that it can take care of the remaining bookkeeping for running the module system.-->
 
 System.js is a framework that was developed in parallel with the early drafts of the EcmaScript Module System proposal. Over time, it has consistently aligned with the evolving semantics and changes of the standard, adapting through various iterations until the standard reached its current form. The core idea behind System.js was to offer a functional implementation of the standard as early as possible, thereby facilitating the adoption of JavaScript modules across the broader JavaScript ecosystem.
 
@@ -196,26 +170,6 @@ flowchart TD
 
 ### Modules and Files
 
-<!-- - Modules are in the end based on files that reside somewhere on a computer.
- - With regards to the core modules of `lively.next` these files reside in the local file system the lively.server is running on.
- - By defauly `lively.next` requests the sources via the server which in return fetches the file and sends its contents back to the client.
- - If a module is changed from the client, the corresponding file as eventually also updated in the file system.
- - Broadly speaking there are 4 types of modules one encounters in lively.next:
-   - The first are the modules belonging to the core packages of `lively.next` (the ones that were just mentioned). They can be changed in order to evolve the system at runtime.
-   - The second one are 3rd party modules that have been installed via the custom NPM package manager `flatn`. While these technically can also be adjusted *as well* it should be obvious that in practice one should never do so.
-     - Note that a lot of these installed npm packages still do not ship as ESM modules and can therefore only be reliably utilized inside node.js.\
-     - The reason is that we currently only provide native fallbacks for non esm modules inside the `node.js` context.
-     - In order to import 3rd part modules in the browser reliably, see the module type below.
-     - The downside is that we loose the reflection capabilities to the modules that are imported via the native fallback.
-   - The third type is 3rd party modules that have been installed via public ESM transpilation service. These are public servers that ship ESM transpilations of NPM packages.
-     - In practice this means that 90% of the time an npm package that is intended to be utilizied in the browser can be imported in the browser via these servers.
-     - There are still bugs and issues with some packages that can be reported to the administrators of these servers who often are rather quick at fixing the issues at hand.
-     - These modules are cached as files on the server file system in order to improve loading performance.
-     - It goes without say that altering these modules while technically possible, is not a good idea.
-   - The fourth type are modules belonging to projects that where created in `lively.next` and you are working on right now.
- - Aside from file based modules, `lively.next` also supports *in-memory* modules that are either stored to the browser local storage *(`local://...`)* or are kept purely in memory *(`lively://...`)*, ceasing to exisit once the runtime is terminated.
-   - One example for these ephemeral modules are the ones created by workspaces in the system.-->
-
 In essence, modules are ultimately based on files that are stored somewhere on a computer. For the core modules of `lively.next`, these files are located within the local file system where the lively.server is running. By default, `lively.next` requests these source files from the server, which retrieves the files and sends their contents back to the client. When a module is modified from the client side, the corresponding file is eventually updated in the file system.
 
 However these are not only only types of modules we use. There are broadly four types of modules encountered in `lively.next`:
@@ -231,23 +185,6 @@ However these are not only only types of modules we use. There are broadly four 
 In addition to file-based modules, `lively.next` also supports in-memory modules. These can be stored in the browser's local storage (`local://...`) or kept entirely in memory (`lively://...`), disappearing once the runtime is terminated. An example of these ephemeral modules includes those created by workspaces within the system. In memory modules can also be serialized, meaning they can be incorporated into a snapshot which can be handy to transport state and behavior across different systems.
  
 ### Bootstrapping the Modulesystem
-
-<!-- - An interesting aspect about modules in lively.next is that they are fully reflective.
-   - This means every module object carries all the info it needs about its place in the system, the source code it holds and how to update or reload itself.
- - Since neither the Browser nor the NodeJS runtime offer a comprable reflection capability, it is curcial to devise a bootstrapping scheme that initializes the module system before it starts importing each module in the system.
-   - The bootstrapping process itself is metacircular meaning the process is defined entirely within lively.next itself.
-   - The bootstrapping algorithm roughly works as follows:
-     - **Step A**
-       - First it is ensured that the required third party libraries are loaded. This includes mainly SystemJS and Babel.
-         > 🏗️ **Notice**
-         > In the future we are trying to remove BabelJS and its large set of dependencies from the system. The main obstacle is the esm to systemjs transpilation we currently utilize in babel.
-       - We then import all of the core packages that are required for `lively.modules` to run.
-       - We then go ahead and initialize the `lively.modules` package.
-     - **Step B**
-       - We then use that newly created lively.modules package to import the previously imported packages *again* together with the remaining packages that have not yet been imported but are nessecary for the bootstrapping to be complete.
-       - At this stage we reach a fully reflective state of the module system
-   - As is, the above code is not executable since without a preexisting module system, we can not go ahead to import *anything* to begin with.
-   - However by ***bundling the bootstrapping algorithm***, the steps inside **A** become just static imports resolved by the bulder. which are enough to enable the steps in **B**.-->
 
 In `lively.next`, modules are fully reflective, meaning each module object contains all the information it needs about its position within the system, the source code it holds, and the methods to update or reload itself. This level of introspection is not natively supported by either the Browser or the NodeJS runtime, making it essential to establish a bootstrapping process that initializes the module system before any module imports occur. 
 
@@ -286,19 +223,6 @@ flowchart TB
 
 ### Fast vs Slow Loading
 
-<!-- - A further optimization for lively.next boot performance
- - When looking at the process of bootstrapping itself it can generally be said that 10% of the time are spend in **Step A** wheras the majority of compute is spent on **Step B**.
- - We can therefore improve the performance by adjusting the dial on *how complete* we want **Step B** to be performed.
- - Hence, there is a choice between what we call the *slow load* and the *fast load*.
- - Slow Load;
-   - Slow loading will use the bundled version in order to completely replace itself with a version of lively loaded via lively.modules, where every module object is loaded from scratch again. This creates a clean network of modules where each module is a first class object that is managed by SystemJS below.
-   - This approach takes longer to load but from then on provides the most reliabel way to enhance the system from within of itself.
- - Fast Load:
-   - Will try to run everything in lively.next without reinstantiating all of the modules again, instead restorting to using the bundledl version of lively.next most of the time.
-   - Changes that were dont to the system after the bundle, are injected into the bundle by a mechanism we refer to as *reviving modules*.
-   - The degree to wich this works varies. In our experience it is best not to have many local changes in place.
-   - The fast load mode is suited best for users who mostly do not touch the core system at all, and are rather non programmers.-->
-
 To optimize the startup performance of `lively.next`, we can adjust the approach to the bootstrapping process. Typically, around 10% of the boot time is spent on **Step A**, while the majority of the time is consumed by **Step B**. To enhance performance, we can choose how thoroughly to perform **Step B**, resulting in two different loading modes: *slow load* and *fast load*.
 
 **Slow Load**:
@@ -308,18 +232,6 @@ In the slow loading mode, the system uses the bundled version to fully replace i
 In contrast, the fast load mode aims to minimize the reinitialization of modules. It primarily uses the bundled version of `lively.next`, avoiding the complete reloading of all modules. Changes made to the system after the bundle are incorporated through a mechanism called *reviving modules*, which injects these updates into the existing bundled modules. However, the effectiveness of this approach can vary, and it is generally not recommended to have numerous local changes in place. The fast load mode is best suited for users who do not modify the core system.
 
 ### Caching Optimizations
-<!--
- - In order to further improve the loading performance in **Step B** we also utilize compression and caching strategies.
- - These are integrated via the SystemJS plugin API that allows us to hook into the loading process of a module.
-#### server side compression of core source code
-   - The server keeps a complete bundle of the entire lively.next core library code ans a single gzip bundle
-   - The bundle is created whenever the server starts or whenever one of the modules in the core are changed during development
-   - The bundle is shipped to the client during startup, which saves time since the request overhead of thousands of seperate module requests is reduced to a single transfer request.
-   - The bundle is then used to directly read the module source from memory during booting of lively.next
-#### transpilation and storage in client for immediate fetch from store
-   - In addition to optimizing the load time of the source code itself, it is also vital to reduce the time spent in transpilation
-   - Since basically any module that is to be editied and evaluated at runtime in lively.next needs to be transpiled, the time to transpile all modules is quite significant.
-   - In order to save this on successive boots, it is possible to store each transpiled module in the local storage and directly fetch and evaluate from there instead of repeatedly performing a costly transpilation.-->
 
 To further optimize the loading performance in **Step B** of the `lively.next` bootstrapping process, we employ compression and caching strategies through the SystemJS plugin API. This API allows us to integrate directly into the module loading process, enhancing efficiency in two key ways:
 
@@ -349,17 +261,6 @@ graph TD
 ```
 
 ### Hot Reloading
-<!-- - SystemJS internally stores the information about which module depends on which
-    - Handles the reload of the nessecary modules in case one module is updated at runtime
-    - When we request a module to be updated or simply reloaded, we trigger the following API calls in SystemJS
-      - First the record of the module is deleted from SystemJS
-      - We then redeclare the module in its new or current form, depending on the scenario (reload or patch)
-      - We then trigger an import of the module which executes the module and populates the module record accordingly.
- - Reloading of module basically causes a clean re-evaluation of the module, which potentially resets all variables, objects, functions and classes within it.
-   - This is alleviated by our custom transpilation explained earlier, which makes the resulting code automatically handle all the aspects required for sucessful *patching at runtime*.
-
- - Regardless of reload or update, `lively.modules` detects the changed exports of the module and determines which dependent modules are affected.
-   - It then traverses these affected modules and forces a re-execution of their compiled bodies such that the updated exports are propagated accordingly. -->
 
 SystemJS maintains an internal record of module dependencies, which allows it to handle the reloading of necessary modules when one is updated at runtime. When a request is made to update or reload a module, the following steps occur in SystemJS:
 
@@ -374,19 +275,6 @@ Regardless of whether a module is reloaded or updated, `lively.modules` detects 
 
 ## Bundling in lively.next
 
-<!--
- - Smalltalk and other Smalltalk-like systems can basically only "ship" their apps together with their runtimes.
- - This usually requires a person that wants to run Self to have Self installed. Likewise a person that wants to run a Smalltalk app needs to have a Squeak Image available or provided.
- - The same issue arises with lively.next, just that we need to instantiate the runtime in the browser, which takes while in order to create all required objects to get the system going and live.
- - If we reallt want to ship in the browser, things needs to load fast and only ship with the minimum amount of what is needed.
-   - This is reasonable since we can assume that most end users of an application will not feel the need to customize it further.
-   - And even if they do, its fair to assume that they will be patient enough to wait a while for the system to load in order to incorporate the changes they need.
- - This is why lively.next comes with a comprehensive bundling system, which is able to create compact bundles out of applications that only include code that is needed while also avoiding expensive initialization of the module system.
- - The bundler is a fairly involved `RollupJS` plugin.
- - The resulting bundle is split bundle via the support of the [System.register() module format](https://github.com/systemjs/systemjs/blob/main/docs/system-register.md). (Explain system.register)
-   - This allows for lazy loading of code chunk which helps with initial load time for applications that use a broad functionality of lively.next (i.e. interactive essays)
--->
-
 Smalltalk and similar systems typically require their applications to be shipped along with their runtimes. For instance, running a Self application necessitates having Self installed, and running a Smalltalk app requires access to a Squeak Image. This dependency issue is also present in lively.next, where the runtime needs to be instantiated in the browser. This process involves creating all the necessary objects to get the system operational, which can take a significant amount of time.
 
 To ship applications effectively in the browser, it is crucial to ensure that they load quickly and include only the essential components. This is a reasonable approach because most end users are unlikely to want to customize the application further. Even if customization is desired, it is fair to assume that users will be willing to wait for the system to load to incorporate the changes they need.
@@ -396,4 +284,3 @@ To address these needs, lively.next features a comprehensive bundling system. Th
 The resulting bundle utilizes the [System.register() module format](https://github.com/systemjs/systemjs/blob/main/docs/system-register.md). This format allows for lazy loading of code chunks, which improves the initial load time for applications that use a wide range of lively.next functionalities, such as interactive essays.
 
 When you create a project, `lively.next` will automatically generate the nessecary build scripts for you, so that you can invoke them easily by running `npm run build` from the console.
-
