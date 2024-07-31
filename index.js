@@ -22,6 +22,8 @@ export class WORLD_CLASS extends World {
     // just dont do anything
   }
 
+  halos () { return []; }
+
   get commands () {
     return [
       ...super.commands, {
