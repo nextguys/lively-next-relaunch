@@ -614,7 +614,9 @@ class Wrapper extends Morph {
   onChange (change) {
     super.onChange(change);
     if (change.prop === 'extent') {
-      this.submorphs[0].scale = this.width < 500 ? .6 : 1;
+      this.withMetaDo({ metaInteraction: false }, () => {
+        this.submorphs[0].scale = this.width < 500 ? .6 : 1;
+      });
     }
   }
 }
