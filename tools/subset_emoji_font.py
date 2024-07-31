@@ -8,7 +8,7 @@ source_font_path = "NotoColorEmoji-Regular.ttf"
 destination_font_path = "Noto Emoji Color Subset.woff2"
 
 # The only emojis that we want in our new font:
-emojis = ["🔗", "🗨️", "💌", "😢", "👪", "🔁", "🖨️", "🔋️", "🎨️", "🤸", "🏗️", "📧", "💡", "✨", "📜"]
+emojis = ["🔗", "🗨️", "💌", "😢", "👪", "🔁", "🖨️", "🔋️", "🎨️", "🤸", "🏗️", "📧", "💡", "✨", "📜", "🧡"]
 
 # Create a list of unicode codes representing the characters in our emojis:
 codes = []
