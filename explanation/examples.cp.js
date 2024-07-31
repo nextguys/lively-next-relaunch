@@ -1,4 +1,4 @@
-import { component, ViewModel, Image, Label, ShadowObject, ConstraintLayout, without, add, part, replace, TilingLayout, Ellipse } from 'lively.morphic';
+import { component, Morph, ViewModel, Image, Label, ShadowObject, ConstraintLayout, without, add, part, replace, TilingLayout, Ellipse } from 'lively.morphic';
 import { Color, RadialGradient, rect, LinearGradient, pt } from 'lively.graphics';
 import { num, promise } from 'lively.lang';
 import { Path } from 'lively.morphic/morph.js';
@@ -610,7 +610,17 @@ const DynamicPokerTable = component(PokerTable, {
   ]
 });
 
+class Wrapper extends Morph {
+  onChange (change) {
+    super.onChange(change);
+    if (change.prop === 'extent') {
+      this.submorphs[0].scale = this.width < 500 ? .6 : 1;
+    }
+  }
+}
+
 export const WrappedDynamicPokerTable = component({
+  type: Wrapper,
   extent: pt(482.1, 453.8),
   borderWidth: 7,
   borderColor: Color.rgb(229, 231, 233),
@@ -624,6 +634,7 @@ export const WrappedDynamicPokerTable = component({
 });
 
 export const WrappedPokerTable = component({
+  type: Wrapper,
   extent: pt(482.1, 453.8),
   borderWidth: 7,
   borderColor: Color.rgb(229, 231, 233),
@@ -694,6 +705,7 @@ const DiversePokerTable = component(PokerTable, {
 });
 
 export const WrappedDiversePokerTable = component({
+  type: Wrapper,
   extent: pt(490, 465.7),
   borderWidth: 7,
   borderColor: Color.rgb(229, 231, 233),
@@ -738,86 +750,104 @@ export const InteractiveDie = component({
 
 export const FocusBlurDiagram = component({
   fill: Color.rgb(229, 231, 233),
-  extent: pt(567.5, 353.3),
+  extent: pt(562.1, 382.8),
+  master: {
+    breakpoints: [
+      [pt(0, 0), component({
+        submorphs: [{ name: 'contents', submorphs: [{ name: 'diagram', scale: .7 }] }]
+      })],
+      [pt(400, 0), component({
+        submorphs: [{ name: 'contents', submorphs: [{ name: 'diagram', scale: 1 }] }]
+      })]
+    ]
+  },
   layout: new TilingLayout({
     padding: rect(10, 10, 0, 0),
-    resizePolicies: [['diagram', {
+    resizePolicies: [['contents', {
       height: 'fill',
       width: 'fill'
     }]]
   }),
   submorphs: [{
-    name: 'diagram',
-    extent: pt(523.2, 348.7),
-    position: pt(12.2, 11.5),
+    name: 'contents',
+    clipMode: 'hidden',
+    layout: new TilingLayout({
+      align: 'center',
+      axisAlign: 'center'
+    }),
     submorphs: [{
-      name: 'alice',
-      dropShadow: new ShadowObject({ distance: 7.071067811865476, rotation: 44.99999999999999, color: Color.rgba(0, 0, 0, 0.5), blur: 30 }),
-      fill: Color.rgb(229, 57, 53),
-      extent: pt(111.6, 88.8),
-      position: pt(111.1, 60.9)
-    }, {
-      name: 'bob',
-      dropShadow: new ShadowObject({ distance: 7.071067811865476, rotation: 44.99999999999999, color: Color.rgba(0, 0, 0, 0.5), blur: 30 }),
-      extent: pt(111.6, 88.8),
-      fill: Color.rgb(33, 150, 243),
-      position: pt(303.2, 178.6)
-    }, {
-      type: Path,
-      name: 'event 1',
-      endMarker: { tagName: 'marker', id: 'end-marker', viewBox: '0 0 10 10', refX: '5', refY: '5', markerWidth: '5', markerHeight: '5', orient: 'auto', children: [{ tagName: 'path', d: 'M0,0 L10,5 L0,10 z' }] },
-      borderColor: Color.rgb(67, 67, 67),
-      borderStyle: 'dotted',
-      borderWidth: 2,
-      draggable: true,
-      extent: pt(101, 24.6),
-      fill: Color.rgba(255, 255, 255, 0),
-      position: pt(2.1, 106.1),
-      vertices: [({ position: pt(0.0000, 27.4961), isSmooth: true, controlPoints: { next: pt(39.0664, 5.2227), previous: pt(0.0000, 0.0000) } }), ({ position: pt(121.8633, 0.0000), isSmooth: true, controlPoints: { next: pt(1.4053, 0.1586), previous: pt(-57.9805, -6.5430) } })]
-    }, {
-      type: Path,
-      name: 'event 2',
-      endMarker: { tagName: 'marker', id: 'end-marker', viewBox: '0 0 10 10', refX: '5', refY: '5', markerWidth: '5', markerHeight: '5', orient: 'auto', children: [{ tagName: 'path', d: 'M0,0 L10,5 L0,10 z' }] },
-      borderColor: Color.rgb(67, 67, 67),
-      borderStyle: 'dotted',
-      borderWidth: 2,
-      extent: pt(96.7, 54.9),
-      fill: Color.rgba(255, 255, 255, 0),
-      position: pt(229.7, 118),
-      vertices: [({ position: pt(0.0000, 0.0000), isSmooth: true, controlPoints: { next: pt(35.0389, 4.6726), previous: pt(0.0000, 0.0000) } }), ({ position: pt(96.7453, 57.4937), isSmooth: true, controlPoints: { next: pt(-0.1858, 1.2547), previous: pt(6.9696, -47.0647) } })]
-    }, {
-      type: Text,
-      name: 'focus call 1',
-      fixedWidth: true,
-      textAlign: 'right',
-      extent: pt(81, 42),
-      fontSize: 15,
-      dynamicCursorColoring: true,
-      fill: Color.rgba(255, 255, 255, 0),
-      fontFamily: '\"IBM Plex Mono\"',
-      position: pt(26.4, 58.8),
-      textAndAttributes: ['focus()\nonFocus()', null]
-    }, {
-      type: Text,
-      name: 'focus call 2',
-      extent: pt(81, 42),
-      dynamicCursorColoring: true,
-      fill: Color.rgba(255, 255, 255, 0),
-      fontFamily: '\"IBM Plex Mono\"',
-      fontSize: 15,
-      position: pt(336.9, 134.8),
-      textAndAttributes: ['focus()\nonFocus()', null]
-    }, {
-      type: Text,
-      name: 'blur call',
-      dynamicCursorColoring: true,
-      fill: Color.rgba(255, 255, 255, 0),
-      fontFamily: '\"IBM Plex Mono\"',
-      fontSize: 15,
-      position: pt(229.6, 89.5),
-      textAndAttributes: ['onBlur()', null]
+      name: 'diagram',
+      extent: pt(431.3, 348.7),
+      submorphs: [{
+        name: 'alice',
+        dropShadow: new ShadowObject({ distance: 7.071067811865476, rotation: 44.99999999999999, color: Color.rgba(0, 0, 0, 0.5), blur: 30 }),
+        fill: Color.rgb(229, 57, 53),
+        extent: pt(111.6, 88.8),
+        position: pt(111.1, 60.9)
+      }, {
+        name: 'bob',
+        dropShadow: new ShadowObject({ distance: 7.071067811865476, rotation: 44.99999999999999, color: Color.rgba(0, 0, 0, 0.5), blur: 30 }),
+        extent: pt(111.6, 88.8),
+        fill: Color.rgb(33, 150, 243),
+        position: pt(303.2, 178.6)
+      }, {
+        type: Path,
+        name: 'event 1',
+        endMarker: { tagName: 'marker', id: 'end-marker', viewBox: '0 0 10 10', refX: '5', refY: '5', markerWidth: '5', markerHeight: '5', orient: 'auto', children: [{ tagName: 'path', d: 'M0,0 L10,5 L0,10 z' }] },
+        borderColor: Color.rgb(67, 67, 67),
+        borderStyle: 'dotted',
+        borderWidth: 2,
+        draggable: true,
+        extent: pt(101, 24.6),
+        fill: Color.rgba(255, 255, 255, 0),
+        position: pt(2.1, 106.1),
+        vertices: [({ position: pt(0.0000, 27.4961), isSmooth: true, controlPoints: { next: pt(39.0664, 5.2227), previous: pt(0.0000, 0.0000) } }), ({ position: pt(121.8633, 0.0000), isSmooth: true, controlPoints: { next: pt(1.4053, 0.1586), previous: pt(-57.9805, -6.5430) } })]
+      }, {
+        type: Path,
+        name: 'event 2',
+        endMarker: { tagName: 'marker', id: 'end-marker', viewBox: '0 0 10 10', refX: '5', refY: '5', markerWidth: '5', markerHeight: '5', orient: 'auto', children: [{ tagName: 'path', d: 'M0,0 L10,5 L0,10 z' }] },
+        borderColor: Color.rgb(67, 67, 67),
+        borderStyle: 'dotted',
+        borderWidth: 2,
+        extent: pt(96.7, 54.9),
+        fill: Color.rgba(255, 255, 255, 0),
+        position: pt(229.7, 118),
+        vertices: [({ position: pt(0.0000, 0.0000), isSmooth: true, controlPoints: { next: pt(35.0389, 4.6726), previous: pt(0.0000, 0.0000) } }), ({ position: pt(96.7453, 57.4937), isSmooth: true, controlPoints: { next: pt(-0.1858, 1.2547), previous: pt(6.9696, -47.0647) } })]
+      }, {
+        type: Text,
+        name: 'focus call 1',
+        fixedWidth: true,
+        textAlign: 'right',
+        extent: pt(81, 42),
+        fontSize: 15,
+        dynamicCursorColoring: true,
+        fill: Color.rgba(255, 255, 255, 0),
+        fontFamily: '\"IBM Plex Mono\"',
+        position: pt(26.4, 58.8),
+        textAndAttributes: ['focus()\nonFocus()', null]
+      }, {
+        type: Text,
+        name: 'focus call 2',
+        extent: pt(81, 42),
+        dynamicCursorColoring: true,
+        fill: Color.rgba(255, 255, 255, 0),
+        fontFamily: '\"IBM Plex Mono\"',
+        fontSize: 15,
+        position: pt(336.9, 134.8),
+        textAndAttributes: ['focus()\nonFocus()', null]
+      }, {
+        type: Text,
+        name: 'blur call',
+        dynamicCursorColoring: true,
+        fill: Color.rgba(255, 255, 255, 0),
+        fontFamily: '\"IBM Plex Mono\"',
+        fontSize: 15,
+        position: pt(229.6, 89.5),
+        textAndAttributes: ['onBlur()', null]
+      }]
     }]
-  }]
+  }
+  ]
 });
 
 export const Shortcut = component({
