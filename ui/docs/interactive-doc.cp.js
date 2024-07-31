@@ -80,10 +80,10 @@ class BorderWidthVisualizerModel extends PropertyVisualizerModel {
   animateProperty () {
     const { dummy, dummyPoly } = this.ui;
     dummy.animate({
-      borderWidth: dummy.borderWidth === 1 ? 10 : 1
+      borderWidth: dummy.borderWidth.bottom === 1 ? 10 : 1
     });
     dummyPoly.animate({
-      borderWidth: dummyPoly.borderWidth === 1 ? 10 : 1
+      borderWidth: dummyPoly.borderWidth.bottom === 1 ? 10 : 1
     });
   }
 }
