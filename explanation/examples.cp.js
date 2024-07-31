@@ -610,19 +610,27 @@ const DynamicPokerTable = component(PokerTable, {
   ]
 });
 
-class Wrapper extends Morph {
-  onChange (change) {
-    super.onChange(change);
-    if (change.prop === 'extent') {
-      this.withMetaDo({ metaInteraction: false }, () => {
-        this.submorphs[0].scale = this.width < 500 ? .6 : 1;
-      });
-    }
+class Wrapper extends ViewModel {
+  get bindings () {
+    return [
+      { signal: 'extent', handler: 'onResize' }
+    ];
+  }
+
+  viewDidLoad () {
+    this.onResize();
+  }
+
+  onResize () {
+    const { view } = this;
+    view.withMetaDo({ metaInteraction: false }, () => {
+      view.submorphs[0].scale = view.width < 500 ? .6 : 1;
+    });
   }
 }
 
 export const WrappedDynamicPokerTable = component({
-  type: Wrapper,
+  defaultViewModel: Wrapper,
   extent: pt(482.1, 453.8),
   borderWidth: 7,
   borderColor: Color.rgb(229, 231, 233),
@@ -636,7 +644,7 @@ export const WrappedDynamicPokerTable = component({
 });
 
 export const WrappedPokerTable = component({
-  type: Wrapper,
+  defaultViewModel: Wrapper,
   extent: pt(482.1, 453.8),
   borderWidth: 7,
   borderColor: Color.rgb(229, 231, 233),
@@ -707,7 +715,7 @@ const DiversePokerTable = component(PokerTable, {
 });
 
 export const WrappedDiversePokerTable = component({
-  type: Wrapper,
+  defaultViewModel: Wrapper,
   extent: pt(490, 465.7),
   borderWidth: 7,
   borderColor: Color.rgb(229, 231, 233),
