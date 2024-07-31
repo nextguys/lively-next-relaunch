@@ -121,14 +121,17 @@ export const BlogEntryPreview = component({
       clipMode: 'hidden',
       fill: Color.rgba(255, 255, 255, 0),
       layout: new TilingLayout({
-        align: 'right',
-        axisAlign: 'center',
+        align: 'center',
+        axis: 'column',
+        axisAlign: 'right',
         hugContentsVertically: true,
         justifySubmorphs: 'spaced',
+        padding: rect(5, 5, 0, 0),
         resizePolicies: [['title', {
           height: 'fixed',
           width: 'fill'
-        }]]
+        }]],
+        spacing: 5
       }),
       height: 10,
       position: pt(-1.5, 0.5),
@@ -299,14 +302,16 @@ export const BlogEntry = component(BlogEntryPreview, {
     name: 'header wrapper',
     layout: new TilingLayout({
       align: 'center',
-      axisAlign: 'center',
+      axis: 'column',
+      axisAlign: 'right',
       hugContentsVertically: true,
       justifySubmorphs: 'spaced',
       padding: rect(0, 0, 0, 20),
       resizePolicies: [['title wrapper', {
         height: 'fixed',
         width: 'fill'
-      }]]
+      }]],
+      spacing: 5
     }),
     submorphs: [without('title'), add({
       name: 'title wrapper',
