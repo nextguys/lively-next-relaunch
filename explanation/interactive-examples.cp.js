@@ -252,7 +252,17 @@ export const ReconciliationSample = component({
           }]
         }]
       }),
-      part(ColorPicker, { viewModel: { embedded: true }, name: 'color picker' })
+      part(ColorPicker, {
+        viewModel: { embedded: true },
+        name: 'color picker',
+        submorphs: [{
+          name: 'header menu',
+          submorphs: [{
+            name: 'close button',
+            visible: false
+          }]
+        }]
+      })
     ]
   }]
 });
