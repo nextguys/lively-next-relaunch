@@ -456,7 +456,7 @@ The browser comes with editing modes for multiple different file types, such as 
 
 ## Reconciliation
 
-In our [introduction to `lively.morphic`](#explanations/morphic), we introduced our component system and how to use it to build composable and reusable UI building blocks. Using this code driven approach might be handy for developers, but this workflow is not accessible for non-programmers. Even for programmers, navigating large component hierarchies might be burdensome at some times. **One of our goals for the `lively.next` project is to change this and provide our users with a graphical, direct manipulation workflow for the definition and derivation of components.** For this reason, `lively.ide` comes with a **reconciliation** mechanism that seamlessly translates between the code and visual representation  of components.
+In our [introduction to `lively.morphic`](#documentation/morphic), we introduced our component system and how to use it to build composable and reusable UI building blocks. Using this code driven approach might be handy for developers, but this workflow is not accessible for non-programmers. Even for programmers, navigating large component hierarchies might be burdensome at some times. **One of our goals for the `lively.next` project is to change this and provide our users with a graphical, direct manipulation workflow for the definition and derivation of components.** For this reason, `lively.ide` comes with a **reconciliation** mechanism that seamlessly translates between the code and visual representation  of components.
 
 To illustrate this point, below you can see a simplified example of what the reconciliation engine is able to achieve:
 

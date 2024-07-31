@@ -116,7 +116,7 @@ class Foo  extends SuperFoo {
 
 > **💡 Tip**
 >
-> Remembering this concept of `static get properties() { }` is important, for example when working with `ViewModel`s. See our [introduction](#explanations/morphic) to working with `ViewModel`s.
+> Remembering this concept of `static get properties() { }` is important, for example when working with `ViewModel`s. See our [introduction](#documentation/morphic) to working with `ViewModel`s.
 
 Every other piece of meta information on the other hand is generated during transpilation since the transpiler has all the meta information at hand already so that it can be attached to the initialized class. It is then passed to the `createOrExtent()` function from earlier like so:
 
@@ -187,7 +187,7 @@ However these are not only only types of modules we use. There are broadly four 
 
 4. **Third-Party Modules via Public ESM Transpilation Services**: These are public servers that provide ESM-transpiled versions of NPM packages. This method enables approximately 90% of NPM packages intended for browser use to be imported directly into the browser. While there may be occasional bugs or issues, they can often be reported to the administrators of these servers, who are usually prompt in addressing the problems. To enhance loading performance, these modules are cached as files on the server file system of `lively.next`. Although technically possible, altering these modules is generally not recommended.
 
-In addition to file-based modules, `lively.next` also supports in-memory modules. These can be stored in the browser's local storage (`local://...`) or kept entirely in memory (`lively://...`), disappearing once the run-time is terminated. An example of these ephemeral modules includes those created by workspaces within the system. In memory modules can also be serialized, meaning they can be incorporated into a snapshot which can be handy to transport state and behavior across different systems. See our [explanation on `lively.project`s](#explanations/projects) for some more information on snapshots.
+In addition to file-based modules, `lively.next` also supports in-memory modules. These can be stored in the browser's local storage (`local://...`) or kept entirely in memory (`lively://...`), disappearing once the run-time is terminated. An example of these ephemeral modules includes those created by workspaces within the system. In memory modules can also be serialized, meaning they can be incorporated into a snapshot which can be handy to transport state and behavior across different systems. See our [explanation on `lively.project`s](#documentation/projects) for some more information on snapshots.
  
 ### Bootstrapping the Module-System
 
@@ -292,4 +292,4 @@ To address these needs, `lively.next` features a comprehensive bundling system. 
 
 The resulting bundle utilizes the [System.register() module format](https://github.com/systemjs/systemjs/blob/main/docs/system-register.md). This format allows for lazy loading of code chunks, which improves the initial load time for applications that use a wide range of `lively.next` functionalities, such as *interactive essays*.
 
-When you create a project, `lively.next` will automatically generate the necessary build scripts for you, so that you can invoke them easily by running `npm run build` from the console. More information can be found in our [guide to `lively.project`s](#explanations/projects).
+When you create a project, `lively.next` will automatically generate the necessary build scripts for you, so that you can invoke them easily by running `npm run build` from the console. More information can be found in our [guide to `lively.project`s](#documentation/projects).

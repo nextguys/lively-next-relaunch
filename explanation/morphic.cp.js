@@ -6,7 +6,7 @@ import { InteractiveDie, WrappedDynamicPokerTable, WrappedThrowableDie, AllFaces
 import { Color } from "lively.graphics/color.js";
 const morphic = component({
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,36394),
+  extent: pt(420,36423),
   layout: new TilingLayout({
   axis: "column",
   hugContentsVertically: true,
@@ -18,7 +18,7 @@ const morphic = component({
   position: pt(750,297),
   submorphs: [{
   name: 'aMorph',
-  extent: pt(420,36394),
+  extent: pt(420,36423),
   fill: Color.transparent,
   layout: new TilingLayout({
   axis: "column",
@@ -300,8 +300,10 @@ This is implemented via a hidden DOM input node which is manually focused on dem
   position: pt(15,6711)
 }, part(FocusBlurDiagram, {
   name: 'embedded 7',
-  extent: pt(390,353.3),
+  extent: pt(390,382.8),
   position: pt(15,9073),
+  submorphs: [{
+  name: 'contents',
   submorphs: [{
   name: 'diagram',
   submorphs: [{
@@ -310,6 +312,7 @@ This is implemented via a hidden DOM input node which is manually focused on dem
 }, {
   name: 'event 2',
   vertices: [({position:pt(0,0),isSmooth:true,controlPoints:{next:pt(35.0225,4.4618),previous:pt(0,0)}}),({position:pt(96.7,54.9),isSmooth:true,controlPoints:{next:pt(-0.1857,1.1981),previous:pt(6.9663,-44.9415)}})]
+}]
 }]
 }]
 }), {
@@ -397,11 +400,11 @@ to elements once we introduce <code>ViewModel</code>s later on.</p>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"83\" data-htmlline=\"84\">Which will yield a morph that looks like this:</p>\n\
 \n\
 </div>',
-  position: pt(15,9441)
+  position: pt(15,9471)
 }, part(WrappedDie, {
   name: 'embedded 9',
   extent: pt(390,304.1),
-  position: pt(15,13270)
+  position: pt(15,13299)
 }), {
   type: HTMLMorph,
   name: 'markdown 10',
@@ -437,11 +440,15 @@ While <code>component</code> is used to <strong>define</strong> a reusable compo
 <p class=\"markdown-line-marker\" data-mdline=\"31\" data-htmlline=\"32\">The resulting morph should look something like this:</p>\n\
 \n\
 </div>',
-  position: pt(15,13589)
+  position: pt(15,13618)
 }, part(WrappedPokerTable, {
   name: 'embedded 11',
   extent: pt(390,453.8),
-  position: pt(15,14435)
+  position: pt(15,14464),
+  submorphs: [{
+  name: 'poker table1',
+  scale: 0.6
+}]
 }), {
   type: HTMLMorph,
   name: 'markdown 12',
@@ -533,11 +540,15 @@ For instance, going back to our poker table example, we may want to apply differ
 <p class=\"markdown-line-marker\" data-mdline=\"107\" data-htmlline=\"108\">Notice that in the resulting scene, the dice have changed their styling:</p>\n\
 \n\
 </div>',
-  position: pt(15,14903)
+  position: pt(15,14933)
 }, part(WrappedDiversePokerTable, {
   name: 'embedded 13',
   extent: pt(390,465.7),
-  position: pt(15,19085)
+  position: pt(15,19115),
+  submorphs: [{
+  name: 'diverse poker table1',
+  scale: 0.6
+}]
 }), {
   type: HTMLMorph,
   name: 'markdown 14',
@@ -889,11 +900,11 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 </code></pre>\n\
 \n\
 </div>',
-  position: pt(15,19566)
+  position: pt(15,19595)
 }, part(AllFaces, {
   name: 'embedded 15',
   extent: pt(390,337.8),
-  position: pt(15,32728)
+  position: pt(15,32758)
 }), {
   type: HTMLMorph,
   name: 'markdown 16',
@@ -948,11 +959,11 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 <p class=\"markdown-line-marker\" data-mdline=\"50\" data-htmlline=\"51\">The resulting die looks like this. Try triggering the throw mechanism by clicking on the die.</p>\n\
 \n\
 </div>',
-  position: pt(15,33081)
+  position: pt(15,33111)
 }, part(WrappedThrowableDie, {
   name: 'embedded 17',
   extent: pt(390,304.1),
-  position: pt(15,34213)
+  position: pt(15,34242)
 }), {
   type: HTMLMorph,
   name: 'markdown 18',
@@ -1002,11 +1013,15 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
 <p class=\"markdown-line-marker\" data-mdline=\"49\" data-htmlline=\"50\">The resulting poker table looks like this. <strong>Click on the dice and observe how the total changes</strong>:</p>\n\
 \n\
 </div>',
-  position: pt(15,34532)
+  position: pt(15,34561)
 }, part(WrappedDynamicPokerTable, {
   name: 'embedded 19',
   extent: pt(390,453.8),
-  position: pt(15,35905)
+  position: pt(15,35934),
+  submorphs: [{
+  name: 'poker table',
+  scale: 0.6
+}]
 }), {
   type: HTMLMorph,
   name: 'markdown 20',
@@ -1015,7 +1030,7 @@ exposeInstance.<span class=\"hljs-property\">customPropertyExternal</span> <span
   html: '<div class=\"markdown-body\" style=\"margin: 5px\">\n\
 \n\
 </div>',
-  position: pt(15,36374)
+  position: pt(15,36403)
 }]
 }]
 });
