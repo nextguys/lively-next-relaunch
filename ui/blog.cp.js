@@ -462,7 +462,7 @@ export class BlogModel extends ViewModel {
 export const Blog = component({
   defaultViewModel: BlogModel,
   extent: pt(931, 306),
-  styleClasses: ['dashed'],
+  styleClasses: ['auto-links'],
   master: {
     breakpoints: [
       [pt(0, 0), component({

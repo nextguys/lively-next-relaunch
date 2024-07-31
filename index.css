@@ -30,9 +30,10 @@ lite-youtube {
   margin: 0 auto !important;
 }
 
-.dashed a {
-  text-decoration: underline dashed #FF7700;
-  text-decoration-thickness: 2px;
+.auto-links a {
+  text-decoration: underline;
+  color: black;
+  text-decoration-thickness: 1px;
 } 
 
 .markdown-body img {
