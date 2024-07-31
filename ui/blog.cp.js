@@ -525,7 +525,7 @@ export const Blog = component({
         fontFamily: '\"IBM Plex Mono\"'
       }, ' \n\nFor a more synchronous mode of communication, we kindly invite you to our ', null, '🔗', {
         fontFamily: 'Noto Emoji Color Subset'
-      }, ' chatroom on matrix ', {
+      }, ' ', null, 'chatroom on matrix', {
         fontColor: Color.rgb(0, 0, 0),
         link: 'https://matrix.to/#/#lively.next:matrix.org'
       }, '!', null]
