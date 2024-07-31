@@ -276,7 +276,7 @@ export const BlogEntry = component(BlogEntryPreview, {
   name: 'blog entry',
   defaultViewModel: BlogEntryModel,
   borderStyle: 'none',
-  clipMode: 'visible',
+  clipMode: 'hidden',
   extent: pt(654, 688.5),
   layout: new TilingLayout({
     align: 'right',
