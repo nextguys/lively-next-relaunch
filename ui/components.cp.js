@@ -1,11 +1,9 @@
-import { component, ShadowObject, part, ViewModel, TilingLayout } from 'lively.morphic';
+import { component, part, ViewModel, TilingLayout } from 'lively.morphic';
 import { pt, rect } from 'lively.graphics/geometry-2d.js';
-import { Image, Ellipse } from 'lively.morphic/morph.js';
-import { Color, LinearGradient } from 'lively.graphics/color.js';
+import { Image } from 'lively.morphic/morph.js';
+import { Color } from 'lively.graphics/color.js';
 import { Text } from 'lively.morphic/text/morph.js';
-import { HTMLMorph } from 'lively.morphic/html-morph.js';
-import { without } from 'lively.morphic/components/core.js';
-import { add, style, PolicyApplicator } from 'lively.morphic/components/policy.js';
+
 import { Footer } from './footer.cp.js';
 import { HashRouter } from 'lively.components/hash-router.js';
 import { Blog } from './blog.cp.js';
@@ -20,8 +18,6 @@ import { LandingPage } from './pages/landing-page.cp.js';
 
 import { ErrorPage } from './pages/error.cp.js';
 import { DocumentationPage, BackToDocsButton } from './pages/documentation.cp.js';
-import { projectAsset } from 'lively.project/helpers.js';
-import { num } from 'lively.lang/index.js';
 
 class LivelyWebPageModel extends ViewModel {
   static get properties () {
@@ -86,6 +82,8 @@ class LivelyWebPageModel extends ViewModel {
 
   async route (hash) {
     this.hideAllPages();
+
+    window.scrollTo(0, 0);
 
     // base landing page
     if (!hash || hash === '') {
