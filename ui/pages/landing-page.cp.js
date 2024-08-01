@@ -441,7 +441,7 @@ export const LandingPage = component({
             fontStyle: 'italic', fontSize: 16
           }, ' and ', { fontSize: 16 }, 'interactivity', {
             fontStyle: 'italic', fontSize: 16
-          }, '. \n\n It combines rich ', null, 'live programming capabilities', {
+          }, '. \n\nIt combines rich ', null, 'live programming capabilities', {
             fontStyle: 'italic'
           }, ', in the spirit of Smalltalk, with a graphical ', null, 'direct manipulation', {
             fontStyle: 'italic'
