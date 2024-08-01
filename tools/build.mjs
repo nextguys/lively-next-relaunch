@@ -16,6 +16,25 @@ const build = await rollup({
     lively({
       autoRun: {
         title: 'nextguys--lively-next-relaunch',
+        head: `
+        <script>
+          fetch('./assets/prerendered/index.json').then(index => index.json().then(index => {
+            let loadedHash = window.location.hash;
+            if (loadedHash.startsWith('#')) loadedHash = loadedHash.replace('#', '');
+            let availableSizes = index[loadedHash];
+            if (!availableSizes) availableSizes = index.error;
+            let selectedSize;
+            for (let size of availableSizes) {
+               if (size < window.innerWidth) {
+                 selectedSize = size;
+                 break;
+               } 
+            }
+            fetch('./assets/prerendered/' + (loadedHash ? loadedHash + '/' : '') + selectedSize)
+              .then(html => html.text())
+              .then(html => document.body.insertAdjacentHTML( 'beforeend', html ));
+          }))
+        </script>`
       },
       minify,
       verbose: true,

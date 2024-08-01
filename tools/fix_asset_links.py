@@ -4,6 +4,19 @@ from pathlib import Path
 
 project_directory = Path(__file__).parent
 
+def ensure_files(file_paths):
+    flattened_files = []
+    for file_path in file_paths:
+        if os.path.isdir(file_path):
+            for root, dirs, files in os.walk(file_path):
+                for file in files:
+                    sub_path = os.path.join(root, file)
+                    if not os.path.isdir(sub_path):
+                        flattened_files.append(sub_path)
+        else:
+      	    flattened_files.append(file_path)
+    return flattened_files
+
 def read_files(file_paths):
     contents = []
     for file_path in file_paths:
@@ -38,7 +51,8 @@ file_paths = [
     '../explanation/morphic.cp.js',
     '../explanation/projects.cp.js',
     '../explanation/studio.cp.js',
-    '../assets/articles/entries.js'
+    '../assets/articles/entries.js',
+    '../assets/prerendered/'
     ] 
-resolved_file_paths = [(project_directory / file_path).resolve() for file_path in file_paths]
+resolved_file_paths = ensure_files([(project_directory / file_path).resolve() for file_path in file_paths])
 process_files(resolved_file_paths)

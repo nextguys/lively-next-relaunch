@@ -12,7 +12,7 @@ import { CompiledHistoryPage } from './pages/compiled_history.cp.js';
 import { ImprintPage } from './pages/imprint.cp.js';
 import { ExamplePage } from './pages/examples.cp.js';
 
-import { connect } from 'lively.bindings';
+import { connect, signal } from 'lively.bindings';
 import { NavBar } from './navigation.cp.js';
 import { LandingPage } from './pages/landing-page.cp.js';
 
@@ -53,10 +53,20 @@ class LivelyWebPageModel extends ViewModel {
       },
       expose: {
         get () {
-          return ['onMouseDown'];
+          return ['onMouseDown', 'getAllRoutes', 'route'];
         }
       }
     };
+  }
+
+  getAllRoutes () {
+    return [
+      '', 'history', 'documentation',
+      ...Object.keys(this.documentationComponents).map(slug => `documentation/${slug}`),
+      'examples', 'imprint', 'blog',
+      ...blogEntries.map(e => `blog/${e.slug}`),
+      'error'
+    ];
   }
 
   hideAllPages () {
@@ -79,6 +89,7 @@ class LivelyWebPageModel extends ViewModel {
     const page = part(pageComponent);
     this.ui.body.submorphs = [page];
     this.ui.body.layout.setResizePolicyFor(page, { width: 'fill', height: 'fixed' });
+    page.whenRendered().then(() => signal(this.view, 'route finished'));
     return page;
   }
 
