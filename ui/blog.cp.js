@@ -233,7 +233,6 @@ export const BlogEntryPreview = component({
       name: 'abstract',
       fontSize: 14,
       clipMode: 'hidden',
-      height: 90.5,
       selectionMode: 'native',
       borderColor: Color.rgb(23, 160, 251),
       dynamicCursorColoring: true,
@@ -241,7 +240,6 @@ export const BlogEntryPreview = component({
       fixedWidth: true,
       lineWrapping: 'by-words',
       padding: rect(1, 20, 0, -19),
-      position: pt(-198, 22),
       textAndAttributes: [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Habitasse platea dictumst vestibulum rhoncus est. Tempus iaculis urna id volutpat lacus laoreet. A cras semper auctor neque. Amet massa vitae tortor condimentum. Tellus at urna condimentum mattis pellentesque. Integer eget aliquet nibh praesent tristique magna sit amet purus. Enim nec dui nunc mattis enim ut tellus. Mauris augue neque gravida in fermentum et sollicitudin. Porttitor rhoncus dolor purus non enim praesent elementum facilisis leo. Vivamus arcu felis bibendum ut tristique et egestas quis. Cras pulvinar mattis nunc sed blandit libero volutpat. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum. Consequat interdum varius sit amet mattis vulputate. At elementum eu facilisis sed odio morbi quis commodo.',
         null
