@@ -15,4 +15,5 @@ python3 ./tools/fix_asset_links.py
 node --no-experimental-fetch --no-warnings --experimental-import-meta-resolve --experimental-loader ../../flatn/resolver.mjs ./tools/build.mjs $verbose
 
 cp -r ./assets/* ./build/assets
+cp ./assets/favicon.ico ./build/favicon.ico
 sed -i -E "s/<title>.+<\/title>/<title>lively\.next - the truly integrated development environment<\/title>/" ./build/index.html
