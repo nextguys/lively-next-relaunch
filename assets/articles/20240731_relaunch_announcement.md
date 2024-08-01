@@ -71,7 +71,7 @@ Still, the amount of added tests over the last two-and-a-half years is small and
 
 While we try to document our ideas and found bugs in our GitHub repository, there are still (far too many) ideas scattered throughout our office. We tried organizing and planning our development process multiple times, preparing sprints, estimates and goals - but with limited success. Working on a large and complex project such as `lively.next` with as little resources as two people is a strange undertaking and having neither need, desire, nor ambition to producterize it comes as a blessing and a curse at the same time. We might reflect on this further in a future blog post!
 
-# A look in the future...
+# A look into the future...
 
 These lines mark, in a very non-dramatic way, the end of another chapter in the [history of the `lively.next`](#history) project. Initially we planned to be able to develop `lively.next` on a full-time basis for two years. Luckily, circumstances were so good that we could continue for more than half a year and a continuation still seems likely. 
 
