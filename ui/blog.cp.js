@@ -442,7 +442,7 @@ export class BlogModel extends ViewModel {
 
     entries.forEach((entry) => {
       const previewItem = part(BlogEntryPreview, {
-        name: entry.slug,
+        name: entry.slug + '-preview',
         viewModel: {
           entry,
           blog: this,
