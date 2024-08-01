@@ -420,7 +420,7 @@ export const DocumentationPage = component({
 
       {
         name: 'example video',
-        imageUrl: 'http://localhost:9011/local_projects/nextguys--lively-next-relaunch/assets/architecture.png'
+        imageUrl: projectAsset('architecture.png')
       }, {
         name: 'description wrapper',
         extent: pt(500, 381.2),
