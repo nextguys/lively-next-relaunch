@@ -19,6 +19,8 @@ import { LandingPage } from './pages/landing-page.cp.js';
 import { ErrorPage } from './pages/error.cp.js';
 import { DocumentationPage, BackToDocsButton } from './pages/documentation.cp.js';
 
+import bowser from 'esm://run/bowser';
+
 class LivelyWebPageModel extends ViewModel {
   static get properties () {
     return {
@@ -164,7 +166,15 @@ class LivelyWebPageModel extends ViewModel {
     if (evt.targetMorphs[0].name === 'examples') this.router.route('examples', true);
     if (blogEntries.map(e => e.slug).includes(evt.targetMorphs[0].name)) this.router.route(`blog/${evt.targetMorphs[0].name}`, true);
     if (evt.targetMorphs[0].name === 'logo section') this.router.route(null, true);
-    if (evt.targetMorphs[0].name === 'try it out button') window.open('https://github.com/LivelyKernel/lively.next', '_blank');
+    if (evt.targetMorphs[0].name === 'try it out button') {
+      const ua = bowser.parse(navigator.userAgent);
+      const platform = ua.platform.type;
+      const os = ua.os.name;
+      if (platform === 'mobile' && os === 'iOS') {
+        window.location = 'https://github.com/LivelyKernel/lively.next';
+      }
+      window.open('https://github.com/LivelyKernel/lively.next', '_blank');
+    }
   }
 
   async viewDidLoad () {
