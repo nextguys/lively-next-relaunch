@@ -34,6 +34,7 @@ async function generatePrerenderedBits () { // eslint-disable-line no-unused-var
       prerenderedNode.id = '__prerenderedNode__';
       routeToPrerender[route][website.width] = prerenderedNode.outerHTML;
     };
+    createPrerender();
     while (website.width < maxWidth) {
       let last = JSON.stringify(arr.compact(website.withAllSubmorphsDo(m => m._lastIndex)));
       website.width += 100;
