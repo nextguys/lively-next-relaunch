@@ -30,6 +30,7 @@ const build = await rollup({
                  break;
                } 
             }
+            if (!selectedSize) selectedSize = availableSizes[availableSizes.length - 1];
             fetch('./assets/prerendered/' + (loadedHash ? loadedHash + '/' : '') + selectedSize)
               .then(html => html.text())
               .then(html => document.body.insertAdjacentHTML( 'beforeend', html ));
