@@ -13,10 +13,10 @@ export const PreviewPage = component({
   fill: Color.transparent,
   clipMode: 'hidden',
   layout: new TilingLayout({
+    align: 'right',
     axis: 'column',
     hugContentsHorizontally: true,
     hugContentsVertically: true,
-    padding: rect(10, 10, 0, 0),
     spacing: 10
   }),
   opcaity: 0
@@ -89,35 +89,70 @@ class BlogEntryModel extends ViewModel {
 }
 export const BlogEntryPreview = component({
   defaultViewModel: BlogEntryPreviewModel,
-  borderStyle: {
-    bottom: 'solid',
-    left: 'none',
-    right: 'none',
-    top: 'solid'
-  },
-  borderColor: Color.rgb(166, 166, 166),
-  borderWidth: 1,
   clipMode: 'hidden',
-  extent: pt(582, 245.5),
-  layout: new TilingLayout({
-    axis: 'column',
-    axisAlign: 'right',
-    hugContentsVertically: true,
-    padding: rect(20, 0, 0, 0),
-    resizePolicies: [['header wrapper', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['seperator', {
-      height: 'fixed',
-      width: 'fill'
-    }], ['abstract', {
-      height: 'fixed',
-      width: 'fill'
-    }]]
-  }),
+  extent: pt(726, 268.2),
+  master: {
+    breakpoints: [
+      [pt(0, 0), component({
+        layout: new TilingLayout({
+          axis: 'column',
+          axisAlign: 'center',
+          hugContentsVertically: true,
+          padding: rect(20, 0, 0, 0),
+          resizePolicies: [['header wrapper', {
+            height: 'fixed',
+            width: 'fill'
+          }], ['seperator', {
+            height: 'fixed',
+            width: 'fill'
+          }], ['abstract', {
+            height: 'fixed',
+            width: 'fill'
+          }], ['continue reading wrapper', { height: 'fixed', width: 'fill' }]]
+        })
+      })],
+      [pt(800, 0), component({
+        layout: new TilingLayout({
+          axis: 'column',
+          axisAlign: 'center',
+          hugContentsVertically: true,
+          padding: rect(20, 0, 0, 0),
+          resizePolicies: [['header wrapper', {
+            height: 'fixed',
+            width: 'fixed'
+          }], ['seperator', {
+            height: 'fixed',
+            width: 'fixed'
+          }], ['abstract', {
+            height: 'fixed',
+            width: 'fixed'
+          }],
+          ['continue reading wrapper', { height: 'fixed', width: 'fixed' }]]
+        }),
+        submorphs: [
+          { name: 'header wrapper', width: 800 },
+          { name: 'seperator', width: 800 },
+          { name: 'abstract', width: 800 },
+          { name: 'continue reading wrapper', width: 800 }
+        ]
+      })]
+    ]
+  },
   submorphs: [
     {
       name: 'header wrapper',
+      borderWidth: {
+        bottom: 1,
+        left: 0,
+        right: 0,
+        top: 1
+      },
+      borderStyle: {
+        bottom: 'none',
+        left: 'none',
+        right: 'none',
+        top: 'solid'
+      },
       clipMode: 'hidden',
       fill: Color.rgba(255, 255, 255, 0),
       layout: new TilingLayout({
@@ -135,7 +170,12 @@ export const BlogEntryPreview = component({
       }),
       height: 10,
       position: pt(-1.5, 0.5),
-      borderColor: Color.rgb(23, 160, 251),
+      borderColor: {
+        bottom: Color.rgb(166, 166, 166),
+        left: Color.rgb(23, 160, 251),
+        right: Color.rgb(23, 160, 251),
+        top: Color.rgb(166, 166, 166)
+      },
       submorphs: [
         {
           type: Text,
@@ -234,7 +274,6 @@ export const BlogEntryPreview = component({
       fontSize: 14,
       clipMode: 'hidden',
       selectionMode: 'native',
-      borderColor: Color.rgb(23, 160, 251),
       dynamicCursorColoring: true,
       fill: Color.rgb(255, 255, 255),
       fixedWidth: true,
@@ -247,12 +286,28 @@ export const BlogEntryPreview = component({
     },
     {
       name: 'continue reading wrapper',
+      borderWidth: {
+        bottom: 1,
+        left: 0,
+        right: 0,
+        top: 0
+      },
+      borderStyle: {
+        bottom: 'solid',
+        left: 'none',
+        right: 'none',
+        top: 'none'
+      },
       layout: new TilingLayout({
         align: 'right',
-        axisAlign: 'center',
-        hugContentsHorizontally: true
+        axisAlign: 'center'
       }),
-      borderColor: Color.rgb(23, 160, 251),
+      borderColor: {
+        bottom: Color.rgb(166, 166, 166),
+        left: Color.rgb(23, 160, 251),
+        right: Color.rgb(23, 160, 251),
+        top: Color.rgb(23, 160, 251)
+      },
       extent: pt(155.5, 20),
       position: pt(-40, 23),
       submorphs: [{
@@ -464,12 +519,13 @@ export class BlogModel extends ViewModel {
 
 export const Blog = component({
   defaultViewModel: BlogModel,
-  extent: pt(931, 306),
+  extent: pt(1028, 306),
   styleClasses: ['auto-links'],
   master: {
     breakpoints: [
       [pt(0, 0), component({
         layout: new TilingLayout({
+          spacing: 20,
           axis: 'column',
           axisAlign: 'center',
           resizePolicies: [['intro text', {
@@ -479,10 +535,14 @@ export const Blog = component({
             height: 'fixed',
             width: 'fill'
           }]]
-        })
+        }),
+        submorphs: [
+          { name: 'intro text', padding: rect(20, 0, 0, 0) }
+        ]
       })],
       [pt(800, 0), component({
         layout: new TilingLayout({
+          spacing: 20,
           axis: 'column',
           axisAlign: 'center',
           resizePolicies: [['intro text', {
@@ -500,8 +560,7 @@ export const Blog = component({
     {
       name: 'intro text',
       type: Text,
-      padding: rect(0, 0, 0, 30),
-      width: 650,
+      width: 800,
       selectionMode: 'native',
       lineWrapping: 'by-words',
       fontSize: 14,
