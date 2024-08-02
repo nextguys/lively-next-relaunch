@@ -4,7 +4,7 @@ import { HTMLMorph } from "lively.morphic/html-morph.js";
 const projects = component({
   type: HTMLMorph,
   name: 'aMarkdownPreviewMorph',
-  extent: pt(420,8091.2),
+  extent: pt(420,8053.6),
   fixedHeight: false,
   html: '<div class=\"markdown-body\" style=\"margin: 5px\">\n\
 <p class=\"markdown-line-marker\" data-mdline=\"0\" data-htmlline=\"1\">Work in <code>lively.next</code> is organized in so called “projects”. Other ways of thinking about these projects might be a folder, containing all relevant files for a specific application or, for the technical inclined readers, a <code>git</code> repository.</p>\n\
@@ -64,7 +64,7 @@ When saving a project, <code>lively.next</code> will by default increase the pat
 <h3 class=\"markdown-line-marker\" data-mdline=\"84\" data-htmlline=\"85\">What makes a Project</h3>\n\
 <p class=\"markdown-line-marker\" data-mdline=\"86\" data-htmlline=\"88\">A project is defined by its folder structure. In theory, it would be possible to create a <code>lively.next</code> project by hand, by just creating all these files manually. Most important is the <code>package.json</code> file, that stores a lot of important meta data about the project that we utilize at runtime.\n\
 When creating a new project, the folder structure is as follow:</p>\n\
-<pre><code class=\"language-sh\"># &gt;$ tree\n\
+<pre><code class=\"language-console hljs language-shell\" data-highlighted=\"yes\"><span class=\"hljs-meta prompt_\"># </span>&gt;$ tree\n\
 .\n\
 ├── build\n\
 ├── fonts.css\n\
