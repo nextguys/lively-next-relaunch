@@ -87,7 +87,7 @@ As you might have guessed from the above description, `lively.project` is simply
 A project is defined by its folder structure. In theory, it would be possible to create a `lively.next` project by hand, by just creating all these files manually. Most important is the `package.json` file, that stores a lot of important meta data about the project that we utilize at runtime.
 When creating a new project, the folder structure is as follow:
 
-```sh
+```console
 # >$ tree
 .
 ├── build
