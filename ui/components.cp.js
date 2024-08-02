@@ -40,10 +40,6 @@ class LivelyWebPageModel extends ViewModel {
               load: async () => (await System.import('nextguys--lively-next-relaunch/explanation/projects.cp.js')).projects,
               title: 'lively.projects'
             },
-            serialization: {
-              load: async () => (await System.import('nextguys--lively-next-relaunch/explanation/serialization.cp.js')).serialization,
-              title: 'lively.serialization'
-            },
             studio: {
               load: async () => (await System.import('nextguys--lively-next-relaunch/explanation/studio.cp.js')).studio,
               title: 'lively.studio'
