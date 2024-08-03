@@ -12,7 +12,7 @@ Since `lively.next` lives in the Browser and `Node.JS` run-times, it does not ha
 
 ### Scope
 
-The first area of concern are evaluation scopes. In `JavaScript` a scope is defined syntactically but cannot be accessed easily programmatically after the fact, especially not in the browser. For instance, evaluating variable declaration like `var foo = "bar";` manually will not populate some kind of local namespace. Likewise, we cannot access variables from other scopes unless we have them explicitly stored away in a dedicated object.
+The first area of concern are evaluation scopes. In `JavaScript` a scope is defined syntactically but cannot be accessed easily programmatically after the fact, especially not in the browser. For instance, evaluating variable declaration like `var foo = "bar";` manually will simply populate the namespace the evaluation took place in. So we can not actually control which namespace the variables are populating. Likewise, we cannot access variables from other scopes unless we have them explicitly stored away in a dedicated object that we can pass around or access globally.
 
 This is especially troubling when considering tools like the **Workspace** or the **System Browser**, where we operate on a module scope and would like to have the ability to flexibly evaluate expressions within the context of the module.
 To alleviate that, `lively.next` provides a scope capturing transpilation for modules that is transparent to the user. It covers:
@@ -135,7 +135,7 @@ Every other piece of meta information on the other hand is generated during tran
 
 ### Dynamic Code Evaluation
 
-In Smalltalk-like systems, a crucial feature is the pervasive capability to evaluate expressions. This concept is rooted in the influences of `LISP`-like systems from which Smalltalk drew inspiration. In `JavaScript`, the standard `eval()` function has a number of peculiarities that can complicate its practical use. Notably, the evaluation context is tied to the local scope of the function from which it was invoked. Additionally, there are several other specific rules and behaviors associated with `eval()`, which are outlined in detail on resources like the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval).
+In Smalltalk-like systems, a crucial feature is the pervasive capability to evaluate expressions. This concept is rooted in the influences of `LISP`-like systems from which Smalltalk drew inspiration. In `JavaScript`, the standard `eval()` function has a number of peculiarities that can complicate its practical use. Notably, the evaluation context is tied to the local scope of the function from which it was invoked, as mentioned previously. Additionally, there are several other specific rules and behaviors associated with `eval()`, which are outlined in detail on resources like the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval).
 
 To address these limitations, the `lively.next` framework offers a custom wrapper around `JavaScript`'s native `eval()` function. This wrapper applies unique source transformations, thereby providing a more predictable and flexible evaluation behavior. It allows for custom bindings to be provided alongside the code being evaluated, offering various styles of evaluation:
 
@@ -143,7 +143,7 @@ To address these limitations, the `lively.next` framework offers a custom wrappe
 
 2. **Module-Based Evaluation**: Here, the variables of a module scope captured during custom transpilation are made available to the expression. This setup also supports the evaluation of partial module-specific expressions, such as `import` or `export` statements. This functionality is not available with the native `eval()` and is achieved by transforming module-specific syntax into statements that correctly access values from the module's `recorder` object.
 
-3. **Remote run-time Evaluation**: This environment supports evaluation in separate run-times, such as different browsers, servers, or `lively.next` instances running on different hardware. The source transpilation process ensures that all necessary modules and packages are imported, enabling the evaluation to proceed smoothly in the different environment.
+3. **Remote run-time Evaluation**: This environment supports evaluation in separate run-times, such as different browsers, servers, or `lively.next` instances running on different hardware. The source transpilation process ensures that all necessary modules and packages are imported, enabling the evaluation to proceed smoothly in the different environment. Remote evaluation can both be performed on per module basis or custom variable mapping, as explained before.
 
 ## Modules in lively.next
 
@@ -177,7 +177,7 @@ flowchart TD
 
 In essence, modules are ultimately based on files that are stored somewhere on a computer. For the core modules of `lively.next` (such as `lively.modules`, `lively.morphic`, etc.), these files are located within the local file system where the `lively.server` is running. By default, `lively.next` requests these source files from the server, which retrieves the files and sends their contents back to the client. When a module is modified from the client side, the corresponding file is eventually updated in the file system.
 
-However these are not only only types of modules we use. There are broadly four types of modules encountered in `lively.next`:
+However these are not the only types of modules we use. There are broadly four types of modules encountered in `lively.next`:
 
 1. **Core Modules**: These are part of the core packages of `lively.next`. These modules can be modified to evolve the system at run-time.
 
@@ -194,6 +194,10 @@ In addition to file-based modules, `lively.next` also supports in-memory modules
 In `lively.next`, modules are fully reflective, meaning each module object contains all the information it needs about its position within the system, the source code it holds, and the methods to update or reload itself. This level of introspection is not natively supported by either the Browser or the `NodeJS` run-time, making it essential to establish a bootstrapping process that initializes the module system before any module imports occur. 
 
 The bootstrapping process is meta-circular, meaning it is defined entirely within `lively.next`. Here's a breakdown of the process:
+
+> **📜 Behind the Scenes**
+>
+> Note, that the following describes the bootstrapping inside both the browser and `Node.JS`. There is a slight difference between the two: For step A we utilize the native module system in `Node.JS` to import the modules in a non reflective manner. As for the browser, we still rely on a bootstrapping bundle to perform the *initial import*. This used to be nessecary, since browsers did not support ES modules *at all* natively. Nowadays ES modules are supported, yet bundles still maintain a loading performance edge over ES modules especially for large projects, hence we still rely on using a bootstrapping bundle in the browser.
 
 **Step A** involves ensuring that all necessary third-party libraries, particularly `SystemJS` and [`Babel`](https://babeljs.io/), are loaded first. These libraries are crucial for the functioning of the system. Note, that a future goal is to remove `Babel` and its extensive dependencies, as it is currently used only for ESM to `SystemJS` transpilation. After loading these libraries, all core packages required for the `lively.modules` package are imported, followed by the initialization of the `lively.modules` package itself.
 
@@ -248,11 +252,11 @@ graph TD
    storage[Local Storage Obj]
    modules[lively.modules]
    S--compressed module archive-->sources
-   S--"`**per module source (3)**`"-->modules
+   S--"`**3. per module source**`"-->modules
    subgraph Client
      modules--write cache-->transpiled
-     sources--"`**read memory 2**`"-->modules;
-     transpiled--"`**read cache (1)**`"-->modules
+     sources--"`**2. read memory**`"-->modules;
+     transpiled--"`**1. read cache**`"-->modules
      subgraph storage
        sources
        transpiled
@@ -279,7 +283,7 @@ SystemJS maintains an internal record of module dependencies, which allows it to
 
 Reloading a module essentially results in a complete re-evaluation of the module's contents, which can reset all variables, objects, functions, and classes defined within it. To manage this, our custom transpilation process, as explained earlier, ensures that the code is structured to support successful run-time patching, preserving necessary state changes.
 
-Regardless of whether a module is reloaded or updated, `lively.modules` detects any changes in the module's exports and identifies the dependent modules affected by these changes. It then traverses these affected modules, forcing a re-execution of their compiled bodies to propagate the updated exports throughout the system.
+Regardless of whether a module is reloaded or updated, `lively.modules` detects any changes in the module's exports and identifies the dependent modules affected by these changes. It then traverses these affected modules, forcing a re-execution of their compiled bodies to propagate the updated exports throughout the system if needed.
 
 
 ## Bundling in `lively.next`
@@ -288,7 +292,7 @@ Smalltalk and similar systems typically require their applications to be shipped
 
 To ship applications effectively as web-apps for the browser, it is crucial to ensure that they load quickly and include only the essential components. This is a reasonable approach because most end users are unlikely to want to customize the application further. Even if customization is desired, it is fair to assume that users will be willing to wait for the system to load to incorporate the changes they need.
 
-To address these needs, `lively.next` features a comprehensive bundling system. This system creates compact bundles of applications, including only the necessary code and avoiding the costly initialization of the module system. The bundler operates as a sophisticated [`RollupJS`](https://rollupjs.org/) plugin.
+To address these needs, `lively.next` features a comprehensive bundling system. This system creates compact bundles of applications, including only the necessary code and avoiding the costly initialization of the module system. The bundler operates as a custom [`RollupJS`](https://rollupjs.org/) plugin.
 
 The resulting bundle utilizes the [System.register() module format](https://github.com/systemjs/systemjs/blob/main/docs/system-register.md). This format allows for lazy loading of code chunks, which improves the initial load time for applications that use a wide range of `lively.next` functionalities, such as *interactive essays*.
 
