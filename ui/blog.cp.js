@@ -313,6 +313,7 @@ export const BlogEntryPreview = component({
       submorphs: [{
         type: Text,
         name: 'continue reading',
+        nativeCursor: 'pointer',
         fontWeight: '600',
         dynamicCursorColoring: true,
         fill: Color.rgba(255, 255, 255, 0),
